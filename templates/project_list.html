@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects{% endblock title %}
+
+{% block content %}
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Project Name</th>
+					<th>Date Created</th>
+					<th>Last Modified</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+		   <tbody>
+				{% for project in object_list %}
+				<tr>
+				   <td><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</td>
+				   <td>{{ project.date_created }}</td>
+				   <td>{{ project.date_modified }}</td>
+				    <td><a href="{% url 'project_edit' project.pk %}">Edit</a></td>
+				    <td><a href="{% url 'project_delete' project.pk %}">Delete</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="container"> 
+		<div class="mx-auto" style="width: 200px;">
+			<div class="btn-group">
+				<button class="btn btn-primary" type="button"><a href="{% url 'project_new' %}"/>New Project</button>
+				<button class="btn btn-primary" type="button">Load from File</button>
+			 </div>
+	    </div>
+	</div>
+{% endblock content %}
