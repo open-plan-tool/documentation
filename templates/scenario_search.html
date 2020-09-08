@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+    <div class="progress-bar-wrapper"></div>
+
+    <div class="input-panel">
+        <a class="btn btn-primary btn-lg open-modal" data-modal="CreateScenarioModal">
+            Add Scenario
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <div class="alert alert-info">
+                    <strong>Success: </strong>{{ message }}
+                </div>
+            {% endif %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger">
+                    <strong>Success: </strong>{{ message }}
+                </div>
+            {% endif %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success">
+                    <strong>Success: </strong>{{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="panel panel-default ">
+        <div class="panel-heading"><h3 class="panel-title"><strong>Scenario List </strong></h3></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table id="ScenarioTable" class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>&emsp;&emsp;</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>Time Step</th>
+                        <th>Period</th>
+                        <th>Capex_fix</th>
+                        <th>Capex_var</th>
+                        <th>Opex_fix</th>
+                        <th>Opex_var</th>
+                        <th>lifetime</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for scenario in scenario_list %}
+                        <tr class="table-row">
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="scenario_check"
+                                               value="{{ scenario.pk }}"/></label>
+                                </div>
+                            </td>
+                            <td class="text"><span>{{ scenario.name }}</span></td>
+                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+                            <td class="text"><span>{{ scenario.time_step }}</span></td>
+                            <td class="text"><span>{{ scenario.period }}</span></td>
+                            <td class="text"><span>{{ scenario.capex_fix }}</span></td>
+                            <td class="text"><span>{{ scenario.capex_var }}</span></td>
+                            <td class="text"><span>{{ scenario.opex_fix }}</span></td>
+                            <td class="text"><span>{{ scenario.opex_var }}</span></td>
+                            <td class="text"><span>{{ scenario.lifetime }}</span></td>
+                            <td>
+                                <input style="float: left; margin: 5px;" class="btn btn-sm btn-default open-modal"
+                                       type="submit"
+                                       value="Edit" data-modal="UpdateCommentForm"
+                                       data-url="{% url 'scenario_update' scenario.pk %}"/>
+                                <form style="float: left;" class="form" action="{% url 'scenario_delete' scenario.pk %}"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
+                                           type="submit" value="Delete"
+                                           onclick="return confirm('Are you sure you want to delete?')"/>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-panel">
+        <form style="float: right;" id="ScenarioSelect" class="form"
+              method="GET">
+            <input style="float: left;  margin: 5px;" class="btn btn-lg btn-primary"
+                   type="submit" value="Next"/>
+        </form>
+    </div>
+
+
+    <!-- Here we create this empty div for inserting modal -->
+    <div id="modal-div"></div>
+
+
+
+
+    <script>
+        //we can set animation delay as following in ms (default 1000)
+        ProgressBar.singleStepAnimation = 500;
+        ProgressBar.init(
+            ['Create Project',
+                'Add Comments',
+                'Create Scenario',
+                'Add Assets',
+                'Run Simulation',
+            ],
+            'Create Scenario',
+            'progress-bar-wrapper' // created this optional parameter for container name (otherwise default container created)
+        );
+
+    </script>
+
+    <script>
+        //modalData holds id of html form
+        var modalDiv = $("#modal-div");
+        var modalName = $(".open-modal").data("modal")
+
+
+        $(".open-modal").on("click", function () {
+            $.ajax({
+                url: "{% url 'scenario_create' %}",
+                success: function (data) {
+                    modalDiv.html(data);
+                    $('#' + modalName).modal();
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        $('#ScenarioTable').on('click', '.scenario_check', function (event) {
+            console.log("CLICKED!")
+            if ($('.table-row').hasClass('active')) {
+                $('.table-row').removeClass('active');
+            } else {
+                $('.table-row').addClass('active').siblings().removeClass('active');
+            }
+        });
+
+
+        $('.scenario_check').click(function () {
+            scenarioId = $(this).val();
+            $('#ScenarioSelect').attr("action", "/asset/search/" + scenarioId);
+            $('.scenario_check').not(this).prop('checked', false);
+            console.log(scenarioId + " checked!")  // sanity check
+
+        });
+
+        $('#ScenarioSelect').on('submit', function (event) {
+            console.log("form submitted!")  // sanity check
+            if ($('.scenario_check').is(':checked')) {
+                if (confirm("Are you sure you want to proceed?")) {
+                } else {
+                    event.preventDefault();
+                }
+            } else {
+                alert("You must select a scenario to proceed!");
+                event.preventDefault();
+            }
+        });
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+    <div class="progress-bar-wrapper"></div>
+
+    <div class="input-panel">
+        <a class="btn btn-primary btn-lg open-modal" data-modal="CreateScenarioModal">
+            Add New Asset
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <div class="alert alert-info">
+                    <strong>Success: </strong>{{ message }}
+                </div>
+            {% endif %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger">
+                    <strong>Success: </strong>{{ message }}
+                </div>
+            {% endif %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success">
+                    <strong>Success: </strong>{{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="panel panel-default ">
+        <div class="panel-heading"><h3 class="panel-title"><strong>Asset List </strong></h3></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Energy Vector</th>
+                        <th>Asset Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for asset in asset_list %}
+                        <tr>
+                            <td class="text"><span>{{ asset.name }}</span></td>
+                            <td class="text"><span>Electricity</span></td>
+                            <td class="text"><span>Electricity</span></td>
+
+                            <td>
+                                <input style="float: left; margin: 5px;" class="btn btn-sm btn-default open-modal"
+                                       type="submit"
+                                       value="Edit" data-modal="UpdateCommentForm"
+                                       data-url="{% url 'scenario_update' scenario.pk %}"/>
+                                <form style="float: left;" class="form" action="{% url 'scenario_delete' scenario.pk %}"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
+                                           type="submit" value="Delete"
+                                           onclick="return confirm('Are you sure you want to delete?')"/>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+
+    <!-- Here we create this empty div for inserting modal -->
+    <div id="modal-div"></div>
+
+
+
+
+    <script>
+        //we can set animation delay as following in ms (default 1000)
+        ProgressBar.singleStepAnimation = 500;
+        ProgressBar.init(
+            ['Create Project',
+                'Add Comments',
+                'Create Scenario',
+                'Add Assets',
+                'Run Simulation',
+            ],
+            'Create Scenario',
+            'progress-bar-wrapper' // created this optional parameter for container name (otherwise default container created)
+        );
+
+    </script>
+
+    <script>
+        //modalData holds id of html form
+        var modalDiv = $("#modal-div");
+        var modalName = $(".open-modal").data("modal")
+
+
+        $(".open-modal").on("click", function () {
+            $.ajax({
+                url: "{% url 'scenario_create' %}",
+                success: function (data) {
+                    modalDiv.html(data);
+                    $('#' + modalName).modal();
+                }
+            });
+        });
+
+
+
+    </script>
+
+{% endblock %}

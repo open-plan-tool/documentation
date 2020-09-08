@@ -1,97 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Energy Planning Application</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-  </head>
+    <link rel="shortcut icon" href="/static/images/eland.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+          integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <script src="/static/js/progress-bar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+            integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/map.css">
+    <link rel="stylesheet" href="/static/css/progress-bar.css">
+</head>
 <body>
-	<header>
-		<nav id="header-nav" class="navbar navbar-expand-lg navbar-light">
-		  <div class="container">
-			<div class="navbar-header">
-			  <a href="index.html" class="pull-left visible-md visible-lg">
-				<div id="logo-img"></div>
-			  </a>
-			  <div class="navbar-brand">
-				<a href="index.html"><h1>Energy Planning Application</h1></a>
-				<p>
-				  Part of E-LAND Toolbox
-				  <!--<img src="images/eland-logo.png">
-				  <span></span>-->
-				</p>
-			  </div>
-			</div>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsable-nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-			</button>
 
-			<div id="collapsable-nav" class="collapse navbar-collapse">
-			   <ul id="nav-list" class="nav navbar-nav navbar-right">
-				<li>
-				  <a href="settings.html">Settings</a>
-				</li>
-				<li class="nav-item dropdown" id="nav-drop">
-				  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">About</a>
-					<ul class="submenu dropdown-menu">
-					  <li>
-						<a href=#>E-LAND Project</a>
-					  </li>
-					  <li>
-						<a href=#>eomof</a>
-					  </li>
-				  </ul>
-				  </li>
-				</li>
-				<li>
-				  <a href="#">Logout</a>
-				</li>
-			  </ul><!-- #nav-list -->
-			</div><!-- .collapse .navbar-collapse -->
-		  </div><!-- .container -->
-		</nav><!-- #header-nav -->
-	</header>
-		{% if user.is_authenticated %}
-		{% endif %}
-		<div class="collapse navbar-collapse" id="navbarCollapse">
-		{% if user.is_authenticated %}
-		  <ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-				<a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				{{ user.username }}
-				</a>
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-					<a class="dropdown-item" href="{% url 'password_change'%}">
-					Change password</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="{% url 'logout' %}">
-					Log Out</a>
-				</div>
-			</li>
-		  </ul>
-        {% else %}
-          <form class="form-inline ml-auto">
-            <a href="{% url 'login' %}" class="btn btn-outline-secondary">
-            Log In</a>
-            <a href="{% url 'signup' %}" class="btn btn-primary ml-2">
-            Sign up</a>
-          </form>
-        {% endif %}
-      </div>
-    </nav>
-    <div class="container">
-      {% block content %}{% endblock content %}
-	  {% block after_content %}{% endblock after_content%}
-    </div>
+{% include "navbar.html" with user=user %}
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+
+<div class="container">
+    {% block content %}{% endblock content %}
+    {% block after_content %}{% endblock after_content %}
+</div>
+</body>
 </html>
