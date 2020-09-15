@@ -1,6 +1,8 @@
 from crispy_forms.utils import render_crispy_form, render_field
 from django.contrib.auth.decorators import login_required
 import json
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import *
@@ -20,6 +22,8 @@ from .models import *
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+
+# region Project
 
 @login_required
 @require_http_methods(["GET"])
@@ -131,6 +135,10 @@ def project_search(request):
     return render(request, 'project_search.html',
                   {'project_list': project_list})
 
+# endregion Project
+
+
+# region Comment
 
 @login_required
 @require_http_methods(["GET"])
@@ -221,6 +229,11 @@ def comment_delete(request, id):
         messages.success(request, 'Comment successfully deleted!')
         return HttpResponseRedirect('/comment/search')
 
+
+# endregion Comment
+
+
+# region Scenario
 
 @login_required
 @require_http_methods(["GET"])
@@ -318,6 +331,11 @@ def scenario_delete(request, id):
         return HttpResponseRedirect('/scenario/search')
 
 
+# endregion Scenario
+
+
+# region Asset
+
 @login_required
 @require_http_methods(["GET"])
 def asset_search(request, id):
@@ -335,3 +353,5 @@ def asset_search(request, id):
     asset_list.extend(storage_asset_list)
 
     return render(request, 'asset_search.html', {'asset_list': asset_list})
+
+# endregion Asset

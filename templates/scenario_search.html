@@ -74,17 +74,38 @@
                             <td class="text"><span>{{ scenario.opex_var }}</span></td>
                             <td class="text"><span>{{ scenario.lifetime }}</span></td>
                             <td>
-                                <input style="float: left; margin: 5px;" class="btn btn-sm btn-default open-modal"
-                                       type="submit"
-                                       value="Edit" data-modal="UpdateCommentForm"
-                                       data-url="{% url 'scenario_update' scenario.pk %}"/>
-                                <form style="float: left;" class="form" action="{% url 'scenario_delete' scenario.pk %}"
-                                      method="POST">
-                                    {% csrf_token %}
-                                    <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
-                                           type="submit" value="Delete"
-                                           onclick="return confirm('Are you sure you want to delete?')"/>
-                                </form>
+
+
+                                <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
+                                    <a href="#" id="dropdownMenuButton" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog" style="font-size: 120%"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="1" href="#">
+                                                <span class="glyphicon glyphicon-edit open-modal"
+                                                      type="submit"
+                                                      value="Edit" data-modal="UpdateCommentForm"
+                                                      data-url="{% url 'scenario_update' scenario.pk %}"> Edit</span>
+                                            </a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href="#">
+                                                <form style="float: left;" class="form" action="{% url 'scenario_delete' scenario.pk %}"
+                                                      method="POST">
+                                                    {% csrf_token %}
+                                                    <label style="float: left;  margin: 5px;">
+                                                    <span class="glyphicon glyphicon-trash"> Delete</span>
+                                                    <input style="display: none" class="btn btn-sm btn-danger"
+                                                               type="submit" value="Delete"
+                                                               onclick="return confirm('Are you sure you want to delete?')"/>
+                                                    </label>
+                                                </form>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </td>
                         </tr>
                     {% endfor %}
@@ -177,5 +198,39 @@
 
 
     </script>
+
+    <script>
+
+        (function () {
+            var dropdownMenu;
+
+            // and when you show it, move it to the body
+            $(window).on('show.bs.dropdown', function (e) {
+
+                // grab the menu
+                dropdownMenu = $(e.target).find('.dropdown-menu');
+
+                // detach it and append it to the body
+                $('body').append(dropdownMenu.detach());
+
+                // grab the new offset position
+                var eOffset = $(e.target).offset();
+
+                // make sure to place it where it would normally go (this could be improved)
+                dropdownMenu.css({
+                    'display': 'block',
+                    'top': eOffset.top + $(e.target).outerHeight(),
+                    'left': eOffset.left
+                });
+            });
+
+            // and when you hide it, reattach the drop down, and hide it normally
+            $(window).on('hide.bs.dropdown', function (e) {
+                $(e.target).append(dropdownMenu.detach());
+                dropdownMenu.hide();
+            });
+        })();
+    </script>
+
 
 {% endblock %}
