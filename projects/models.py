@@ -30,7 +30,6 @@ class EconomicData(models.Model):
 
 
 class Project(models.Model):
-    id = models.AutoField(primary_key=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=120)
@@ -39,17 +38,13 @@ class Project(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     economic_data = models.OneToOneField(EconomicData, on_delete=models.SET_NULL, null=True, )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
 
     def __str__(self):
         return self.name
 
 
 class Comment(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
     body = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
@@ -59,7 +54,6 @@ class Comment(models.Model):
 
 
 class Scenario(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
     start_date = models.DateField()
     period = models.IntegerField()
@@ -91,7 +85,6 @@ class ElectricityAsset(models.Model):
 
 
 class EnergyConsumption(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
     historical_consumption_data = models.TextField()
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
@@ -101,7 +94,6 @@ class EnergyConsumption(models.Model):
 
 
 class EnergyProduction(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
 
@@ -110,7 +102,6 @@ class EnergyProduction(models.Model):
 
 
 class EnergyConversion(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
 
@@ -119,7 +110,6 @@ class EnergyConversion(models.Model):
 
 
 class EnergyStorage(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
 
@@ -128,24 +118,20 @@ class EnergyStorage(models.Model):
 
 
 class PVPlant(ElectricityAsset):
-    id = models.AutoField(primary_key=True)
     historical_generation_data = models.TextField()
     asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
 
 
 class PVInverter(ElectricityAsset):
-    id = models.AutoField(primary_key=True)
     efficiency = models.FloatField()
     asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
 
 
 class WindPlant(ElectricityAsset):
-    id = models.AutoField(primary_key=True)
     asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
 
 
 class ESS(ElectricityAsset):
-    id = models.AutoField(primary_key=True)
     asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
 
 
