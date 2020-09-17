@@ -13,6 +13,7 @@ from django.contrib import messages
 from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
 
+from .dtos import Asset
 from .forms import *
 from .models import *
 
@@ -328,6 +329,11 @@ def asset_search(request, id):
     production_asset_list = EnergyProduction.objects.filter(scenario=scenario)
     conversion_asset_list = EnergyConversion.objects.filter(scenario=scenario)
     storage_asset_list = EnergyStorage.objects.filter(scenario=scenario)
+
+    for x in asset_list:
+        asset = Asset(x.id, x.name, 'Electricity', )
+
+
 
     asset_list.extend(consumption_asset_list)
     asset_list.extend(production_asset_list)

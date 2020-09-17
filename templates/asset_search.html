@@ -51,8 +51,8 @@
                     {% for asset in asset_list %}
                         <tr>
                             <td class="text"><span>{{ asset.name }}</span></td>
-                            <td class="text"><span>Electricity</span></td>
-                            <td class="text"><span>Electricity</span></td>
+                            <td class="text"><span>{{ asset.energy_vector }}</span></td>
+                            <td class="text"><span>{{ asset.type }}</span></td>
 
                             <td>
                                 <input style="float: left; margin: 5px;" class="btn btn-sm btn-default open-modal"

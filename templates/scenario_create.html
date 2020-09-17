@@ -25,11 +25,12 @@
 </div><!-- /.modal -->
 
 <script>
-    $(function () {
+
         $("#id_start_date").datepicker({
             format: 'dd/mm/yyyy',
+            autoHide: true
         });
-    });
+
 </script>
 
 <script>
@@ -44,7 +45,6 @@
 
 
     {#// AJAX for posting#}
-
     function create_scenario() {
         $.ajax({
             url: "{% url 'scenario_create_post' %}",

@@ -145,14 +145,12 @@
     <script>
 
         $('#ScenarioTable').on('click', '.scenario_check', function (event) {
-            console.log("CLICKED!")
-            if ($('.table-row').hasClass('active')) {
-                $('.table-row').removeClass('active');
+            if ($(this).closest('.table-row').hasClass('active')) {
+                $(this).closest('.table-row').removeClass('active');
             } else {
-                $('.table-row').addClass('active').siblings().removeClass('active');
+                $(this).closest('.table-row').addClass('active').siblings().removeClass('active');
             }
         });
-
 
         $('.scenario_check').click(function () {
             scenarioId = $(this).val();

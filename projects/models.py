@@ -74,7 +74,7 @@ class Scenario(models.Model):
     def __str__(self):
         return self.name
 
-
+# May extend to all classes and not just electricity
 class ElectricityAsset(models.Model):
     name = models.CharField(max_length=60)
     age_installed = models.FloatField()
@@ -136,7 +136,7 @@ class PVPlant(ElectricityAsset):
 class PVInverter(ElectricityAsset):
     id = models.AutoField(primary_key=True)
     efficiency = models.FloatField()
-    asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
+    asset_type = models.ForeignKey(EnergyConversion, on_delete=models.CASCADE)
 
 
 class WindPlant(ElectricityAsset):
