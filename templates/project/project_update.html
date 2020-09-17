@@ -67,10 +67,10 @@
     {% endif %}
 
 
-<script>
+    <script>
         /* Map Show and Latitude-Longitude data autofill */
-        var lat = document.getElementById("id_latitude").value
-        var lon = document.getElementById("id_longitude").value
+        var lat = document.getElementById("id_latitude").value;
+        var lon = document.getElementById("id_longitude").value;
         var mymap = L.map('mapid').setView([lat, lon], 4);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -85,11 +85,11 @@
         var popup = L.popup();
         function onMapClick(e) {
             popup.setLatLng(e.latlng)
-            .setContent("Location " + e.latlng.toString()).openOn(mymap);
+                .setContent("Location " + e.latlng.toString()).openOn(mymap);
             $('#id_latitude').val(e.latlng.lat.toFixed(6));
             $('#id_longitude').val(e.latlng.lng.toFixed(6));
         }
         mymap.on('click', onMapClick);
     </script>
 
-{% endblock %}
+{% endblock content %}

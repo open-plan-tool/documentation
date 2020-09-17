@@ -1,8 +1,11 @@
 from crispy_forms.utils import render_crispy_form, render_field
+from django.apps import AppConfig, apps
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 import json
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound
 from django.shortcuts import *
@@ -37,7 +40,7 @@ def project_detail(request, id):
     project_form = ProjectDetailForm(None, instance=project)
     economic_data_form = EconomicDataDetailForm(None, instance=economic_data)
 
-    return render(request, 'project_detail.html',
+    return render(request, 'project/project_detail.html',
                   {'project_form': project_form, 'economic_data_form': economic_data_form})
 
     template_name = 'project_detail.html'
@@ -84,7 +87,7 @@ def project_create(request):
     else:
         form = ProjectCreateForm()
 
-    return render(request, 'project_create.html', {'form': form})
+    return render(request, 'project/project_create.html', {'form': form})
 
 
 @login_required
@@ -105,7 +108,7 @@ def project_update(request, id):
         # Save was successful, so send message
         messages.success(request, 'Project Info updated successfully!')
 
-    return render(request, 'project_update.html',
+    return render(request, 'project/project_update.html',
                   {'project_form': project_form, 'economic_data_form': economic_data_form})
 
 
@@ -122,7 +125,7 @@ def project_delete(request, id):
         messages.success(request, 'Project successfully deleted!')
 
     project_list = Project.objects.filter(user=request.user)
-    return render(request, 'project_search.html', {'project_list': project_list})
+    return render(request, 'project/project_search.html', {'project_list': project_list})
 
 
 @login_required
@@ -132,7 +135,7 @@ def project_search(request):
     # project_list_json = json.dumps(list(project_list.values_list('name', 'longitude', 'latitude')),
     #                                cls=DjangoJSONEncoder)
 
-    return render(request, 'project_search.html',
+    return render(request, 'project/project_search.html',
                   {'project_list': project_list})
 
 # endregion Project
@@ -147,7 +150,7 @@ def comment_search(request):
 
     comment_list = Comment.objects.filter(project=project)
 
-    return render(request, 'comment_search.html', {'comment_list': comment_list})
+    return render(request, 'comment/comment_search.html', {'comment_list': comment_list})
 
 
 @login_required
@@ -178,7 +181,7 @@ def comment_create(request):
     else:
         form = CommentCreateForm()
 
-    return render(request, 'comment_create.html', {'form': form})
+    return render(request, 'comment/comment_create.html', {'form': form})
 
 
 @login_required
@@ -212,7 +215,7 @@ def comment_update(request, id):
     else:
         form = CommentUpdateForm(instance=comment)
 
-    return render(request, 'comment_update.html', {'form': form})
+    return render(request, 'comment/comment_update.html', {'form': form})
 
 
 @login_required
@@ -242,7 +245,7 @@ def scenario_search(request):
 
     scenario_list = Scenario.objects.filter(project=project)
 
-    return render(request, 'scenario_search.html', {'scenario_list': scenario_list})
+    return render(request, 'scenario/scenario_search.html', {'scenario_list': scenario_list})
 
 
 @login_required
@@ -252,7 +255,7 @@ def scenario_create(request):
 
     form = ScenarioCreateForm()
 
-    return render(request, 'scenario_create.html', {'form': form})
+    return render(request, 'scenario/scenario_create.html', {'form': form})
 
 
 @json_view
@@ -313,7 +316,7 @@ def scenario_update(request, id):
     else:
         form = CommentUpdateForm(instance=comment)
 
-    return render(request, 'comment_update.html', {'form': form})
+    return render(request, 'comment/comment_update.html', {'form': form})
 
 
 @login_required
@@ -342,6 +345,7 @@ def asset_search(request, id):
     asset_list = []
 
     scenario = get_object_or_404(Scenario, pk=id)
+    '''
     consumption_asset_list = EnergyConsumption.objects.filter(scenario=scenario)
     production_asset_list = EnergyProduction.objects.filter(scenario=scenario)
     conversion_asset_list = EnergyConversion.objects.filter(scenario=scenario)
@@ -351,7 +355,58 @@ def asset_search(request, id):
     asset_list.extend(production_asset_list)
     asset_list.extend(conversion_asset_list)
     asset_list.extend(storage_asset_list)
-
+    '''
     return render(request, 'asset_search.html', {'asset_list': asset_list})
+
+
+class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    context_object_name = 'form'
+    template_name = 'asset/asset_create.html'
+    fields = '__all__'
+    #exclude = ('scenario', 'name')
+    success_url = reverse_lazy('scenario_search')
+
+    def test_func(self):
+        scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
+        project = get_object_or_404(Project, pk=self.request.session['project_id'])
+        return self.request.user == project.user
+
+    def dispatch(self, request, *args, **kwargs):
+        # use this method along with proper url config to load parametric Asset models.
+        # where 'my_asset' is the url parameter name and 'projects' is the app name to look for models
+        my_asset = kwargs.get('my_asset', None)
+        self.model = apps.get_model('projects', my_asset.capitalize())
+        try:
+            ret = super(AssetCreateView, self).dispatch(request, *args, **kwargs)
+        except AttributeError:
+            raise Http404("No such Asset exists.")
+        return ret
+
+    def get_form(self):
+        # User this method to prepopulate form with scenario id.
+        # Also use js to hide scenario selection from the from.
+        form = super(AssetCreateView, self).get_form()
+        form.fields.pop('scenario')
+        # initial_base = self.get_initial()
+        # scenario_pk = self.request.session['scenario_id']
+        # initial_base['scenario'] = Scenario.objects.get(id=scenario_pk)
+        # form.initial = initial_base
+        #form.fields['name'].widget = forms.widgets.TextInput()
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['asset_name'] = self.model.__str__(self)
+
+        myval = self.request.GET.get('test1')
+        context['test_val'] = myval
+        return context
+
+    def form_valid(self, form):
+        scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
+        form.instance.scenario = scenario
+        #messages.success(self.request, 'Item created successfully!')
+        return super().form_valid(form)
+
 
 # endregion Asset

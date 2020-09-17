@@ -63,27 +63,17 @@ class ProjectCreateForm(forms.Form):
                                   widget=forms.Textarea(attrs={'placeholder': 'More detailed description here...'}))
 
     country = forms.ChoiceField(label='Country', choices=COUNTRY)
-    longitude = forms.FloatField(
-        label='Location, longitude',
-        widget=forms.NumberInput(attrs={'placeholder': 'longitude...'})
-    )
-    latitude = forms.FloatField(
-        label='Location, latitude',
-        widget=forms.NumberInput(attrs={'placeholder': 'latitude...'})
-    )
-    duration = forms.IntegerField(
-        label='Project Duration',
-        widget=forms.NumberInput(attrs={'placeholder': 'Project Duration...'})
-    )
+    longitude = forms.FloatField(label='Location, longitude',
+                                 widget=forms.NumberInput(attrs={'placeholder': 'longitude...'}))
+    latitude = forms.FloatField(label='Location, latitude',
+                                widget=forms.NumberInput(attrs={'placeholder': 'latitude...'}))
+    duration = forms.IntegerField(label='Project Duration',
+                                  widget=forms.NumberInput(attrs={'placeholder': 'Project Duration...'}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
-    discount = forms.IntegerField(
-        label='Discount Factor',
-        widget=forms.NumberInput(attrs={'placeholder': 'Discount Factor...'})
-    )
-    tax = forms.IntegerField(
-        label='Tax',
-        widget=forms.NumberInput(attrs={'placeholder': 'Tax...'})
-    )
+    discount = forms.IntegerField(label='Discount Factor',
+                                  widget=forms.NumberInput(attrs={'placeholder': 'Discount Factor...'}))
+    tax = forms.IntegerField(label='Tax',
+                             widget=forms.NumberInput(attrs={'placeholder': 'Tax...'}))
 
     electricity = forms.BooleanField(label='Electricity', initial=False, required=False)
     heat = forms.BooleanField(label='Heat', initial=False, required=False)
