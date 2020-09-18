@@ -409,4 +409,12 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
 
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def asset_topology_create(request):
+    return render(request, 'asset/create_asset_topology.html')
+
+
+
 # endregion Asset
