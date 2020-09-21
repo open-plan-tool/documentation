@@ -111,44 +111,6 @@ cursor: pointer;
     width:80% !important;
 }
 
-.btn-lock {
-  float: right;
-  position: absolute;
-  bottom: 10px;
-  right: 140px;
-  display: flex;
-  font-size: 24px;
-  color: white;
-  padding: 5px 10px;
-  background: #555555;
-  border-radius: 4px;
-  border-right: 1px solid var(--border-color);
-  z-index: 5;
-  cursor: pointer;
-}
-
-.bar-zoom {
-  float: right;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  font-size: 24px;
-  color: white;
-  padding: 5px 10px;
-  background: #555555;
-  border-radius: 4px;
-  border-right: 1px solid var(--border-color);
-  z-index: 5;
-}
-.bar-zoom svg {
-  cursor: pointer;
-  padding-left: 10px;
-}
-.bar-zoom svg:nth-child(1) {
-  padding-left: 0px;
-}
-
 #drawflow {
   position: relative;
   width: calc(100vw - 301px);
@@ -284,20 +246,23 @@ cursor: pointer;
 
 
 .drawflow-node.personalized {
-  background: red;
-  height: 200px;
+  background: grey;
+  height: 150px;
+  width: 50px;
+  border-radius: 10px;
   text-align: center;
   color: white;
 }
 .drawflow-node.personalized .input {
-  background: yellow;
-}
-.drawflow-node.personalized .output {
   background: green;
 }
 
+.drawflow-node.personalized .output {
+  background: red;
+}
+
 .drawflow-node.personalized.selected {
-  background: blue;
+  background: grey;
 }
 
 .drawflow .connection .point {

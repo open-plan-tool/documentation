@@ -15,11 +15,16 @@
 
       <div class="col">
           <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="source">
-              <p class="m-b-20">Add new Energy Source</p>
-              <h2 class="text-center"><i class="fa fa-wind f-left"></i><span>486</span></h2>
+              <i class="fas fa-wind"></i><span>Energy Source</span>
           </div>
           <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer">
               <i class="fas fa-code"></i><span> Transformer</span>
+          </div>
+          <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dbclick">
+              <i class="fas fa-mouse"></i><span> DBClick!</span>
+          </div>
+          <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="personalized">
+              <i class="fas fa-fill"></i><span> Personalized</span>
           </div>
       </div>
 
@@ -34,7 +39,9 @@
           html: JSON.stringify(editor.export())
           })">Export</div>
         <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
+          <div id="modal-div" style="z-index: 9999;"></div>
       </div>
+
     </div>
   </div>
 
@@ -91,20 +98,19 @@
     }
 
 
+    //#region Alternative Item Creation Method
 
-    ////////////////////////////
-var data = { "name": 'GEORGE' };
-var html = document.createElement("div");
-html.className = 'title-box';
-html.innerHTML = `
+    var data = { "name": 'THENAME' };
+    var html = document.createElement("div");
+    html.className = 'title-box';
+    html.innerHTML = `
               <div class="title-box"><i class="fas fa-code"></i><span>Transformer</span></div>
-              <div class="box"><textarea df-template></textarea></div>
+              <div class="box"><input df-template></input></div>
               `;
-editor.registerNode('test', html);
-// Use
-editor.addNode('github', 0, 1, 150, 300, 'github', data, 'test', true);
-//////////////////////////////////////
-
+    editor.registerNode('test', html);
+    // Use
+    editor.addNode('github', 0, 1, 150, 300, 'github', data, 'test', true);
+    //#endregion
 
 
     function addNodeToDrawFlow(name, pos_x, pos_y) {
@@ -114,25 +120,132 @@ editor.addNode('github', 0, 1, 150, 300, 'github', data, 'test', true);
       pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
       pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
-
       switch (name) {
         case 'source':
-        var energy_source = `<div class="title-box"><i class="fa fa-wind"></i>Energy Source</div>`;
-          editor.addNode('source', 0,  1, pos_x, pos_y, 'source', {}, energy_source );
-          break;
+        var energy_source_html = `<div>
+<div class="title-box">
+    <img src="/static/images/wind.png" style="max-width: 40%; max-height: 70%"/></i>Energy Source
+</div>
+<div class="box dbclickbox" ondblclick="showpopup(event)">
+                Db Click here
+                <div class="modal" style="display:none">
+                  <div class="modal-content">
+                    <span class="close" onclick="closemodal(event)">&times;</span>
+                    Change your variable {name} !
+                    <input type="text" df-name>
+                  </div>
 
+                </div>
+</div>
+</div>`;
+          editor.addNode('source', 0,  1, pos_x, pos_y, 'source', { name: ''}, energy_source_html );
+          break;
+          case 'personalized':
+            var personalized = `
+            <div id="demo" ondblclick="loadCommentTest()">
+              Bus
+            </div>
+            `;
+            editor.addNode('personalized', 1, 1, pos_x, pos_y, 'personalized', {}, personalized );
+            break;
           case 'transformer':
             var template = `
                           <div>
                             <div class="title-box"><i class="fas fa-code"></i><span>Transformer1</span></div>
-                            <div class="box"><textarea df-template>Text</textarea>dsfsdfsdfsdfsdfsdfd</div>
+                            <div class="box"><textarea df-template>Text</textarea>template info</div>
                           </div>
                           `;
             editor.addNode('template', 1, 1, pos_x, pos_y, 'transformer', { "transformer": 'Write your template'}, template );
             break;
+            case 'dbclick':
+            var dbclick = `
+            <div>
+            <div class="title-box"><i class="fas fa-mouse"></i> Db Click</div>
+              <div class="box clickbox" ondblclick="showcustompopup(event)">
+                Db Click here
+
+            <div id="demo" class="input-panel">
+                <a class="btn btn-primary btn-lg open-modal" data-modal="CreateScenarioModal">
+                    Add Scenario
+                </a>
+            </div>
+
+              </div>
+            </div>
+            `;
+            editor.addNode('dbclick', 1, 0, pos_x, pos_y, 'dbclick', { name: ''}, dbclick );
+            break;
         default:
       }
     }
+
+
+
+    var transform = '';
+        function showpopup(e) {
+            e.target.closest(".drawflow-node").style.zIndex = "9999";
+            e.target.children[0].style.display = "block";
+            console.log(e.target.children[0]);
+            transform = editor.precanvas.style.transform;
+            editor.precanvas.style.transform = '';
+            editor.precanvas.style.left = editor.canvas_x +'px';
+            editor.precanvas.style.top = editor.canvas_y +'px';
+            console.log(transform);
+
+            editor.editor_mode = "fixed";
+        }
+
+        function closemodal(e) {
+            e.target.closest(".drawflow-node").style.zIndex = "2";
+            e.target.parentElement.parentElement.style.display  ="none";
+            //document.getElementById("modalfix").style.display = "none";
+            editor.precanvas.style.transform = transform;
+            editor.precanvas.style.left = '0px';
+            editor.precanvas.style.top = '0px';
+            editor.editor_mode = "edit";
+        }
+
+
+        function showcustompopup(e) {
+        //modalData holds id of html form
+        var modalDiv = $("#modal-div");
+        var modalName = $(".open-modal").data("modal")
+
+
+        $(".open-modal").on("click", function () {
+            console.log("CLICKED!")
+            $.ajax({
+                url: "{% url 'scenario_create' %}",
+                success: function (data) {
+                    modalDiv.html(data);
+
+                    const inputs = document.getElementById('CreateScenarioModal').getElementsByTagName('input');
+                    for (const [key, value] of Object.entries(inputs)) {
+                        console.log(key, value);
+                    }
+                    $('#' + modalName).modal();
+                }
+            });
+        });
+        }
+
+
+    function loadCommentTest() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("demo").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "{% url 'comment_create' %}", true);
+        xhttp.send();
+    }
+
+
+///////////////////////////////////////////////
+
+
   </script>
+
 
 {% endblock end_body_scripts %}
