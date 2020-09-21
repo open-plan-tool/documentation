@@ -17,6 +17,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
+from django.core import serializers
 
 from .forms import *
 from .models import *
@@ -137,6 +138,7 @@ def project_search(request):
 
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
+
 
 # endregion Project
 
@@ -342,28 +344,74 @@ def scenario_delete(request, id):
 @login_required
 @require_http_methods(["GET"])
 def asset_search(request, id):
-    asset_list = []
-
     scenario = get_object_or_404(Scenario, pk=id)
-    '''
-    consumption_asset_list = EnergyConsumption.objects.filter(scenario=scenario)
-    production_asset_list = EnergyProduction.objects.filter(scenario=scenario)
-    conversion_asset_list = EnergyConversion.objects.filter(scenario=scenario)
-    storage_asset_list = EnergyStorage.objects.filter(scenario=scenario)
+    request.session['scenario_id'] = scenario.id
 
-    asset_list.extend(consumption_asset_list)
-    asset_list.extend(production_asset_list)
-    asset_list.extend(conversion_asset_list)
-    asset_list.extend(storage_asset_list)
-    '''
-    return render(request, 'asset_search.html', {'asset_list': asset_list})
+    asset_list = Asset.objects.filter(scenario=scenario)
+
+    asset_type_list = json.dumps(list(AssetType.objects.all().values()), cls=DjangoJSONEncoder)
+
+    return render(request, 'asset/asset_search.html', {'asset_list': asset_list, 'asset_type_list': asset_type_list})
+
+
+@login_required
+@require_http_methods(["GET"])
+def asset_create(request, asset_type_name):
+    form = AssetCreateForm()
+
+    # Retrieve asset type
+    asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)
+    request.session['asset_type_name'] = asset_type_name
+
+    form_fields = list(form.fields)
+
+    # Remove form fields that do not correspond to the model
+    for field in form_fields:
+        if field not in asset_type.asset_fields.split(','):
+            form.fields.pop(field)
+
+    return render(request, 'asset/asset_create_form.html', {'form': form})
+
+
+@json_view
+@login_required
+@require_http_methods(["POST"])
+def asset_create_post(request):
+    form = AssetCreateForm(request.POST)
+
+    asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
+    form_fields = list(form.fields)
+
+    # Remove form fields that do not correspond to the model
+    for field in form_fields:
+        if field not in asset_type.asset_fields.split(','):
+            form.fields.pop(field)
+
+    # check whether it's valid:
+    if form.is_valid():
+        # process the data in form.cleaned_data as required
+        asset = Asset()
+
+        for name, value in form.cleaned_data.items():
+            setattr(asset, name, value)
+
+        asset.scenario = get_object_or_404(Scenario, pk=request.session['scenario_id'])
+        asset.asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
+        asset.save()
+
+        # redirect to a new URL:
+        return {'success': True}
+
+    form_html = crispy_forms_filters.as_crispy_form(form)
+
+    return {'success': False, 'form_html': form_html}
 
 
 class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     context_object_name = 'form'
-    template_name = 'asset/asset_create.html'
+    template_name = 'asset/asset_create_form.html'
     fields = '__all__'
-    #exclude = ('scenario', 'name')
+    # exclude = ('scenario', 'name')
     success_url = reverse_lazy('scenario_search')
 
     def test_func(self):
@@ -391,7 +439,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # scenario_pk = self.request.session['scenario_id']
         # initial_base['scenario'] = Scenario.objects.get(id=scenario_pk)
         # form.initial = initial_base
-        #form.fields['name'].widget = forms.widgets.TextInput()
+        # form.fields['name'].widget = forms.widgets.TextInput()
         return form
 
     def get_context_data(self, **kwargs):
@@ -405,8 +453,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
         form.instance.scenario = scenario
-        #messages.success(self.request, 'Item created successfully!')
+        # messages.success(self.request, 'Item created successfully!')
         return super().form_valid(form)
-
 
 # endregion Asset

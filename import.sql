@@ -1,0 +1,15 @@
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('dso','electricity', 'energy_provider', 'source');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('electricity_excess','electricity', 'energy_consumption', 'sink');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('dso_feedin','electricity', 'energy_consumption', 'sink');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('demand','electricity', 'energy_consumption', 'sink');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('transformer_station_in','electricity', 'energy_conversion', 'transformer');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('transformer_station_out','electricity', 'energy_conversion', 'transformer');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('storage_charge_controller_in','electricity', 'energy_conversion', 'transformer');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('storage_charge_controller_out','electricity', 'energy_conversion', 'transformer');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('solar_inverter','electricity', 'energy_conversion', 'transformer');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('dso_consumption','electricity', 'energy_production', 'source');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('pv_plant','electricity', 'energy_production', 'source');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('wind_plant','electricity', 'energy_production', 'source');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('charging_power','electricity', 'energy_storage', 'storage');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('discharging_power','electricity', 'energy_storage', 'storage');
+insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type) values ('capacity','electricity', 'energy_storage', 'storage');
