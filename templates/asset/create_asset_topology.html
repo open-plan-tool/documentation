@@ -8,157 +8,358 @@
     <link rel="stylesheet" type="text/css" href="/static/css/beautiful.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
 {% endblock start_body_scripts %}
 
 {% block topology %}
-  <div class="wrapper">
+    <div class="wrapper">
 
-      <div class="col">
-          <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="source">
-              <i class="fas fa-wind"></i><span>Energy Source</span>
-          </div>
-          <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer">
-              <i class="fas fa-code"></i><span> Transformer</span>
-          </div>
-          <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dbclick">
-              <i class="fas fa-mouse"></i><span> DBClick!</span>
-          </div>
-          <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="personalized">
-              <i class="fas fa-fill"></i><span> Personalized</span>
-          </div>
-      </div>
+        <div class="col">
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="source">
+                <i class="fas fa-sun"></i><span> Source </span>
+            </div>
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer">
+                <i class="fas fa-arrow-up"></i><i class="fas fa-arrow-down"></i><span> Transformer </span>
+            </div>
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="sink">
+                <i class="fas fa-industry"></i><span> Sink </span>
+            </div>
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
+                <i class="fas fa-grip-lines"></i><span> Bus </span>
+            </div>
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="sourcethe">
+                <i class="fas fa-wind"></i><span>Energy Source</span>
+            </div>
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transfmr">
+                <i class="fas fa-code"></i><span> Template </span>
+            </div>
+        </div>
 
-    <div class="col-right">
-      <div class="menu">
-        <ul><li onclick="editor.changeModule('Home'); changeModule(event);" class="selected">Topology</li></ul>
-      </div>
+        <div class="col-center">
+            <div class="menu">
+                <ul><li onclick="editor.changeModule('Home'); changeModule(event);" class="selected">Topology</li></ul>
+            </div>
 
-      <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <div class="btn-export" onclick="Swal.fire({
-          title: 'Export',
-          html: JSON.stringify(editor.export())
-          })">Export</div>
-        <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
-          <div id="modal-div" style="z-index: 9999;"></div>
-      </div>
+            <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="btn-export" onclick="Swal.fire({title: 'Export', html: JSON.stringify(editor.export())})">
+                    Export
+                </div>
+                <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
+                <div id="modal-div" style="z-index: 9999;"></div>
+            </div>
+        </div>
 
+        <!--
+        <div class="col-right" style="display: none">
+            Add here logic for the properties sidebar.
+        </div>
+        -->
     </div>
-  </div>
 
 {% endblock topology %}
 
+
 {% block end_body_scripts %}
-  <script>
-    // Initialize
-    var id = document.getElementById("drawflow");
-    const editor = new Drawflow(id);
-    editor.reroute = true;
-    editor.start();
 
+    <script>
+    // Define a uniqueIdIncrementor to keep track of the created object modals in the window.
+        // For the creation procedure ids with names #modalDataId{0,1,2,3} are created.
+        window.uniqueIdIncrementor = 0;
 
-    /* Mouse and Touch Actions */
-    var elements = document.getElementsByClassName('drag-drawflow');
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].addEventListener('touchend', drop, false);
-      elements[i].addEventListener('touchmove', positionMobile, false);
-      elements[i].addEventListener('touchstart', drag, false );
-    }
+        let addInputAttributes = function (str) {
+            const parser = new DOMParser();
+            let doc = parser.parseFromString(str, 'text/html');
 
-    var mobile_item_selec = '';
-    var mobile_last_move = null;
-   function positionMobile(ev) {
-     mobile_last_move = event;
-   }
+            // get the list of all inputs and add the custom 'df-*' attribute foreach input
+            let inputElements = doc.body.getElementsByTagName("input");
+            $.each(inputElements, function(index, item){
+                let nameAttr = item.getAttribute("name");
+                item.setAttribute('df-'+nameAttr, '');
+            });
+            const theForm = doc.body.getElementsByTagName("form");
+            return theForm;
+        };
 
-   function allowDrop(ev) {
-      ev.preventDefault();
-    }
-
-    function drag(ev) {
-      if (ev.type === "touchstart") {
-        mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
-      } else {
-      ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
-      }
-    }
-
-    function drop(ev) {
-      if (ev.type === "touchend") {
-        var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
-        if(parentdrawflow != null) {
-          addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
+        function getAssetData(asset_type_name) {
+            $.get('create/' + asset_type_name, function(data){
+                // get only the html form part of the page.
+                let myData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
+                data2Html = addInputAttributes(myData);
+                //return data2Html;
+                $(`#modalDataId${uniqueIdIncrementor-1}`).html(data2Html);
+                });
         }
-        mobile_item_selec = '';
-      } else {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("node");
-        addNodeToDrawFlow(data, ev.clientX, ev.clientY);
-      }
+    </script>
 
+
+    <script>
+        // Initialize
+        var id = document.getElementById("drawflow");
+        const editor = new Drawflow(id);
+        editor.reroute = true;
+        editor.drawflow = {
+    "drawflow": {
+        "Home": {
+            "data": {
+                "1": {
+                    "id": 1,
+                    "name": "source",
+                    "data": {
+                        "installed_capacity": "7",
+                        "capex_fix": "7",
+                        "capex_var": "7",
+                        "opex_fix": "7",
+                        "opex_var": "7",
+                        "lifetime": "7",
+                        "age_installed": "3"
+                    },
+                    "class": "source",
+                    "html": "Source\n",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "2",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 285,
+                    "pos_y": 149
+                },
+                "2": {
+                    "id": 2,
+                    "name": "transformer",
+                    "data": {
+                        "age_installed": "3",
+                        "installed_capacity": "3",
+                        "capex_fix": "3",
+                        "capex_var": "3",
+                        "opex_fix": "3",
+                        "opex_var": "22",
+                        "lifetime": "2"
+                    },
+                    "class": "transformer",
+                    "html": "Transformer\n",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 564,
+                    "pos_y": 147
+                },
+                "3": {
+                    "id": 3,
+                    "name": "bus",
+                    "data": {
+                        "age_installed": "3",
+                        "installed_capacity": "3",
+                        "capex_fix": "32",
+                        "capex_var": "23",
+                        "opex_fix": "22",
+                        "opex_var": "22",
+                        "lifetime": "2"
+                    },
+                    "class": "bus",
+                    "html": "Bus\n",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "2",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "5",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 950,
+                                            "pos_y": 61
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 841,
+                    "pos_y": 105
+                },
+                "4": {
+                    "id": 4,
+                    "name": "sink",
+                    "data": {
+                        "age_installed": "8",
+                        "installed_capacity": "9",
+                        "capex_fix": "9",
+                        "capex_var": "9",
+                        "opex_fix": "9",
+                        "opex_var": "9",
+                        "lifetime": "9"
+                    },
+                    "class": "sink",
+                    "html": "Sink\n",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {},
+                    "pos_x": 1023,
+                    "pos_y": 249
+                },
+                "5": {
+                    "id": 5,
+                    "name": "sink",
+                    "data": {
+                        "age_installed": "8",
+                        "installed_capacity": "7",
+                        "capex_fix": "7",
+                        "capex_var": "6",
+                        "opex_fix": "8",
+                        "opex_var": "9",
+                        "lifetime": "6"
+                    },
+                    "class": "sink",
+                    "html": "Sink\n",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {},
+                    "pos_x": 1007,
+                    "pos_y": 101
+                }
+            }
+        }
     }
+};
+        editor.start();
+
+        /* Mouse and Touch Actions */
+        var elements = document.getElementsByClassName('drag-drawflow');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener('touchend', drop, false);
+            elements[i].addEventListener('touchmove', positionMobile, false);
+            elements[i].addEventListener('touchstart', drag, false );
+        }
+
+        var mobile_item_selec = '';
+        var mobile_last_move = null;
+        function positionMobile(ev) {
+            mobile_last_move = event;
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            if (ev.type === "touchstart") {
+                mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
+            } else {
+                ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
+            }
+        }
+
+        function drop(ev) {
+            if (ev.type === "touchend") {
+                var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
+                if(parentdrawflow != null) {
+                    addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
+                }
+                mobile_item_selec = '';
+            } else {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("node");
+                addNodeToDrawFlow(data, ev.clientX, ev.clientY);
+            }
+
+        }
 
 
-    //#region Alternative Item Creation Method
+        function addNodeToDrawFlow(name, pos_x, pos_y) {
+            if(editor.editor_mode === 'fixed') {
+                return false;
+            }
+            pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+            pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
-    var data = { "name": 'THENAME' };
-    var html = document.createElement("div");
-    html.className = 'title-box';
-    html.innerHTML = `
-              <div class="title-box"><i class="fas fa-code"></i><span>Transformer</span></div>
-              <div class="box"><input df-template></input></div>
-              `;
-    editor.registerNode('test', html);
-    // Use
-    editor.addNode('github', 0, 1, 150, 300, 'github', data, 'test', true);
-    //#endregion
+            switch (name) {
+                case 'sourcethe':
+                    let energy_source_html = `<div>
+                        <div class="title-box">
+                            <img src="/static/images/wind.png" style="max-width: 40%; max-height: 70%"/></i>Energy Source
+                        </div>
+                        <div class="box dbclickbox" ondblclick="showpopup(event)">
+                            Db Click here
+                            <div class="modal" style="display:none">
+                              <div class="modal-content">
+                                <span class="close" onclick="closemodal(event)">&times;</span>
+                                Change your variable {name} !
+                                <input type="text" df-name>
+                              </div>
 
-
-    function addNodeToDrawFlow(name, pos_x, pos_y) {
-      if(editor.editor_mode === 'fixed') {
-        return false;
-      }
-      pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
-      pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-
-      switch (name) {
-        case 'source':
-        var energy_source_html = `<div>
-<div class="title-box">
-    <img src="/static/images/wind.png" style="max-width: 40%; max-height: 70%"/></i>Energy Source
-</div>
-<div class="box dbclickbox" ondblclick="showpopup(event)">
-                Db Click here
-                <div class="modal" style="display:none">
-                  <div class="modal-content">
-                    <span class="close" onclick="closemodal(event)">&times;</span>
-                    Change your variable {name} !
-                    <input type="text" df-name>
-                  </div>
-
-                </div>
-</div>
-</div>`;
-          editor.addNode('source', 0,  1, pos_x, pos_y, 'source', { name: ''}, energy_source_html );
-          break;
-          case 'personalized':
-            var personalized = `
-            <div id="demo" ondblclick="loadCommentTest()">
-              Bus
-            </div>
-            `;
-            editor.addNode('personalized', 1, 1, pos_x, pos_y, 'personalized', {}, personalized );
-            break;
-          case 'transformer':
-            var template = `
+                            </div>
+                        </div>
+                    </div>`;
+                    editor.addNode('sourcethe', 0,  1, pos_x, pos_y, 'sourcethe', { name: ''}, energy_source_html );
+                    break;
+                case 'transfmr':
+                    var template = `
                           <div>
                             <div class="title-box"><i class="fas fa-code"></i><span>Transformer1</span></div>
                             <div class="box"><textarea df-template>Text</textarea>template info</div>
                           </div>
                           `;
-            editor.addNode('template', 1, 1, pos_x, pos_y, 'transformer', { "transformer": 'Write your template'}, template );
-            break;
-            case 'dbclick':
-            var dbclick = `
+                    editor.addNode('template', 1, 1, pos_x, pos_y, 'transfmr', { "transfmr": 'Write your template'}, template );
+                    break;
+                case 'requestModalWithNewDataEachTime':
+                    var dbclick = `
             <div>
             <div class="title-box"><i class="fas fa-mouse"></i> Db Click</div>
               <div class="box clickbox" ondblclick="showcustompopup(event)">
@@ -173,24 +374,77 @@
               </div>
             </div>
             `;
-            editor.addNode('dbclick', 1, 0, pos_x, pos_y, 'dbclick', { name: ''}, dbclick );
-            break;
-        default:
-      }
-    }
+                    editor.addNode('dbclick', 1, 0, pos_x, pos_y, 'dbclick', { name: ''}, dbclick );
+                    break;
+
+                case 'bus':
+                    let mydata = getAssetData('dso');
+                    let bus_html = `<div
+                        class="box" ondblclick="showpopup(event)">Bus
+                        <div class="modal" style="display:none">
+                          <div class="modal-content">
+                            <span class="close" onclick="closemodal(event)">&times;</span>
+                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
+                          </div>
+                        </div>
+                    </div>
+                    `;
+                    editor.addNode('bus', 1, 1, pos_x, pos_y, 'bus', {}, bus_html );
+                    break;
+                case 'source':
+                    getAssetData('pv_plant');
+                    let source_html = `<div
+                        class="box" ondblclick="showpopup(event)">Source
+                        <div class="modal" style="display:none">
+                          <div class="modal-content">
+                            <span class="close" onclick="closemodal(event)">&times;</span>
+                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
+                          </div>
+                        </div>
+                    </div>
+                    `;
+                    editor.addNode('source', 0, 1, pos_x, pos_y, 'source', {}, source_html);
+                    break;
+                case 'sink':
+                    getAssetData('demand');
+                    let sink_html = `<div
+                        class="box" ondblclick="showpopup(event)">Sink
+                        <div class="modal" style="display:none">
+                          <div class="modal-content">
+                            <span class="close" onclick="closemodal(event)">&times;</span>
+                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
+                          </div>
+                        </div>
+                    </div>
+                    `;
+                    editor.addNode('sink', 1, 0, pos_x, pos_y, 'sink', {}, sink_html);
+                    break;
+                case 'transformer':
+                    getAssetData('transformer_station_in');
+                    let transformer_html = `<div
+                        class="box" ondblclick="showpopup(event)">Transformer
+                        <div class="modal" style="display:none">
+                          <div class="modal-content">
+                            <span class="close" onclick="closemodal(event)">&times;</span>
+                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
+                          </div>
+                        </div>
+                    </div>
+                    `;
+                    editor.addNode('transformer', 1, 1, pos_x, pos_y, 'transformer', {}, transformer_html);
+                    break;
+                default:
+            }
+        }
 
 
-
-    var transform = '';
+        var transform = '';
         function showpopup(e) {
             e.target.closest(".drawflow-node").style.zIndex = "9999";
             e.target.children[0].style.display = "block";
             console.log(e.target.children[0]);
-            transform = editor.precanvas.style.transform;
-            editor.precanvas.style.transform = '';
             editor.precanvas.style.left = editor.canvas_x +'px';
             editor.precanvas.style.top = editor.canvas_y +'px';
-            console.log(transform);
 
             editor.editor_mode = "fixed";
         }
@@ -198,8 +452,6 @@
         function closemodal(e) {
             e.target.closest(".drawflow-node").style.zIndex = "2";
             e.target.parentElement.parentElement.style.display  ="none";
-            //document.getElementById("modalfix").style.display = "none";
-            editor.precanvas.style.transform = transform;
             editor.precanvas.style.left = '0px';
             editor.precanvas.style.top = '0px';
             editor.editor_mode = "edit";
@@ -207,45 +459,28 @@
 
 
         function showcustompopup(e) {
-        //modalData holds id of html form
-        var modalDiv = $("#modal-div");
-        var modalName = $(".open-modal").data("modal")
+            //modalData holds id of html form
+            var modalDiv = $("#modal-div");
+            var modalName = $(".open-modal").data("modal")
 
 
-        $(".open-modal").on("click", function () {
-            console.log("CLICKED!")
-            $.ajax({
-                url: "{% url 'scenario_create' %}",
-                success: function (data) {
-                    modalDiv.html(data);
+            $(".open-modal").on("click", function () {
+                console.log("CLICKED!")
+                $.ajax({
+                    url: "{% url 'scenario_create' %}",
+                    success: function (data) {
+                        modalDiv.html(data);
 
-                    const inputs = document.getElementById('CreateScenarioModal').getElementsByTagName('input');
-                    for (const [key, value] of Object.entries(inputs)) {
-                        console.log(key, value);
+                        const inputs = document.getElementById('CreateScenarioModal').getElementsByTagName('input');
+                        for (const [key, value] of Object.entries(inputs)) {
+                            console.log(key, value);
+                        }
+                        $('#' + modalName).modal();
                     }
-                    $('#' + modalName).modal();
-                }
+                });
             });
-        });
         }
 
-
-    function loadCommentTest() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("demo").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("GET", "{% url 'comment_create' %}", true);
-        xhttp.send();
-    }
-
-
-///////////////////////////////////////////////
-
-
-  </script>
-
+    </script>
 
 {% endblock end_body_scripts %}

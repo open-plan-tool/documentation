@@ -215,10 +215,10 @@ cursor: pointer;
   padding: 10px 20px 20px 20px;
   font-size: 14px;
   color: #555555;
-
 }
+
 .drawflow-node .box p {
-  margin-top: 5px;
+  margin-top: 50px;
   margin-bottom: 5px;
 }
 
@@ -245,25 +245,109 @@ cursor: pointer;
 }
 
 
-.drawflow-node.personalized {
+/* <editor-fold desc="region Bus Region"> */
+.drawflow-node.bus {
   background: grey;
   height: 150px;
   width: 50px;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
   color: white;
 }
-.drawflow-node.personalized .input {
+.drawflow-node.bus .input {
   background: green;
 }
 
-.drawflow-node.personalized .output {
+.drawflow-node.bus .output {
   background: red;
 }
 
-.drawflow-node.personalized.selected {
+.drawflow-node.bus.selected {
   background: grey;
 }
+/*</editor-fold> */
+
+
+/* <editor-fold desc="Sink Region"> */
+.drawflow-node.sink {
+  border-bottom: 50px solid #4dc3ff;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+  width: 125px;
+  background: transparent;
+  text-align: left;
+}
+.drawflow-node.sink .input {
+  background: green;
+}
+
+.drawflow-node.sink .output {
+  background: red;
+}
+
+.drawflow-node.sink.selected {
+  border-bottom: 50px solid #4dc3ff;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+  width: 125px;
+  background: transparent;
+  text-align: left;
+}
+/*</editor-fold> */
+
+
+/* <editor-fold desc="Source Region"> */
+.drawflow-node.source {
+  border-top: 50px solid #00e600;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+  width: 125px;
+  background: transparent;
+  text-align: left;
+}
+.drawflow-node.source .input {
+  background: green;
+}
+
+.drawflow-node.source .output {
+  background: red;
+}
+
+.drawflow-node.source.selected {
+  border-top: 50px solid #00e600;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  height: 0;
+  width: 125px;
+  background: transparent;
+  text-align: left;
+}
+/*</editor-fold> */
+
+
+/* <editor-fold desc="Transformer Region"> */
+.drawflow-node.transformer {
+  height: 50px;
+  width: 100px;
+  background-color: #ffb84d;
+  text-align: left;
+}
+.drawflow-node.transformer .input {
+  background: green;
+}
+
+.drawflow-node.transformer .output {
+  background: red;
+}
+
+.drawflow-node.transformer.selected {
+  background-color: #ffb84d;
+}
+/*</editor-fold> */
+
 
 .drawflow .connection .point {
   stroke: var(--border-color);
@@ -298,7 +382,7 @@ cursor: pointer;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 400px; /* Could be more or less, depending on screen size */
+  width: 20vw; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */

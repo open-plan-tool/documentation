@@ -137,3 +137,13 @@ class ScenarioUpdateForm(ModelForm):
     class Meta:
         model = Scenario
         exclude = ['id', 'project']
+
+
+class AssetCreateForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(AssetCreateForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Asset
+        exclude = ['scenario']

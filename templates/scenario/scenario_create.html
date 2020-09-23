@@ -33,11 +33,23 @@
 </script>
 
 <script>
+  /*
+    function getFormData($form){
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+    return indexed_array;
+    }
+*/
 
     var form_id = $("#CreateScenarioForm");
 
     form_id.on('submit', function (event) {
         event.preventDefault();
+        console.log(getFormData(form_id));
         console.log("form submitted!")  // sanity check
         create_scenario();
     });
@@ -85,6 +97,17 @@
         location.reload();
 
     });
+
+    function getFormData($form) {
+        var unindexed_array = $form.serializeArray();
+        var indexed_array = {};
+
+        $.map(unindexed_array, function (n, i) {
+            indexed_array[n['name']] = n['value'];
+        });
+
+        return indexed_array;
+    }
 
     {#// AJAX for posting#}
     {#function create_scenario() {#}

@@ -7,16 +7,36 @@
 
     <div class="progress-bar-wrapper"></div>
 
-    <div class="input-panel">
-        <a class="btn btn-primary btn-lg open-modal" data-modal="CreateScenarioModal">
-            Add New Asset
-        </a>
+    <div class="form-row">
+        <div class="form-group col-md-2 mb-0">
+            <label for="VectorSelect">Energy Vector:</label>
+            <select class="form-control" id="VectorSelect">
+                <option disabled selected value>Choose...</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2 mb-0">
+            <label for="CategorySelect">Asset Category:</label>
+            <select class="form-control" id="CategorySelect">
+                <option disabled selected value>Choose...</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2 mb-0">
+            <label for="AssetSelect">Asset type:</label>
+            <select class="form-control" id="AssetSelect">
+                <option disabled selected value>Choose...</option>
+            </select>
+        </div>
+        <div class="input-panel">
+            <a class="btn btn-primary btn-lg open-modal" data-modal="CreateAssetModal">
+                Add Asset
+            </a>
+        </div>
     </div>
 
     <div class="input-panel" >
         <a href="{% url 'new_asset_create' 'PVInverter' %}" name="test1" class="btn btn-primary btn-lg" role="button">Create New PV Inverter Asset</a>
-    <a href="{% url 'new_asset_create' 'PVPlant' %}" name="test1" class="btn btn-primary btn-lg" role="button">Create New PV Inverter Asset</a>
-    <a href="{% url 'new_assets_topology' %}" name="test2" class="btn btn-primary btn-lg" role="button">Create New Topology</a>
+        <a href="{% url 'new_asset_create' 'PVPlant' %}" name="test1" class="btn btn-primary btn-lg" role="button">Create New PV Inverter Asset</a>
+        <a href="{% url 'new_assets_topology' %}" name="test2" class="btn btn-primary btn-lg" role="button">Create New Topology</a>
     </div>
 
     {% if messages %}
@@ -45,33 +65,67 @@
         <div class="panel-heading"><h3 class="panel-title"><strong>Asset List </strong></h3></div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="AssetTable" class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
+                        <th>&emsp;&emsp;</th>
                         <th>Name</th>
-                        <th>Energy Vector</th>
-                        <th>Asset Type</th>
+                        <th>Capex_fix</th>
+                        <th>Capex_var</th>
+                        <th>Opex_fix</th>
+                        <th>Opex_var</th>
+                        <th>lifetime</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for asset in asset_list %}
-                        <tr>
-                            <td class="text"><span>{{ asset.name }}</span></td>
-                            <td class="text"><span>Electricity</span></td>
-                            <td class="text"><span>Electricity</span></td>
-
+                        <tr class="table-row">
                             <td>
-                                <input style="float: left; margin: 5px;" class="btn btn-sm btn-default open-modal"
-                                       type="submit"
-                                       value="Edit" data-modal="UpdateCommentForm"
-                                       data-url="{% url 'scenario_update' scenario.pk %}"/>
-                                <form style="float: left;" class="form" action="{% url 'scenario_delete' scenario.pk %}"
-                                      method="POST">
-                                    {% csrf_token %}
-                                    <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
-                                           type="submit" value="Delete"
-                                           onclick="return confirm('Are you sure you want to delete?')"/>
-                                </form>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="asset_check"
+                                               value="{{ asset.pk }}"/></label>
+                                </div>
+                            </td>
+                            <td class="text"><span>{{ asset.name }}</span></td>
+                            <td class="text"><span>{{ asset.capex_fix }}</span></td>
+                            <td class="text"><span>{{ asset.capex_var }}</span></td>
+                            <td class="text"><span>{{ asset.opex_fix }}</span></td>
+                            <td class="text"><span>{{ asset.opex_var }}</span></td>
+                            <td class="text"><span>{{ asset.lifetime }}</span></td>
+                            <td>
+
+
+                                <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
+                                    <a href="#" id="dropdownMenuButton" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog" style="font-size: 120%"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="1" href="#">
+                                                <span class="glyphicon glyphicon-edit open-modal"
+                                                      type="submit"
+                                                      value="Edit" data-modal="UpdateCommentForm"></span>
+                                                {#                                                      data-url="{% url 'asset_update' asset.pk %}"> Edit</span>#}
+                                            </a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="-1" href="#">
+                                                {#                                                <form style="float: left;" class="form" action="{% url 'asset_delete' asset.pk %}"#}
+                                                method="POST">
+                                                {% csrf_token %}
+                                                <label style="float: left;  margin: 5px;">
+                                                    <span class="glyphicon glyphicon-trash"> Delete</span>
+                                                    <input style="display: none" class="btn btn-sm btn-danger"
+                                                           type="submit" value="Delete"
+                                                           onclick="return confirm('Are you sure you want to delete?')"/>
+                                                </label>
+                                                </form>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </td>
                         </tr>
                     {% endfor %}
@@ -81,14 +135,17 @@
         </div>
     </div>
 
-
+    <div class="input-panel">
+        <form style="float: right;" id="AssetSelect" class="form"
+              method="GET">
+            <input style="float: left;  margin: 5px;" class="btn btn-lg btn-primary"
+                   type="submit" value="Next"/>
+        </form>
     </div>
 
 
     <!-- Here we create this empty div for inserting modal -->
     <div id="modal-div"></div>
-
-
 
 
     <script>
@@ -97,34 +154,144 @@
         ProgressBar.init(
             ['Create Project',
                 'Add Comments',
-                'Create Scenario',
+                'Create Asset',
                 'Add Assets',
                 'Run Simulation',
             ],
-            'Create Scenario',
+            'Create Asset',
             'progress-bar-wrapper' // created this optional parameter for container name (otherwise default container created)
         );
 
     </script>
 
+    <!-- Populate dropdown list -->
     <script>
+        var assetTypeList = {{ asset_type_list | safe}}
+
+        var energyVectorDropdown = $("#VectorSelect");
+        var assetCategoryDropdown = $("#CategorySelect");
+        var assetTypeDropdown = $("#AssetSelect");
+
+        var energyVectorValues = [];
+        var assetCategoryValues = [];
+
+        $.each(assetTypeList, function () {
+            energyVectorValues.push(this.energy_vector);
+            assetCategoryValues.push(this.asset_category);
+        });
+
+        //Append only unique values
+        $.each($.unique(energyVectorValues), function () {
+            energyVectorDropdown.append($("<option />").val(this).text(this));
+        });
+
+        $.each($.unique(assetCategoryValues), function () {
+            assetCategoryDropdown.append($("<option />").val(this).text(this));
+        });
+
+        assetCategoryDropdown.change(function () {
+            var assetTypeValues = $.grep(assetTypeList, function (v) {
+                return v.energy_vector === energyVectorDropdown.val() && v.asset_category === assetCategoryDropdown.val();
+            });
+
+
+            $.each(assetTypeValues, function () {
+                assetTypeDropdown.append($("<option />").val(assetTypeValues.asset_type).text(this.asset_type));
+            });
+
+        });
+    </script>
+
+    <script>
+
+
         //modalData holds id of html form
         var modalDiv = $("#modal-div");
         var modalName = $(".open-modal").data("modal")
 
-
+        //Serve asset_create view through ajax
         $(".open-modal").on("click", function () {
+            var assetType = $('#AssetSelect option:selected').text();
+            console.log(assetType);
+
             $.ajax({
-                url: "{% url 'scenario_create' %}",
+                url: "/asset/create/" + assetType,
                 success: function (data) {
                     modalDiv.html(data);
                     $('#' + modalName).modal();
                 }
             });
         });
+    </script>
 
+    <script>
+
+        $('#AssetTable').on('click', '.asset_check', function (event) {
+            console.log("CLICKED!")
+            if ($('.table-row').hasClass('active')) {
+                $('.table-row').removeClass('active');
+            } else {
+                $('.table-row').addClass('active').siblings().removeClass('active');
+            }
+        });
+
+
+        $('.asset_check').click(function () {
+            assetId = $(this).val();
+            $('#AssetSelect').attr("action", "/asset/search/" + assetId);
+            $('.asset_check').not(this).prop('checked', false);
+            console.log(assetId + " checked!")  // sanity check
+
+        });
+
+        $('#AssetSelect').on('submit', function (event) {
+            console.log("form submitted!")  // sanity check
+            if ($('.asset_check').is(':checked')) {
+                if (confirm("Are you sure you want to proceed?")) {
+                } else {
+                    event.preventDefault();
+                }
+            } else {
+                alert("You must select a asset to proceed!");
+                event.preventDefault();
+            }
+        });
 
 
     </script>
+
+    <script>
+
+        (function () {
+            var dropdownMenu;
+
+            // and when you show it, move it to the body
+            $(window).on('show.bs.dropdown', function (e) {
+
+                // grab the menu
+                dropdownMenu = $(e.target).find('.dropdown-menu');
+
+                // detach it and append it to the body
+                $('body').append(dropdownMenu.detach());
+
+                // grab the new offset position
+                var eOffset = $(e.target).offset();
+
+                // make sure to place it where it would normally go (this could be improved)
+                dropdownMenu.css({
+                    'display': 'block',
+                    'top': eOffset.top + $(e.target).outerHeight(),
+                    'left': eOffset.left
+                });
+            });
+
+            // and when you hide it, reattach the drop down, and hide it normally
+            $(window).on('hide.bs.dropdown', function (e) {
+                $(e.target).append(dropdownMenu.detach());
+                dropdownMenu.hide();
+            });
+        })();
+    </script>
+
 
 {% endblock %}

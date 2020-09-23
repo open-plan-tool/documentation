@@ -26,4 +26,7 @@ urlpatterns = [
     path('asset/create/?P<my_asset>', AssetCreateView.as_view(), name='new_asset_create'),
     path('asset/assets_topology', asset_topology_create, name='new_assets_topology'),
 
+    path('asset/create/<str:asset_type_name>', asset_create, name='asset_create'),
+    path('asset/create_post/', asset_create_post, name='asset_create_post'),
+
 ]
