@@ -399,3 +399,31 @@ cursor: pointer;
     width: 80%;
   }
 }
+
+
+
+/* Make inputs to the top */
+.drawflow .parent-node .custom-node-1 .inputs {
+  position: absolute;
+  top: -10px;
+  padding-left: 50%;
+}
+/* Make outputs to the bottom */
+.drawflow .parent-node .custom-node-2 .outputs {
+  position: absolute;
+  bottom: -10px;
+  padding-left: 50%;
+}
+/* Make inputs to the right */
+.drawflow .parent-node .custom-node-3 .inputs {
+  position: absolute;
+  right: 0px;
+}
+/* Make outputs to the left */
+.drawflow .parent-node .custom-node-4 .outputs {
+  position: absolute;
+  left: 0px;
+}
+
+
+

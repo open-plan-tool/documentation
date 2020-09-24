@@ -9,30 +9,85 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#accordion" ).accordion();
+        } );
+    </script>
 {% endblock start_body_scripts %}
 
 {% block topology %}
     <div class="wrapper">
 
-        <div class="col">
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="source">
-                <i class="fas fa-sun"></i><span> Source </span>
+        <div id="accordion" class="col">
+            <h3>Energy Production</h3>
+            <div style="padding: 0px; margin: 0px; height: fit-content;">
+                <div class="drag-drawflow source" draggable="true" ondragstart="drag(event)" data-node="dso_consumption">
+                    <i class="fas fa-plug"></i><span> DSO Consumption </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="pv_plant">
+                    <i class="fas fa-solar-panel"></i><span> PV Plant </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="wind_plant">
+                    <i class="fas fa-wind"></i><span> Wind Plant </span>
+                </div>
             </div>
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer">
-                <i class="fas fa-arrow-up"></i><i class="fas fa-arrow-down"></i><span> Transformer </span>
+            <h3>Energy Conversion</h3>
+            <div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_in">
+                    <i class="fas fa-arrow-left"></i><span> Transformer Station In </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_out">
+                    <i class="fas fa-arrow-right"></i><span> Transformer Station Out </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_charge_controller_in">
+                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-left"></i><span> Storage Charge Controller In </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_charge_controller_out">
+                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-right"></i><span> Storage Charge Controller Out </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="solar_inverter">
+                    <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span> Solar Inverter </span>
+                </div>
             </div>
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="sink">
-                <i class="fas fa-industry"></i><span> Sink </span>
+            <h3>Energy Storage</h3>
+            <div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="charging_power">
+                    <i class="fas fa-battery-three-quarters"></i><span> Charging Power </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="discharging_power">
+                    <i class="fas fa-battery-quarter"></i><span> Discharging Power </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="capacity">
+                    <i class="fas fa-battery-full"></i><span> Capacity </span>
+                </div>
             </div>
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
-                <i class="fas fa-grip-lines"></i><span> Bus </span>
+            <h3>Energy Consumption</h3>
+            <div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="electricity_excess">
+                    <i class="fas fa-fire"></i><span> Electricity Excess </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso_feedin">
+                    <i class="fas fa-plug"></i><span> DSO Feedin </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="demand">
+                    <i class="fas fa-lightbulb"></i><span> Demand </span>
+                </div>
             </div>
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="sourcethe">
-                <i class="fas fa-wind"></i><span>Energy Source</span>
+            <h3>Energy Provider</h3>
+            <div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
+                    <i class="fas fa-grip-lines"></i><span> Bus </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso">
+                    <i class="fas fa-grip-lines"></i><span> dso </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="requestModalWithNewDataEachTime">
+                    <i class="fas fa-grip-lines"></i><span> Request from DB Test </span>
+                </div>
             </div>
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transfmr">
-                <i class="fas fa-code"></i><span> Template </span>
-            </div>
+
         </div>
 
         <div class="col-center">
@@ -45,7 +100,7 @@
                     Export
                 </div>
                 <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
-                <div id="modal-div" style="z-index: 9999;"></div>
+                <div id="modal-div"></div>
             </div>
         </div>
 
@@ -66,7 +121,7 @@
         // For the creation procedure ids with names #modalDataId{0,1,2,3} are created.
         window.uniqueIdIncrementor = 0;
 
-        let addInputAttributes = function (str) {
+        function addInputAttributes(str) {
             const parser = new DOMParser();
             let doc = parser.parseFromString(str, 'text/html');
 
@@ -82,13 +137,27 @@
 
         function getAssetData(asset_type_name) {
             $.get('create/' + asset_type_name, function(data){
-                // get only the html form part of the page.
                 let myData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
                 data2Html = addInputAttributes(myData);
-                //return data2Html;
                 $(`#modalDataId${uniqueIdIncrementor-1}`).html(data2Html);
                 });
         }
+
+        function createNewAssetObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
+            getAssetData(asset_type_name);
+            let source_html = `<div
+                class="box" ondblclick="showpopup(event)">${nodeName}
+                <div class="modal" style="display:none">
+                  <div class="modal-content">
+                    <span class="close" onclick="closemodal(event)">&times;</span>
+                    <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
+                  </div>
+                </div>
+            </div>
+            `;
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, source_html);
+        }
+
     </script>
 
 
@@ -97,187 +166,7 @@
         var id = document.getElementById("drawflow");
         const editor = new Drawflow(id);
         editor.reroute = true;
-        editor.drawflow = {
-    "drawflow": {
-        "Home": {
-            "data": {
-                "1": {
-                    "id": 1,
-                    "name": "source",
-                    "data": {
-                        "installed_capacity": "7",
-                        "capex_fix": "7",
-                        "capex_var": "7",
-                        "opex_fix": "7",
-                        "opex_var": "7",
-                        "lifetime": "7",
-                        "age_installed": "3"
-                    },
-                    "class": "source",
-                    "html": "Source\n",
-                    "typenode": false,
-                    "inputs": {},
-                    "outputs": {
-                        "output_1": {
-                            "connections": [
-                                {
-                                    "node": "2",
-                                    "output": "input_1"
-                                }
-                            ]
-                        }
-                    },
-                    "pos_x": 285,
-                    "pos_y": 149
-                },
-                "2": {
-                    "id": 2,
-                    "name": "transformer",
-                    "data": {
-                        "age_installed": "3",
-                        "installed_capacity": "3",
-                        "capex_fix": "3",
-                        "capex_var": "3",
-                        "opex_fix": "3",
-                        "opex_var": "22",
-                        "lifetime": "2"
-                    },
-                    "class": "transformer",
-                    "html": "Transformer\n",
-                    "typenode": false,
-                    "inputs": {
-                        "input_1": {
-                            "connections": [
-                                {
-                                    "node": "1",
-                                    "input": "output_1"
-                                }
-                            ]
-                        }
-                    },
-                    "outputs": {
-                        "output_1": {
-                            "connections": [
-                                {
-                                    "node": "3",
-                                    "output": "input_1"
-                                }
-                            ]
-                        }
-                    },
-                    "pos_x": 564,
-                    "pos_y": 147
-                },
-                "3": {
-                    "id": 3,
-                    "name": "bus",
-                    "data": {
-                        "age_installed": "3",
-                        "installed_capacity": "3",
-                        "capex_fix": "32",
-                        "capex_var": "23",
-                        "opex_fix": "22",
-                        "opex_var": "22",
-                        "lifetime": "2"
-                    },
-                    "class": "bus",
-                    "html": "Bus\n",
-                    "typenode": false,
-                    "inputs": {
-                        "input_1": {
-                            "connections": [
-                                {
-                                    "node": "2",
-                                    "input": "output_1"
-                                }
-                            ]
-                        }
-                    },
-                    "outputs": {
-                        "output_1": {
-                            "connections": [
-                                {
-                                    "node": "4",
-                                    "output": "input_1"
-                                },
-                                {
-                                    "node": "5",
-                                    "output": "input_1",
-                                    "points": [
-                                        {
-                                            "pos_x": 950,
-                                            "pos_y": 61
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    "pos_x": 841,
-                    "pos_y": 105
-                },
-                "4": {
-                    "id": 4,
-                    "name": "sink",
-                    "data": {
-                        "age_installed": "8",
-                        "installed_capacity": "9",
-                        "capex_fix": "9",
-                        "capex_var": "9",
-                        "opex_fix": "9",
-                        "opex_var": "9",
-                        "lifetime": "9"
-                    },
-                    "class": "sink",
-                    "html": "Sink\n",
-                    "typenode": false,
-                    "inputs": {
-                        "input_1": {
-                            "connections": [
-                                {
-                                    "node": "3",
-                                    "input": "output_1"
-                                }
-                            ]
-                        }
-                    },
-                    "outputs": {},
-                    "pos_x": 1023,
-                    "pos_y": 249
-                },
-                "5": {
-                    "id": 5,
-                    "name": "sink",
-                    "data": {
-                        "age_installed": "8",
-                        "installed_capacity": "7",
-                        "capex_fix": "7",
-                        "capex_var": "6",
-                        "opex_fix": "8",
-                        "opex_var": "9",
-                        "lifetime": "6"
-                    },
-                    "class": "sink",
-                    "html": "Sink\n",
-                    "typenode": false,
-                    "inputs": {
-                        "input_1": {
-                            "connections": [
-                                {
-                                    "node": "3",
-                                    "input": "output_1"
-                                }
-                            ]
-                        }
-                    },
-                    "outputs": {},
-                    "pos_x": 1007,
-                    "pos_y": 101
-                }
-            }
-        }
-    }
-};
+        //editor.drawflow = {"drawflow":{"Home":{"data":{"8":{"id":8,"name":"source","data":{"age_installed":"3","installed_capacity":"3","capex_fix":"33","capex_var":"3","opex_fix":"3","opex_var":"3","lifetime":"33"},"class":"source","html":"source\n\n \n ×\n  \n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":250,"pos_y":90},"9":{"id":9,"name":"transformer","data":{"age_installed":"4","installed_capacity":"4","capex_fix":"4","capex_var":"4","opex_fix":"4","opex_var":"4","lifetime":"4"},"class":"transformer","html":"Transformer\n\n\n ×\n\n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"10","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"11","output":"input_1"}]}},"pos_x":699,"pos_y":131},"10":{"id":10,"name":"bus","data":{"age_installed":"22","installed_capacity":"2","capex_fix":"2","capex_var":"2","opex_fix":"2","opex_var":"2","lifetime":"2"},"class":"bus","html":"Bus\n\n\n ×\n\n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"9","output":"input_1"}]}},"pos_x":502,"pos_y":146},"11":{"id":11,"name":"sink","data":{"age_installed":"5","capex_fix":"5","capex_var":"55","installed_capacity":"5","opex_fix":"5","opex_var":"5","lifetime":"5"},"class":"sink","html":"sink\n\n\n ×\n\n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"9","input":"output_1"}]}},"outputs":{"output_1":{"connections":[]}},"pos_x":942,"pos_y":235}}}}};
         editor.start();
 
         /* Mouse and Touch Actions */
@@ -321,6 +210,9 @@
 
         }
 
+        editor.on('nodeCreated', function(id) {
+            console.log("Node created " + id);
+        })
 
         function addNodeToDrawFlow(name, pos_x, pos_y) {
             if(editor.editor_mode === 'fixed') {
@@ -347,7 +239,7 @@
                             </div>
                         </div>
                     </div>`;
-                    editor.addNode('sourcethe', 0,  1, pos_x, pos_y, 'sourcethe', { name: ''}, energy_source_html );
+                    editor.addNode('sourceNodeName', 0,  1, pos_x, pos_y, 'sourcethe', { name: ''}, energy_source_html );
                     break;
                 case 'transfmr':
                     var template = `
@@ -376,69 +268,70 @@
             `;
                     editor.addNode('dbclick', 1, 0, pos_x, pos_y, 'dbclick', { name: ''}, dbclick );
                     break;
-
+                //<editor-fold desc="Energy Production">
+                case 'dso_consumption':
+                    createNewAssetObject('source', 1, 1, 'dso_consumption', pos_x, pos_y);
+                    break;
+                case 'pv_plant':
+                    createNewAssetObject('source', 1, 1, 'pv_plant', pos_x, pos_y);
+                    break;
+                case 'wind_plant':
+                    createNewAssetObject('source', 1, 1, 'wind_plant', pos_x, pos_y);
+                    break;
+                //</editor-fold>
+                //<editor-fold desc="Energy Conversion">
+                case 'transformer_station_in':
+                    createNewAssetObject('transformer', 1, 1, 'transformer_station_in', pos_x, pos_y);
+                    break;
+                case 'transformer_station_out':
+                    createNewAssetObject('transformer', 1, 1, 'transformer_station_out', pos_x, pos_y);
+                    break;
+                case 'storage_charge_controller_in':
+                    createNewAssetObject('transformer', 1, 1, 'storage_charge_controller_in', pos_x, pos_y);
+                    break;
+                case 'storage_charge_controller_out':
+                    createNewAssetObject('transformer', 1, 1, 'storage_charge_controller_out', pos_x, pos_y);
+                    break;
+                case 'solar_inverter':
+                    createNewAssetObject('transformer', 1, 1, 'solar_inverter', pos_x, pos_y);
+                    break;
+                //</editor-fold>
+                //<editor-fold desc="Energy Storage">
+                case 'charging_power':
+                    createNewAssetObject('transformer', 1, 1, 'charging_power', pos_x, pos_y);
+                    break;
+                case 'discharging_power':
+                    createNewAssetObject('transformer', 1, 1, 'discharging_power', pos_x, pos_y);
+                    break;
+                case 'capacity':
+                    createNewAssetObject('transformer', 1, 1, 'capacity', pos_x, pos_y);
+                    break;
+                //</editor-fold>
+                //<editor-fold desc="Energy Consumption">
+                case 'electricity_excess':
+                    createNewAssetObject('sink', 1, 1, 'electricity_excess', pos_x, pos_y);
+                    break;
+                case 'dso_feedin':
+                    createNewAssetObject('sink', 1, 1, 'dso_feedin', pos_x, pos_y);
+                    break;
+                case 'demand':
+                    createNewAssetObject('sink', 1, 1, 'demand', pos_x, pos_y);
+                    break;
+                //</editor-fold>
+                //<editor-fold desc="Energy Provider">
                 case 'bus':
-                    let mydata = getAssetData('dso');
-                    let bus_html = `<div
-                        class="box" ondblclick="showpopup(event)">Bus
-                        <div class="modal" style="display:none">
-                          <div class="modal-content">
-                            <span class="close" onclick="closemodal(event)">&times;</span>
-                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
-                          </div>
-                        </div>
-                    </div>
-                    `;
-                    editor.addNode('bus', 1, 1, pos_x, pos_y, 'bus', {}, bus_html );
+                    createNewAssetObject('bus', 1, 1, 'dso', pos_x, pos_y);
                     break;
-                case 'source':
-                    getAssetData('pv_plant');
-                    let source_html = `<div
-                        class="box" ondblclick="showpopup(event)">Source
-                        <div class="modal" style="display:none">
-                          <div class="modal-content">
-                            <span class="close" onclick="closemodal(event)">&times;</span>
-                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
-                          </div>
-                        </div>
-                    </div>
-                    `;
-                    editor.addNode('source', 0, 1, pos_x, pos_y, 'source', {}, source_html);
+                case 'dso':
+                    createNewAssetObject('dso', 1, 1, 'dso', pos_x, pos_y);
                     break;
-                case 'sink':
-                    getAssetData('demand');
-                    let sink_html = `<div
-                        class="box" ondblclick="showpopup(event)">Sink
-                        <div class="modal" style="display:none">
-                          <div class="modal-content">
-                            <span class="close" onclick="closemodal(event)">&times;</span>
-                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
-                          </div>
-                        </div>
-                    </div>
-                    `;
-                    editor.addNode('sink', 1, 0, pos_x, pos_y, 'sink', {}, sink_html);
-                    break;
-                case 'transformer':
-                    getAssetData('transformer_station_in');
-                    let transformer_html = `<div
-                        class="box" ondblclick="showpopup(event)">Transformer
-                        <div class="modal" style="display:none">
-                          <div class="modal-content">
-                            <span class="close" onclick="closemodal(event)">&times;</span>
-                            <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
-                          </div>
-                        </div>
-                    </div>
-                    `;
-                    editor.addNode('transformer', 1, 1, pos_x, pos_y, 'transformer', {}, transformer_html);
-                    break;
+                //</editor-fold>
                 default:
             }
         }
 
 
-        var transform = '';
+        let transform = '';
         function showpopup(e) {
             e.target.closest(".drawflow-node").style.zIndex = "9999";
             e.target.children[0].style.display = "block";

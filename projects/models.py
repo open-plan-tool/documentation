@@ -165,6 +165,8 @@ class Asset(models.Model):
     dispatchable = models.BooleanField(null=True, default=False)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=True)
+    pos_x = models.FloatField()
+    pos_y = models.FloatField()
 
 
 class ElectricityAsset(models.Model):
