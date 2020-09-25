@@ -117,11 +117,32 @@
 {% block end_body_scripts %}
 
     <script>
-    // Define a uniqueIdIncrementor to keep track of the created object modals in the window.
+        $(".btn-export").click(function(){
+            $.ajax({
+                headers: {'X-CSRFToken': '{{ csrf_token }}' },
+                type: "POST",
+                url: "{% url 'asset_topology_create_post' %}",
+                data: JSON.stringify(editor.export()),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function(data,status){alert(data + ' ' + status);},
+                failure: function(errMsg) {
+                    alert(errMsg);
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        // Define a uniqueIdIncrementor to keep track of the created object modals in the window.
         // For the creation procedure ids with names #modalDataId{0,1,2,3} are created.
         window.uniqueIdIncrementor = 0;
 
         function addInputAttributes(str) {
+            /* this function loops over all form inputs and adds custom Drawflow attribute.
+            *  It is equivalent to the python snippet added in the AssetForm Creation. */
             const parser = new DOMParser();
             let doc = parser.parseFromString(str, 'text/html');
 
@@ -133,20 +154,19 @@
             });
             const theForm = doc.body.getElementsByTagName("form");
             return theForm;
-        };
+        }
 
         function getAssetData(asset_type_name) {
             $.get('create/' + asset_type_name, function(data){
-                let myData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
-                data2Html = addInputAttributes(myData);
-                $(`#modalDataId${uniqueIdIncrementor-1}`).html(data2Html);
+                let formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
+                //data2Html = addInputAttributes(formData);
+                $(`#modalDataId${uniqueIdIncrementor-1}`).html(formData);
                 });
         }
 
         function createNewAssetObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
             getAssetData(asset_type_name);
-            let source_html = `<div
-                class="box" ondblclick="showpopup(event)">${nodeName}
+            let source_html = `<div class="box" ondblclick="showpopup(event)">
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -157,6 +177,48 @@
             `;
             editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, source_html);
         }
+
+        /* Use this function to create nodes which will contain the full html data (forms included). */
+        // region Alternative Html Injection Implementation
+        /*
+        function createNewAssetObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
+            httpGetAsync(nodeName, connectionInputs, connectionOutputs, asset_type_name, pos_x, pos_y, createNodeDiv);
+        }
+        function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, pos_x, pos_y, innerHtmlData){
+            console.log("innerHtmlData:         " + innerHtmlData);
+            var source_html = `<div class="box" ondblclick="showpopup(event)">
+                <div class="modal" style="display:none">
+                  <div class="modal-content">
+                    <span class="close" onclick="closemodal(event)">&times;</span>
+                    <div id="modalDataId${window.uniqueIdIncrementor++}">${innerHtmlData}</div>
+                  </div>
+                </div>
+            </div>
+            `;
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, source_html);
+            console.log(typeof(source_html));
+            console.log(source_html);
+        }
+
+        function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y, callback)
+        {
+            console.log('Start Get Async');
+            var fullUrl = 'create/' + asset_type_name;
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                    var data = xmlHttp.responseText;
+                    var formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
+                    callback(nodeName, connectionInputs=1, connectionOutputs=1, pos_x, pos_y, formData);
+                }
+            }
+            xmlHttp.open("GET", fullUrl, true); // true for asynchronous
+            xmlHttp.send(null);
+
+            console.log('End Get Async');
+        }
+         */
+        // endregion
 
     </script>
 
@@ -258,7 +320,7 @@
                 Db Click here
 
             <div id="demo" class="input-panel">
-                <a class="btn btn-primary btn-lg open-modal" data-modal="CreateScenarioModal">
+                <a class="btn btn-primary btn-lg open-modal" data-modal="CreateAssetModal">
                     Add Scenario
                 </a>
             </div>
@@ -360,11 +422,11 @@
             $(".open-modal").on("click", function () {
                 console.log("CLICKED!")
                 $.ajax({
-                    url: "{% url 'scenario_create' %}",
+                    url: "{% url 'asset_create' 'pv_plant' %}",
                     success: function (data) {
                         modalDiv.html(data);
 
-                        const inputs = document.getElementById('CreateScenarioModal').getElementsByTagName('input');
+                        const inputs = document.getElementById('CreateAssetModal').getElementsByTagName('input');
                         for (const [key, value] of Object.entries(inputs)) {
                             console.log(key, value);
                         }

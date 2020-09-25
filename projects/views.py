@@ -7,8 +7,7 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, HttpResponseServerError, \
-    JsonResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
 from django.shortcuts import *
 from django.template.context_processors import csrf
 from django.views.decorators.http import require_http_methods
@@ -458,6 +457,21 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 def asset_topology_create(request):
     return render(request, 'asset/create_asset_topology.html')
 
+
+@json_view
+@login_required
+@require_http_methods(["POST"])
+def asset_topology_create_post(request):
+    node_data_list = list()
+    if request.method == "POST" and request.is_ajax():
+        data = json.loads(request.body)['drawflow']['Home']['data']
+        for node in data:
+            del data[node]['html'], data[node]['typenode']
+            node_data_list.append(data[node])
+        print(node_data_list)
+        return JsonResponse({"success": True}, status=200)
+    else:
+        return JsonResponse({"success": False}, status=400)
 
 
 # endregion Asset

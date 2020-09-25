@@ -1,26 +1,10 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Field
 from crispy_forms.layout import Submit
 from django import forms
 from django.forms import ModelForm
 
 from projects.models import *
 
-COUNTRY = (
-    ('', 'Choose...'),
-    ('Norway', 'Norway'),
-    ('Finland', 'Finland'),
-    ('Germany', 'Germany'),
-    ('Italy', 'Italy'),
-)
-
-CURRENCY = (
-    ('', 'Choose...'),
-    ('EUR', 'EUR'),
-    ('NOK', 'NOK'),
-    ('USD', 'USD'),
-    ('GBP', 'GBP'),
-)
 
 
 class ProjectDetailForm(ModelForm):
@@ -143,6 +127,14 @@ class AssetCreateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AssetCreateForm, self).__init__(*args, **kwargs)
+        ''' DrawFlow specific configuration, add a special attribute to 
+            every field in order for the framework to be able to export
+            the data to json.
+            !! This addition doesn't affect the previous behavior !!
+        '''
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({f'df-{field}': ''})
+        ''' ----------------------------------------------------- '''
 
     class Meta:
         model = Asset
