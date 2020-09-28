@@ -117,11 +117,12 @@
 {% block end_body_scripts %}
 
     <script>
+        /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function(){
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}' },
                 type: "POST",
-                url: "{% url 'asset_topology_create_post' %}",
+                url: "{% url 'new_assets_topology' %}",
                 data: JSON.stringify(editor.export()),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -165,8 +166,33 @@
         }
 
         function createNewAssetObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
-            getAssetData(asset_type_name);
-            let source_html = `<div class="box" ondblclick="showpopup(event)">
+            if (nodeName === 'bus'){
+                let html = `<div class="box" ondblclick="showpopup(event)">
+                <div class="modal" style="display:none">
+                  <div class="modal-content">
+                    <span class="close" onclick="closemodal(event)">&times;</span>
+                    <div>
+                        <label for="name">Name: </label>
+                        <input id="name" type="text" df-name>
+                    </div>
+                    <div>
+                        <label for="bustype">Bus Type: </label>
+                        <select id="bustype" df-bustype>
+                            <option value="" selected disabled hidden>Choose Type...</option>
+                            <option value="bus_electricity">Electricity Bus</option>
+                            <option value="bus_heat">Heat Bus</option>
+                            <option value="bus_gas">Gas Bus</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            `;
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, html);
+            }
+            else {
+                getAssetData(asset_type_name);
+                let html = `<div class="box" ondblclick="showpopup(event)">
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -175,7 +201,8 @@
                 </div>
             </div>
             `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, source_html);
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, html);
+            }
         }
 
         /* Use this function to create nodes which will contain the full html data (forms included). */
@@ -272,9 +299,16 @@
 
         }
 
-        editor.on('nodeCreated', function(id) {
-            console.log("Node created " + id);
+        // Disallow Any Connection to be created without a bus.
+        editor.on('connectionCreated', function(connection) {
+            var nodeIn = editor.getNodeFromId(connection['input_id']);
+            var nodeOut = editor.getNodeFromId(connection['output_id']);
+            if ((nodeIn['name'] !== 'bus' && nodeOut['name'] !== 'bus') || (nodeIn['name'] === 'bus' && nodeOut['name'] === 'bus')) {
+                editor.removeSingleConnection(connection['output_id'],connection['input_id'],connection['output_class'],connection['input_class']);
+                Swal.fire('Unexpected Connection', 'Please connect assets to each other\n only through a bus node. Interconnecting busses is also not allowed.', 'error')
+            }
         })
+
 
         function addNodeToDrawFlow(name, pos_x, pos_y) {
             if(editor.editor_mode === 'fixed') {
@@ -283,6 +317,8 @@
             pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
             pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
+            createNewAssetObject(name, 1, 1, name, pos_x, pos_y);
+            /*
             switch (name) {
                 case 'sourcethe':
                     let energy_source_html = `<div>
@@ -332,18 +368,18 @@
                     break;
                 //<editor-fold desc="Energy Production">
                 case 'dso_consumption':
-                    createNewAssetObject('source', 1, 1, 'dso_consumption', pos_x, pos_y);
+                    createNewAssetObject('dso_consumption', 1, 1, 'dso_consumption', pos_x, pos_y);
                     break;
                 case 'pv_plant':
-                    createNewAssetObject('source', 1, 1, 'pv_plant', pos_x, pos_y);
+                    createNewAssetObject('pv_plant', 1, 1, 'pv_plant', pos_x, pos_y);
                     break;
                 case 'wind_plant':
-                    createNewAssetObject('source', 1, 1, 'wind_plant', pos_x, pos_y);
+                    createNewAssetObject('wind_plant', 1, 1, 'wind_plant', pos_x, pos_y);
                     break;
                 //</editor-fold>
                 //<editor-fold desc="Energy Conversion">
                 case 'transformer_station_in':
-                    createNewAssetObject('transformer', 1, 1, 'transformer_station_in', pos_x, pos_y);
+                    createNewAssetObject('transformer_station_in', 1, 1, 'transformer_station_in', pos_x, pos_y);
                     break;
                 case 'transformer_station_out':
                     createNewAssetObject('transformer', 1, 1, 'transformer_station_out', pos_x, pos_y);
@@ -390,6 +426,7 @@
                 //</editor-fold>
                 default:
             }
+             */
         }
 
 

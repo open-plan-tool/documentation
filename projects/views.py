@@ -364,7 +364,7 @@ def asset_create(request, asset_type_name):
 
     # Remove form fields that do not correspond to the model
     for field in form_fields:
-        if field not in asset_type.asset_fields.split(','):
+        if field not in asset_type.asset_fields:
             form.fields.pop(field)
 
     return render(request, 'asset/asset_create_form.html', {'form': form})
@@ -381,7 +381,7 @@ def asset_create_post(request):
 
     # Remove form fields that do not correspond to the model
     for field in form_fields:
-        if field not in asset_type.asset_fields.split(','):
+        if field not in asset_type.asset_fields:
             form.fields.pop(field)
 
     # check whether it's valid:
@@ -454,24 +454,71 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def asset_topology_create(request):
-    return render(request, 'asset/create_asset_topology.html')
+def scenario_topology_view(request):
+    if request.method == "GET":
+        return render(request, 'asset/create_asset_topology.html')
 
+    elif request.method == "POST" and request.is_ajax():
+        topology = json.loads(request.body)['drawflow']['Home']['data']
+        node_list = list()
+        # get and clear topology data
+        for node in topology:
+            del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
+            node_list.append(NodeObject(topology[node]))
+            print(topology[node])
+        for node_obj in node_list:
+            if node_obj.name == 'bus':
+                node_obj.create_bus(request.session['scenario_id'])
+            else:
+                node_obj.create_asset(request.session['scenario_id'])
 
-@json_view
-@login_required
-@require_http_methods(["POST"])
-def asset_topology_create_post(request):
-    node_data_list = list()
-    if request.method == "POST" and request.is_ajax():
-        data = json.loads(request.body)['drawflow']['Home']['data']
-        for node in data:
-            del data[node]['html'], data[node]['typenode']
-            node_data_list.append(data[node])
-        print(node_data_list)
+            #print(asset.__dict__)
+        #for data_obj, data_obj_value in node_list[1].data.items():
+            #print(data_obj, data_obj_value)
         return JsonResponse({"success": True}, status=200)
     else:
         return JsonResponse({"success": False}, status=400)
+
+
+class NodeObject:
+    def __init__(self, node_data):
+        self.obj_id = node_data['id']
+        self.name = node_data['name']
+        self.data = node_data['data']
+        self.inputs = node_data['inputs']
+        self.outputs = node_data['outputs']
+        self.pos_x = node_data['pos_x']
+        self.pos_y = node_data['pos_y']
+
+    def create_asset(self, scen_id):
+        asset = Asset()
+        for name, value in self.data.items():
+            if name == 'optimize_cap':
+                value = True if value == 'on' else False
+
+            setattr(asset, name, value)
+        setattr(asset, 'pos_x', self.pos_x)
+        setattr(asset, 'pos_y', self.pos_y)
+        asset.scenario = get_object_or_404(Scenario, pk=scen_id)
+        asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
+        asset.save()
+        print("\n\nafter id: {} pk: {}\n\n".format(asset.id, asset.pk))
+
+    def create_bus(self, scen_id):
+        bus = Bus()
+        setattr(bus, 'name', self.data['name'])
+        setattr(bus, 'bustype', self.data['bustype'])
+        setattr(bus, 'pos_x', self.pos_x)
+        setattr(bus, 'pos_y', self.pos_y)
+        bus.scenario = get_object_or_404(Scenario, pk=scen_id)
+        bus.save()
+        print('saved bus %s',self.name)
+
+    #@staticmethod
+    #def _prepare_inputs(data):
+
+
+
 
 
 # endregion Asset

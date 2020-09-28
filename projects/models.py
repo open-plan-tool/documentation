@@ -22,7 +22,6 @@ CURRENCY = (
 )
 
 FLOW_DIRECTION = (
-    ('', 'Choose...'),
     ('In', 'Ingoing'),
     ('Out', 'Outgoing'),
 )
@@ -91,11 +90,13 @@ ASSET_TYPE = (
     ('charging_power', 'charging_power'),
     ('discharging_power', 'discharging_power'),
     ('capacity', 'capacity'),
+)
+
+BUS_TYPE = (
     ('bus_electricity', 'bus_electricity'),
     ('bus_heat', 'bus_heat'),
     ('bus_gas', 'bus_gas'),
 )
-
 
 
 class EconomicData(models.Model):
@@ -153,8 +154,17 @@ class AssetType(models.Model):
     asset_fields = models.TextField(null=True)
 
 
-class Asset(models.Model):
+class TopologyNode(models.Model):
     name = models.CharField(max_length=60)
+    pos_x = models.FloatField(default=0.0)
+    pos_y = models.FloatField(default=0.0)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+
+
+class Asset(TopologyNode):
     age_installed = models.FloatField()
     installed_capacity = models.FloatField()
     capex_fix = models.FloatField()
@@ -162,7 +172,7 @@ class Asset(models.Model):
     opex_fix = models.FloatField()
     opex_var = models.FloatField()
     lifetime = models.IntegerField()
-    optimize_cap = models.BooleanField()
+    optimize_cap = models.BooleanField(null=False, default=False)
     historical_generation_data = models.TextField(null=True)
     crate = models.FloatField(null=True)
     efficiency = models.FloatField(null=True)
@@ -171,20 +181,18 @@ class Asset(models.Model):
     soc_max = models.FloatField(null=True)
     soc_min = models.FloatField(null=True)
     dispatchable = models.BooleanField(null=True, default=False)
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=True)
-    pos_x = models.FloatField(default=0.0, null=True)
-    pos_y = models.FloatField(default=0.0, null=True)
 
 
-class Bus(models.Model):
-    name = models.CharField(max_length=60)
+class Bus(TopologyNode):
+    type = models.CharField(max_length=30, choices=BUS_TYPE, default=BUS_TYPE[0][0])
 
 
 class ClassConnection(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE, null=False)
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=False)
     flow_direction = models.CharField(max_length=10, choices=FLOW_DIRECTION, null=False)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
 
 
 
