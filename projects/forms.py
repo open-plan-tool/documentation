@@ -78,23 +78,8 @@ class ProjectCreateForm(forms.Form):
         self.helper.label_class = 'col-lg-4'
         self.helper.field_class = 'col-lg-8'
 
-        # step 1: Assign id to radio, put 2nd field in a div
-        # self.helper.layout = Layout(
-        #     CustomCheckbox('electricity'),
-        # )
 
-        # self.helper.layout = Layout(
-        #     Field('electricity', template=CustomCheckbox)
-        # )
-
-
-class CommentCreateForm(ModelForm):
-    class Meta:
-        model = Comment
-        exclude = ['id', 'project']
-
-
-class CommentUpdateForm(ModelForm):
+class CommentForm(ModelForm):
     class Meta:
         model = Comment
         exclude = ['id', 'project']
@@ -106,15 +91,6 @@ class ScenarioCreateForm(ModelForm):
     class Meta:
         model = Scenario
         exclude = ['id', 'project']
-
-    # Render form
-    # def __init__(self, *args, **kwargs):
-    #     super(ScenarioCreateForm, self).__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.form_id = 'CreateScenarioForm'
-    #     self.helper.form_method = 'post'
-    #     # self.helper.form_action = 'form_action'
-    #     self.helper.add_input(Submit('submit', 'Create', css_class='btn-success'))
 
 
 class ScenarioUpdateForm(ModelForm):

@@ -160,17 +160,14 @@ def comment_create(request):
     # if this is a POST request we need to process the form data
     if request.POST:
         # create a form instance and populate it with data from the request:
-        form = CommentCreateForm(request.POST)
+        form = CommentForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
             comment = Comment()
-
             comment.name = form.cleaned_data['name']
             comment.body = form.cleaned_data['body']
-
             comment.project = project
-
             comment.save()
 
             # redirect to a new URL:
@@ -178,7 +175,7 @@ def comment_create(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = CommentCreateForm()
+        form = CommentForm()
 
     return render(request, 'comment/comment_create.html', {'form': form})
 
@@ -195,7 +192,7 @@ def comment_update(request, id):
         # if this is a POST request we need to process the form data
     if request.POST:
         # create a form instance and populate it with data from the request:
-        form = CommentUpdateForm(request.POST)
+        form = CommentForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -212,7 +209,7 @@ def comment_update(request, id):
 
         # if a GET (or any other method) we'll create a blank form
     else:
-        form = CommentUpdateForm(instance=comment)
+        form = CommentForm(instance=comment)
 
     return render(request, 'comment/comment_update.html', {'form': form})
 
@@ -296,7 +293,7 @@ def scenario_update(request, id):
         # if this is a POST request we need to process the form data
     if request.POST:
         # create a form instance and populate it with data from the request:
-        form = CommentUpdateForm(request.POST)
+        form = CommentForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -313,7 +310,7 @@ def scenario_update(request, id):
 
         # if a GET (or any other method) we'll create a blank form
     else:
-        form = CommentUpdateForm(instance=comment)
+        form = CommentForm(instance=comment)
 
     return render(request, 'comment/comment_update.html', {'form': form})
 
@@ -466,15 +463,37 @@ def scenario_topology_view(request):
             del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
             node_list.append(NodeObject(topology[node]))
             print(topology[node])
+
+        node_to_db_mapping_dict = dict()
+
         for node_obj in node_list:
             if node_obj.name == 'bus':
                 node_obj.create_bus(request.session['scenario_id'])
             else:
                 node_obj.create_asset(request.session['scenario_id'])
+            node_to_db_mapping_dict[node_obj.obj_id] = {
+                'db_obj_id': node_obj.db_obj_id,
+                'node_type': node_obj.node_obj_type,
+                'output_connections': node_obj.outputs,
+            }
 
-            #print(asset.__dict__)
-        #for data_obj, data_obj_value in node_list[1].data.items():
-            #print(data_obj, data_obj_value)
+        for node_obj in node_list:
+            for output_connection in node_obj.outputs:
+                connection = ConnectionLink()
+                output_node = node_to_db_mapping_dict[int(output_connection)]
+
+                if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
+                    setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
+                    setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
+                    setattr(connection, 'flow_direction', 'B2A')
+                    setattr(connection, 'scenario', get_object_or_404(Scenario, pk=request.session['scenario_id']))
+                elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
+                    setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
+                    setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
+                    setattr(connection, 'flow_direction', 'A2B')
+                    setattr(connection, 'scenario', get_object_or_404(Scenario, pk=request.session['scenario_id']))
+                connection.save()
+
         return JsonResponse({"success": True}, status=200)
     else:
         return JsonResponse({"success": False}, status=400)
@@ -485,24 +504,30 @@ class NodeObject:
         self.obj_id = node_data['id']
         self.name = node_data['name']
         self.data = node_data['data']
-        self.inputs = node_data['inputs']
-        self.outputs = node_data['outputs']
         self.pos_x = node_data['pos_x']
         self.pos_y = node_data['pos_y']
+        self.db_obj_id = None
+        self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
+        self.inputs = node_data['inputs']
+        self.outputs = list()
+
+        for key1 in node_data['outputs'].keys():
+            for key2 in node_data['outputs'][key1]:
+                self.outputs = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
 
     def create_asset(self, scen_id):
         asset = Asset()
         for name, value in self.data.items():
             if name == 'optimize_cap':
                 value = True if value == 'on' else False
-
             setattr(asset, name, value)
+
         setattr(asset, 'pos_x', self.pos_x)
         setattr(asset, 'pos_y', self.pos_y)
         asset.scenario = get_object_or_404(Scenario, pk=scen_id)
         asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
         asset.save()
-        print("\n\nafter id: {} pk: {}\n\n".format(asset.id, asset.pk))
+        self.db_obj_id = asset.id
 
     def create_bus(self, scen_id):
         bus = Bus()
@@ -512,13 +537,7 @@ class NodeObject:
         setattr(bus, 'pos_y', self.pos_y)
         bus.scenario = get_object_or_404(Scenario, pk=scen_id)
         bus.save()
-        print('saved bus %s',self.name)
-
-    #@staticmethod
-    #def _prepare_inputs(data):
-
-
-
+        self.db_obj_id = bus.id
 
 
 # endregion Asset
