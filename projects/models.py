@@ -22,8 +22,8 @@ CURRENCY = (
 )
 
 FLOW_DIRECTION = (
-    ('In', 'Ingoing'),
-    ('Out', 'Outgoing'),
+    ('B2A', 'Bus_to_Asset'),
+    ('A2B', 'Asset_to_Bus'),
 )
 
 ENERGY_VECTOR = (
@@ -185,95 +185,11 @@ class Asset(TopologyNode):
 
 
 class Bus(TopologyNode):
-    type = models.CharField(max_length=30, choices=BUS_TYPE, default=BUS_TYPE[0][0])
+    type = models.CharField(max_length=20, choices=BUS_TYPE)
 
 
-class ClassConnection(models.Model):
+class ConnectionLink(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE, null=False)
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=False)
-    flow_direction = models.CharField(max_length=10, choices=FLOW_DIRECTION, null=False)
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
-
-
-
-
-# region To be deleted.
-
-class ElectricityAsset(models.Model):
-    name = models.CharField(max_length=60)
-    age_installed = models.FloatField()
-    installed_capacity = models.FloatField()
-    capex_fix = models.FloatField()
-    capex_var = models.FloatField()
-    opex_fix = models.FloatField()
-    opex_var = models.FloatField()
-    lifetime = models.IntegerField()
-    optimize_cap = models.BooleanField()
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
-
-
-class PVPlant(ElectricityAsset):
-    historical_generation_data = models.TextField()
-    #asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "PV Plant"
-
-
-class PVInverter(ElectricityAsset):
-    efficiency = models.FloatField()
-    #asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "PV Inverter"
-
-class WindPlant(ElectricityAsset):
-
-    def __str__(self):
-        return "Wind Plant"
-    #asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
-
-
-class ESS(ElectricityAsset):
-
-    def __str__(self):
-        return "Energy Storage System (ESS)"
-    #asset_type = models.ForeignKey(EnergyProduction, on_delete=models.CASCADE)
-
-
-class ChargingPower(ElectricityAsset):
-    crate = models.FloatField()
-    efficiency = models.FloatField()
-    self_discharge = models.FloatField()
-    ess = models.OneToOneField(ESS, on_delete=models.CASCADE, primary_key=True,)
-
-
-class Capacity(ElectricityAsset):
-    efficiency = models.FloatField()
-    soc_initial = models.FloatField()
-    soc_max = models.FloatField()
-    soc_min = models.FloatField()
-    ess = models.OneToOneField(ESS, on_delete=models.CASCADE, primary_key=True,)
-
-
-class DischargingPower(ElectricityAsset):
-    crate = models.FloatField()
-    efficiency = models.FloatField()
-    ess = models.OneToOneField(ESS, on_delete=models.CASCADE, primary_key=True,)
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
-
-
-class ChargeController(ElectricityAsset):
-    efficiency = models.FloatField()
-    ess = models.OneToOneField(ESS, on_delete=models.CASCADE, primary_key=True,)
-    start_date = models.DateTimeField()
-    period = models.IntegerField()
-    time_step = models.IntegerField()
-
-    def __str__(self):
-        return self.name
-
-# endregion
+    flow_direction = models.CharField(max_length=15, choices=FLOW_DIRECTION, null=False)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
