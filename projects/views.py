@@ -7,7 +7,7 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
 from django.shortcuts import *
 from django.template.context_processors import csrf
 from django.views.decorators.http import require_http_methods
@@ -17,6 +17,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
+from django.core import serializers
 
 from .forms import *
 from .models import *
@@ -42,8 +43,6 @@ def project_detail(request, id):
 
     return render(request, 'project/project_detail.html',
                   {'project_form': project_form, 'economic_data_form': economic_data_form})
-
-    template_name = 'project_detail.html'
 
 
 @login_required
@@ -342,21 +341,65 @@ def scenario_delete(request, id):
 @login_required
 @require_http_methods(["GET"])
 def asset_search(request, id):
-    asset_list = []
-
     scenario = get_object_or_404(Scenario, pk=id)
-    '''
-    consumption_asset_list = EnergyConsumption.objects.filter(scenario=scenario)
-    production_asset_list = EnergyProduction.objects.filter(scenario=scenario)
-    conversion_asset_list = EnergyConversion.objects.filter(scenario=scenario)
-    storage_asset_list = EnergyStorage.objects.filter(scenario=scenario)
+    request.session['scenario_id'] = scenario.id
 
-    asset_list.extend(consumption_asset_list)
-    asset_list.extend(production_asset_list)
-    asset_list.extend(conversion_asset_list)
-    asset_list.extend(storage_asset_list)
-    '''
-    return render(request, 'asset_search.html', {'asset_list': asset_list})
+    asset_list = Asset.objects.filter(scenario=scenario)
+
+    asset_type_list = json.dumps(list(AssetType.objects.all().values()), cls=DjangoJSONEncoder)
+
+    return render(request, 'asset_search.html', {'asset_list': asset_list, 'asset_type_list': asset_type_list})
+
+
+@login_required
+@require_http_methods(["GET"])
+def asset_create(request, asset_type_name):
+    form = AssetCreateForm()
+
+    # Retrieve asset type
+    asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)
+    request.session['asset_type_name'] = asset_type_name
+
+    form_fields = list(form.fields)
+
+    # Remove form fields that do not correspond to the model
+    for field in form_fields:
+        if field not in asset_type.asset_fields:
+            form.fields.pop(field)
+
+    return render(request, 'asset/asset_create_form.html', {'form': form})
+
+
+@json_view
+@login_required
+@require_http_methods(["POST"])
+def asset_create_post(request):
+    form = AssetCreateForm(request.POST)
+
+    asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
+    form_fields = list(form.fields)
+
+    # Remove form fields that do not correspond to the model
+    for field in form_fields:
+        if field not in asset_type.asset_fields:
+            form.fields.pop(field)
+
+    # check whether it's valid:
+    if form.is_valid():
+        # process the data in form.cleaned_data as required
+        asset = Asset()
+
+        for name, value in form.cleaned_data.items():
+            setattr(asset, name, value)
+
+        asset.scenario = get_object_or_404(Scenario, pk=request.session['scenario_id'])
+        asset.asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
+        asset.save()
+
+        # redirect to a new URL:
+        return {'success': True}
+
+    form_html = crispy_forms_filters.as_crispy_form(form)
 
 
 class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -409,11 +452,72 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
 
-
 @login_required
 @require_http_methods(["GET", "POST"])
-def asset_topology_create(request):
-    return render(request, 'asset/create_asset_topology.html')
+def scenario_topology_view(request):
+    if request.method == "GET":
+        return render(request, 'asset/create_asset_topology.html')
+
+    elif request.method == "POST" and request.is_ajax():
+        topology = json.loads(request.body)['drawflow']['Home']['data']
+        node_list = list()
+        # get and clear topology data
+        for node in topology:
+            del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
+            node_list.append(NodeObject(topology[node]))
+            print(topology[node])
+        for node_obj in node_list:
+            if node_obj.name == 'bus':
+                node_obj.create_bus(request.session['scenario_id'])
+            else:
+                node_obj.create_asset(request.session['scenario_id'])
+
+            #print(asset.__dict__)
+        #for data_obj, data_obj_value in node_list[1].data.items():
+            #print(data_obj, data_obj_value)
+        return JsonResponse({"success": True}, status=200)
+    else:
+        return JsonResponse({"success": False}, status=400)
+
+
+class NodeObject:
+    def __init__(self, node_data):
+        self.obj_id = node_data['id']
+        self.name = node_data['name']
+        self.data = node_data['data']
+        self.inputs = node_data['inputs']
+        self.outputs = node_data['outputs']
+        self.pos_x = node_data['pos_x']
+        self.pos_y = node_data['pos_y']
+
+    def create_asset(self, scen_id):
+        asset = Asset()
+        for name, value in self.data.items():
+            if name == 'optimize_cap':
+                value = True if value == 'on' else False
+
+            setattr(asset, name, value)
+        setattr(asset, 'pos_x', self.pos_x)
+        setattr(asset, 'pos_y', self.pos_y)
+        asset.scenario = get_object_or_404(Scenario, pk=scen_id)
+        asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
+        asset.save()
+        print("\n\nafter id: {} pk: {}\n\n".format(asset.id, asset.pk))
+
+    def create_bus(self, scen_id):
+        bus = Bus()
+        setattr(bus, 'name', self.data['name'])
+        setattr(bus, 'bustype', self.data['bustype'])
+        setattr(bus, 'pos_x', self.pos_x)
+        setattr(bus, 'pos_y', self.pos_y)
+        bus.scenario = get_object_or_404(Scenario, pk=scen_id)
+        bus.save()
+        print('saved bus %s',self.name)
+
+    #@staticmethod
+    #def _prepare_inputs(data):
+
+
 
 
 
