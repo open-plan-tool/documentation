@@ -4,28 +4,6 @@
 
 {% block content %}
 
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                <div class="alert alert-info">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-danger">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                <div class="alert alert-success">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
     <div class="input-panel" >
         <a href="{% url 'project_create' %}" class="btn btn-primary btn-lg" role="button">Create New Project</a>
     </div>

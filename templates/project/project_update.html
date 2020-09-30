@@ -44,29 +44,6 @@
     </div>
 
 
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                <div class="alert alert-info">
-                    <strong>Info: </strong>{{ message }}
-                </div>
-            {% endif %}
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-danger">
-                    <strong>Error: </strong>{{ message }}
-                </div>
-            {% endif %}
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                <div class="alert alert-success">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
-
     <script>
         /* Map Show and Latitude-Longitude data autofill */
         var lat = document.getElementById("id_latitude").value;
@@ -86,8 +63,8 @@
         function onMapClick(e) {
             popup.setLatLng(e.latlng)
                 .setContent("Location " + e.latlng.toString()).openOn(mymap);
-            $('#id_latitude').val(e.latlng.lat.toFixed(6));
-            $('#id_longitude').val(e.latlng.lng.toFixed(6));
+            $('#id_latitude').val(e.latlng.lat.toFixed(4));
+            $('#id_longitude').val(e.latlng.lng.toFixed(4));
         }
         mymap.on('click', onMapClick);
     </script>

@@ -114,7 +114,7 @@ class Project(models.Model):
     country = models.CharField(max_length=20, choices=COUNTRY)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    economic_data = models.OneToOneField(EconomicData, on_delete=models.SET_NULL, null=True, )
+    economic_data = models.OneToOneField(EconomicData, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
 
     def __str__(self):

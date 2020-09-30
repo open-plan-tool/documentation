@@ -452,6 +452,11 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 @login_required
 @require_http_methods(["GET", "POST"])
 def scenario_topology_view(request):
+    #if request.method == 'GET' and request.is_ajax():
+        #print('\n\nHere\n')
+        #res = {"drawflow":{"Home":{"data":{"8":{"id":8,"name":"source","data":{"age_installed":"3","installed_capacity":"3","capex_fix":"33","capex_var":"3","opex_fix":"3","opex_var":"3","lifetime":"33"},"class":"source","html":"source\n\n \n ×\n  \n\n\n \n ","typenode":False,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":250,"pos_y":90}}}}}
+        #return JsonResponse(res, status=200)
+
     if request.method == "GET":
         return render(request, 'asset/create_asset_topology.html')
 
@@ -468,35 +473,40 @@ def scenario_topology_view(request):
 
         for node_obj in node_list:
             if node_obj.name == 'bus':
-                node_obj.create_bus(request.session['scenario_id'])
+                node_obj.create_or_update_bus(request.session['scenario_id'])
             else:
-                node_obj.create_asset(request.session['scenario_id'])
+                node_obj.create_or_update_asset(request.session['scenario_id'])
+
             node_to_db_mapping_dict[node_obj.obj_id] = {
                 'db_obj_id': node_obj.db_obj_id,
                 'node_type': node_obj.node_obj_type,
                 'output_connections': node_obj.outputs,
             }
-
+        # Make sure there are no connections in the Database to prevent inserting the same connections upon updating.
+        ConnectionLink.objects.filter(scenario_id=request.session['scenario_id']).delete()
         for node_obj in node_list:
-            for output_connection in node_obj.outputs:
-                connection = ConnectionLink()
-                output_node = node_to_db_mapping_dict[int(output_connection)]
+            create_node_interconnection_links(node_obj, node_to_db_mapping_dict, request.session['scenario_id'])
 
-                if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
-                    setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
-                    setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
-                    setattr(connection, 'flow_direction', 'B2A')
-                    setattr(connection, 'scenario', get_object_or_404(Scenario, pk=request.session['scenario_id']))
-                elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
-                    setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
-                    setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
-                    setattr(connection, 'flow_direction', 'A2B')
-                    setattr(connection, 'scenario', get_object_or_404(Scenario, pk=request.session['scenario_id']))
-                connection.save()
-
-        return JsonResponse({"success": True}, status=200)
+        ''' return a dictionary as a response to the front end, containing the node_ids along with their
+        # associated database_ids. This information will help the front end to identify whether the submitted
+        # nodes are new or existing ones and thus discriminate if they need to be updated or created. '''
+        topo2db_id_map = dict()
+        for key, value in node_to_db_mapping_dict.items():
+            topo2db_id_map[key] = value['db_obj_id']
+        response_dict = {"success": True, "data": topo2db_id_map}
+        print("The dict is {}".format(topo2db_id_map))
+        return JsonResponse(response_dict, status=200)
     else:
         return JsonResponse({"success": False}, status=400)
+
+
+def load_scenario_topology_from_db():
+    ''' #Start from here to recreate the drawflow editor json response
+         all_assets = Asset.objects.filter(scenario_id=request.session['scenario_id'])
+         for asst in all_assets:
+             print("All Assets: {}\n".format(asst.__dict__))
+    '''
+    pass
 
 
 class NodeObject:
@@ -506,7 +516,7 @@ class NodeObject:
         self.data = node_data['data']
         self.pos_x = node_data['pos_x']
         self.pos_y = node_data['pos_y']
-        self.db_obj_id = None
+        self.db_obj_id = (node_data['data']['databaseId'] if 'databaseId' in node_data['data'] else None)
         self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
         self.inputs = node_data['inputs']
         self.outputs = list()
@@ -515,8 +525,8 @@ class NodeObject:
             for key2 in node_data['outputs'][key1]:
                 self.outputs = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
 
-    def create_asset(self, scen_id):
-        asset = Asset()
+    def create_or_update_asset(self, scen_id):
+        asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()
         for name, value in self.data.items():
             if name == 'optimize_cap':
                 value = True if value == 'on' else False
@@ -527,17 +537,36 @@ class NodeObject:
         asset.scenario = get_object_or_404(Scenario, pk=scen_id)
         asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
         asset.save()
-        self.db_obj_id = asset.id
+        if self.db_obj_id is None:
+            self.db_obj_id = asset.id
 
-    def create_bus(self, scen_id):
-        bus = Bus()
+    def create_or_update_bus(self, scen_id):
+        bus = get_object_or_404(Bus, pk=self.db_obj_id) if self.db_obj_id else Bus()
         setattr(bus, 'name', self.data['name'])
         setattr(bus, 'bustype', self.data['bustype'])
         setattr(bus, 'pos_x', self.pos_x)
         setattr(bus, 'pos_y', self.pos_y)
         bus.scenario = get_object_or_404(Scenario, pk=scen_id)
         bus.save()
-        self.db_obj_id = bus.id
+        if self.db_obj_id is None:
+            self.db_obj_id = bus.id
 
+
+def create_node_interconnection_links(node_obj, map_dict, scen_id):
+    for output_connection in node_obj.outputs:
+        connection = ConnectionLink()
+        output_node = map_dict[int(output_connection)]
+
+        if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
+            setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
+            setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
+            setattr(connection, 'flow_direction', 'B2A')
+            setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
+        elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
+            setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
+            setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
+            setattr(connection, 'flow_direction', 'A2B')
+            setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
+        connection.save()
 
 # endregion Asset

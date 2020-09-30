@@ -13,28 +13,6 @@
         </a>
     </div>
 
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                <div class="alert alert-info">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-danger">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                <div class="alert alert-success">
-                    <strong>Success: </strong>{{ message }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
     <div class="panel panel-default ">
         <div class="panel-heading"><h3 class="panel-title"><strong>Scenario List </strong></h3></div>
         <div class="panel-body">
@@ -74,8 +52,7 @@
                             <td class="text"><span>{{ scenario.opex_var }}</span></td>
                             <td class="text"><span>{{ scenario.lifetime }}</span></td>
                             <td>
-
-
+                                <!-- Create the configuration glyphicon and the dropdown menu choices. -->
                                 <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
                                     <a href="#" id="dropdownMenuButton" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-cog" style="font-size: 120%"></span>
@@ -85,9 +62,10 @@
                                             <a role="menuitem" tabindex="1" href="#">
                                                 <span class="glyphicon glyphicon-edit open-modal"
                                                       type="submit"
-                                                      value="Edit" data-modal="UpdateCommentForm"
+                                                      value="Edit" data-modal="UpdateScenarioForm"
                                                       data-url="{% url 'scenario_update' scenario.pk %}"> Edit</span>
-                                            </a></li>
+                                            </a>
+                                        </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
                                             <a role="menuitem" tabindex="-1" href="#">
@@ -105,7 +83,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </td>
                         </tr>
                     {% endfor %}
@@ -143,7 +120,6 @@
             'Create Scenario',
             'progress-bar-wrapper' // created this optional parameter for container name (otherwise default container created)
         );
-
     </script>
 
     <script>
@@ -164,7 +140,6 @@
     </script>
 
     <script>
-
         $('#ScenarioTable').on('click', '.scenario_check', function (event) {
             console.log("CLICKED!")
             if ($('.table-row').hasClass('active')) {
@@ -195,27 +170,19 @@
                 event.preventDefault();
             }
         });
-
-
     </script>
 
     <script>
-
         (function () {
             var dropdownMenu;
-
-            // and when you show it, move it to the body
+            // show it and move it to the body
             $(window).on('show.bs.dropdown', function (e) {
-
                 // grab the menu
                 dropdownMenu = $(e.target).find('.dropdown-menu');
-
                 // detach it and append it to the body
                 $('body').append(dropdownMenu.detach());
-
                 // grab the new offset position
                 var eOffset = $(e.target).offset();
-
                 // make sure to place it where it would normally go (this could be improved)
                 dropdownMenu.css({
                     'display': 'block',
