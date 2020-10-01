@@ -144,18 +144,21 @@ def convert_to_dto(scenario: Scenario):
     # Iterate over assets
     for asset in asset_list:
 
-        #Find all connections to asset
+        # Find all connections to asset
         connection_list = ConnectionLink.objects.filter(asset=asset)
 
-        input_bus = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
-        output_bus = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
+        input_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
+        output_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
+
+        input_bus_name = input_connection.bus if input_connection is not None else None
+        output_bus_name = output_connection.bus if output_connection is not None else None
 
         asset_dto = AssetDto(asset.asset_type.asset_category,
                              asset.name,
                              asset.asset_type.mvs_type,
                              asset.asset_type.energy_vector,
-                             None,
-                             None,
+                             input_bus_name,
+                             output_bus_name,
                              asset.dispatchable,
                              to_value_type(asset, 'age_installed'),
                              to_value_type(asset, 'crate'),
@@ -198,7 +201,6 @@ def convert_to_dto(scenario: Scenario):
     return mvs_request_dto
 
 
-
 def map_to_dto(model_obj, dto_obj):
     # Iterate over model attributes
     for f in model_obj._meta.get_fields():
@@ -219,5 +221,5 @@ def to_value_type(model_obj, field_name):
 
 def to_timeseries_data(model_obj, field_name):
     unit = ValueType.objects.get(type=field_name).unit
-    value_list = json.loads(getattr(model_obj, field_name)) if getattr(model_obj, field_name) != None else None
+    value_list = json.loads(getattr(model_obj, field_name)) if getattr(model_obj, field_name) is not None else None
     return TimeseriesDataDto(unit, value_list)
