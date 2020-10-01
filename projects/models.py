@@ -164,16 +164,21 @@ class TopologyNode(models.Model):
         abstract = True
 
 
+class ValueType(models.Model):
+    type = models.CharField(max_length=30, null=False)
+    unit = models.CharField(max_length=30, null=True)
+
+
 class Asset(TopologyNode):
     age_installed = models.FloatField()
     installed_capacity = models.FloatField()
-    capex_fix = models.FloatField()
-    capex_var = models.FloatField()
-    opex_fix = models.FloatField()
-    opex_var = models.FloatField()
+    capex_fix = models.FloatField()  # development_costs
+    capex_var = models.FloatField()  # specific_costs
+    opex_fix = models.FloatField()  # specific_costs_om
+    opex_var = models.FloatField()  # dispatch_price
     lifetime = models.IntegerField()
     optimize_cap = models.BooleanField(null=False, default=False)
-    historical_generation_data = models.TextField(null=True)
+    input_timeseries = models.TextField(null=True)
     crate = models.FloatField(null=True)
     efficiency = models.FloatField(null=True)
     self_discharge = models.FloatField(null=True)

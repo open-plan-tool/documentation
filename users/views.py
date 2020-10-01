@@ -28,7 +28,8 @@ def signup(request):
         # print(form.errors.as_data())
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            # user.is_active = False
+            user.is_active = True
             user.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
@@ -42,7 +43,7 @@ def signup(request):
             email = EmailMessage(
                 mail_subject, message, to=[to_email]
             )
-            email.send()
+            # email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = CustomUserCreationForm()

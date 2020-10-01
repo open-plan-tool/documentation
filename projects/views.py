@@ -19,6 +19,7 @@ from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
 from django.core import serializers
 
+from .dtos import convert_to_dto
 from .forms import *
 from .models import *
 
@@ -136,6 +137,7 @@ def project_search(request):
 
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
+
 
 # endregion Project
 
@@ -403,7 +405,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     context_object_name = 'form'
     template_name = 'asset/asset_create.html'
     fields = '__all__'
-    #exclude = ('scenario', 'name')
+    # exclude = ('scenario', 'name')
     success_url = reverse_lazy('scenario_search')
 
     def test_func(self):
@@ -431,7 +433,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # scenario_pk = self.request.session['scenario_id']
         # initial_base['scenario'] = Scenario.objects.get(id=scenario_pk)
         # form.initial = initial_base
-        #form.fields['name'].widget = forms.widgets.TextInput()
+        # form.fields['name'].widget = forms.widgets.TextInput()
         return form
 
     def get_context_data(self, **kwargs):
@@ -445,17 +447,17 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
         form.instance.scenario = scenario
-        #messages.success(self.request, 'Item created successfully!')
+        # messages.success(self.request, 'Item created successfully!')
         return super().form_valid(form)
 
 
 @login_required
 @require_http_methods(["GET", "POST"])
 def scenario_topology_view(request):
-    #if request.method == 'GET' and request.is_ajax():
-        #print('\n\nHere\n')
-        #res = {"drawflow":{"Home":{"data":{"8":{"id":8,"name":"source","data":{"age_installed":"3","installed_capacity":"3","capex_fix":"33","capex_var":"3","opex_fix":"3","opex_var":"3","lifetime":"33"},"class":"source","html":"source\n\n \n ×\n  \n\n\n \n ","typenode":False,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":250,"pos_y":90}}}}}
-        #return JsonResponse(res, status=200)
+    # if request.method == 'GET' and request.is_ajax():
+    # print('\n\nHere\n')
+    # res = {"drawflow":{"Home":{"data":{"8":{"id":8,"name":"source","data":{"age_installed":"3","installed_capacity":"3","capex_fix":"33","capex_var":"3","opex_fix":"3","opex_var":"3","lifetime":"33"},"class":"source","html":"source\n\n \n ×\n  \n\n\n \n ","typenode":False,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":250,"pos_y":90}}}}}
+    # return JsonResponse(res, status=200)
 
     if request.method == "GET":
         return render(request, 'asset/create_asset_topology.html')
@@ -569,4 +571,15 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
             setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
         connection.save()
 
+
 # endregion Asset
+
+@login_required
+@json_view
+@require_http_methods(["GET"])
+def get_topology_json(request):
+    scenario = Scenario.objects.get(pk=1)
+    mvs_request_dto = convert_to_dto(scenario)
+
+    return HttpResponse(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__),
+                        status=200)
