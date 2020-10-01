@@ -100,7 +100,7 @@
                     Export
                 </div>
                 <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
-                <div class="btn-info" style="float: right" onclick="editor.clearModuleSelected()">Load Topology</div>
+
                 <div id="modal-div"></div>
             </div>
         </div>
@@ -116,27 +116,6 @@
 
 
 {% block end_body_scripts %}
-
-    <script>
-        /* Export Topology to JSON and send to back-end. */
-        function loadData(){
-            $.ajax({
-                headers: {'X-CSRFToken': '{{ csrf_token }}' },
-                type: "GET",
-                url: "{% url 'new_assets_topology' %}",
-                data: JSON.stringify({'test': 'gr3at'}),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(resp){
-                    //console.log('\nResponse is: '+ JSON.stringify(resp));
-                    //return JSON.stringify(resp);
-                    },
-                failure: function(errMsg) {alert(errMsg);}
-            });
-        }
-    </script>
-
-
     <script>
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function(){
@@ -161,18 +140,38 @@
 
     <script>
         $( document ).ready(function() {
-            console.log( "ready!" );
+            $.getJSON("{% url 'new_assets_topology' %}", {}, function (data, textStatus, jqXHR){
+                //console.log(`${JSON.stringify(busNodes)} \n\n and ${JSON.stringify(assetNodes)} \n\n and ${JSON.stringify(connectionLinks)}`);
+                $.each(data['busses'], function (index, nodeData) {
+                    createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y);
+                    //console.log(JSON.stringify(nodeData));
+                });
+                $.each(data['assets'], function (index, nodeData) {
+                    createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y);
+                    //console.log(JSON.stringify(nodeData));
+                });
+                $.each(data['links'], function (index, linkData) {
+                    let busNodeId = nodeToDbId[linkData.bus_id];
+                    let assetNodeId = nodeToDbId[linkData.asset_id];
+
+                    if (linkData.flow_direction === "B2A")
+                        editor.addConnection(busNodeId, assetNodeId, 'output_1', 'input_1');
+                    else
+                        editor.addConnection(assetNodeId, busNodeId, 'output_1', 'input_1');
+                    console.log(JSON.stringify(linkData));
+                });
+            })
+            .done(function () { alert('Request done!'); })
+            .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
         });
     </script>
-
 
     <script>
         // Initialize
         var id = document.getElementById("drawflow");
         const editor = new Drawflow(id);
         editor.reroute = true;
-        //editor.drawflow = loadData();
-        //editor.drawflow = {"drawflow":{"Home":{"data":{"8":{"id":8,"name":"source","data":{"age_installed":"3","installed_capacity":"3","capex_fix":"33","capex_var":"3","opex_fix":"3","opex_var":"3","lifetime":"33"},"class":"source","html":"source\n\n \n ×\n  \n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":250,"pos_y":90},"9":{"id":9,"name":"transformer","data":{"age_installed":"4","installed_capacity":"4","capex_fix":"4","capex_var":"4","opex_fix":"4","opex_var":"4","lifetime":"4"},"class":"transformer","html":"Transformer\n\n\n ×\n\n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"10","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"11","output":"input_1"}]}},"pos_x":699,"pos_y":131},"10":{"id":10,"name":"bus","data":{"age_installed":"22","installed_capacity":"2","capex_fix":"2","capex_var":"2","opex_fix":"2","opex_var":"2","lifetime":"2"},"class":"bus","html":"Bus\n\n\n ×\n\n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"8","input":"output_1"}]}},"outputs":{"output_1":{"connections":[{"node":"9","output":"input_1"}]}},"pos_x":502,"pos_y":146},"11":{"id":11,"name":"sink","data":{"age_installed":"5","capex_fix":"5","capex_var":"55","installed_capacity":"5","opex_fix":"5","opex_var":"5","lifetime":"5"},"class":"sink","html":"sink\n\n\n ×\n\n\n\n \n ","typenode":false,"inputs":{"input_1":{"connections":[{"node":"9","input":"output_1"}]}},"outputs":{"output_1":{"connections":[]}},"pos_x":942,"pos_y":235}}}}};
+        //editor.drawflow = {"drawflow":{"Home":{"data":{"3":{"id":3,"name":"bus","data":{"name":"SDFSDF","bustype":"bus_heat"},"class":"bus","html":"Bus","typenode":false,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[]}},"pos_x":309.41,"pos_y":311}}}}};
         editor.start();
 
         /* Mouse and Touch Actions */
@@ -226,8 +225,13 @@
             }
         })
 
+
+        const nodeToDbId = {}; // a dictionary to keep the mapping between node and database ids.
+
         editor.on('nodeCreated', function (nodeID){
-            console.log('NodeCreated: '+editor.drawflow.drawflow.Home.data[`${nodeID}`]);
+            const dbId = editor.drawflow.drawflow.Home.data[`${nodeID}`]['data']['databaseId'];
+            nodeToDbId[`${dbId}`] = nodeID;
+            //console.log('NodeCreated: ' + JSON.stringify(editor.drawflow.drawflow.Home.data[`${nodeID}`]));
         })
 
         function addNodeToDrawFlow(name, pos_x, pos_y) {
@@ -237,7 +241,7 @@
             pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
             pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
-            createNewAssetObject(name, 1, 1, name, pos_x, pos_y);
+            createNodeObject(name, 1, 1, {}, pos_x, pos_y);
             /*
             switch (name) {
                 case 'sourcethe':
@@ -288,60 +292,60 @@
                     break;
                 //<editor-fold desc="Energy Production">
                 case 'dso_consumption':
-                    createNewAssetObject('dso_consumption', 1, 1, 'dso_consumption', pos_x, pos_y);
+                    createNodeObject('dso_consumption', 1, 1, 'dso_consumption', pos_x, pos_y);
                     break;
                 case 'pv_plant':
-                    createNewAssetObject('pv_plant', 1, 1, 'pv_plant', pos_x, pos_y);
+                    createNodeObject('pv_plant', 1, 1, 'pv_plant', pos_x, pos_y);
                     break;
                 case 'wind_plant':
-                    createNewAssetObject('wind_plant', 1, 1, 'wind_plant', pos_x, pos_y);
+                    createNodeObject('wind_plant', 1, 1, 'wind_plant', pos_x, pos_y);
                     break;
                 //</editor-fold>
                 //<editor-fold desc="Energy Conversion">
                 case 'transformer_station_in':
-                    createNewAssetObject('transformer_station_in', 1, 1, 'transformer_station_in', pos_x, pos_y);
+                    createNodeObject('transformer_station_in', 1, 1, 'transformer_station_in', pos_x, pos_y);
                     break;
                 case 'transformer_station_out':
-                    createNewAssetObject('transformer', 1, 1, 'transformer_station_out', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'transformer_station_out', pos_x, pos_y);
                     break;
                 case 'storage_charge_controller_in':
-                    createNewAssetObject('transformer', 1, 1, 'storage_charge_controller_in', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'storage_charge_controller_in', pos_x, pos_y);
                     break;
                 case 'storage_charge_controller_out':
-                    createNewAssetObject('transformer', 1, 1, 'storage_charge_controller_out', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'storage_charge_controller_out', pos_x, pos_y);
                     break;
                 case 'solar_inverter':
-                    createNewAssetObject('transformer', 1, 1, 'solar_inverter', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'solar_inverter', pos_x, pos_y);
                     break;
                 //</editor-fold>
                 //<editor-fold desc="Energy Storage">
                 case 'charging_power':
-                    createNewAssetObject('transformer', 1, 1, 'charging_power', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'charging_power', pos_x, pos_y);
                     break;
                 case 'discharging_power':
-                    createNewAssetObject('transformer', 1, 1, 'discharging_power', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'discharging_power', pos_x, pos_y);
                     break;
                 case 'capacity':
-                    createNewAssetObject('transformer', 1, 1, 'capacity', pos_x, pos_y);
+                    createNodeObject('transformer', 1, 1, 'capacity', pos_x, pos_y);
                     break;
                 //</editor-fold>
                 //<editor-fold desc="Energy Consumption">
                 case 'electricity_excess':
-                    createNewAssetObject('sink', 1, 1, 'electricity_excess', pos_x, pos_y);
+                    createNodeObject('sink', 1, 1, 'electricity_excess', pos_x, pos_y);
                     break;
                 case 'dso_feedin':
-                    createNewAssetObject('sink', 1, 1, 'dso_feedin', pos_x, pos_y);
+                    createNodeObject('sink', 1, 1, 'dso_feedin', pos_x, pos_y);
                     break;
                 case 'demand':
-                    createNewAssetObject('sink', 1, 1, 'demand', pos_x, pos_y);
+                    createNodeObject('sink', 1, 1, 'demand', pos_x, pos_y);
                     break;
                 //</editor-fold>
                 //<editor-fold desc="Energy Provider">
                 case 'bus':
-                    createNewAssetObject('bus', 1, 1, 'dso', pos_x, pos_y);
+                    createNodeObject('bus', 1, 1, 'dso', pos_x, pos_y);
                     break;
                 case 'dso':
-                    createNewAssetObject('dso', 1, 1, 'dso', pos_x, pos_y);
+                    createNodeObject('dso', 1, 1, 'dso', pos_x, pos_y);
                     break;
                 //</editor-fold>
                 default:
@@ -369,7 +373,6 @@
             editor.editor_mode = "edit";
         }
 
-
         function showcustompopup(e) {
             //modalData holds id of html form
             var modalDiv = $("#modal-div");
@@ -392,7 +395,6 @@
                 });
             });
         }
-
     </script>
 
 
@@ -426,7 +428,8 @@
                 });
         }
 
-        function createNewAssetObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
+        function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
+            //console.log(`nodeName: ${nodeName} and asset_type_name: ${asset_type_name}.\n`);
             if (nodeName === 'bus'){
                 let html = `<div class="box" ondblclick="showpopup(event)">
                 <div class="modal" style="display:none">
@@ -449,10 +452,10 @@
                 </div>
             </div>
             `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, html);
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
             else {
-                getAssetData(asset_type_name);
+                getAssetData(nodeName);
                 let html = `<div class="box" ondblclick="showpopup(event)">
                 <div class="modal" style="display:none">
                   <div class="modal-content">
@@ -462,14 +465,14 @@
                 </div>
             </div>
             `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, html);
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
         }
 
         /* Use this function to create nodes which will contain the full html data (forms included). */
         // region Alternative Html Injection Implementation
         /*
-        function createNewAssetObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
+        function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
             httpGetAsync(nodeName, connectionInputs, connectionOutputs, asset_type_name, pos_x, pos_y, createNodeDiv);
         }
         function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, pos_x, pos_y, innerHtmlData){
@@ -507,7 +510,6 @@
         }
          */
         // endregion
-
     </script>
 
 {% endblock end_body_scripts %}

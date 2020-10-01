@@ -19,7 +19,6 @@ from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
 from django.core import serializers
 
-from .dtos import convert_to_dto
 from .forms import *
 from .models import *
 
@@ -137,7 +136,6 @@ def project_search(request):
 
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
-
 
 # endregion Project
 
@@ -405,7 +403,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     context_object_name = 'form'
     template_name = 'asset/asset_create.html'
     fields = '__all__'
-    # exclude = ('scenario', 'name')
+    #exclude = ('scenario', 'name')
     success_url = reverse_lazy('scenario_search')
 
     def test_func(self):
@@ -433,7 +431,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # scenario_pk = self.request.session['scenario_id']
         # initial_base['scenario'] = Scenario.objects.get(id=scenario_pk)
         # form.initial = initial_base
-        # form.fields['name'].widget = forms.widgets.TextInput()
+        #form.fields['name'].widget = forms.widgets.TextInput()
         return form
 
     def get_context_data(self, **kwargs):
@@ -447,17 +445,17 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
         form.instance.scenario = scenario
-        # messages.success(self.request, 'Item created successfully!')
+        #messages.success(self.request, 'Item created successfully!')
         return super().form_valid(form)
 
 
 @login_required
 @require_http_methods(["GET", "POST"])
 def scenario_topology_view(request):
-    # if request.method == 'GET' and request.is_ajax():
-    # print('\n\nHere\n')
-    # res = {"drawflow":{"Home":{"data":{"8":{"id":8,"name":"source","data":{"age_installed":"3","installed_capacity":"3","capex_fix":"33","capex_var":"3","opex_fix":"3","opex_var":"3","lifetime":"33"},"class":"source","html":"source\n\n \n ×\n  \n\n\n \n ","typenode":False,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[{"node":"10","output":"input_1"}]}},"pos_x":250,"pos_y":90}}}}}
-    # return JsonResponse(res, status=200)
+    if request.method == "GET" and request.is_ajax():
+        # Approach: send assets, busses and connection links to the front end and let it do the work
+        topology_data_list = load_scenario_topology_from_db(request.session['scenario_id'])
+        return JsonResponse(topology_data_list, status=200)
 
     if request.method == "GET":
         return render(request, 'asset/create_asset_topology.html')
@@ -469,7 +467,6 @@ def scenario_topology_view(request):
         for node in topology:
             del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
             node_list.append(NodeObject(topology[node]))
-            print(topology[node])
 
         node_to_db_mapping_dict = dict()
 
@@ -496,23 +493,59 @@ def scenario_topology_view(request):
         for key, value in node_to_db_mapping_dict.items():
             topo2db_id_map[key] = value['db_obj_id']
         response_dict = {"success": True, "data": topo2db_id_map}
-        print("The dict is {}".format(topo2db_id_map))
         return JsonResponse(response_dict, status=200)
     else:
         return JsonResponse({"success": False}, status=400)
 
 
-def load_scenario_topology_from_db():
-    ''' #Start from here to recreate the drawflow editor json response
-         all_assets = Asset.objects.filter(scenario_id=request.session['scenario_id'])
-         for asst in all_assets:
-             print("All Assets: {}\n".format(asst.__dict__))
-    '''
-    pass
+def load_scenario_topology_from_db(scen_id):
+    bus_nodes_list = db_bus_nodes_to_list(scen_id)
+    asset_nodes_list = db_asset_nodes_to_list(scen_id)
+    connection_links_list = db_connection_links_to_list(scen_id)
+    return {"busses": bus_nodes_list, "assets": asset_nodes_list, "links": connection_links_list}
+
+
+def db_bus_nodes_to_list(scen_id):
+    all_db_busses = Bus.objects.filter(scenario_id=scen_id)
+    bus_nodes_list = list()
+    for db_bus in all_db_busses:
+        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id},
+                       "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y}
+        bus_nodes_list.append(db_bus_dict)
+    return bus_nodes_list
+
+
+def db_asset_nodes_to_list(scen_id):
+    all_db_assets = Asset.objects.filter(scenario_id=scen_id)
+    asset_nodes_list = list()
+    data = dict()
+    for db_asset in all_db_assets:
+        db_asset_to_dict = json.loads(json.dumps(db_asset.__dict__, default = lambda o: o.__dict__))
+        ignored_keys = ["scenario_id", "pos_x", "pos_y", "asset_type_id"]
+        for key, val in db_asset_to_dict.items():
+            if not (key.startswith('_') or (key in ignored_keys) or val is None):
+                if key == "id":
+                    data["databaseId"] = val
+                else:
+                    data[key] = val
+
+        asset_type_obj = get_object_or_404(AssetType, pk=db_asset.asset_type_id)
+        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y, "data": data}
+        asset_nodes_list.append(db_asset_dict)
+    return asset_nodes_list
+
+
+def db_connection_links_to_list(scen_id):
+    all_db_connection_links = ConnectionLink.objects.filter(scenario_id=scen_id)
+    connections_list = list()
+    for db_connection in all_db_connection_links:
+        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id, "flow_direction": db_connection.flow_direction}
+        connections_list.append(db_connection_dict)
+    return connections_list
 
 
 class NodeObject:
-    def __init__(self, node_data):
+    def __init__(self, node_data=None):
         self.obj_id = node_data['id']
         self.name = node_data['name']
         self.data = node_data['data']
@@ -545,7 +578,7 @@ class NodeObject:
     def create_or_update_bus(self, scen_id):
         bus = get_object_or_404(Bus, pk=self.db_obj_id) if self.db_obj_id else Bus()
         setattr(bus, 'name', self.data['name'])
-        setattr(bus, 'bustype', self.data['bustype'])
+        setattr(bus, 'type', self.data['bustype'])
         setattr(bus, 'pos_x', self.pos_x)
         setattr(bus, 'pos_y', self.pos_y)
         bus.scenario = get_object_or_404(Scenario, pk=scen_id)
