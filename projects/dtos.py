@@ -145,8 +145,6 @@ def convert_to_dto(scenario: Scenario):
     for asset in asset_list:
 
         # Find all connections to asset
-        connection_list = ConnectionLink.objects.filter(asset=asset)
-
         input_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
         output_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
 
@@ -200,7 +198,7 @@ def convert_to_dto(scenario: Scenario):
 
     return mvs_request_dto
 
-
+#can be used to map assets fields with asset dtos
 def map_to_dto(model_obj, dto_obj):
     # Iterate over model attributes
     for f in model_obj._meta.get_fields():

@@ -147,7 +147,7 @@ class Scenario(models.Model):
 
 
 class AssetType(models.Model):
-    asset_type = models.CharField(max_length=30, choices=ASSET_TYPE)
+    asset_type = models.CharField(max_length=30, choices=ASSET_TYPE, null=False, unique=True)
     asset_category = models.CharField(max_length=30, choices=ASSET_CATEGORY)
     energy_vector = models.CharField(max_length=20, choices=ENERGY_VECTOR)
     mvs_type = models.CharField(max_length=20, choices=MVS_TYPE)
@@ -165,7 +165,7 @@ class TopologyNode(models.Model):
 
 
 class ValueType(models.Model):
-    type = models.CharField(max_length=30, null=False)
+    type = models.CharField(max_length=30, null=False, unique=True)
     unit = models.CharField(max_length=30, null=True)
 
 
