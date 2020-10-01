@@ -147,14 +147,14 @@ def convert_to_dto(scenario: Scenario):
         #Find all connections to asset
         connection_list = ConnectionLink.objects.filter(asset=asset)
 
-        input_bus = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first().b
+        input_bus = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
         output_bus = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
 
         asset_dto = AssetDto(asset.asset_type.asset_category,
                              asset.name,
                              asset.asset_type.mvs_type,
                              asset.asset_type.energy_vector,
-                             input_bus.,
+                             None,
                              None,
                              asset.dispatchable,
                              to_value_type(asset, 'age_installed'),
