@@ -1,11 +1,9 @@
-import sys
+import json
+from typing import List
 
 from numpy.core import long
-from typing import List
-import json
 
 from projects.models import *
-from django.db import models
 
 
 class ProjectDataDto:
@@ -127,10 +125,10 @@ def convert_to_dto(scenario: Scenario):
 
     economic_data_dto = EconomicDataDto(economic_data.currency,
                                         to_value_type(economic_data, 'duration'),
-                                        None,  # TODO: Add missing fields to DB
+                                        to_value_type(economic_data, 'annuity_factor'),
                                         to_value_type(economic_data, 'discount'),
                                         to_value_type(economic_data, 'tax'),
-                                        None)
+                                        to_value_type(economic_data, 'crf'), )
 
     # map_to_dto(economic_data, economic_data_dto)
 
@@ -168,16 +166,17 @@ def convert_to_dto(scenario: Scenario):
                              to_value_type(asset, 'efficiency'),
                              to_value_type(asset, 'installed_capacity'),
                              to_value_type(asset, 'lifetime'),
-                             None,  # TODO: Add missing fields to DB
-                             None,
-                             None,
+                             to_value_type(asset, 'maximum_capacity'),
+                             to_value_type(asset, 'energy_price'),
+                             to_value_type(asset, 'feedin_tariff'),
                              to_value_type(asset, 'optimize_cap'),
-                             None,
-                             None,
-                             None,
+                             to_value_type(asset, 'peak_demand_pricing'),
+                             to_value_type(asset, 'peak_demand_pricing_period'),
+                             to_value_type(asset, 'renewable_share'),
                              to_value_type(asset, 'capex_var'),
                              to_value_type(asset, 'opex_fix'),
-                             to_timeseries_data(asset, 'input_timeseries'), )
+                             to_timeseries_data(asset, 'input_timeseries')
+                             )
 
         # map_to_dto(asset, asset_dto)
 
@@ -198,7 +197,8 @@ def convert_to_dto(scenario: Scenario):
 
     return mvs_request_dto
 
-#can be used to map assets fields with asset dtos
+
+# can be used to map assets fields with asset dtos
 def map_to_dto(model_obj, dto_obj):
     # Iterate over model attributes
     for f in model_obj._meta.get_fields():
@@ -212,12 +212,20 @@ def map_to_dto(model_obj, dto_obj):
 
 
 def to_value_type(model_obj, field_name):
-    unit = ValueType.objects.get(type=field_name).unit
+    value_type = ValueType.objects.filter(type=field_name).first()
+    unit = value_type.unit if value_type is not None else None
     value = getattr(model_obj, field_name)
-    return ValueTypeDto(unit, value)
+    if value is not None:
+        return ValueTypeDto(unit, value)
+    else:
+        return None
 
 
 def to_timeseries_data(model_obj, field_name):
-    unit = ValueType.objects.get(type=field_name).unit
+    value_type = ValueType.objects.filter(type=field_name).first()
+    unit = value_type.unit if value_type is not None else None
     value_list = json.loads(getattr(model_obj, field_name)) if getattr(model_obj, field_name) is not None else None
-    return TimeseriesDataDto(unit, value_list)
+    if value_list is not None:
+        return TimeseriesDataDto(unit, value_list)
+    else:
+        return None

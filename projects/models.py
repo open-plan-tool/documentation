@@ -63,7 +63,7 @@ VALUE_TYPE = (
     ('opex_var', 'opex_var'),
     ('lifetime', 'lifetime'),
     ('optimize_cap', 'optimize_cap'),
-    ('historical_generation_data', 'historical_generation_data'),
+    ('input_timeseries', 'input_timeseries'),
     ('crate', 'crate'),
     ('efficiency', 'efficiency'),
     ('self_discharge', 'self_discharge'),
@@ -71,6 +71,12 @@ VALUE_TYPE = (
     ('soc_max', 'soc_max'),
     ('soc_min', 'soc_min'),
     ('dispatchable', 'dispatchable'),
+    ('maximum_capacity', 'maximum_capacity'),
+    ('energy_price', 'energy_price'),
+    ('feedin_tariff', 'feedin_tariff'),
+    ('peak_demand', 'peak_demand'),
+    ('peak_demand_pricing_period', 'peak_demand_pricing_period'),
+    ('renewable_share', 'renewable_share'),
 )
 
 ASSET_TYPE = (
@@ -103,7 +109,9 @@ class EconomicData(models.Model):
     duration = models.IntegerField()
     currency = models.CharField(max_length=3, choices=CURRENCY)
     discount = models.FloatField()
+    annuity_factor = models.FloatField()
     tax = models.FloatField()
+    crf = models.FloatField()
 
 
 class Project(models.Model):
@@ -170,13 +178,13 @@ class ValueType(models.Model):
 
 
 class Asset(TopologyNode):
-    age_installed = models.FloatField()
-    installed_capacity = models.FloatField()
-    capex_fix = models.FloatField()  # development_costs
-    capex_var = models.FloatField()  # specific_costs
-    opex_fix = models.FloatField()  # specific_costs_om
-    opex_var = models.FloatField()  # dispatch_price
-    lifetime = models.IntegerField()
+    age_installed = models.FloatField(null=False)
+    installed_capacity = models.FloatField(null=False,)
+    capex_fix = models.FloatField(null=False,)  # development_costs
+    capex_var = models.FloatField(null=False,)  # specific_costs
+    opex_fix = models.FloatField(null=False,)  # specific_costs_om
+    opex_var = models.FloatField(null=False,)  # dispatch_price
+    lifetime = models.IntegerField(null=False,)
     optimize_cap = models.BooleanField(null=False, default=False)
     input_timeseries = models.TextField(null=True)
     crate = models.FloatField(null=True)
@@ -186,6 +194,12 @@ class Asset(TopologyNode):
     soc_max = models.FloatField(null=True)
     soc_min = models.FloatField(null=True)
     dispatchable = models.BooleanField(null=True, default=False)
+    maximum_capacity = models.FloatField(null=True)
+    energy_price = models.FloatField(null=True)
+    feedin_tariff = models.FloatField(null=True)
+    peak_demand_pricing = models.FloatField(null=True)
+    peak_demand_pricing_period = models.FloatField(null=True)
+    renewable_share = models.FloatField(null=True)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=True)
 
 
