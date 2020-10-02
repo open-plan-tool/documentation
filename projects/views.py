@@ -138,6 +138,7 @@ def project_search(request):
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
 
+
 # endregion Project
 
 
@@ -404,7 +405,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     context_object_name = 'form'
     template_name = 'asset/asset_create.html'
     fields = '__all__'
-    #exclude = ('scenario', 'name')
+    # exclude = ('scenario', 'name')
     success_url = reverse_lazy('scenario_search')
 
     def test_func(self):
@@ -432,7 +433,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # scenario_pk = self.request.session['scenario_id']
         # initial_base['scenario'] = Scenario.objects.get(id=scenario_pk)
         # form.initial = initial_base
-        #form.fields['name'].widget = forms.widgets.TextInput()
+        # form.fields['name'].widget = forms.widgets.TextInput()
         return form
 
     def get_context_data(self, **kwargs):
@@ -446,7 +447,7 @@ class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
         form.instance.scenario = scenario
-        #messages.success(self.request, 'Item created successfully!')
+        # messages.success(self.request, 'Item created successfully!')
         return super().form_valid(form)
 
 
@@ -456,7 +457,7 @@ def scenario_topology_view(request):
     if request.method == "GET" and request.is_ajax():
         # Approach: send assets, busses and connection links to the front end and let it do the work
         topology_data_list = load_scenario_topology_from_db(request.session['scenario_id'])
-        #print(topology_data_list)
+        # print(topology_data_list)
         return JsonResponse(topology_data_list, status=200)
 
     if request.method == "GET":
@@ -471,8 +472,8 @@ def scenario_topology_view(request):
             node_list.append(NodeObject(topology[node]))
 
         # Clear the database before inserting or updating data.
-        #Asset.objects.filter(scenario_id=request.session['scenario_id']).delete()
-        #Bus.objects.filter(scenario_id=request.session['scenario_id']).delete()
+        # Asset.objects.filter(scenario_id=request.session['scenario_id']).delete()
+        # Bus.objects.filter(scenario_id=request.session['scenario_id']).delete()
         node_to_db_mapping_dict = dict()
 
         for node_obj in node_list:
@@ -525,7 +526,7 @@ def db_asset_nodes_to_list(scen_id):
     asset_nodes_list = list()
     for db_asset in all_db_assets:
         data = dict()
-        db_asset_to_dict = json.loads(json.dumps(db_asset.__dict__, default = lambda o: o.__dict__))
+        db_asset_to_dict = json.loads(json.dumps(db_asset.__dict__, default=lambda o: o.__dict__))
         ignored_keys = ["scenario_id", "pos_x", "pos_y", "asset_type_id"]
         for key, val in db_asset_to_dict.items():
             if not (key.startswith('_') or (key in ignored_keys) or val is None):
@@ -535,7 +536,8 @@ def db_asset_nodes_to_list(scen_id):
                     data[key] = val
 
         asset_type_obj = get_object_or_404(AssetType, pk=db_asset.asset_type_id)
-        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y, "data": data}
+        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y,
+                         "data": data}
         asset_nodes_list.append(db_asset_dict)
     return asset_nodes_list
 
@@ -544,7 +546,8 @@ def db_connection_links_to_list(scen_id):
     all_db_connection_links = ConnectionLink.objects.filter(scenario_id=scen_id)
     connections_list = list()
     for db_connection in all_db_connection_links:
-        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id, "flow_direction": db_connection.flow_direction}
+        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id,
+                              "flow_direction": db_connection.flow_direction}
         connections_list.append(db_connection_dict)
     return connections_list
 
@@ -614,11 +617,37 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
 # endregion Asset
 
 @login_required
-@json_view
 @require_http_methods(["GET"])
-def get_topology_json(request):
-    scenario = Scenario.objects.get(pk=1)
+def get_topology_json(request, scenario_id):
+    scenario = Scenario.objects.get(pk=scenario_id)
     mvs_request_dto = convert_to_dto(scenario)
 
-    return HttpResponse(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__),
-                        status=200)
+    # Create data dict from dto object
+    data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
+    # Remove None values
+    data_clean = del_none(data)
+
+    return JsonResponse(data_clean, status=200, content_type='application/json')
+
+
+# Helper method to clean data from None values
+
+
+def del_none(d):
+    # Copy dict in order to modify
+    rez = d.copy()
+    # Iterate over dict
+    for key, value in d.items():
+        # If null or empty delete key from dict
+        if value is None or value == '':
+            del rez[key]
+        # Else if nested dict call method again on dict
+        elif isinstance(value, dict):
+            rez[key] = del_none(value)
+        # Else if nested list call method again on contents
+        elif isinstance(value, list):
+            if not value:
+                del rez[key]
+            for entry in value:
+                value[value.index(entry)] = del_none(entry)
+    return rez
