@@ -12,11 +12,11 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    {{ form.name| as_crispy_field  }}
-                    {{ form.description| as_crispy_field  }}
-                    {{ form.country| as_crispy_field  }}
+                    {{ form.name| as_crispy_field }}
+                    {{ form.description| as_crispy_field }}
+                    {{ form.country| as_crispy_field }}
                     <div style="height:330px;" id="mapid"></div>
-                    <br />
+                    <br/>
                     <div class="form-row">
                         <div class="form-group col-md-4 mb-0">
                             {{ form.latitude|as_crispy_field }}
@@ -38,17 +38,23 @@
                         <div class="form-group col-md-4 mb-0">
                             {{ form.tax|as_crispy_field }}
                         </div>
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.annuity_factor|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.crf|as_crispy_field }}
+                        </div>
                     </div>
-                    <div class = "container">
+                    <div class="container">
                         <div class="row">
                             <div class="col-sm-5">
-                                {{ form.electricity| as_crispy_field  }}
-                                {{ form.heat| as_crispy_field  }}
-                                {{ form.gas| as_crispy_field  }}
+                                {{ form.electricity| as_crispy_field }}
+                                {{ form.heat| as_crispy_field }}
+                                {{ form.gas| as_crispy_field }}
                             </div>
                             <div class="col-sm-5">
-                                {{ form.h2| as_crispy_field  }}
-                                {{ form.mobility| as_crispy_field  }}
+                                {{ form.h2| as_crispy_field }}
+                                {{ form.mobility| as_crispy_field }}
                             </div>
                         </div>
                     </div>
@@ -72,12 +78,14 @@
         }).addTo(mymap);
 
         var popup = L.popup();
+
         function onMapClick(e) {
             popup.setLatLng(e.latlng)
-            .setContent("Location " + e.latlng.toString()).openOn(mymap);
+                .setContent("Location " + e.latlng.toString()).openOn(mymap);
             $('#id_latitude').val(e.latlng.lat.toFixed(6));
             $('#id_longitude').val(e.latlng.lng.toFixed(6));
         }
+
         mymap.on('click', onMapClick);
     </script>
 
@@ -86,7 +94,7 @@
         ProgressBar.singleStepAnimation = 500;
         ProgressBar.init(
             ['Create Project',
-            'Add Comments',
+                'Add Comments',
                 'Create Scenario',
                 'Add Assets',
                 'Run Simulation',

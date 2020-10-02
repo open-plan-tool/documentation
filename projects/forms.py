@@ -57,6 +57,10 @@ class ProjectCreateForm(forms.Form):
                                   widget=forms.NumberInput(attrs={'placeholder': 'Discount Factor...'}))
     tax = forms.IntegerField(label='Tax',
                              widget=forms.NumberInput(attrs={'placeholder': 'Tax...'}))
+    annuity_factor = forms.FloatField(label='Annuity Factor',
+                                      widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
+    crf = forms.FloatField(label='CRF',
+                           widget=forms.NumberInput(attrs={'placeholder': 'CRF...'}))
 
     electricity = forms.BooleanField(label='Electricity', initial=False, required=False)
     heat = forms.BooleanField(label='Heat', initial=False, required=False)

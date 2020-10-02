@@ -64,6 +64,8 @@ def project_create(request):
             economic_data.currency = form.cleaned_data['currency']
             economic_data.discount = form.cleaned_data['discount']
             economic_data.tax = form.cleaned_data['tax']
+            economic_data.annuity_factor = form.cleaned_data['annuity_factor']
+            economic_data.crf = form.cleaned_data['crf']
 
             economic_data.save()
 
@@ -485,6 +487,7 @@ def del_none(d):
         elif isinstance(value, list):
             if not value:
                 del rez[key]
+        # Remove empty list entries
             for entry in value:
                 value[value.index(entry)] = del_none(entry)
     return rez
