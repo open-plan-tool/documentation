@@ -1,37 +1,38 @@
-[33mb7cf6ce[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m)[m Topology Recreation Completion
-[33m310693c[m[33m ([m[1;31morigin/dev[m[33m)[m Added Asset serializer to dto (under progress)
-[33m8d6393d[m Added Asset serializer to dto (under progress)
-[33m3e8a84a[m Added Asset serializer to dto (under progress)
-[33maba78c0[m Added Asset serializer to dto (under progress)
-[33m01437f8[m Added Asset serializer to dto (under progress)
-[33mc38ab72[m Merge remote-tracking branch 'origin/dev' into dev
-[33mfe8b4b2[m Added Asset serializer to dto (under progress)
-[33me303b8a[m Recreate Topology From DB
-[33m80b8e70[m Expose db id to topology
-[33m3d7eca8[m Merge remote-tracking branch 'origin/dev' into dev
-[33m8d9c18e[m Expose db id to topology
-[33m331ac0b[m Added email verification support!
-[33m79c747f[m Merge remote-tracking branch 'origin/dev' into dev
-[33m36c2090[m Topology Parser Ready
-[33m2714b92[m Merge remote-tracking branch 'origin/dev' into dev
-[33m9a46e20[m node interconnection constrain rules
-[33m726eb4d[m Basic Json Paser Created
-[33m939917d[m Accordion and Energy Types addition.
-[33mbe0dfd5[m Topology Objects Creation
-[33ma27ec12[m Merge remote-tracking branch 'origin/dev' into dev
-[33m1ca6c24[m gitignore fixes
-[33m13a2b73[m Assets Topology Creation gitignore addition
-[33m62bccc8[m DragNDrop Topology Testing 3 different creation methods.
-[33mb4c9167[m Dev changed to merge with vic
-[33mda0cdf3[m Drawflow init Integration
-[33m62d71da[m rmPycs and Migs
-[33m4105b25[m rmPycache
-[33me8c6bd5[m clean pycs
-[33m58826e6[m AssetCreateView addition
-[33m34838a5[m[33m ([m[1;32mmaster[m[33m)[m Cleanup and Minor Changes
-[33m4eadfc9[m rollback
-[33mfce021a[m Delete 0001_initial.py
-[33m649cf1c[m Delete 0001_initial.py
-[33mfbc10a5[m Delete db.sqlite3
-[33m371c803[m Initial version
-[33m9df3304[m Initial commit
+- 4 hours ago <font color='red'>0dc56e2</font> : Topology Recreation Completion 
+- 4 hours ago <font color='red'>b7cf6ce</font> : Topology Recreation Completion 
+- 24 hours ago <font color='red'>310693c</font> : Added Asset serializer to dto (under progress) 
+- 24 hours ago <font color='red'>8d6393d</font> : Added Asset serializer to dto (under progress) 
+- 24 hours ago <font color='red'>3e8a84a</font> : Added Asset serializer to dto (under progress) 
+- 24 hours ago <font color='red'>aba78c0</font> : Added Asset serializer to dto (under progress) 
+- 25 hours ago <font color='red'>01437f8</font> : Added Asset serializer to dto (under progress) 
+- 25 hours ago <font color='red'>c38ab72</font> : Merge remote-tracking branch 'origin/dev' into dev 
+- 25 hours ago <font color='red'>fe8b4b2</font> : Added Asset serializer to dto (under progress) 
+- 25 hours ago <font color='red'>e303b8a</font> : Recreate Topology From DB 
+- 2 days ago <font color='red'>80b8e70</font> : Expose db id to topology 
+- 2 days ago <font color='red'>3d7eca8</font> : Merge remote-tracking branch 'origin/dev' into dev 
+- 2 days ago <font color='red'>8d9c18e</font> : Expose db id to topology 
+- 2 days ago <font color='red'>331ac0b</font> : Added email verification support! 
+- 3 days ago <font color='red'>79c747f</font> : Merge remote-tracking branch 'origin/dev' into dev 
+- 3 days ago <font color='red'>36c2090</font> : Topology Parser Ready 
+- 3 days ago <font color='red'>2714b92</font> : Merge remote-tracking branch 'origin/dev' into dev 
+- 4 days ago <font color='red'>9a46e20</font> : node interconnection constrain rules 
+- 7 days ago <font color='red'>726eb4d</font> : Basic Json Paser Created 
+- 8 days ago <font color='red'>939917d</font> : Accordion and Energy Types addition. 
+- 9 days ago <font color='red'>be0dfd5</font> : Topology Objects Creation 
+- 11 days ago <font color='red'>a27ec12</font> : Merge remote-tracking branch 'origin/dev' into dev 
+- 11 days ago <font color='red'>1ca6c24</font> : gitignore fixes 
+- 11 days ago <font color='red'>13a2b73</font> : Assets Topology Creation gitignore addition 
+- 11 days ago <font color='red'>62bccc8</font> : DragNDrop Topology Testing 3 different creation methods. 
+- 11 days ago <font color='red'>b4c9167</font> : Dev changed to merge with vic 
+- 2 weeks ago <font color='red'>da0cdf3</font> : Drawflow init Integration 
+- 2 weeks ago <font color='red'>62d71da</font> : rmPycs and Migs 
+- 2 weeks ago <font color='red'>4105b25</font> : rmPycache 
+- 2 weeks ago <font color='red'>e8c6bd5</font> : clean pycs 
+- 2 weeks ago <font color='red'>58826e6</font> : AssetCreateView addition 
+- 2 weeks ago <font color='red'>34838a5</font> : Cleanup and Minor Changes 
+- 3 weeks ago <font color='red'>4eadfc9</font> : rollback 
+- 3 weeks ago <font color='red'>fce021a</font> : Delete 0001_initial.py 
+- 3 weeks ago <font color='red'>649cf1c</font> : Delete 0001_initial.py 
+- 3 weeks ago <font color='red'>fbc10a5</font> : Delete db.sqlite3 
+- 3 months ago <font color='red'>371c803</font> : Initial version 
+- 3 months ago <font color='red'>9df3304</font> : Initial commit 

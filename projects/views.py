@@ -1,27 +1,20 @@
-from crispy_forms.utils import render_crispy_form, render_field
-from django.apps import AppConfig, apps
-
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 import json
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import *
-from django.template.context_processors import csrf
 from django.views.decorators.http import require_http_methods
-from django.views.generic import ListView, DetailView, TemplateView
-from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 from django.contrib import messages
 from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
-from django.core import serializers
 
 from .dtos import convert_to_dto
 from .forms import *
 from .models import *
+from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
+    update_deleted_objects_from_database
 
 
 class HomeView(TemplateView):
@@ -261,6 +254,7 @@ def scenario_create(request):
 def scenario_create_post(request):
     project = get_object_or_404(Project, pk=request.session['project_id'])
     form = ScenarioCreateForm(request.POST)
+
     # check whether it's valid:
     if form.is_valid():
         # process the data in form.cleaned_data as required
@@ -269,7 +263,7 @@ def scenario_create_post(request):
         for name, value in form.cleaned_data.items():
             setattr(scenario, name, value)
 
-        scenario.project = project;
+        scenario.project = project
         scenario.save()
 
         request.session['scenario_id'] = scenario.id
@@ -286,32 +280,39 @@ def scenario_create_post(request):
 @require_http_methods(["GET", "POST"])
 def scenario_update(request, id):
     project = get_object_or_404(Project, pk=request.session['project_id'])
-    comment = get_object_or_404(Comment, pk=id)
+    scenario = get_object_or_404(Scenario, pk=id)
 
-    if comment.project != project:
+    if scenario.project != project:
         return HttpResponseForbidden()
 
         # if this is a POST request we need to process the form data
     if request.POST:
         # create a form instance and populate it with data from the request:
-        form = CommentForm(request.POST)
+        form = ScenarioUpdateForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
 
-            comment.name = form.cleaned_data['name']
-            comment.body = form.cleaned_data['body']
+            scenario.name = form.cleaned_data['name']
+            scenario.start_date = form.cleaned_data['start_date']
+            scenario.period = form.cleaned_data['period']
+            scenario.time_step = form.cleaned_data['time_step']
+            scenario.capex_fix = form.cleaned_data['capex_fix']
+            scenario.capex_var = form.cleaned_data['capex_var']
+            scenario.opex_fix = form.cleaned_data['opex_fix']
+            scenario.opex_var = form.cleaned_data['opex_var']
+            scenario.lifetime = form.cleaned_data['lifetime']
 
-            comment.project = project
+            scenario.project = project
 
-            comment.save()
+            scenario.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/comment/search')
+            return HttpResponseRedirect('scenario/search')
 
         # if a GET (or any other method) we'll create a blank form
     else:
-        form = CommentForm(instance=comment)
+        form = ScenarioUpdateForm(instance=scenario)
 
     return render(request, 'comment/comment_update.html', {'form': form})
 
@@ -373,7 +374,6 @@ def asset_create(request, asset_type_name):
 @require_http_methods(["POST"])
 def asset_create_post(request):
     form = AssetCreateForm(request.POST)
-
     asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
     form_fields = list(form.fields)
 
@@ -400,63 +400,12 @@ def asset_create_post(request):
     form_html = crispy_forms_filters.as_crispy_form(form)
 
 
-class AssetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    context_object_name = 'form'
-    template_name = 'asset/asset_create.html'
-    fields = '__all__'
-    #exclude = ('scenario', 'name')
-    success_url = reverse_lazy('scenario_search')
-
-    def test_func(self):
-        scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
-        project = get_object_or_404(Project, pk=self.request.session['project_id'])
-        return self.request.user == project.user
-
-    def dispatch(self, request, *args, **kwargs):
-        # use this method along with proper url config to load parametric Asset models.
-        # where 'my_asset' is the url parameter name and 'projects' is the app name to look for models
-        my_asset = kwargs.get('my_asset', None)
-        self.model = apps.get_model('projects', my_asset.capitalize())
-        try:
-            ret = super(AssetCreateView, self).dispatch(request, *args, **kwargs)
-        except AttributeError:
-            raise Http404("No such Asset exists.")
-        return ret
-
-    def get_form(self):
-        # User this method to prepopulate form with scenario id.
-        # Also use js to hide scenario selection from the from.
-        form = super(AssetCreateView, self).get_form()
-        form.fields.pop('scenario')
-        # initial_base = self.get_initial()
-        # scenario_pk = self.request.session['scenario_id']
-        # initial_base['scenario'] = Scenario.objects.get(id=scenario_pk)
-        # form.initial = initial_base
-        #form.fields['name'].widget = forms.widgets.TextInput()
-        return form
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['asset_name'] = self.model.__str__(self)
-
-        myval = self.request.GET.get('test1')
-        context['test_val'] = myval
-        return context
-
-    def form_valid(self, form):
-        scenario = get_object_or_404(Scenario, pk=self.request.session['scenario_id'])
-        form.instance.scenario = scenario
-        #messages.success(self.request, 'Item created successfully!')
-        return super().form_valid(form)
-
-
 @login_required
 @require_http_methods(["GET", "POST"])
 def scenario_topology_view(request):
     if request.method == "GET" and request.is_ajax():
         # Approach: send assets, busses and connection links to the front end and let it do the work
         topology_data_list = load_scenario_topology_from_db(request.session['scenario_id'])
-        #print(topology_data_list)
         return JsonResponse(topology_data_list, status=200)
 
     if request.method == "GET":
@@ -470,11 +419,10 @@ def scenario_topology_view(request):
             del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
             node_list.append(NodeObject(topology[node]))
 
-        # Clear the database before inserting or updating data.
-        #Asset.objects.filter(scenario_id=request.session['scenario_id']).delete()
-        #Bus.objects.filter(scenario_id=request.session['scenario_id']).delete()
-        node_to_db_mapping_dict = dict()
+        # delete objects from database which were deleted by the user
+        update_deleted_objects_from_database(request.session['scenario_id'], node_list)
 
+        node_to_db_mapping_dict = dict()
         for node_obj in node_list:
             if node_obj.name == 'bus':
                 node_obj.create_or_update_bus(request.session['scenario_id'])
@@ -502,116 +450,8 @@ def scenario_topology_view(request):
     else:
         return JsonResponse({"success": False}, status=400)
 
-
-def load_scenario_topology_from_db(scen_id):
-    bus_nodes_list = db_bus_nodes_to_list(scen_id)
-    asset_nodes_list = db_asset_nodes_to_list(scen_id)
-    connection_links_list = db_connection_links_to_list(scen_id)
-    return {"busses": bus_nodes_list, "assets": asset_nodes_list, "links": connection_links_list}
-
-
-def db_bus_nodes_to_list(scen_id):
-    all_db_busses = Bus.objects.filter(scenario_id=scen_id)
-    bus_nodes_list = list()
-    for db_bus in all_db_busses:
-        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id},
-                       "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y}
-        bus_nodes_list.append(db_bus_dict)
-    return bus_nodes_list
-
-
-def db_asset_nodes_to_list(scen_id):
-    all_db_assets = Asset.objects.filter(scenario_id=scen_id)
-    asset_nodes_list = list()
-    for db_asset in all_db_assets:
-        data = dict()
-        db_asset_to_dict = json.loads(json.dumps(db_asset.__dict__, default = lambda o: o.__dict__))
-        ignored_keys = ["scenario_id", "pos_x", "pos_y", "asset_type_id"]
-        for key, val in db_asset_to_dict.items():
-            if not (key.startswith('_') or (key in ignored_keys) or val is None):
-                if key == "id":
-                    data["databaseId"] = val
-                else:
-                    data[key] = val
-
-        asset_type_obj = get_object_or_404(AssetType, pk=db_asset.asset_type_id)
-        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y, "data": data}
-        asset_nodes_list.append(db_asset_dict)
-    return asset_nodes_list
-
-
-def db_connection_links_to_list(scen_id):
-    all_db_connection_links = ConnectionLink.objects.filter(scenario_id=scen_id)
-    connections_list = list()
-    for db_connection in all_db_connection_links:
-        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id, "flow_direction": db_connection.flow_direction}
-        connections_list.append(db_connection_dict)
-    return connections_list
-
-
-class NodeObject:
-    def __init__(self, node_data=None):
-        self.obj_id = node_data['id']
-        self.name = node_data['name']
-        self.data = node_data['data']
-        self.pos_x = node_data['pos_x']
-        self.pos_y = node_data['pos_y']
-        self.db_obj_id = (node_data['data']['databaseId'] if 'databaseId' in node_data['data'] else None)
-        self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
-        self.inputs = node_data['inputs']
-        self.outputs = list()
-
-        for key1 in node_data['outputs'].keys():
-            for key2 in node_data['outputs'][key1]:
-                self.outputs = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
-
-    def create_or_update_asset(self, scen_id):
-        asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()
-        for name, value in self.data.items():
-            print(name, value)
-            if name == 'optimize_cap':
-                value = True if value == 'on' else False
-            setattr(asset, name, value)
-
-        setattr(asset, 'pos_x', self.pos_x)
-        setattr(asset, 'pos_y', self.pos_y)
-        asset.scenario = get_object_or_404(Scenario, pk=scen_id)
-        asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
-        asset.save()
-        if self.db_obj_id is None:
-            self.db_obj_id = asset.id
-
-    def create_or_update_bus(self, scen_id):
-        bus = get_object_or_404(Bus, pk=self.db_obj_id) if self.db_obj_id else Bus()
-        setattr(bus, 'name', self.data['name'])
-        setattr(bus, 'type', self.data['bustype'])
-        setattr(bus, 'pos_x', self.pos_x)
-        setattr(bus, 'pos_y', self.pos_y)
-        bus.scenario = get_object_or_404(Scenario, pk=scen_id)
-        bus.save()
-        if self.db_obj_id is None:
-            self.db_obj_id = bus.id
-
-
-def create_node_interconnection_links(node_obj, map_dict, scen_id):
-    for output_connection in node_obj.outputs:
-        connection = ConnectionLink()
-        output_node = map_dict[int(output_connection)]
-
-        if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
-            setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
-            setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
-            setattr(connection, 'flow_direction', 'B2A')
-            setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
-        elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
-            setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
-            setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
-            setattr(connection, 'flow_direction', 'A2B')
-            setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
-        connection.save()
-
-
 # endregion Asset
+
 
 @login_required
 @json_view
@@ -619,6 +459,4 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
 def get_topology_json(request):
     scenario = Scenario.objects.get(pk=1)
     mvs_request_dto = convert_to_dto(scenario)
-
-    return HttpResponse(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__),
-                        status=200)
+    return HttpResponse(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__), status=200)

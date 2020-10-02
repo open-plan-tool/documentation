@@ -23,7 +23,7 @@ urlpatterns = [
     path('scenario/delete/<int:id>', scenario_delete, name='scenario_delete'),
 
     path('asset/search/<int:id>', asset_search, name='asset_search'),
-    path('asset/create/?P<my_asset>', AssetCreateView.as_view(), name='new_asset_create'),
+    #path('asset/create/?P<my_asset>', AssetCreateView.as_view(), name='new_asset_create'),
     path('asset/assets_topology', scenario_topology_view, name='new_assets_topology'),
 
     path('asset/create/<str:asset_type_name>', asset_create, name='asset_create'),
