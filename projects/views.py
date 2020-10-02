@@ -454,9 +454,37 @@ def scenario_topology_view(request):
 
 
 @login_required
-@json_view
 @require_http_methods(["GET"])
-def get_topology_json(request):
-    scenario = Scenario.objects.get(pk=1)
+def get_topology_json(request, scenario_id):
+    scenario = Scenario.objects.get(pk=scenario_id)
     mvs_request_dto = convert_to_dto(scenario)
-    return HttpResponse(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__), status=200)
+
+    # Create data dict from dto object
+    data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
+    # Remove None values
+    data_clean = del_none(data)
+
+    return JsonResponse(data_clean, status=200, content_type='application/json')
+
+
+# Helper method to clean data from None values
+
+
+def del_none(d):
+    # Copy dict in order to modify
+    rez = d.copy()
+    # Iterate over dict
+    for key, value in d.items():
+        # If null or empty delete key from dict
+        if value is None or value == '':
+            del rez[key]
+        # Else if nested dict call method again on dict
+        elif isinstance(value, dict):
+            rez[key] = del_none(value)
+        # Else if nested list call method again on contents
+        elif isinstance(value, list):
+            if not value:
+                del rez[key]
+            for entry in value:
+                value[value.index(entry)] = del_none(entry)
+    return rez

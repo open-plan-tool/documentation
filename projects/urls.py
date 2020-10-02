@@ -29,6 +29,6 @@ urlpatterns = [
     path('asset/create/<str:asset_type_name>', asset_create, name='asset_create'),
     path('asset/create_post/', asset_create, name='asset_create_post'),
 
-    path('topology/create_json/', get_topology_json, name='get_topology_json'),
+    path('topology/create_json/<int:scenario_id>', get_topology_json, name='get_topology_json'),
 
 ]
