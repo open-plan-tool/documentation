@@ -456,6 +456,7 @@ def scenario_topology_view(request):
     if request.method == "GET" and request.is_ajax():
         # Approach: send assets, busses and connection links to the front end and let it do the work
         topology_data_list = load_scenario_topology_from_db(request.session['scenario_id'])
+        #print(topology_data_list)
         return JsonResponse(topology_data_list, status=200)
 
     if request.method == "GET":
@@ -469,6 +470,9 @@ def scenario_topology_view(request):
             del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
             node_list.append(NodeObject(topology[node]))
 
+        # Clear the database before inserting or updating data.
+        #Asset.objects.filter(scenario_id=request.session['scenario_id']).delete()
+        #Bus.objects.filter(scenario_id=request.session['scenario_id']).delete()
         node_to_db_mapping_dict = dict()
 
         for node_obj in node_list:
@@ -519,8 +523,8 @@ def db_bus_nodes_to_list(scen_id):
 def db_asset_nodes_to_list(scen_id):
     all_db_assets = Asset.objects.filter(scenario_id=scen_id)
     asset_nodes_list = list()
-    data = dict()
     for db_asset in all_db_assets:
+        data = dict()
         db_asset_to_dict = json.loads(json.dumps(db_asset.__dict__, default = lambda o: o.__dict__))
         ignored_keys = ["scenario_id", "pos_x", "pos_y", "asset_type_id"]
         for key, val in db_asset_to_dict.items():
@@ -564,6 +568,7 @@ class NodeObject:
     def create_or_update_asset(self, scen_id):
         asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()
         for name, value in self.data.items():
+            print(name, value)
             if name == 'optimize_cap':
                 value = True if value == 'on' else False
             setattr(asset, name, value)
