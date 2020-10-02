@@ -132,36 +132,52 @@
                         // add database id to the node data dictionary, in order to discriminate among existing and new nodes.
                         editor.drawflow.drawflow.Home.data[`${key}`].data['databaseId'] = val;
                     });
-                    },
+                },
                 failure: function(errMsg) {alert(errMsg);}
             });
         });
     </script>
 
     <script>
-        $( document ).ready(function() {
-            $.getJSON("{% url 'new_assets_topology' %}", {}, function (data, textStatus, jqXHR){
-                //console.log(`${JSON.stringify(busNodes)} \n\n and ${JSON.stringify(assetNodes)} \n\n and ${JSON.stringify(connectionLinks)}`);
-                $.each(data['busses'], function (index, nodeData) {
-                    createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y);
-                    //console.log(JSON.stringify(nodeData));
-                });
-                $.each(data['assets'], function (index, nodeData) {
-                    createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y);
-                    //console.log(JSON.stringify(nodeData));
-                });
-                $.each(data['links'], function (index, linkData) {
+        function addBusses(data) {
+            $.each(data['busses'], function (index, nodeData) {
+                createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y);
+                //console.log(JSON.stringify(nodeData));
+            });
+        }
+
+        function addAssets(data) {
+            data['assets'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+        }
+
+        function addLinks(data) {
+            let time = 500;
+            $.each(data['links'], function (index, linkData) {
+                setTimeout(function (){
                     let busNodeId = nodeToDbId[linkData.bus_id];
                     let assetNodeId = nodeToDbId[linkData.asset_id];
-
-                    if (linkData.flow_direction === "B2A")
+                    console.log(busNodeId + " : " + assetNodeId);
+                    if (linkData.flow_direction === "B2A") {
                         editor.addConnection(busNodeId, assetNodeId, 'output_1', 'input_1');
-                    else
+                    } else {
                         editor.addConnection(assetNodeId, busNodeId, 'output_1', 'input_1');
-                    console.log(JSON.stringify(linkData));
-                });
+                    }
+                }, time);
+                time += 50;
+                //console.log(JSON.stringify(linkData));
+            });
+        }
+
+
+        $( document ).ready(function() {
+            $.getJSON("{% url 'new_assets_topology' %}", {}, function (data, textStatus, jqXHR){
+                $.when(addBusses(data), addAssets(data)).always(function(){
+                    setTimeout(function (){
+                        addLinks(data);
+                    }, 400);
+                }); // when
             })
-            .done(function () { alert('Request done!'); })
+            .done(function () { /*console.log('Request done!');*/ })
             .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
         });
     </script>
@@ -231,7 +247,7 @@
         editor.on('nodeCreated', function (nodeID){
             const dbId = editor.drawflow.drawflow.Home.data[`${nodeID}`]['data']['databaseId'];
             nodeToDbId[`${dbId}`] = nodeID;
-            //console.log('NodeCreated: ' + JSON.stringify(editor.drawflow.drawflow.Home.data[`${nodeID}`]));
+            console.log('NodeCreated: ' + JSON.stringify(dbId));
         })
 
         function addNodeToDrawFlow(name, pos_x, pos_y) {
@@ -402,11 +418,12 @@
 
         // Define a uniqueIdIncrementor to keep track of the created object modals in the window.
         // For the creation procedure ids with names #modalDataId{0,1,2,3} are created.
+        /*
         window.uniqueIdIncrementor = 0;
 
         function addInputAttributes(str) {
-            /* this function loops over all form inputs and adds custom Drawflow attribute.
-            *  It is equivalent to the python snippet added in the AssetForm Creation. */
+            // this function loops over all form inputs and adds custom Drawflow attribute.
+            // It is equivalent to the python snippet added in the AssetForm Creation.
             const parser = new DOMParser();
             let doc = parser.parseFromString(str, 'text/html');
 
@@ -427,6 +444,7 @@
                 $(`#modalDataId${uniqueIdIncrementor-1}`).html(formData);
                 });
         }
+        */
 
         function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
             //console.log(`nodeName: ${nodeName} and asset_type_name: ${asset_type_name}.\n`);
@@ -452,63 +470,62 @@
                 </div>
             </div>
             `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
+                editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
             else {
-                getAssetData(nodeName);
-                let html = `<div class="box" ondblclick="showpopup(event)">
-                <div class="modal" style="display:none">
-                  <div class="modal-content">
-                    <span class="close" onclick="closemodal(event)">&times;</span>
-                    <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
-                  </div>
-                </div>
-            </div>
-            `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
+                httpGetAsync(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y, createNodeDiv);
             }
+            /*
+            getAssetData(nodeName);
+            let html = `<div class="box" ondblclick="showpopup(event)">
+            <div class="modal" style="display:none">
+              <div class="modal-content">
+                <span class="close" onclick="closemodal(event)">&times;</span>
+                <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
+              </div>
+            </div>
+        </div>
+        `;
+        editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
+
+        */
         }
 
         /* Use this function to create nodes which will contain the full html data (forms included). */
         // region Alternative Html Injection Implementation
-        /*
-        function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y) {
-            httpGetAsync(nodeName, connectionInputs, connectionOutputs, asset_type_name, pos_x, pos_y, createNodeDiv);
-        }
-        function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, pos_x, pos_y, innerHtmlData){
-            console.log("innerHtmlData:         " + innerHtmlData);
+
+        function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y, innerHtmlData){
+            //console.log("innerHtmlData:         " + innerHtmlData);
             var source_html = `<div class="box" ondblclick="showpopup(event)">
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-                    <div id="modalDataId${window.uniqueIdIncrementor++}">${innerHtmlData}</div>
+                    <div>${innerHtmlData}</div>
                   </div>
                 </div>
             </div>
             `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, {}, source_html);
-            console.log(typeof(source_html));
-            console.log(source_html);
+            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html);
+            console.log(nodeName + JSON.stringify(nodeData));
+            //console.log(source_html);
         }
 
-        function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, asset_type_name, pos_x, pos_y, callback)
-        {
-            console.log('Start Get Async');
-            var fullUrl = 'create/' + asset_type_name;
+        function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, callback=createNodeDiv) {
+            //console.log('Start Get Async');
+            var fullUrl = 'create/' + nodeName;
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() {
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                     var data = xmlHttp.responseText;
                     var formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
-                    callback(nodeName, connectionInputs=1, connectionOutputs=1, pos_x, pos_y, formData);
+                    callback(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, formData);
                 }
             }
             xmlHttp.open("GET", fullUrl, true); // true for asynchronous
             xmlHttp.send(null);
-
-            console.log('End Get Async');
+            //console.log('End Get Async');
         }
-         */
+
         // endregion
     </script>
 
