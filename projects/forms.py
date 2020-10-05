@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Row, Column
 from django import forms
 from django.forms import ModelForm
 
@@ -100,6 +100,25 @@ class ScenarioUpdateForm(ModelForm):
     class Meta:
         model = Scenario
         exclude = ['id', 'project']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(Column('name', css_class='form-group col-xs-5'),
+                Column('start_date', css_class='form-group col-xs-4'),
+                css_class='form-row row'),
+            Row(Column('period', css_class='form-group col-xs-3'),
+                Column('time_step', css_class='form-group col-xs-3'),
+                Column('lifetime', css_class='form-group col-xs-3'),
+                css_class='form-row row'),
+            Row(Column('capex_fix', css_class='form-group col-xs-2'),
+                Column('capex_var', css_class='form-group col-xs-2'),
+                Column('opex_fix', css_class='form-group col-xs-2'),
+                Column('opex_var', css_class='form-group col-xs-3'),
+                css_class='form-row row'),
+
+        )
 
 
 class AssetCreateForm(ModelForm):

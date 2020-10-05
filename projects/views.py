@@ -167,7 +167,7 @@ def comment_create(request):
             comment.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/comment/search')
+            return HttpResponseRedirect('/scenario/search')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -201,7 +201,7 @@ def comment_update(request, id):
             comment.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/comment/search')
+            return HttpResponseRedirect('/scenario/search')
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -222,7 +222,7 @@ def comment_delete(request, id):
     if request.POST:
         comment.delete()
         messages.success(request, 'Comment successfully deleted!')
-        return HttpResponseRedirect('/comment/search')
+        return HttpResponseRedirect('/scenario/search')
 
 
 # endregion Comment
@@ -237,7 +237,9 @@ def scenario_search(request):
 
     scenario_list = Scenario.objects.filter(project=project)
 
-    return render(request, 'scenario/scenario_search.html', {'scenario_list': scenario_list})
+    comment_list = Comment.objects.filter(project=project)
+
+    return render(request, 'scenario/scenario_search.html', {'scenario_list': scenario_list, 'comment_list': comment_list})
 
 
 @login_required
@@ -317,6 +319,20 @@ def scenario_update(request, id):
         form = ScenarioUpdateForm(instance=scenario)
 
     return render(request, 'comment/comment_update.html', {'form': form})
+
+
+@login_required
+@require_http_methods(["GET"])
+def scenario_view(request, id):
+    project = get_object_or_404(Project, pk=request.session['project_id'])
+    scenario = get_object_or_404(Scenario, pk=id)
+
+    if scenario.project != project or project.user != request.user:
+        return HttpResponseForbidden()
+
+    scenario_form = ScenarioUpdateForm(None, instance=scenario)
+    return render(request, 'scenario/scenario_info.html', {'scenario_form': scenario_form})
+
 
 
 @login_required
@@ -455,6 +471,8 @@ def scenario_topology_view(request):
 # endregion Asset
 
 
+# region MVS JSON Related
+
 @login_required
 @require_http_methods(["GET"])
 def get_topology_json(request, scenario_id):
@@ -491,3 +509,5 @@ def del_none(d):
             for entry in value:
                 value[value.index(entry)] = del_none(entry)
     return rez
+
+# endregion

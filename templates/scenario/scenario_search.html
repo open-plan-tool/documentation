@@ -4,53 +4,28 @@
 
 {% block content %}
 
-
-    <div class="progress-bar-wrapper"></div>
-
-    <div class="input-panel">
-        <a class="btn btn-primary btn-lg open-modal" data-modal="CreateScenarioModal">
-            Add Scenario
-        </a>
-    </div>
+    <h1 style="text-align: center">Project Overview</h1>
+    <!-- region Project Scenarios List -->
+    <a class="open-modal" data-modal="CreateScenarioModal" style="visibility: hidden">Add Scenario</a>
 
     <div class="panel panel-default ">
-        <div class="panel-heading"><h3 class="panel-title"><strong>Scenario List </strong></h3></div>
+        <div class="panel-heading"><h2 class="panel-title" style="text-align: center"><strong>Project Scenarios </strong></h2></div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table id="ScenarioTable" class="table table-striped">
+                <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
                         <th>&emsp;&emsp;</th>
                         <th>Name</th>
                         <th>Start Date</th>
-                        <th>Time Step</th>
-                        <th>Period</th>
-                        <th>Capex_fix</th>
-                        <th>Capex_var</th>
-                        <th>Opex_fix</th>
-                        <th>Opex_var</th>
-                        <th>lifetime</th>
+                        <th>State</th>
+                        <th>User Ranking</th>
+                        <th>Progress</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for scenario in scenario_list %}
                         <tr class="table-row">
-                            <td>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" class="scenario_check"
-                                               value="{{ scenario.pk }}"/></label>
-                                </div>
-                            </td>
-                            <td class="text"><span>{{ scenario.name }}</span></td>
-                            <td class="text"><span>{{ scenario.start_date }}</span></td>
-                            <td class="text"><span>{{ scenario.time_step }}</span></td>
-                            <td class="text"><span>{{ scenario.period }}</span></td>
-                            <td class="text"><span>{{ scenario.capex_fix }}</span></td>
-                            <td class="text"><span>{{ scenario.capex_var }}</span></td>
-                            <td class="text"><span>{{ scenario.opex_fix }}</span></td>
-                            <td class="text"><span>{{ scenario.opex_var }}</span></td>
-                            <td class="text"><span>{{ scenario.lifetime }}</span></td>
                             <td>
                                 <!-- Create the configuration glyphicon and the dropdown menu choices. -->
                                 <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
@@ -59,12 +34,20 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
                                         <li role="presentation">
+                                            <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
+                                               href="{% url 'scenario_view' scenario.pk %}" name="View"> Info</a>
+                                        </li>
+                                        <li role="presentation">
                                             <a role="menuitem" tabindex="1" href="#">
                                                 <span class="glyphicon glyphicon-edit open-modal"
                                                       type="submit"
                                                       value="Edit" data-modal="UpdateScenarioForm"
                                                       data-url="{% url 'scenario_update' scenario.pk %}"> Edit</span>
                                             </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" class="glyphicon glyphicon-picture"
+                                               href="{% url 'new_assets_topology' %}" name="View"> Grid Model</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
@@ -73,7 +56,7 @@
                                                       method="POST">
                                                     {% csrf_token %}
                                                     <label style="float: left;  margin: 5px;">
-                                                    <span class="glyphicon glyphicon-trash"> Delete</span>
+                                                    <span class="glyphicon glyphicon-trash"> Remove</span>
                                                     <input style="display: none" class="btn btn-sm btn-danger"
                                                                type="submit" value="Delete"
                                                                onclick="return confirm('Are you sure you want to delete?')"/>
@@ -84,55 +67,111 @@
                                     </ul>
                                 </div>
                             </td>
+                            <td class="text"><span>{{ scenario.name }}</span></td>
+                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+
                         </tr>
                     {% endfor %}
+                    <tr class="table-row">
+                        <td>
+                            <a class="glyphicon glyphicon-plus open-modal" style="color: forestgreen" data-modal="CreateScenarioModal"></a>
+                        </td>
+                        <td colspan="5">Create New Scenario</td>
+                    </tr>
+                    <tr class="table-row">
+                        <td>
+                            <a class="glyphicon glyphicon-upload" style="color: forestgreen"></a>
+                        </td>
+                        <td colspan="5">Load Scenario From File</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- endregion -->
+
+    <!-- region Project Comments List -->
+    <div class="panel panel-default ">
+        <div class="panel-heading"><h2 class="panel-title" style="text-align: center"><strong>Project Comments </strong></h2></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>&emsp;&emsp;</th>
+                        <th>Title</th>
+                        <th>Comment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in comment_list %}
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <a href="#" id="dropdownMenuButton" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog" style="font-size: 120%"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
+                                               href="{% url 'comment_update' comment.pk %}" name="View"> Info</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>{{ comment.name }}</td>
+                            <td class="text"><span>{{ comment.body }}</span></td>
+                            <td>
+                                <input style="float: left; margin: 5px;" class="btn btn-sm btn-default open-comments-modal"
+                                       type="submit"
+                                       value="Edit" data-modal="UpdateCommentForm"
+                                       data-url="{% url 'comment_update' comment.pk %}"/>
+                                <form style="float: left;" class="form" action="{% url 'comment_delete' comment.pk %}"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
+                                           type="submit" value="Delete"
+                                           onclick="return confirm('Are you sure you want to delete?')"/>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <a class="glyphicon glyphicon-plus open-comments-modal" style="color: forestgreen"
+                               data-modal="CreateCommentForm" data-url="{% url 'comment_create' %}"></a>
+                        </td>
+                        <td colspan="2">Add Comment</td>
+
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <div class="input-panel">
-        <form style="float: right;" id="ScenarioSelect" class="form"
-              method="GET">
-            <input style="float: left;  margin: 5px;" class="btn btn-lg btn-primary"
-                   type="submit" value="Next"/>
-        </form>
-    </div>
-
+    <!-- endregion -->
 
     <!-- Here we create this empty div for inserting modal -->
     <div id="modal-div"></div>
+{% endblock %}
 
-
-
-
-    <script>
-        //we can set animation delay as following in ms (default 1000)
-        ProgressBar.singleStepAnimation = 500;
-        ProgressBar.init(
-            ['Create Project',
-                'Add Comments',
-                'Create Scenario',
-                'Add Assets',
-                'Run Simulation',
-            ],
-            'Create Scenario',
-            'progress-bar-wrapper' // created this optional parameter for container name (otherwise default container created)
-        );
-    </script>
-
+{% block end_body_scripts %}
     <script>
         //modalData holds id of html form
         var modalDiv = $("#modal-div");
         var modalName = $(".open-modal").data("modal")
-
 
         $(".open-modal").on("click", function () {
             $.ajax({
                 url: "{% url 'scenario_create' %}",
                 success: function (data) {
                     modalDiv.html(data);
+                    console.log(modalDiv);
                     $('#' + modalName).modal();
                 }
             });
@@ -140,36 +179,22 @@
     </script>
 
     <script>
-        $('#ScenarioTable').on('click', '.scenario_check', function (event) {
-            console.log("CLICKED!")
-            if ($('.table-row').hasClass('active')) {
-                $('.table-row').removeClass('active');
-            } else {
-                $('.table-row').addClass('active').siblings().removeClass('active');
-            }
-        });
+        //modalData holds id of html form
+        var modalDiv = $("#modal-div");
 
-
-        $('.scenario_check').click(function () {
-            scenarioId = $(this).val();
-            $('#ScenarioSelect').attr("action", "/asset/search/" + scenarioId);
-            $('.scenario_check').not(this).prop('checked', false);
-            console.log(scenarioId + " checked!")  // sanity check
-
-        });
-
-        $('#ScenarioSelect').on('submit', function (event) {
-            console.log("form submitted!")  // sanity check
-            if ($('.scenario_check').is(':checked')) {
-                if (confirm("Are you sure you want to proceed?")) {
-                } else {
-                    event.preventDefault();
+        $(".open-comments-modal").on("click", function () {
+            var modalUrl = $(this).data("url")
+            var modalName = $(this).data("modal")
+            $.ajax({
+                url: modalUrl,
+                success: function (data) {
+                    modalDiv.html(data);
+                    $(".modal-form").attr("action", modalUrl)
+                    $('#' + modalName).modal();
                 }
-            } else {
-                alert("You must select a scenario to proceed!");
-                event.preventDefault();
-            }
+            });
         });
+
     </script>
 
     <script>
@@ -198,6 +223,4 @@
             });
         })();
     </script>
-
-
-{% endblock %}
+{% endblock end_body_scripts %}

@@ -21,9 +21,9 @@ urlpatterns = [
     path('scenario/create_post/', scenario_create_post, name='scenario_create_post'),
     path('scenario/update/<int:id>', scenario_update, name='scenario_update'),
     path('scenario/delete/<int:id>', scenario_delete, name='scenario_delete'),
+    path('scenario/view/<int:id>', scenario_view, name='scenario_view'),
 
     path('asset/search/<int:id>', asset_search, name='asset_search'),
-    #path('asset/create/?P<my_asset>', AssetCreateView.as_view(), name='new_asset_create'),
     path('asset/assets_topology', scenario_topology_view, name='new_assets_topology'),
 
     path('asset/create/<str:asset_type_name>', asset_create, name='asset_create'),
