@@ -37,6 +37,7 @@
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
                                                href="{% url 'scenario_view' scenario.pk %}" name="View"> Info</a>
                                         </li>
+                                        <!--
                                         <li role="presentation">
                                             <a role="menuitem" tabindex="1" href="#">
                                                 <span class="glyphicon glyphicon-edit open-modal"
@@ -45,9 +46,10 @@
                                                       data-url="{% url 'scenario_update' scenario.pk %}"> Edit</span>
                                             </a>
                                         </li>
+                                        -->
                                         <li role="presentation">
                                             <a role="menuitem" class="glyphicon glyphicon-picture"
-                                               href="{% url 'new_assets_topology' %}" name="View"> Grid Model</a>
+                                               href="{% url 'new_assets_topology' %}" name="View"> Grid-Model</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
@@ -69,9 +71,9 @@
                             </td>
                             <td class="text"><span>{{ scenario.name }}</span></td>
                             <td class="text"><span>{{ scenario.start_date }}</span></td>
-                            <td class="text"><span>{{ scenario.start_date }}</span></td>
-                            <td class="text"><span>{{ scenario.start_date }}</span></td>
-                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+                            <td class="text"><span>{{ None }}</span></td>
+                            <td class="text"><span>{{ None }}</span></td>
+                            <td class="text"><span>{{ None }}</span></td>
 
                         </tr>
                     {% endfor %}
@@ -83,7 +85,7 @@
                     </tr>
                     <tr class="table-row">
                         <td>
-                            <a class="glyphicon glyphicon-upload" style="color: forestgreen"></a>
+                            <a id="upload-scenario" class="glyphicon glyphicon-upload" style="color: forestgreen"></a>
                         </td>
                         <td colspan="5">Load Scenario From File</td>
                     </tr>
@@ -153,14 +155,29 @@
             </div>
         </div>
     </div>
-
     <!-- endregion -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
 
     <!-- Here we create this empty div for inserting modal -->
     <div id="modal-div"></div>
 {% endblock %}
 
 {% block end_body_scripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#upload-scenario").modalForm({
+                formURL: "{% url 'scenario_upload' %}"
+            });
+        });
+    </script>
+
     <script>
         //modalData holds id of html form
         var modalDiv = $("#modal-div");

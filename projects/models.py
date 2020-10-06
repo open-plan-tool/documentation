@@ -212,3 +212,8 @@ class ConnectionLink(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=False)
     flow_direction = models.CharField(max_length=15, choices=FLOW_DIRECTION, null=False)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
+
+
+class ScenarioFile(models.Model):
+    title = models.CharField(max_length=50)
+    file = models.FileField(upload_to='tempFiles/', null=True, blank=True)

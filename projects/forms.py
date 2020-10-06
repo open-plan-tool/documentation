@@ -1,3 +1,5 @@
+from bootstrap_modal_forms.forms import BSModalModelForm
+from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column
 from django import forms
@@ -119,6 +121,12 @@ class ScenarioUpdateForm(ModelForm):
                 css_class='form-row row'),
 
         )
+
+
+class LoadScenarioFromFileForm(BSModalModelForm):
+    class Meta:
+        model = ScenarioFile
+        fields = ['title', 'file']
 
 
 class AssetCreateForm(ModelForm):

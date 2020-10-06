@@ -1,9 +1,11 @@
+from bootstrap_modal_forms.generic import BSModalCreateView
 from django.contrib.auth.decorators import login_required
 import json
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import *
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 from django.contrib import messages
@@ -76,7 +78,7 @@ def project_create(request):
             request.session['project_id'] = project.id
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/comment/search')
+            return HttpResponseRedirect('/scenario/search')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -348,6 +350,28 @@ def scenario_delete(request, id):
         scenario.delete()
         messages.success(request, 'scenario successfully deleted!')
         return HttpResponseRedirect('/scenario/search')
+
+'''
+@login_required
+@require_http_methods(["GET", "POST"])
+def load_scenario_from_file(request):
+    if request.method == 'POST':
+        form = LoadScenarioFromFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            # !TODO
+            #check_format_and_create_model(request.FILES['file'])
+            return HttpResponseRedirect(reverse('scenario_search'))
+    else:
+        form = LoadScenarioFromFileForm()
+    return render(request, 'scenario/load_scenario_from_file.html', {'form': form})
+'''
+
+
+class BookCreateView(BSModalCreateView):
+    template_name = 'scenario/load_scenario_from_file.html'
+    form_class = LoadScenarioFromFileForm
+    success_message = 'Success: Scenario Uploaded.'
+    success_url = reverse_lazy('scenario_search')
 
 
 # endregion Scenario

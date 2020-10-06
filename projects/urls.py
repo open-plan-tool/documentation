@@ -22,6 +22,7 @@ urlpatterns = [
     path('scenario/update/<int:id>', scenario_update, name='scenario_update'),
     path('scenario/delete/<int:id>', scenario_delete, name='scenario_delete'),
     path('scenario/view/<int:id>', scenario_view, name='scenario_view'),
+    path('scenario/upload/', BookCreateView.as_view(), name='scenario_upload'),
 
     path('asset/search/<int:id>', asset_search, name='asset_search'),
     path('asset/assets_topology', scenario_topology_view, name='new_assets_topology'),
