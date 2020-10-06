@@ -269,7 +269,7 @@ cursor: pointer;
 
 
 /* <editor-fold desc="Sink Region"> */
-.drawflow-node.sink {
+.drawflow-node.demand, .drawflow-node.electricity_excess, .drawflow-node.dso_feedin {
   border-bottom: 50px solid #4dc3ff;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
@@ -278,15 +278,15 @@ cursor: pointer;
   background: transparent;
   text-align: left;
 }
-.drawflow-node.sink .input {
+.drawflow-node.demand .input, .drawflow-node.electricity_excess .input, .drawflow-node.dso_feedin .input {
   background: green;
 }
 
-.drawflow-node.sink .output {
+.drawflow-node.demand .output, .drawflow-node.electricity_excess .output, .drawflow-node.dso_feedin .output {
   background: red;
 }
 
-.drawflow-node.sink.selected {
+.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected{
   border-bottom: 50px solid #4dc3ff;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
@@ -299,7 +299,7 @@ cursor: pointer;
 
 
 /* <editor-fold desc="Source Region"> */
-.drawflow-node.source {
+.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
   border-top: 50px solid #00e600;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
@@ -308,15 +308,15 @@ cursor: pointer;
   background: transparent;
   text-align: left;
 }
-.drawflow-node.source .input {
+.drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
   background: green;
 }
 
-.drawflow-node.source .output {
+.drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output{
   background: red;
 }
 
-.drawflow-node.source.selected {
+.drawflow-node.dso.selected , .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected{
   border-top: 50px solid #00e600;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;

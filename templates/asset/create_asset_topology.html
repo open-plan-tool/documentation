@@ -3,18 +3,9 @@
 {% load crispy_forms_tags %}
 
 {% block start_body_scripts %}
-    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/beautiful.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            $( "#accordion" ).accordion();
-        } );
-    </script>
 {% endblock start_body_scripts %}
 
 {% block topology %}
@@ -23,7 +14,7 @@
         <div id="accordion" class="col">
             <h3>Energy Production</h3>
             <div style="padding: 0px; margin: 0px; height: fit-content;">
-                <div class="drag-drawflow source" draggable="true" ondragstart="drag(event)" data-node="dso_consumption">
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso_consumption">
                     <i class="fas fa-plug"></i><span> DSO Consumption </span>
                 </div>
                 <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="pv_plant">
@@ -31,6 +22,9 @@
                 </div>
                 <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="wind_plant">
                     <i class="fas fa-wind"></i><span> Wind Plant </span>
+                </div>
+                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso">
+                    <i class="fas fa-grip-lines"></i><span> System DSO </span>
                 </div>
             </div>
             <h3>Energy Conversion</h3>
@@ -75,17 +69,9 @@
                     <i class="fas fa-lightbulb"></i><span> Demand </span>
                 </div>
             </div>
-            <h3>Energy Provider</h3>
-            <div>
-                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
-                    <i class="fas fa-grip-lines"></i><span> Bus </span>
-                </div>
-                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso">
-                    <i class="fas fa-grip-lines"></i><span> dso </span>
-                </div>
-                <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="requestModalWithNewDataEachTime">
-                    <i class="fas fa-grip-lines"></i><span> Request from DB Test </span>
-                </div>
+            <h3>Energy Bus</h3>
+            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
+                <i class="fas fa-grip-lines"></i><span> Bus </span>
             </div>
 
         </div>
@@ -96,8 +82,8 @@
             </div>
 
             <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="btn-export" onclick="Swal.fire({title: 'Export', html: JSON.stringify(editor.export())})">
-                    Export
+                <div class="btn-export">
+                    Save
                 </div>
                 <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
 
@@ -116,34 +102,19 @@
 
 
 {% block end_body_scripts %}
+    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        /* Export Topology to JSON and send to back-end. */
-        $(".btn-export").click(function(){
-            $.ajax({
-                headers: {'X-CSRFToken': '{{ csrf_token }}' },
-                type: "POST",
-                url: "{% url 'new_assets_topology' %}",
-                data: JSON.stringify(editor.export()),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(resp){
-                    var node = resp.data;
-                    $.each(node, function(key, val){
-                        // add database id to the node data dictionary, in order to discriminate among existing and new nodes.
-                        editor.drawflow.drawflow.Home.data[`${key}`].data['databaseId'] = val;
-                    });
-                },
-                failure: function(errMsg) {alert(errMsg);}
-            });
-        });
+        $( function() {
+            $( "#accordion" ).accordion();
+        } );
     </script>
 
     <script>
         function addBusses(data) {
-            $.each(data['busses'], function (index, nodeData) {
-                createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y);
-                //console.log(JSON.stringify(nodeData));
-            });
+            data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
         }
 
         function addAssets(data) {
@@ -154,9 +125,9 @@
             let time = 500;
             $.each(data['links'], function (index, linkData) {
                 setTimeout(function (){
-                    let busNodeId = nodeToDbId[linkData.bus_id];
-                    let assetNodeId = nodeToDbId[linkData.asset_id];
-                    console.log(busNodeId + " : " + assetNodeId);
+                    let busNodeId = nodeToDbId['bus'][linkData.bus_id];
+                    let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
+
                     if (linkData.flow_direction === "B2A") {
                         editor.addConnection(busNodeId, assetNodeId, 'output_1', 'input_1');
                     } else {
@@ -164,7 +135,6 @@
                     }
                 }, time);
                 time += 50;
-                //console.log(JSON.stringify(linkData));
             });
         }
 
@@ -242,139 +212,30 @@
         })
 
 
-        const nodeToDbId = {}; // a dictionary to keep the mapping between node and database ids.
+        const nodeToDbId = {'bus':{},'asset':{}}; // a dictionary to keep the mapping between node and database ids.
 
         editor.on('nodeCreated', function (nodeID){
+            const nodeType = (editor.drawflow.drawflow.Home.data[`${nodeID}`].name === "bus") ? "bus" : "asset";
             const dbId = editor.drawflow.drawflow.Home.data[`${nodeID}`]['data']['databaseId'];
-            nodeToDbId[`${dbId}`] = nodeID;
-            console.log('NodeCreated: ' + JSON.stringify(dbId));
+            if (nodeType === "bus")
+                nodeToDbId['bus'][`${dbId}`] = nodeID;
+            else
+                nodeToDbId['asset'][`${dbId}`] = nodeID;
         })
 
         function addNodeToDrawFlow(name, pos_x, pos_y) {
-            if(editor.editor_mode === 'fixed') {
+            if(editor.editor_mode === 'fixed')
                 return false;
-            }
             pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
             pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
             createNodeObject(name, 1, 1, {}, pos_x, pos_y);
-            /*
-            switch (name) {
-                case 'sourcethe':
-                    let energy_source_html = `<div>
-                        <div class="title-box">
-                            <img src="/static/images/wind.png" style="max-width: 40%; max-height: 70%"/></i>Energy Source
-                        </div>
-                        <div class="box dbclickbox" ondblclick="showpopup(event)">
-                            Db Click here
-                            <div class="modal" style="display:none">
-                              <div class="modal-content">
-                                <span class="close" onclick="closemodal(event)">&times;</span>
-                                Change your variable {name} !
-                                <input type="text" df-name>
-                              </div>
-
-                            </div>
-                        </div>
-                    </div>`;
-                    editor.addNode('sourceNodeName', 0,  1, pos_x, pos_y, 'sourcethe', { name: ''}, energy_source_html );
-                    break;
-                case 'transfmr':
-                    var template = `
-                          <div>
-                            <div class="title-box"><i class="fas fa-code"></i><span>Transformer1</span></div>
-                            <div class="box"><textarea df-template>Text</textarea>template info</div>
-                          </div>
-                          `;
-                    editor.addNode('template', 1, 1, pos_x, pos_y, 'transfmr', { "transfmr": 'Write your template'}, template );
-                    break;
-                case 'requestModalWithNewDataEachTime':
-                    var dbclick = `
-            <div>
-            <div class="title-box"><i class="fas fa-mouse"></i> Db Click</div>
-              <div class="box clickbox" ondblclick="showcustompopup(event)">
-                Db Click here
-
-            <div id="demo" class="input-panel">
-                <a class="btn btn-primary btn-lg open-modal" data-modal="CreateAssetModal">
-                    Add Scenario
-                </a>
-            </div>
-
-              </div>
-            </div>
-            `;
-                    editor.addNode('dbclick', 1, 0, pos_x, pos_y, 'dbclick', { name: ''}, dbclick );
-                    break;
-                //<editor-fold desc="Energy Production">
-                case 'dso_consumption':
-                    createNodeObject('dso_consumption', 1, 1, 'dso_consumption', pos_x, pos_y);
-                    break;
-                case 'pv_plant':
-                    createNodeObject('pv_plant', 1, 1, 'pv_plant', pos_x, pos_y);
-                    break;
-                case 'wind_plant':
-                    createNodeObject('wind_plant', 1, 1, 'wind_plant', pos_x, pos_y);
-                    break;
-                //</editor-fold>
-                //<editor-fold desc="Energy Conversion">
-                case 'transformer_station_in':
-                    createNodeObject('transformer_station_in', 1, 1, 'transformer_station_in', pos_x, pos_y);
-                    break;
-                case 'transformer_station_out':
-                    createNodeObject('transformer', 1, 1, 'transformer_station_out', pos_x, pos_y);
-                    break;
-                case 'storage_charge_controller_in':
-                    createNodeObject('transformer', 1, 1, 'storage_charge_controller_in', pos_x, pos_y);
-                    break;
-                case 'storage_charge_controller_out':
-                    createNodeObject('transformer', 1, 1, 'storage_charge_controller_out', pos_x, pos_y);
-                    break;
-                case 'solar_inverter':
-                    createNodeObject('transformer', 1, 1, 'solar_inverter', pos_x, pos_y);
-                    break;
-                //</editor-fold>
-                //<editor-fold desc="Energy Storage">
-                case 'charging_power':
-                    createNodeObject('transformer', 1, 1, 'charging_power', pos_x, pos_y);
-                    break;
-                case 'discharging_power':
-                    createNodeObject('transformer', 1, 1, 'discharging_power', pos_x, pos_y);
-                    break;
-                case 'capacity':
-                    createNodeObject('transformer', 1, 1, 'capacity', pos_x, pos_y);
-                    break;
-                //</editor-fold>
-                //<editor-fold desc="Energy Consumption">
-                case 'electricity_excess':
-                    createNodeObject('sink', 1, 1, 'electricity_excess', pos_x, pos_y);
-                    break;
-                case 'dso_feedin':
-                    createNodeObject('sink', 1, 1, 'dso_feedin', pos_x, pos_y);
-                    break;
-                case 'demand':
-                    createNodeObject('sink', 1, 1, 'demand', pos_x, pos_y);
-                    break;
-                //</editor-fold>
-                //<editor-fold desc="Energy Provider">
-                case 'bus':
-                    createNodeObject('bus', 1, 1, 'dso', pos_x, pos_y);
-                    break;
-                case 'dso':
-                    createNodeObject('dso', 1, 1, 'dso', pos_x, pos_y);
-                    break;
-                //</editor-fold>
-                default:
-            }
-             */
         }
 
 
-        let transform = '';
         function showpopup(e) {
             e.target.closest(".drawflow-node").style.zIndex = "9999";
             e.target.children[0].style.display = "block";
-            console.log(e.target.children[0]);
             editor.precanvas.style.left = editor.canvas_x +'px';
             editor.precanvas.style.top = editor.canvas_y +'px';
 
@@ -382,74 +243,35 @@
         }
 
         function closemodal(e) {
-            e.target.closest(".drawflow-node").style.zIndex = "2";
-            e.target.parentElement.parentElement.style.display  ="none";
+            e.target.closest(".drawflow-node").style.zIndex = "2"; // bring node to default z-index
+            e.target.parentElement.parentElement.style.display  ="none"; // hide the modal
             editor.precanvas.style.left = '0px';
             editor.precanvas.style.top = '0px';
             editor.editor_mode = "edit";
         }
 
-        function showcustompopup(e) {
-            //modalData holds id of html form
-            var modalDiv = $("#modal-div");
-            var modalName = $(".open-modal").data("modal")
-
-
-            $(".open-modal").on("click", function () {
-                console.log("CLICKED!")
-                $.ajax({
-                    url: "{% url 'asset_create' 'pv_plant' %}",
-                    success: function (data) {
-                        modalDiv.html(data);
-
-                        const inputs = document.getElementById('CreateAssetModal').getElementsByTagName('input');
-                        for (const [key, value] of Object.entries(inputs)) {
-                            console.log(key, value);
-                        }
-                        $('#' + modalName).modal();
+        document.addEventListener('keydown', function(e) {
+            const modalList = document.getElementsByClassName("modal");
+            if (e.keyCode === 27) {
+                for (const modalDiv of modalList) {
+                    if (modalDiv.style.display === "block"){
+                        modalDiv.parentElement.parentElement.parentElement.style.zIndex = "2"; // drawflow-node element
+                        modalDiv.style.display = "none";
+                        editor.precanvas.style.left = '0px';
+                        editor.precanvas.style.top = '0px';
+                        editor.editor_mode = "edit";
                     }
-                });
-            });
-        }
+                }
+            }
+        })
+
     </script>
 
 
     <script>
-
-        // Define a uniqueIdIncrementor to keep track of the created object modals in the window.
-        // For the creation procedure ids with names #modalDataId{0,1,2,3} are created.
-        /*
-        window.uniqueIdIncrementor = 0;
-
-        function addInputAttributes(str) {
-            // this function loops over all form inputs and adds custom Drawflow attribute.
-            // It is equivalent to the python snippet added in the AssetForm Creation.
-            const parser = new DOMParser();
-            let doc = parser.parseFromString(str, 'text/html');
-
-            // get the list of all inputs and add the custom 'df-*' attribute foreach input
-            let inputElements = doc.body.getElementsByTagName("input");
-            $.each(inputElements, function(index, item){
-                let nameAttr = item.getAttribute("name");
-                item.setAttribute('df-'+nameAttr, '');
-            });
-            const theForm = doc.body.getElementsByTagName("form");
-            return theForm;
-        }
-
-        function getAssetData(asset_type_name) {
-            $.get('create/' + asset_type_name, function(data){
-                let formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
-                //data2Html = addInputAttributes(formData);
-                $(`#modalDataId${uniqueIdIncrementor-1}`).html(formData);
-                });
-        }
-        */
-
         function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
-            //console.log(`nodeName: ${nodeName} and asset_type_name: ${asset_type_name}.\n`);
             if (nodeName === 'bus'){
-                let html = `<div class="box" ondblclick="showpopup(event)">
+                let html = `<div class="box" ondblclick="showpopup(event)">${nodeData.name}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -472,31 +294,13 @@
             `;
                 editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
-            else {
+            else
                 httpGetAsync(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y, createNodeDiv);
-            }
-            /*
-            getAssetData(nodeName);
-            let html = `<div class="box" ondblclick="showpopup(event)">
-            <div class="modal" style="display:none">
-              <div class="modal-content">
-                <span class="close" onclick="closemodal(event)">&times;</span>
-                <div id="modalDataId${window.uniqueIdIncrementor++}"></div>
-              </div>
-            </div>
-        </div>
-        `;
-        editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
-
-        */
         }
 
         /* Use this function to create nodes which will contain the full html data (forms included). */
-        // region Alternative Html Injection Implementation
-
         function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y, innerHtmlData){
-            //console.log("innerHtmlData:         " + innerHtmlData);
-            var source_html = `<div class="box" ondblclick="showpopup(event)">
+            var source_html = `<div class="box" ondblclick="showpopup(event)">${nodeData.name}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -506,12 +310,9 @@
             </div>
             `;
             editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html);
-            console.log(nodeName + JSON.stringify(nodeData));
-            //console.log(source_html);
         }
 
         function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, callback=createNodeDiv) {
-            //console.log('Start Get Async');
             var fullUrl = 'create/' + nodeName;
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() {
@@ -523,10 +324,30 @@
             }
             xmlHttp.open("GET", fullUrl, true); // true for asynchronous
             xmlHttp.send(null);
-            //console.log('End Get Async');
         }
+    </script>
 
-        // endregion
+    <script defer>
+        /* Export Topology to JSON and send to back-end. */
+        $(".btn-export").click(function(){
+            $.ajax({
+                headers: {'X-CSRFToken': '{{ csrf_token }}' },
+                type: "POST",
+                url: "{% url 'new_assets_topology' %}",
+                data: JSON.stringify(editor.export()),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(resp){
+                    var node = resp.data;
+                    $.each(node, function(key, val){
+                        // add database id to the node data dictionary, in order to discriminate among existing and new nodes.
+                        editor.drawflow.drawflow.Home.data[`${key}`].data['databaseId'] = val;
+                    });
+                    window.location.href = "{% url 'scenario_search' %}";
+                },
+                failure: function(errMsg) {alert(errMsg);}
+            });
+        });
     </script>
 
 {% endblock end_body_scripts %}
