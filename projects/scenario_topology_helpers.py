@@ -35,7 +35,8 @@ def db_asset_nodes_to_list(scen_id):
                     data[key] = val
 
         asset_type_obj = get_object_or_404(AssetType, pk=db_asset.asset_type_id)
-        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y, "data": data}
+        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y,
+                         "data": data}
         asset_nodes_list.append(db_asset_dict)
     return asset_nodes_list
 
@@ -44,7 +45,8 @@ def db_connection_links_to_list(scen_id):
     all_db_connection_links = ConnectionLink.objects.filter(scenario_id=scen_id)
     connections_list = list()
     for db_connection in all_db_connection_links:
-        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id, "flow_direction": db_connection.flow_direction}
+        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id,
+                              "flow_direction": db_connection.flow_direction}
         connections_list.append(db_connection_dict)
     return connections_list
 
@@ -132,3 +134,25 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
             setattr(connection, 'flow_direction', 'A2B')
             setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
         connection.save()
+
+
+# Helper method to clean dict data from None values
+def del_none(d: dict):
+    # Copy dict in order to modify
+    rez = d.copy()
+    # Iterate over dict
+    for key, value in d.items():
+        # If null or empty delete key from dict
+        if value is None or value == '':
+            del rez[key]
+        # Else if nested dict call method again on dict
+        elif isinstance(value, dict):
+            rez[key] = del_none(value)
+        # Else if nested list call method again on contents
+        elif isinstance(value, list):
+            if not value:
+                del rez[key]
+            # Remove empty list entries
+            for entry in value:
+                value[value.index(entry)] = del_none(entry)
+    return rez

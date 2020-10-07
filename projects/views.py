@@ -14,9 +14,10 @@ from crispy_forms.templatetags import crispy_forms_filters
 
 from .dtos import convert_to_dto
 from .forms import *
+from .http_requests import mvs_simulation_request
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
-    update_deleted_objects_from_database
+    update_deleted_objects_from_database, del_none
 
 
 class HomeView(TemplateView):
@@ -135,6 +136,7 @@ def project_search(request):
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
 
+
 # endregion Project
 
 
@@ -241,7 +243,8 @@ def scenario_search(request):
 
     comment_list = Comment.objects.filter(project=project)
 
-    return render(request, 'scenario/scenario_search.html', {'scenario_list': scenario_list, 'comment_list': comment_list})
+    return render(request, 'scenario/scenario_search.html',
+                  {'scenario_list': scenario_list, 'comment_list': comment_list})
 
 
 @login_required
@@ -336,7 +339,6 @@ def scenario_view(request, id):
     return render(request, 'scenario/scenario_info.html', {'scenario_form': scenario_form})
 
 
-
 @login_required
 @require_http_methods(["POST"])
 def scenario_delete(request, id):
@@ -350,6 +352,7 @@ def scenario_delete(request, id):
         scenario.delete()
         messages.success(request, 'scenario successfully deleted!')
         return HttpResponseRedirect('/scenario/search')
+
 
 '''
 @login_required
@@ -492,42 +495,48 @@ def scenario_topology_view(request):
     else:
         return JsonResponse({"success": False}, status=400)
 
+
 # endregion Asset
 
 
 # region MVS JSON Related
 
+# End-point to return scenario topology JSON
 @login_required
 @require_http_methods(["GET"])
 def get_topology_json(request, scenario_id):
+    # Load scenario
     scenario = Scenario.objects.get(pk=scenario_id)
+
+    # Convert scenario topology to dto's
     mvs_request_dto = convert_to_dto(scenario)
 
-    # Create data dict from dto object
+    # Create data dict from dto objects
     data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
+
     # Remove None values
     data_clean = del_none(data)
 
     return JsonResponse(data_clean, status=200, content_type='application/json')
 
 
-# Helper method to clean data from None values
-def del_none(d):
-    # Copy dict in order to modify
-    rez = d.copy()
-    # Iterate over dict
-    for key, value in d.items():
-        # If null or empty delete key from dict
-        if value is None or value == '':
-            del rez[key]
-        # Else if nested dict call method again on dict
-        elif isinstance(value, dict):
-            rez[key] = del_none(value)
-        # Else if nested list call method again on contents
-        elif isinstance(value, list):
-            if not value:
-                del rez[key]
-        # Remove empty list entries
-            for entry in value:
-                value[value.index(entry)] = del_none(entry)
-    return rez
+# End-point to send MVS simulation request
+@login_required
+@require_http_methods(["GET"])
+def request_mvs_simulation(request, scenario_id):
+    # Load scenario
+    scenario = Scenario.objects.get(pk=scenario_id)
+
+    # Convert scenario topology to dto's
+    mvs_request_dto = convert_to_dto(scenario)
+
+    # Create data dict from dto objects
+    data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
+
+    # Remove None values
+    data_clean = del_none(data)
+
+    # Make simulation request to MVS
+    response = mvs_simulation_request(data_clean)
+
+    return JsonResponse(data_clean, status=200, content_type='application/json')

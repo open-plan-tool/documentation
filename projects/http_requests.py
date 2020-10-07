@@ -11,7 +11,7 @@ def mvs_simulation_request(data: dict):
     payload = json.dumps(data)
 
     try:
-        response = requests.get(MVS_URL, data=payload, headers=headers, proxies=PROXY_CONFIG)
+        response = requests.post(MVS_URL, data=payload, headers=headers, proxies=PROXY_CONFIG, verify=False)
 
         # If the response was successful, no Exception will be raised
         response.raise_for_status()

@@ -146,8 +146,8 @@ def convert_to_dto(scenario: Scenario):
         input_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
         output_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
 
-        input_bus_name = input_connection.bus if input_connection is not None else None
-        output_bus_name = output_connection.bus if output_connection is not None else None
+        input_bus_name = input_connection.bus.name if input_connection is not None else None
+        output_bus_name = output_connection.bus.name if output_connection is not None else None
 
         asset_dto = AssetDto(asset.asset_type.asset_category,
                              asset.name,
