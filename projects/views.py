@@ -355,6 +355,28 @@ def scenario_delete(request, id):
         return HttpResponseRedirect('/scenario/search')
 
 
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def start_scenario_simulation(request, scen_id):
+    print(scen_id)
+    if request.method == 'POST' and request.is_ajax():
+        sent_successfully = True
+        # TODO!! send the scenario JSON to MVS
+        if sent_successfully:
+            messages.success(request, 'Simulation Started!')
+            return HttpResponseRedirect(reverse('scenario_search'))
+            #return {'success': True}
+        else:
+            messages.warning(request, 'Could not start Scenario Simulation.')
+            #return {'success': False}
+            return HttpResponseRedirect(reverse('scenario_search'))
+    else:
+        messages.warning(request, 'Could not start Scenario Simulation.')
+        return HttpResponseRedirect(reverse('scenario_search'))
+
+
 '''
 @login_required
 @require_http_methods(["GET", "POST"])
@@ -501,6 +523,24 @@ def scenario_topology_view(request):
 
 
 # region MVS JSON Related
+
+# End-point to return scenario topology JSON
+@login_required
+@require_http_methods(["GET"])
+def get_topology_json(request, scenario_id):
+    # Load scenario
+    scenario = Scenario.objects.get(pk=scenario_id)
+
+    # Convert scenario topology to dto's
+    mvs_request_dto = convert_to_dto(scenario)
+
+    # Create data dict from dto objects
+    data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
+
+    # Remove None values
+    data_clean = del_none(data)
+
+    return JsonResponse(data_clean, status=200, content_type='application/json')
 
 
 # End-point to send MVS simulation request
