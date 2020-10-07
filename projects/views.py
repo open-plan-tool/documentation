@@ -512,8 +512,6 @@ def get_topology_json(request, scenario_id):
 
 
 # Helper method to clean data from None values
-
-
 def del_none(d):
     # Copy dict in order to modify
     rez = d.copy()
@@ -533,5 +531,3 @@ def del_none(d):
             for entry in value:
                 value[value.index(entry)] = del_none(entry)
     return rez
-
-# endregion

@@ -167,3 +167,10 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+PROXY_CONFIG = {
+    "http": "http://icache.intracomtel.com:80",
+    "https": "https://icache.intracomtel.com:80",
+}
+
+MVS_URL = "https://mvs-eland.rl-institut.de/uploadjson/"
