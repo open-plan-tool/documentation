@@ -11,6 +11,7 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
+from datetime import datetime
 
 from .dtos import convert_to_dto
 from .forms import *
@@ -503,6 +504,7 @@ def scenario_topology_view(request):
 
 
 # End-point to send MVS simulation request
+@json_view
 @login_required
 @require_http_methods(["GET"])
 def request_mvs_simulation(request, scenario_id):
@@ -520,14 +522,22 @@ def request_mvs_simulation(request, scenario_id):
 
     # Create empty Simulation model object
     simulation = Simulation()
+    simulation.status = "Running"
     simulation.save()
 
     # Make simulation request to MVS
-    response = mvs_simulation_request(data_clean)
+    results = mvs_simulation_request(data_clean)
 
-    # TODO: populate simulation with results from MVS
+    if results is None:
+        simulation.status = "Failed"
+    else:
+        simulation.status = "Completed"
+        # TODO: Store results in GZIP format
+        simulation.results = results
 
+    simulation.end_date = datetime.now()
+    simulation.save()
 
-    return JsonResponse(response, status=200, content_type='application/json')
+    return {'success': True}
 
 # endregion MVS JSON Related

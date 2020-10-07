@@ -231,3 +231,4 @@ class Simulation(models.Model):
     end_date = models.DateTimeField(null=True)
     status = models.CharField(max_length=20, choices=SIMULATION_STATUS, null=False)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
+    results = models.BinaryField(null=True, max_length=30e6)
