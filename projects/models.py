@@ -104,6 +104,13 @@ BUS_TYPE = (
     ('bus_gas', 'bus_gas'),
 )
 
+SIMULATION_STATUS = (
+    ('Failed', 'Failed'),
+    ('Completed', 'Completed'),
+    ('Running', 'Running'),
+    ('Cancelled', 'Cancelled'),
+)
+
 
 class EconomicData(models.Model):
     duration = models.IntegerField()
@@ -179,12 +186,12 @@ class ValueType(models.Model):
 
 class Asset(TopologyNode):
     age_installed = models.FloatField(null=False)
-    installed_capacity = models.FloatField(null=False,)
-    capex_fix = models.FloatField(null=False,)  # development_costs
-    capex_var = models.FloatField(null=False,)  # specific_costs
-    opex_fix = models.FloatField(null=False,)  # specific_costs_om
-    opex_var = models.FloatField(null=False,)  # dispatch_price
-    lifetime = models.IntegerField(null=False,)
+    installed_capacity = models.FloatField(null=False, )
+    capex_fix = models.FloatField(null=False, )  # development_costs
+    capex_var = models.FloatField(null=False, )  # specific_costs
+    opex_fix = models.FloatField(null=False, )  # specific_costs_om
+    opex_var = models.FloatField(null=False, )  # dispatch_price
+    lifetime = models.IntegerField(null=False, )
     optimize_cap = models.BooleanField(null=False, default=False)
     input_timeseries = models.TextField(null=True)
     crate = models.FloatField(null=True)
@@ -217,3 +224,10 @@ class ConnectionLink(models.Model):
 class ScenarioFile(models.Model):
     title = models.CharField(max_length=50)
     file = models.FileField(upload_to='tempFiles/', null=True, blank=True)
+
+
+class Simulation(models.Model):
+    start_date = models.DateTimeField(auto_now_add=True, null=False)
+    end_date = models.DateTimeField(null=True)
+    status = models.CharField(max_length=20, choices=SIMULATION_STATUS, null=False)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)

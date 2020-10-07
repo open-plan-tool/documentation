@@ -30,7 +30,6 @@ urlpatterns = [
     path('asset/create/<str:asset_type_name>', asset_create, name='asset_create'),
     path('asset/create_post/', asset_create, name='asset_create_post'),
 
-    path('topology/create_json/<int:scenario_id>', get_topology_json, name='get_topology_json'),
     path('topology/mvs_simulation/<int:scenario_id>', request_mvs_simulation, name='request_mvs_simulation'),
 
 ]
