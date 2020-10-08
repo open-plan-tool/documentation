@@ -37,6 +37,10 @@
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
                                                href="{% url 'scenario_view' scenario.pk %}" name="View"> Info</a>
                                         </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="1" class="glyphicon glyphicon-eye-open"
+                                               href="{% url 'scenario_visualize_results' scenario.pk %}" name="visualizeResults"> Visualize-Results</a>
+                                        </li>
                                         <!--
                                         <li role="presentation">
                                             <a role="menuitem" tabindex="1" href="#">
@@ -56,6 +60,10 @@
                                                href="{% url 'start_scenario_simulation' scenario.pk %}" name="Simulation"> Simulate</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a role="menuitem" tabindex="1" class="glyphicon glyphicon-duplicate"
+                                               href="{% url 'scenario_duplicate' scenario.pk %}" name="Duplicate"> Create-a-Copy</a>
+                                        </li>
                                         <li role="presentation">
                                             <a role="menuitem" tabindex="-1" href="#">
                                                 <form style="float: left;" class="form" action="{% url 'scenario_delete' scenario.pk %}"

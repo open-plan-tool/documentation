@@ -19,9 +19,11 @@ urlpatterns = [
     path('scenario/search/<int:proj_id>', scenario_search, name='scenario_search'),
     path('scenario/create/', scenario_create, name='scenario_create'),
     path('scenario/create_post/', scenario_create_post, name='scenario_create_post'),
-    path('scenario/update/<int:id>', scenario_update, name='scenario_update'),
+    path('scenario/update/<int:scen_id>', scenario_update, name='scenario_update'),
     path('scenario/delete/<int:scen_id>', scenario_delete, name='scenario_delete'),
     path('scenario/view/<int:scen_id>', scenario_view, name='scenario_view'),
+    path('scenario/results/<int:scen_id>', scenario_visualize_results, name='scenario_visualize_results'),
+    path('scenario/duplicate/<int:scen_id>', scenario_duplicate, name='scenario_duplicate'),
     path('scenario/upload/', LoadScenarioFromFileView.as_view(), name='scenario_upload'),
     path('scenario/simulate/<int:scen_id>', start_scenario_simulation, name='start_scenario_simulation'),
 

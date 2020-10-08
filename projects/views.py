@@ -18,7 +18,7 @@ from .forms import *
 from .http_requests import mvs_simulation_request
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
-    update_deleted_objects_from_database, del_none
+    update_deleted_objects_from_database, del_none, duplicate_scenario_objects, duplicate_scenario_connections
 
 
 class HomeView(TemplateView):
@@ -185,10 +185,9 @@ def comment_create(request):
 @login_required
 @require_http_methods(["GET", "POST"])
 def comment_update(request, com_id):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
     comment = get_object_or_404(Comment, pk=com_id)
 
-    if comment.project != project:
+    if comment.project.user != request.user:
         return HttpResponseForbidden()
 
         # if this is a POST request we need to process the form data
@@ -198,16 +197,13 @@ def comment_update(request, com_id):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-
             comment.name = form.cleaned_data['name']
             comment.body = form.cleaned_data['body']
-
-            comment.project = project
 
             comment.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
+            return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id]))
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -219,16 +215,15 @@ def comment_update(request, com_id):
 @login_required
 @require_http_methods(["POST"])
 def comment_delete(request, com_id):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
     comment = get_object_or_404(Comment, pk=com_id)
 
-    if comment.project != project:
+    if comment.project.user != request.user:
         return HttpResponseForbidden()
 
     if request.POST:
         comment.delete()
         messages.success(request, 'Comment successfully deleted!')
-        return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
+        return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id]))
 
 
 # endregion Comment
@@ -289,11 +284,10 @@ def scenario_create_post(request):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def scenario_update(request, id):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
-    scenario = get_object_or_404(Scenario, pk=id)
+def scenario_update(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
 
-    if scenario.project != project:
+    if scenario.project.user != request.user:
         return HttpResponseForbidden()
 
         # if this is a POST request we need to process the form data
@@ -314,12 +308,10 @@ def scenario_update(request, id):
             scenario.opex_var = form.cleaned_data['opex_var']
             scenario.lifetime = form.cleaned_data['lifetime']
 
-            scenario.project = project
-
             scenario.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
+            return HttpResponseRedirect(reverse('scenario_search', args=[scenario.project.id]))
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -331,14 +323,52 @@ def scenario_update(request, id):
 @login_required
 @require_http_methods(["GET"])
 def scenario_view(request, scen_id):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
-    if scenario.project != project or project.user != request.user:
+    if scenario.project.user != request.user:
         return HttpResponseForbidden()
 
     scenario_form = ScenarioUpdateForm(None, instance=scenario)
     return render(request, 'scenario/scenario_info.html', {'scenario_form': scenario_form, 'scenario_id': scen_id})
+
+
+@login_required
+@require_http_methods(["GET"])
+def scenario_visualize_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+    if scenario.project.user != request.user:
+        return HttpResponseForbidden()
+
+    scenario_form = ScenarioUpdateForm(None, instance=scenario)
+    return render(request, 'scenario/scenario_visualize_results.html', {'scenario_form': scenario_form, 'scenario_id': scen_id})
+
+
+@login_required
+@require_http_methods(["GET"])
+def scenario_duplicate(request, scen_id):
+    """ duplicates the selected scenario and all of its associated components (topology data included) """
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if scenario.project.user != request.user:
+        return HttpResponseForbidden()
+
+    # We need to iterate over all the objects related to this scenario and duplicate them
+    # and associate them with the new scenario id.
+    asset_list = Asset.objects.filter(scenario=scenario)
+    bus_list = Bus.objects.filter(scenario=scenario)
+    connections_list = ConnectionLink.objects.filter(scenario=scenario)
+    simulation_list = Simulation.objects.filter(scenario=scenario)
+
+    # first duplicate the scenario
+    scenario.pk = None
+    scenario.save()
+    # from now on we are working with the duplicated scenario, not the original
+    old2new_asset_ids_map = duplicate_scenario_objects(asset_list, scenario)
+    old2new_bus_ids_map = duplicate_scenario_objects(bus_list, scenario)
+    duplicate_scenario_connections(connections_list, scenario, old2new_asset_ids_map, old2new_bus_ids_map)
+    duplicate_scenario_objects(simulation_list, scenario)
+
+    return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
 @login_required

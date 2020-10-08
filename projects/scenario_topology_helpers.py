@@ -74,6 +74,28 @@ def update_deleted_objects_from_database(scenario_id, topo_node_list):
             Bus.objects.filter(id=bus_id).delete()
 
 
+def duplicate_scenario_objects(obj_list, scenario):
+    mapping_dict = dict()
+    for obj in obj_list:
+        old_id = obj.id
+        obj.id = None
+        obj.scenario = scenario
+        obj.save()
+        mapping_dict[old_id] = obj.id
+    return mapping_dict
+
+
+def duplicate_scenario_connections(connections_list, scenario, asset_map, bus_map):
+    for connection in connections_list:
+        old_asset_id = connection.asset_id
+        old_bus_id = connection.bus_id
+        connection.id = None
+        connection.asset_id = asset_map[old_asset_id]
+        connection.bus_id = bus_map[old_bus_id]
+        connection.scenario = scenario
+        connection.save()
+
+
 class NodeObject:
     def __init__(self, node_data=None):
         self.obj_id = node_data['id']
