@@ -31,7 +31,7 @@
                             <td>{{ project.date_updated }}</td>
                             <td>{{ project.country }}</td>
                             <td>
-                                <form style="float: left;" class="form" action="{% url 'scenario_search' %}"
+                                <form style="float: left;" class="form" action="{% url 'scenario_search' project.pk %}"
                                       method="GET">
                                     <input class="btn btn-sm btn-success" type="submit" value="Open"/>&emsp;
                                 </form>

@@ -29,8 +29,8 @@ class HomeView(TemplateView):
 
 @login_required
 @require_http_methods(["GET"])
-def project_detail(request, id):
-    project = get_object_or_404(Project, pk=id)
+def project_detail(request, proj_id):
+    project = get_object_or_404(Project, pk=proj_id)
     economic_data = EconomicData.objects.get(project=project)
 
     if project.user != request.user:
@@ -80,7 +80,7 @@ def project_create(request):
             request.session['project_id'] = project.id
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/scenario/search')
+            return HttpResponseRedirect(reverse('scenario_search', args=[project.id]))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -91,8 +91,8 @@ def project_create(request):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def project_update(request, id):
-    project = get_object_or_404(Project, pk=id)
+def project_update(request, proj_id):
+    project = get_object_or_404(Project, pk=proj_id)
     economic_data = EconomicData.objects.get(project=project)
 
     if project.user != request.user:
@@ -101,11 +101,12 @@ def project_update(request, id):
     project_form = ProjectUpdateForm(request.POST or None, instance=project)
     economic_data_form = EconomicDataUpdateForm(request.POST or None, instance=economic_data)
 
-    if request.POST and project_form.is_valid() and economic_data_form.is_valid():
+    if request.method == "POST" and project_form.is_valid() and economic_data_form.is_valid():
         project_form.save()
         economic_data_form.save()
         # Save was successful, so send message
         messages.success(request, 'Project Info updated successfully!')
+        return HttpResponseRedirect(reverse('project_search'))
 
     return render(request, 'project/project_update.html',
                   {'project_form': project_form, 'economic_data_form': economic_data_form})
@@ -113,8 +114,8 @@ def project_update(request, id):
 
 @login_required
 @require_http_methods(["POST"])
-def project_delete(request, id):
-    project = get_object_or_404(Project, pk=id)
+def project_delete(request, proj_id):
+    project = get_object_or_404(Project, pk=proj_id)
 
     if project.user != request.user:
         return HttpResponseForbidden()
@@ -172,7 +173,7 @@ def comment_create(request):
             comment.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/scenario/search')
+            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -183,9 +184,9 @@ def comment_create(request):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def comment_update(request, id):
+def comment_update(request, com_id):
     project = get_object_or_404(Project, pk=request.session['project_id'])
-    comment = get_object_or_404(Comment, pk=id)
+    comment = get_object_or_404(Comment, pk=com_id)
 
     if comment.project != project:
         return HttpResponseForbidden()
@@ -206,7 +207,7 @@ def comment_update(request, id):
             comment.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect('/scenario/search')
+            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -217,9 +218,9 @@ def comment_update(request, id):
 
 @login_required
 @require_http_methods(["POST"])
-def comment_delete(request, id):
+def comment_delete(request, com_id):
     project = get_object_or_404(Project, pk=request.session['project_id'])
-    comment = get_object_or_404(Comment, pk=id)
+    comment = get_object_or_404(Comment, pk=com_id)
 
     if comment.project != project:
         return HttpResponseForbidden()
@@ -227,7 +228,7 @@ def comment_delete(request, id):
     if request.POST:
         comment.delete()
         messages.success(request, 'Comment successfully deleted!')
-        return HttpResponseRedirect('/scenario/search')
+        return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
 # endregion Comment
@@ -237,9 +238,9 @@ def comment_delete(request, id):
 
 @login_required
 @require_http_methods(["GET"])
-def scenario_search(request):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
-
+def scenario_search(request, proj_id):
+    project = get_object_or_404(Project, pk=proj_id)
+    request.session['project_id'] = proj_id  # set the session according to current project
     scenario_list = Scenario.objects.filter(project=project)
 
     comment_list = Comment.objects.filter(project=project)
@@ -318,7 +319,7 @@ def scenario_update(request, id):
             scenario.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect('scenario/search')
+            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -329,22 +330,22 @@ def scenario_update(request, id):
 
 @login_required
 @require_http_methods(["GET"])
-def scenario_view(request, id):
+def scenario_view(request, scen_id):
     project = get_object_or_404(Project, pk=request.session['project_id'])
-    scenario = get_object_or_404(Scenario, pk=id)
+    scenario = get_object_or_404(Scenario, pk=scen_id)
 
     if scenario.project != project or project.user != request.user:
         return HttpResponseForbidden()
 
     scenario_form = ScenarioUpdateForm(None, instance=scenario)
-    return render(request, 'scenario/scenario_info.html', {'scenario_form': scenario_form})
+    return render(request, 'scenario/scenario_info.html', {'scenario_form': scenario_form, 'scenario_id': scen_id})
 
 
 @login_required
 @require_http_methods(["POST"])
-def scenario_delete(request, id):
+def scenario_delete(request, scen_id):
     project = get_object_or_404(Project, pk=request.session['project_id'])
-    scenario = get_object_or_404(Scenario, pk=id)
+    scenario = get_object_or_404(Scenario, pk=scen_id)
 
     if scenario.project != project:
         return HttpResponseForbidden()
@@ -352,7 +353,7 @@ def scenario_delete(request, id):
     if request.POST:
         scenario.delete()
         messages.success(request, 'scenario successfully deleted!')
-        return HttpResponseRedirect('/scenario/search')
+        return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
 
@@ -366,15 +367,15 @@ def start_scenario_simulation(request, scen_id):
         # TODO!! send the scenario JSON to MVS
         if sent_successfully:
             messages.success(request, 'Simulation Started!')
-            return HttpResponseRedirect(reverse('scenario_search'))
+            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
             #return {'success': True}
         else:
             messages.warning(request, 'Could not start Scenario Simulation.')
             #return {'success': False}
-            return HttpResponseRedirect(reverse('scenario_search'))
+            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
     else:
         messages.warning(request, 'Could not start Scenario Simulation.')
-        return HttpResponseRedirect(reverse('scenario_search'))
+        return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
 '''
@@ -393,11 +394,14 @@ def load_scenario_from_file(request):
 '''
 
 
-class BookCreateView(BSModalCreateView):
+class LoadScenarioFromFileView(BSModalCreateView):
     template_name = 'scenario/load_scenario_from_file.html'
     form_class = LoadScenarioFromFileForm
     success_message = 'Success: Scenario Uploaded.'
-    success_url = reverse_lazy('scenario_search')
+
+    def get_success_url(self):
+        proj_id = self.request.session['project_id']
+        return reverse_lazy('scenario_search', args=[proj_id])
 
 
 # endregion Scenario
@@ -407,8 +411,8 @@ class BookCreateView(BSModalCreateView):
 
 @login_required
 @require_http_methods(["GET"])
-def asset_search(request, id):
-    scenario = get_object_or_404(Scenario, pk=id)
+def asset_search(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
     request.session['scenario_id'] = scenario.id
 
     asset_list = Asset.objects.filter(scenario=scenario)
@@ -470,14 +474,15 @@ def asset_create_post(request):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def scenario_topology_view(request):
+def scenario_topology_view(request, scen_id):
     if request.method == "GET" and request.is_ajax():
         # Approach: send assets, busses and connection links to the front end and let it do the work
-        topology_data_list = load_scenario_topology_from_db(request.session['scenario_id'])
+        topology_data_list = load_scenario_topology_from_db(scen_id)
         return JsonResponse(topology_data_list, status=200)
 
     if request.method == "GET":
-        return render(request, 'asset/create_asset_topology.html')
+        request.session['scenario_id'] = scen_id  # we need to set the session since asset creation relies on it.
+        return render(request, 'asset/create_asset_topology.html', {'scenario_id': scen_id, 'project_id': request.session['project_id']})
 
     elif request.method == "POST" and request.is_ajax():
         topology = json.loads(request.body)['drawflow']['Home']['data']
@@ -488,14 +493,14 @@ def scenario_topology_view(request):
             node_list.append(NodeObject(topology[node]))
 
         # delete objects from database which were deleted by the user
-        update_deleted_objects_from_database(request.session['scenario_id'], node_list)
+        update_deleted_objects_from_database(scen_id, node_list)
 
         node_to_db_mapping_dict = dict()
         for node_obj in node_list:
             if node_obj.name == 'bus':
-                node_obj.create_or_update_bus(request.session['scenario_id'])
+                node_obj.create_or_update_bus(scen_id)
             else:
-                node_obj.create_or_update_asset(request.session['scenario_id'])
+                node_obj.create_or_update_asset(scen_id)
 
             node_to_db_mapping_dict[node_obj.obj_id] = {
                 'db_obj_id': node_obj.db_obj_id,
@@ -503,9 +508,9 @@ def scenario_topology_view(request):
                 'output_connections': node_obj.outputs,
             }
         # Make sure there are no connections in the Database to prevent inserting the same connections upon updating.
-        ConnectionLink.objects.filter(scenario_id=request.session['scenario_id']).delete()
+        ConnectionLink.objects.filter(scenario_id=scen_id).delete()
         for node_obj in node_list:
-            create_node_interconnection_links(node_obj, node_to_db_mapping_dict, request.session['scenario_id'])
+            create_node_interconnection_links(node_obj, node_to_db_mapping_dict, scen_id)
 
         ''' return a dictionary as a response to the front end, containing the node_ids along with their
         # associated database_ids. This information will help the front end to identify whether the submitted

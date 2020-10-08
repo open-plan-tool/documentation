@@ -136,7 +136,7 @@
         }
 
         $(document).ready(function() {
-            $.getJSON("{% url 'new_assets_topology' %}", {}, function (data, textStatus, jqXHR){
+            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, function (data, textStatus, jqXHR){
                 $.when(addBusses(data), addAssets(data)).always(function(){
                     setTimeout(function (){
                         addLinks(data);
@@ -308,7 +308,7 @@
         }
 
         function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, callback=createNodeDiv) {
-            var fullUrl = 'create/' + nodeName;
+            var fullUrl = document.location.origin+'/asset/create/'+nodeName;
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() {
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
@@ -318,6 +318,7 @@
                     callback(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, formData);
                 }
             }
+            console.log(fullUrl);
             xmlHttp.open("GET", fullUrl, true); // true for asynchronous
             xmlHttp.send(null);
         }
@@ -329,7 +330,7 @@
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}' },
                 type: "POST",
-                url: "{% url 'new_assets_topology' %}",
+                url: "{% url 'new_assets_topology' scenario_id %}",
                 data: JSON.stringify(editor.export()),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -339,7 +340,7 @@
                         // add database id to the node data dictionary, in order to discriminate among existing and new nodes.
                         editor.drawflow.drawflow.Home.data[`${key}`].data['databaseId'] = val;
                     });
-                    window.location.href = "{% url 'scenario_search' %}";
+                    window.location.href = "{% url 'scenario_search' project_id %}";
                 },
                 failure: function(errMsg) {alert(errMsg);}
             });

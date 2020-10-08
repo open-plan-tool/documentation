@@ -1,7 +1,8 @@
 from bootstrap_modal_forms.forms import BSModalModelForm
 from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
+from crispy_forms.bootstrap import AppendedText, PrependedText
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Row, Column
+from crispy_forms.layout import Submit, Layout, Row, Column, Field
 from django import forms
 from django.forms import ModelForm
 
@@ -119,7 +120,6 @@ class ScenarioUpdateForm(ModelForm):
                 Column('opex_fix', css_class='form-group col-xs-2'),
                 Column('opex_var', css_class='form-group col-xs-3'),
                 css_class='form-row row'),
-
         )
 
 

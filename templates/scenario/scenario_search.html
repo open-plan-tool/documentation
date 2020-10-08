@@ -49,11 +49,11 @@
                                         -->
                                         <li role="presentation">
                                             <a role="menuitem" class="glyphicon glyphicon-picture"
-                                               href="{% url 'new_assets_topology' %}" name="GridView"> Grid-Model</a>
+                                               href="{% url 'new_assets_topology' scenario.pk %}" name="GridView"> Grid-Model</a>
                                         </li>
                                         <li role="presentation">
                                             <a role="menuitem" class="glyphicon glyphicon-random"
-                                               href="{% url 'start_scenario_simulation' scenario.pk%}" name="Simulation"> Simulate</a>
+                                               href="{% url 'start_scenario_simulation' scenario.pk %}" name="Simulation"> Simulate</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
