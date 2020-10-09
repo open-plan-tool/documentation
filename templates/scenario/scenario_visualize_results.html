@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
+{%load plotly_dash%}
+
+{% block start_body_scripts %}
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+{% endblock start_body_scripts %}
 
 {% block content %}
-    <div class="panel panel-default ">
-        <div class="panel-heading"><h3 class="panel-title"><strong>Scenario Details </strong></h3></div>
-        <div class="panel-body">
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    {% crispy scenario_form %}
-                </div>
-                <button class="btn btn-success" type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
+    {%plotly_app name="app1" ratio=0.5 %}
 
+    <div id='myDiv'>
 {% endblock content %}
+
+
+{% block end_body_scripts %}
+    <script>
+        var trace1 = {
+            x: [1, 2, 3, 4],
+            y: [10, 15, 13, 17],
+            type: 'scatter'
+        };
+
+        var trace2 = {
+            x: [1, 2, 3, 4],
+            y: [16, 5, 11, 9],
+            type: 'scatter'
+        };
+
+        var data = [trace1, trace2];
+
+        Plotly.newPlot('myDiv', data);
+    </script>
+{% endblock end_body_scripts %}
