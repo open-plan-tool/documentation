@@ -499,7 +499,7 @@ def asset_create_post(request):
         # redirect to a new URL:
         return {'success': True}
 
-    form_html = crispy_forms_filters.as_crispy_form(form)
+    #form_html = crispy_forms_filters.as_crispy_form(form)
 
 
 @login_required

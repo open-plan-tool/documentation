@@ -174,3 +174,6 @@ PROXY_CONFIG = {
 }
 
 MVS_URL = "https://mvs-eland.rl-institut.de/uploadjson/"
+
+# Allow iframes to show in page
+X_FRAME_OPTIONS = 'SAMEORIGIN'
