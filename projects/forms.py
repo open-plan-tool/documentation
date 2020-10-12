@@ -145,3 +145,7 @@ class AssetCreateForm(ModelForm):
     class Meta:
         model = Asset
         exclude = ['scenario']
+        widgets = {
+            'optimize_cap': forms.Select(choices=TRUE_FALSE_CHOICES),
+            'dispatchable': forms.Select(choices=TRUE_FALSE_CHOICES)
+        }

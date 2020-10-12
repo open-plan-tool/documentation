@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from projects.models import Bus, AssetType, Scenario, ConnectionLink, Asset
 import json
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
 
 def load_scenario_topology_from_db(scen_id):
@@ -114,30 +115,46 @@ class NodeObject:
 
     def create_or_update_asset(self, scen_id):
         asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()
-        for name, value in self.data.items():
-            # print(name, value)
-            if name == 'optimize_cap':
-                value = True if value == 'on' else False
-            setattr(asset, name, value)
 
-        setattr(asset, 'pos_x', self.pos_x)
-        setattr(asset, 'pos_y', self.pos_y)
-        asset.scenario = get_object_or_404(Scenario, pk=scen_id)
-        asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
-        asset.save()
-        if self.db_obj_id is None:
-            self.db_obj_id = asset.id
+        try:
+            for name, value in self.data.items():
+                setattr(asset, name, value)
+
+            setattr(asset, 'pos_x', self.pos_x)
+            setattr(asset, 'pos_y', self.pos_y)
+            asset.scenario = get_object_or_404(Scenario, pk=scen_id)
+            asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
+            asset.full_clean()
+        except KeyError:
+            return {"success": False, "obj_type": "asset"}
+        except ValidationError:
+            return {"success": False, "obj_type": "asset"}
+        else:
+            asset.save()
+            if self.db_obj_id is None:
+                self.db_obj_id = asset.id
+            return {"success": True, "obj_type": "asset"}
 
     def create_or_update_bus(self, scen_id):
         bus = get_object_or_404(Bus, pk=self.db_obj_id) if self.db_obj_id else Bus()
-        setattr(bus, 'name', self.data['name'])
-        setattr(bus, 'type', self.data['bustype'])
-        setattr(bus, 'pos_x', self.pos_x)
-        setattr(bus, 'pos_y', self.pos_y)
-        bus.scenario = get_object_or_404(Scenario, pk=scen_id)
-        bus.save()
-        if self.db_obj_id is None:
-            self.db_obj_id = bus.id
+
+        try:
+            setattr(bus, 'name', self.data['name'])
+            setattr(bus, 'type', self.data['bustype'])
+            setattr(bus, 'pos_x', self.pos_x)
+            setattr(bus, 'pos_y', self.pos_y)
+            bus.scenario = get_object_or_404(Scenario, pk=scen_id)
+
+            bus.full_clean()
+        except KeyError:
+            return {"success": False, "obj_type": "bus"}
+        except ValidationError:
+            return {"success": False, "obj_type": "bus"}
+        else:
+            bus.save()
+            if self.db_obj_id is None:
+                self.db_obj_id = bus.id
+            return {"success": True, "obj_type": "bus"}
 
 
 def create_node_interconnection_links(node_obj, map_dict, scen_id):

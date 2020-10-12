@@ -32,7 +32,7 @@ urlpatterns = [
     path('asset/assets_topology/<int:scen_id>', scenario_topology_view, name='new_assets_topology'),
 
     path('asset/create/<str:asset_type_name>', asset_create, name='asset_create'),
-    path('asset/create_post/', asset_create, name='asset_create_post'),  # deprecated view, no long required since object are created inside the topology
+    path('asset/create_post/', asset_create, name='asset_create_post'),  # deprecated view, no long required since object are created inside the topology. can be used for validation
 
     path('topology/mvs_simulation/<int:scenario_id>', request_mvs_simulation, name='request_mvs_simulation'),
 

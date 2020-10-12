@@ -114,9 +114,11 @@
 
     <script>
         const addBusses = (data) => data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
-        {#function addBusses(data) {#}
-        {#    data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));#}
-        {#}#}
+        /*
+        function addBusses(data) {
+            data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+        }
+        */
 
         function addAssets(data) {
             data['assets'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
@@ -146,6 +148,7 @@
             .done(function () {  /*console.log('Finished loading nodes and links!');*/ })
             .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
         });
+
     </script>
 
     <script>
@@ -308,6 +311,11 @@
         }
 
         function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, callback=createNodeDiv) {
+            // Due to a problem with Boolean Values not showing in the modal we have to convert bool to string.
+            nodeData.optimize_cap = (nodeData.optimize_cap) ? "True" : "False";
+            nodeData.dispatchable = (nodeData.dispatchable) ? "True" : "False";
+            // ------------------------------------------------------------------------------------------------
+
             var fullUrl = document.location.origin+'/asset/create/'+nodeName;
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() {
@@ -342,7 +350,9 @@
                     });
                     window.location.href = "{% url 'scenario_search' project_id %}";
                 },
-                failure: function(errMsg) {alert(errMsg);}
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire('Grid Model Error', `Please fill in all ${XMLHttpRequest.responseJSON.obj_type} fields.`, 'error');
+                }
             });
         });
     </script>

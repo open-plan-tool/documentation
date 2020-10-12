@@ -21,6 +21,12 @@ CURRENCY = (
     ('GBP', 'GBP'),
 )
 
+TRUE_FALSE_CHOICES = (
+    (None, 'Choose'),
+    (True, 'Yes'),
+    (False, 'No')
+)
+
 FLOW_DIRECTION = (
     ('B2A', 'Bus_to_Asset'),
     ('A2B', 'Asset_to_Bus'),
@@ -185,29 +191,29 @@ class ValueType(models.Model):
 
 
 class Asset(TopologyNode):
-    age_installed = models.FloatField(null=False)
-    installed_capacity = models.FloatField(null=False, )
-    capex_fix = models.FloatField(null=False, )  # development_costs
-    capex_var = models.FloatField(null=False, )  # specific_costs
-    opex_fix = models.FloatField(null=False, )  # specific_costs_om
-    opex_var = models.FloatField(null=False, )  # dispatch_price
-    lifetime = models.IntegerField(null=False, )
-    optimize_cap = models.BooleanField(null=False, default=False)
-    input_timeseries = models.TextField(null=True)
-    crate = models.FloatField(null=True)
-    efficiency = models.FloatField(null=True)
-    self_discharge = models.FloatField(null=True)
-    soc_initial = models.FloatField(null=True)
-    soc_max = models.FloatField(null=True)
-    soc_min = models.FloatField(null=True)
-    dispatchable = models.BooleanField(null=True, default=False)
-    maximum_capacity = models.FloatField(null=True)
-    energy_price = models.FloatField(null=True)
-    feedin_tariff = models.FloatField(null=True)
-    peak_demand_pricing = models.FloatField(null=True)
-    peak_demand_pricing_period = models.FloatField(null=True)
-    renewable_share = models.FloatField(null=True)
-    asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=True)
+    age_installed = models.FloatField(null=False, blank=False)
+    installed_capacity = models.FloatField(null=False, blank=False)
+    capex_fix = models.FloatField(null=False, blank=False)  # development_costs
+    capex_var = models.FloatField(null=False, blank=False)  # specific_costs
+    opex_fix = models.FloatField(null=False, blank=False)  # specific_costs_om
+    opex_var = models.FloatField(null=False, blank=False)  # dispatch_price
+    lifetime = models.IntegerField(null=False, blank=False)
+    optimize_cap = models.BooleanField(null=False, blank=False, choices=TRUE_FALSE_CHOICES)
+    input_timeseries = models.TextField(null=True, blank=True)
+    crate = models.FloatField(null=True, blank=True)
+    efficiency = models.FloatField(null=True, blank=True)
+    self_discharge = models.FloatField(null=True, blank=True)
+    soc_initial = models.FloatField(null=True, blank=True)
+    soc_max = models.FloatField(null=True, blank=True)
+    soc_min = models.FloatField(null=True, blank=True)
+    dispatchable = models.BooleanField(null=True, blank=True, choices=TRUE_FALSE_CHOICES, default=None)
+    maximum_capacity = models.FloatField(null=True, blank=True)
+    energy_price = models.FloatField(null=True, blank=True)
+    feedin_tariff = models.FloatField(null=True, blank=True)
+    peak_demand_pricing = models.FloatField(null=True, blank=True)
+    peak_demand_pricing_period = models.FloatField(null=True, blank=True)
+    renewable_share = models.FloatField(null=True, blank=True)
+    asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=False)
 
 
 class Bus(TopologyNode):

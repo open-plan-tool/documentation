@@ -408,22 +408,6 @@ def start_scenario_simulation(request, scen_id):
         return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
-'''
-@login_required
-@require_http_methods(["GET", "POST"])
-def load_scenario_from_file(request):
-    if request.method == 'POST':
-        form = LoadScenarioFromFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            # !TODO
-            #check_format_and_create_model(request.FILES['file'])
-            return HttpResponseRedirect(reverse('scenario_search'))
-    else:
-        form = LoadScenarioFromFileForm()
-    return render(request, 'scenario/load_scenario_from_file.html', {'form': form})
-'''
-
-
 class LoadScenarioFromFileView(BSModalCreateView):
     template_name = 'scenario/load_scenario_from_file.html'
     form_class = LoadScenarioFromFileForm
@@ -456,7 +440,6 @@ def asset_search(request, scen_id):
 @require_http_methods(["GET"])
 def asset_create(request, asset_type_name):
     form = AssetCreateForm()
-
     # Retrieve asset type
     asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)
     request.session['asset_type_name'] = asset_type_name
@@ -475,29 +458,27 @@ def asset_create(request, asset_type_name):
 @login_required
 @require_http_methods(["POST"])
 def asset_create_post(request):
-    form = AssetCreateForm(request.POST)
-    asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
-    form_fields = list(form.fields)
+    if request.method == "POST":
+        form = AssetCreateForm(request.POST)
+        asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
+        form_fields = list(form.fields)
 
-    # Remove form fields that do not correspond to the model
-    for field in form_fields:
-        if field not in asset_type.asset_fields:
-            form.fields.pop(field)
+        # Remove form fields that do not correspond to the model
+        for field in form_fields:
+            if field not in asset_type.asset_fields:
+                form.fields.pop(field)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            asset = Asset()
 
-    # check whether it's valid:
-    if form.is_valid():
-        # process the data in form.cleaned_data as required
-        asset = Asset()
-
-        for name, value in form.cleaned_data.items():
-            setattr(asset, name, value)
-
-        asset.scenario = get_object_or_404(Scenario, pk=request.session['scenario_id'])
-        asset.asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
-        asset.save()
-
-        # redirect to a new URL:
-        return {'success': True}
+            for name, value in form.cleaned_data.items():
+                setattr(asset, name, value)
+            asset.scenario = get_object_or_404(Scenario, pk=request.session['scenario_id'])
+            asset.asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
+            asset.save()
+            # redirect to a new URL:
+            return JsonResponse({'success': True}, status=200)
 
     #form_html = crispy_forms_filters.as_crispy_form(form)
 
@@ -517,6 +498,7 @@ def scenario_topology_view(request, scen_id):
     elif request.method == "POST" and request.is_ajax():
         topology = json.loads(request.body)['drawflow']['Home']['data']
         node_list = list()
+
         # get and clear topology data
         for node in topology:
             del topology[node]['html'], topology[node]['typenode'], topology[node]['class']
@@ -525,18 +507,24 @@ def scenario_topology_view(request, scen_id):
         # delete objects from database which were deleted by the user
         update_deleted_objects_from_database(scen_id, node_list)
 
+        # map topology nodes to database objects during the process of database objects insertion
         node_to_db_mapping_dict = dict()
         for node_obj in node_list:
             if node_obj.name == 'bus':
-                node_obj.create_or_update_bus(scen_id)
+                successful_bus_insertion = node_obj.create_or_update_bus(scen_id)
+                if not successful_bus_insertion["success"]:
+                    return JsonResponse(successful_bus_insertion, status=400)
             else:
-                node_obj.create_or_update_asset(scen_id)
+                successful_asset_insertion = node_obj.create_or_update_asset(scen_id)
+                if not successful_asset_insertion["success"]:
+                    return JsonResponse(successful_asset_insertion, status=400)
 
             node_to_db_mapping_dict[node_obj.obj_id] = {
                 'db_obj_id': node_obj.db_obj_id,
                 'node_type': node_obj.node_obj_type,
                 'output_connections': node_obj.outputs,
             }
+
         # Make sure there are no connections in the Database to prevent inserting the same connections upon updating.
         ConnectionLink.objects.filter(scenario_id=scen_id).delete()
         for node_obj in node_list:
@@ -551,7 +539,7 @@ def scenario_topology_view(request, scen_id):
         response_dict = {"success": True, "data": topo2db_id_map}
         return JsonResponse(response_dict, status=200)
     else:
-        return JsonResponse({"success": False}, status=400)
+        return JsonResponse({"success": False, "request": "bad request type. couldn't respond."}, status=400)
 
 
 # endregion Asset
@@ -591,18 +579,17 @@ def request_mvs_simulation(request, scenario_id):
 
     # Create data dict from dto objects
     data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
-
     # Remove None values
     data_clean = del_none(data)
 
     # Create empty Simulation model object
     simulation = Simulation()
     simulation.status = "Running"
+    simulation.scenario_id = scenario_id
     simulation.save()
 
     # Make simulation request to MVS
     results = mvs_simulation_request(data_clean)
-
     if results is None:
         simulation.status = "Failed"
     else:
@@ -613,6 +600,7 @@ def request_mvs_simulation(request, scenario_id):
     simulation.end_date = datetime.now()
     simulation.save()
 
-    return {'success': True}
+    return data_clean
+    # return JsonResponse({'success': True}, status=200, content_type='application/json')
 
 # endregion MVS JSON Related
