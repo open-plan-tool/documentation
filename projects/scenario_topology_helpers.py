@@ -176,22 +176,16 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
 
 
 # Helper method to clean dict data from None values
-def del_none(d: dict):
-    # Copy dict in order to modify
-    rez = d.copy()
-    # Iterate over dict
-    for key, value in d.items():
-        # If null or empty delete key from dict
-        if value is None or value == '':
-            del rez[key]
-        # Else if nested dict call method again on dict
-        elif isinstance(value, dict):
-            rez[key] = del_none(value)
-        # Else if nested list call method again on contents
-        elif isinstance(value, list):
-            if not value:
-                del rez[key]
-            # Remove empty list entries
-            for entry in value:
-                value[value.index(entry)] = del_none(entry)
-    return rez
+def remove_empty_elements(d):
+
+    def empty(x):
+        return x is None or x == {} or x == []
+
+    if not isinstance(d, (dict, list)):
+        return d
+    elif isinstance(d, list):
+        return [v for v in (remove_empty_elements(v) for v in d) if not empty(v)]
+    else:
+        return {k: v for k, v in ((k, remove_empty_elements(v)) for k, v in d.items()) if not empty(v)}
+
+

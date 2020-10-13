@@ -18,7 +18,8 @@ from .forms import *
 from .http_requests import mvs_simulation_request
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
-    update_deleted_objects_from_database, del_none, duplicate_scenario_objects, duplicate_scenario_connections
+    update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, \
+    remove_empty_elements
 
 
 class HomeView(TemplateView):
@@ -561,7 +562,7 @@ def get_topology_json(request, scenario_id):
     data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
 
     # Remove None values
-    data_clean = del_none(data)
+    data_clean = remove_empty_elements(data)
 
     return JsonResponse(data_clean, status=200, content_type='application/json')
 
@@ -580,7 +581,7 @@ def request_mvs_simulation(request, scenario_id):
     # Create data dict from dto objects
     data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
     # Remove None values
-    data_clean = del_none(data)
+    data_clean = remove_empty_elements(data)
 
     # Create empty Simulation model object
     simulation = Simulation()
