@@ -82,12 +82,8 @@
             </div>
 
             <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <div class="btn-export">
-                    Save
-                </div>
+                <div class="btn-export">Save</div>
                 <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
-
-                <div id="modal-div"></div>
             </div>
         </div>
 
@@ -137,15 +133,16 @@
             });
         }
 
-        $(document).ready(function() {
+        $(window).on('load', function() {
             $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, function (data, textStatus, jqXHR){
                 $.when(addBusses(data), addAssets(data)).always(function(){
                     setTimeout(function (){
                         addLinks(data);
-                    }, 400);
+                    }, 700);
+                    return data;
                 }); // when
             })
-            .done(function () {  /*console.log('Finished loading nodes and links!');*/ })
+            .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/ })
             .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
         });
 

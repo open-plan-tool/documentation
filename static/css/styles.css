@@ -74,8 +74,9 @@ body {
 }
 
 .table td.text {
-    max-width: 177px;
+    max-width: 200px !important;
     vertical-align: middle;
+    align-content: center;
 }
 
 .table td.text span {

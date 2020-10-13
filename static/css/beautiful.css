@@ -194,7 +194,6 @@ cursor: pointer;
 }
 
 .drawflow-node .drawflow_content_node {
-  position: absolute;
   height: 100%;
   width: 100% !important;
   place-content: center;
@@ -225,7 +224,6 @@ cursor: pointer;
 .drawflow-node textarea {
   height: 100px;
 }
-
 
 /* <editor-fold desc="region Bus Region"> */
 .drawflow-node.bus {
@@ -273,7 +271,7 @@ cursor: pointer;
 }
 
 .drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected{
-  border-bottom: 50px solid #4dc3ff;
+  border-bottom: 50px solid #4ea9ff;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
   height: 0;
@@ -307,7 +305,7 @@ cursor: pointer;
 }
 
 .drawflow-node.dso.selected , .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected{
-  border-top: 50px solid #00e600;
+  border-top: 50px solid #00ae10;
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
   height: 0;
@@ -334,7 +332,7 @@ cursor: pointer;
 }
 
 .drawflow-node.transformer_station_in.selected, .drawflow-node.transformer_station_out.selected, .drawflow-node.storage_charge_controller_in.selected, .drawflow-node.storage_charge_controller_out.selected, .drawflow-node.solar_inverter.selected {
-  background-color: #ffb84d;
+  background-color: #ffa11d;
 }
 /*</editor-fold> */
 
