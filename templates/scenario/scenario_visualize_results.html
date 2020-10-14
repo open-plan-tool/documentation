@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
-{%load plotly_dash%}
 
 {% block start_body_scripts %}
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 {% endblock start_body_scripts %}
 
 {% block content %}
-    {%plotly_app name="app1" ratio=0.5 %}
-
     <div id='myDiv'></div>
 {% endblock content %}
 
@@ -19,7 +16,7 @@
         var trace1 = {
             x: [1, 2, 3, 4],
             y: [10, 15, 13, 17],
-            type: 'scatter'
+            type: 'bar'
         };
 
         var trace2 = {
@@ -28,8 +25,39 @@
             type: 'scatter'
         };
 
-        var data = [trace1, trace2];
+        const plotTime = {{ tTime }};
 
-        Plotly.newPlot('myDiv', data);
+        function convertToDateTime(unixTimestamp) {
+            const milliseconds = unixTimestamp * 1000;
+            const newDate = new Date(milliseconds);
+            return newDate.toDateString();
+        }
+
+        plotTime.forEach(function(timeStamp, index) {
+            this[index] = convertToDateTime(timeStamp);
+        }, plotTime);
+
+        var trace3 = {
+            x: plotTime,
+            y: {{ tData }},
+            type: 'scatter'
+        };
+
+        var layout = {
+            title: 'energyProduction',
+            xaxis: {
+                title: 'Year',
+                showgrid: false,
+                zeroline: false
+            },
+            yaxis: {
+                title: 'Percent',
+                showline: false
+            }
+        };
+
+        //var data = [trace1, trace2];
+        var data = [trace3];
+        Plotly.newPlot('myDiv', data, layout);
     </script>
 {% endblock end_body_scripts %}

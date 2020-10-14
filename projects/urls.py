@@ -1,7 +1,6 @@
 from django.urls import path
 
 from .views import *
-from . import django_plotly_app
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
