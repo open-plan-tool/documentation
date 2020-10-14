@@ -218,10 +218,13 @@ class Asset(TopologyNode):
 
 class Bus(TopologyNode):
     type = models.CharField(max_length=20, choices=BUS_TYPE)
+    #input_ports = models.IntegerField(null=False, default=1)
+    #output_ports = models.IntegerField(null=False, default=1)
 
 
 class ConnectionLink(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE, null=False)
+    #bus_connection_port = models.IntegerField(null=False, default=1)
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=False)
     flow_direction = models.CharField(max_length=15, choices=FLOW_DIRECTION, null=False)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)

@@ -13,24 +13,11 @@
 
 {% block end_body_scripts %}
     <script>
-        var trace1 = {
-            x: [1, 2, 3, 4],
-            y: [10, 15, 13, 17],
-            type: 'bar'
-        };
-
-        var trace2 = {
-            x: [1, 2, 3, 4],
-            y: [16, 5, 11, 9],
-            type: 'scatter'
-        };
-
         const plotTime = {{ tTime }};
 
         function convertToDateTime(unixTimestamp) {
-            const milliseconds = unixTimestamp * 1000;
-            const newDate = new Date(milliseconds);
-            return newDate.toDateString();
+            const newDate = new Date(unixTimestamp);
+            return newDate;
         }
 
         plotTime.forEach(function(timeStamp, index) {
@@ -46,13 +33,13 @@
         var layout = {
             title: 'energyProduction',
             xaxis: {
-                title: 'Year',
-                showgrid: false,
-                zeroline: false
+                title: 'DateTime',
+                showgrid: true,
+                zeroline: true
             },
             yaxis: {
-                title: 'Percent',
-                showline: false
+                title: 'Electricity',
+                showline: true
             }
         };
 

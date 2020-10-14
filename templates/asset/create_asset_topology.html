@@ -228,38 +228,59 @@
             createNodeObject(name, 1, 1, {}, pos_x, pos_y);
         }
 
-        function showpopup(e) {
-            e.target.closest(".drawflow-node").style.zIndex = "9999";
-            e.target.children[0].style.display = "block";
+
+        // region Show Modal either by double clicking the box or the drawflow node.
+        function openModal(box) {
+            box.closest(".drawflow-node").style.zIndex = "9999";
+            box.children[0].style.display = "block";
             editor.precanvas.style.left = editor.canvas_x +'px';
             editor.precanvas.style.top = editor.canvas_y +'px';
-
             editor.editor_mode = "fixed";
         }
 
-        function closemodal(e) {
-            e.target.closest(".drawflow-node").style.zIndex = "2"; // bring node to default z-index
-            e.target.parentElement.parentElement.style.display  ="none"; // hide the modal
+        const showpopup = (e) => openModal(e.target);
+
+        document.addEventListener("dblclick", function (e) {
+            const NodeList = document.getElementsByClassName("drawflow-node");
+            for (const node of NodeList) {
+                if (e.target === node) {
+                    const box = e.target.querySelector('.drawflow-node .box');
+                    openModal(box);
+                }
+            }
+        });
+        // endregion
+
+        // region close Modal on: 1. click 'x', 2. press 'esc' and 3. click outside the modal.
+        function closeModalSteps(modal) {
+            modal.style.display  ="none"; // hide the modal
+            modal.closest(".drawflow-node").style.zIndex = "2"; // bring node to default z-index
             editor.precanvas.style.left = '0px';
             editor.precanvas.style.top = '0px';
             editor.editor_mode = "edit";
         }
 
+        const closemodal = (e) => closeModalSteps(e.target.closest(".modal"));
+
         document.addEventListener('keydown', function(e) {
             const modalList = document.getElementsByClassName("modal");
             if (e.keyCode === 27) {
-                for (const modalDiv of modalList) {
-                    if (modalDiv.style.display === "block"){
-                        modalDiv.parentElement.parentElement.parentElement.style.zIndex = "2"; // drawflow-node element
-                        modalDiv.style.display = "none";
-                        editor.precanvas.style.left = '0px';
-                        editor.precanvas.style.top = '0px';
-                        editor.editor_mode = "edit";
-                    }
+                for (let modalDiv of modalList) {
+                    if (modalDiv.style.display === "block")
+                        closeModalSteps(modalDiv);
                 }
             }
         })
 
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(e) {
+            const modalList = document.getElementsByClassName("modal");
+            for (const modalDiv of modalList) {
+                if (e.target === modalDiv && modalDiv.style.display === "block")
+                    closeModalSteps(modalDiv);
+            }
+        }
+        // endregion set
     </script>
 
 
@@ -287,7 +308,7 @@
                 </div>
             </div>
             `;
-                editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
+                editor.addNode(nodeName, connectionOutputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
             else
                 httpGetAsync(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y, createNodeDiv);

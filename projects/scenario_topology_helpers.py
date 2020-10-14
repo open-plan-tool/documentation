@@ -17,6 +17,7 @@ def db_bus_nodes_to_list(scen_id):
     for db_bus in all_db_busses:
         db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id},
                        "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y}
+                       #"input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
         bus_nodes_list.append(db_bus_dict)
     return bus_nodes_list
 

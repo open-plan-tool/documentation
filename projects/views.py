@@ -334,20 +334,24 @@ def scenario_view(request, scen_id):
 
 
 @login_required
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 def scenario_visualize_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
 
-    with open('static/tempFiles/json_with_results.json') as json_file:
-        dict_values = json.load(json_file)
-    test_data = dict_values['energyProduction']['DSO_consumption']['flow']['data']
-    test_times = dict_values['energyProduction']['DSO_consumption']['flow']['index']
+    if request.method == "GET":
+        with open('static/tempFiles/json_with_results.json') as json_file:
+            dict_values = json.load(json_file)
+        test_data = dict_values['energyProduction']['DSO_consumption']['flow']['data']
+        test_times = dict_values['energyProduction']['DSO_consumption']['flow']['index']
 
-    scenario_form = ScenarioUpdateForm(None, instance=scenario)
-    return render(request, 'scenario/scenario_visualize_results.html', {'scenario_form': scenario_form, 'scenario_id': scen_id, 'tData': test_data, 'tTime':test_times})
+        scenario_form = ScenarioUpdateForm(None, instance=scenario)
+        return render(request, 'scenario/scenario_visualize_results.html', {'scenario_form': scenario_form, 'scenario_id': scen_id, 'tData': test_data, 'tTime': test_times})
+    elif request.method == "POST" and request.is_ajax():
+        pass
+        # return JsonResponse({"test": "1"})
 
 
 @login_required
