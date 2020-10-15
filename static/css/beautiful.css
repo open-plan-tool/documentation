@@ -341,6 +341,7 @@ cursor: pointer;
 .drawflow-node.charging_power, .drawflow-node.discharging_power, .drawflow-node.capacity {
   height: 50px;
   width: 100px;
+  border-radius: 10px;
   background-color: #d9654e;
   text-align: left;
 }

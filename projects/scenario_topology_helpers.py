@@ -109,10 +109,18 @@ class NodeObject:
         self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
         self.inputs = node_data['inputs']
         self.outputs = list()
+        self.new_outputs = self.refactor_connections(node_data)
 
         for key1 in node_data['outputs'].keys():
             for key2 in node_data['outputs'][key1]:
                 self.outputs = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
+
+    def refactor_connections(self, node_data):
+        for key1 in node_data['outputs'].keys():
+            for key2 in node_data['outputs'][key1]:
+                temp = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
+                self.outputs.append(temp)
+        return temp
 
     def create_or_update_asset(self, scen_id):
         asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()

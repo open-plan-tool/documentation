@@ -70,9 +70,20 @@
                 </div>
             </div>
             <h3>Energy Bus</h3>
-            <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
-                <i class="fas fa-grip-lines"></i><span> Bus </span>
-            </div>
+            <ul>
+
+                <li class="chaining-modals" id="chaining-modals">
+                    <div class="ui">
+                        <p>Chaining modals (queue) example</p>
+                        <button aria-label="Try me! Example: Chaining modals (queue)">Try me!</button>
+                    </div>
+                </li>
+                <li>
+                    <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
+                        <i class="fas fa-grip-lines"></i><span> Bus </span>
+                    </div>
+                </li>
+            </ul>
 
         </div>
 
@@ -99,7 +110,7 @@
 
 {% block end_body_scripts %}
     <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -115,7 +126,6 @@
             data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
         }
         */
-
         function addAssets(data) {
             data['assets'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
         }
@@ -184,17 +194,44 @@
 
         function drop(ev) {
             if (ev.type === "touchend") {
-                var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
+                const parentdrawflow = document.elementFromPoint(mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
                 if(parentdrawflow != null) {
                     addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
                 }
                 mobile_item_selec = '';
             } else {
                 ev.preventDefault();
-                var data = ev.dataTransfer.getData("node");
-                addNodeToDrawFlow(data, ev.clientX, ev.clientY);
+                const nodeName = ev.dataTransfer.getData("node");
+                (nodeName === "bus") ? IOBusOptions(nodeName, ev.clientX, ev.clientY) : addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
             }
+        }
 
+        function IOBusOptions(nodeName, posX, posY) {
+            const checkMinMax = (value, min, max) => (value <= min) ? min : (value >= max) ? max : value;
+            Swal.mixin({
+                input: 'number',
+                confirmButtonText: 'Next',
+                showCancelButton: true,
+                progressSteps: ['1', '2']
+            })
+                .queue([
+                {
+                    title: 'Bus Inputs',
+                    text: 'Provide the number of bus Inputs (default 1)',
+                    //html: '<div>Testing Here</div>'
+                },
+                {
+                    title: 'Bus Outputs',
+                    text: 'Provide the number of bus Outputs (default 1)',
+                }
+            ])
+                .then((result) => {
+                if (result.value) {
+                    const inputs =  checkMinMax(result.value[0], 1, 10);
+                    const outputs = checkMinMax(result.value[1], 1, 10);
+                    addNodeToDrawFlow(nodeName, posX, posY, inputs, outputs);
+                }
+            })
         }
 
         // Disallow Any Connection to be created without a bus.
@@ -219,13 +256,12 @@
                 nodeToDbId['asset'][`${dbId}`] = nodeID;
         })
 
-        function addNodeToDrawFlow(name, pos_x, pos_y) {
+        function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs = 1) {
             if(editor.editor_mode === 'fixed')
                 return false;
             pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
             pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-
-            createNodeObject(name, 1, 1, {}, pos_x, pos_y);
+            createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y);
         }
 
 
@@ -286,8 +322,9 @@
 
     <script>
         function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
-            if (nodeName === 'bus'){
-                let html = `<div class="box" ondblclick="showpopup(event)">${nodeData.name}
+            if (nodeName === "bus"){
+                const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
+                let html = `<div class="box" ondblclick="showpopup(event)">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -308,7 +345,7 @@
                 </div>
             </div>
             `;
-                editor.addNode(nodeName, connectionOutputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
+                editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
             else
                 httpGetAsync(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y, createNodeDiv);
@@ -316,7 +353,8 @@
 
         /* Use this function to create nodes which will contain the full html data (forms included). */
         function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y, innerHtmlData){
-            var source_html = `<div class="box" ondblclick="showpopup(event)">${nodeData.name}
+            const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
+            const source_html = `<div class="box" ondblclick="showpopup(event)">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
