@@ -112,15 +112,9 @@
     </script>
 
     <script>
-        const addBusses = (data) => data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
-        /*
-        function addBusses(data) {
-            data['busses'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
-        }
-        */
-        function addAssets(data) {
-            data['assets'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
-        }
+        const addBusses = (data) => data['busses'].forEach(nodeData => createNodeObject(nodeData.name, nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+
+        const addAssets = (data) => data['assets'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
 
         function addLinks(data) {
             data['links'].forEach(linkData => {
@@ -128,9 +122,9 @@
                 let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
 
                 if (linkData.flow_direction === "B2A") {
-                    editor.addConnection(busNodeId, assetNodeId, 'output_1', 'input_1');
+                    editor.addConnection(busNodeId, assetNodeId, linkData.bus_connection_port, 'input_1');
                 } else {
-                    editor.addConnection(assetNodeId, busNodeId, 'output_1', 'input_1');
+                    editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
                 }
             });
         }

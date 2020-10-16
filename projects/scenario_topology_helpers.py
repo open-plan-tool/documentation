@@ -3,7 +3,7 @@ from projects.models import Bus, AssetType, Scenario, ConnectionLink, Asset
 import json
 from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
-
+# region sent db nodes to js
 def load_scenario_topology_from_db(scen_id):
     bus_nodes_list = db_bus_nodes_to_list(scen_id)
     asset_nodes_list = db_asset_nodes_to_list(scen_id)
@@ -16,7 +16,8 @@ def db_bus_nodes_to_list(scen_id):
     bus_nodes_list = list()
     for db_bus in all_db_busses:
         db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id},
-                       "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y}
+                       "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y, "input_ports": db_bus.input_ports,
+                       "output_ports": db_bus.output_ports}
                        #"input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
         bus_nodes_list.append(db_bus_dict)
     return bus_nodes_list
@@ -48,9 +49,11 @@ def db_connection_links_to_list(scen_id):
     connections_list = list()
     for db_connection in all_db_connection_links:
         db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id,
-                              "flow_direction": db_connection.flow_direction}
+                              "flow_direction": db_connection.flow_direction,
+                              "bus_connection_port": db_connection.bus_connection_port}
         connections_list.append(db_connection_dict)
     return connections_list
+# endregion db_nodes_to_js
 
 
 def update_deleted_objects_from_database(scenario_id, topo_node_list):
@@ -107,20 +110,16 @@ class NodeObject:
         self.pos_y = node_data['pos_y']
         self.db_obj_id = (node_data['data']['databaseId'] if 'databaseId' in node_data['data'] else None)
         self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
-        self.inputs = node_data['inputs']
-        self.outputs = list()
-        self.new_outputs = self.refactor_connections(node_data)
+        self.inputs = self.refactor_connections(node_data['inputs'])
+        self.outputs = self.refactor_connections(node_data['outputs'])
 
-        for key1 in node_data['outputs'].keys():
-            for key2 in node_data['outputs'][key1]:
-                self.outputs = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
-
-    def refactor_connections(self, node_data):
-        for key1 in node_data['outputs'].keys():
-            for key2 in node_data['outputs'][key1]:
-                temp = [connected_node['node'] for connected_node in node_data['outputs'][key1][key2]]
-                self.outputs.append(temp)
-        return temp
+    @staticmethod
+    def refactor_connections(input_or_output_data):
+        connection_dict = dict()
+        for key in input_or_output_data.keys():
+            temp = [connected_node['node'] for connected_node in input_or_output_data[key]['connections']]
+            connection_dict[key] = temp
+        return connection_dict
 
     def create_or_update_asset(self, scen_id):
         asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()
@@ -152,6 +151,8 @@ class NodeObject:
             setattr(bus, 'type', self.data['bustype'])
             setattr(bus, 'pos_x', self.pos_x)
             setattr(bus, 'pos_y', self.pos_y)
+            setattr(bus, 'input_ports', len(self.inputs))
+            setattr(bus, 'output_ports', len(self.outputs))
             bus.scenario = get_object_or_404(Scenario, pk=scen_id)
 
             bus.full_clean()
@@ -167,21 +168,28 @@ class NodeObject:
 
 
 def create_node_interconnection_links(node_obj, map_dict, scen_id):
-    for output_connection in node_obj.outputs:
-        connection = ConnectionLink()
-        output_node = map_dict[int(output_connection)]
+    for port_key, connections_list in node_obj.outputs.items():
+        for output_connection in connections_list:
+            connection = ConnectionLink()
+            output_node = map_dict[int(output_connection)]
 
-        if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
-            setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
-            setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
-            setattr(connection, 'flow_direction', 'B2A')
-            setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
-        elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
-            setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
-            setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
-            setattr(connection, 'flow_direction', 'A2B')
-            setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
-        connection.save()
+            if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
+                setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
+                setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
+                setattr(connection, 'flow_direction', 'B2A')
+                setattr(connection, 'bus_connection_port', port_key)
+                setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
+            elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
+                setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
+                setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
+                setattr(connection, 'flow_direction', 'A2B')
+                for node_port_key, con_links_list in output_node['input_connections'].items():
+                    for input_connection in con_links_list:
+                        if node_obj.obj_id == int(input_connection):
+                            setattr(connection, 'bus_connection_port', node_port_key)
+                            print(node_port_key, node_obj.name)
+                setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
+            connection.save()
 
 
 # Helper method to clean dict data from None values

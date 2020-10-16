@@ -533,6 +533,7 @@ def scenario_topology_view(request, scen_id):
             node_to_db_mapping_dict[node_obj.obj_id] = {
                 'db_obj_id': node_obj.db_obj_id,
                 'node_type': node_obj.node_obj_type,
+                'input_connections': node_obj.inputs,
                 'output_connections': node_obj.outputs,
             }
 
