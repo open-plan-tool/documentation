@@ -183,11 +183,17 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
                 setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
                 setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
                 setattr(connection, 'flow_direction', 'A2B')
+
                 for node_port_key, con_links_list in output_node['input_connections'].items():
-                    for input_connection in con_links_list:
+                    for index, input_connection in enumerate(con_links_list):
                         if node_obj.obj_id == int(input_connection):
+                            print(output_node['input_connections'][node_port_key][index])
                             setattr(connection, 'bus_connection_port', node_port_key)
-                            print(node_port_key, node_obj.name)
+                            map_dict[int(output_connection)]['input_connections'][node_port_key][index] = '0'
+                            break
+                    else:
+                        continue
+                    break
                 setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
             connection.save()
 
