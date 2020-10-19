@@ -56,6 +56,9 @@
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="capacity">
                     <i class="fas fa-battery-full"></i><span> Capacity </span>
                 </li>
+                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_unit">
+                    <i class="fas fa-car-battery"></i><span> Storage </span>
+                </li>
             </ul>
             <h3>Energy Consumption</h3>
             <ul style="list-style-type: none;padding: 0;">
@@ -112,36 +115,40 @@
     </script>
 
     <script>
-        const addBusses = (data) => data['busses'].forEach(nodeData => createNodeObject(nodeData.name, nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+        const addBusses = async (data) => data['busses'].forEach(nodeData => createNodeObject(nodeData.name,
+            nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y));
 
-        const addAssets = (data) => data['assets'].forEach(nodeData => createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+        const addAssets = async (data) => data['assets'].forEach(nodeData => createNodeObject(nodeData.name,
+            1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
 
-        function addLinks(data) {
-            data['links'].forEach(linkData => {
-                let busNodeId = nodeToDbId['bus'][linkData.bus_id];
-                let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
-
-                if (linkData.flow_direction === "B2A") {
-                    editor.addConnection(busNodeId, assetNodeId, linkData.bus_connection_port, 'input_1');
-                } else {
-                    editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
-                }
-            });
-        }
+        const addLinks = async (data) => data['links'].forEach(linkData => {
+            let busNodeId = nodeToDbId['bus'][linkData.bus_id];
+            let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
+            console.log(`addLinks: ${busNodeId} and ${assetNodeId}`);
+            (linkData.flow_direction === "B2A") ?
+                editor.addConnection(busNodeId, assetNodeId, linkData.bus_connection_port, 'input_1')
+                : editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
+        });
 
         $(window).on('load', function() {
-            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, function (data, textStatus, jqXHR){
-                $.when(addBusses(data), addAssets(data)).always(function(){
-                    setTimeout(function (){
+            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async function (data, textStatus, jqXHR){
+                {#await Promise.all([addBusses(data), addAssets(data)])#}
+                {#    .then(() => addLinks(data));#}
+                {#console.log(tedggr);#}
+                {#const theBusses = await addBusses(data);#}
+                {#const theAssets = await addAssets(data);#}
+                {#const theLinks = await addLinks(data, tedggr);#}
+
+                $.when(addBusses(data), addAssets(data)).always(function() {
+                    setTimeout(function () {
                         addLinks(data);
                     }, 700);
                     return data;
                 }); // when
             })
-            .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/ })
-            .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
+                .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/ })
+                .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
         });
-
     </script>
 
     <script>
@@ -149,6 +156,8 @@
         var id = document.getElementById("drawflow");
         const editor = new Drawflow(id);
         editor.reroute = true;
+        //editor.zoom_max = 1;
+        //editor.zoom_min = 1;
         //editor.drawflow = {"drawflow":{"Home":{"data":{"3":{"id":3,"name":"bus","data":{"name":"SDFSDF","bustype":"bus_heat"},"class":"bus","html":"Bus","typenode":false,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[]}},"pos_x":309.41,"pos_y":311}}}}};
         editor.start();
 
@@ -188,9 +197,70 @@
             } else {
                 ev.preventDefault();
                 const nodeName = ev.dataTransfer.getData("node");
-                (nodeName === "bus") ? IOBusOptions(nodeName, ev.clientX, ev.clientY) : addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
+                (nodeName === "bus") ? IOBusOptions(nodeName, ev.clientX, ev.clientY) :
+                    (nodeName === "storage_unit") ? addStorageUnit(nodeName, ev.clientX, ev.clientY) : addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
             }
         }
+
+
+        // create Storage Asset package
+        const addStorageUnit = (nodeName /* i.e. storage_unit */, clientX, clientY) => {
+            const storageUnitData = {"busses":[
+                    {"name":"bus","data":{"name":"storage bus","bustype":"bus_electricity"},"pos_x":clientX,"pos_y":clientY,"input_ports":1,"output_ports":2}],
+                "assets":[
+                    {"name":"charging_power","pos_x":clientX+100,"pos_y":clientY+20,"data":{}},
+                    {"name":"discharging_power","pos_x":clientX+100,"pos_y":clientY+80,"data":{}},
+                    {"name":"capacity","pos_x":clientX-150,"pos_y":clientY+50,"data":{}}],
+                "links":[
+                    {"bus_id":null,"asset_id":null,"flow_direction":"B2A","bus_connection_port":"output_1"},
+                    {"bus_id":null,"asset_id":null,"flow_direction":"B2A","bus_connection_port":"output_2"},
+                    {"bus_id":null,"asset_id":null,"flow_direction":"A2B","bus_connection_port":"input_1"}]};
+
+            //const storageBusNodeId = addNodeToDrawFlow("bus", clientX, clientY, 1, 1);
+            //const storageChargingPowerId = addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1);
+            //const storageDischargingPowerId = addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1);
+            //const storageCapacityId = addNodeToDrawFlow("capacity", clientX-150, clientY+50, 0, 1);
+
+            //addLinks(storageUnitData);
+
+            $.when(addNodeToDrawFlow("bus", clientX, clientY, 1, 1),
+                addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1),
+                addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1),
+                addNodeToDrawFlow("capacity", clientX-150, clientY+50, 0, 1))
+            .then(function(storageBusNodeId, storageChargingPowerId, storageDischargingPowerId, storageCapacityId){
+                storageUnitData.links.forEach(link => {
+                    link.bus_id = storageBusNodeId;
+                    if (link.flow_direction === "A2B")
+                        link.asset_id = storageCapacityId;
+                    else if ((link.flow_direction === "B2A") && (link.bus_connection_port === "output_1"))
+                        link.asset_id = storageChargingPowerId;
+                    else
+                        link.asset_id = storageDischargingPowerId;
+                });
+
+                setTimeout(function (){
+                    //console.log(`dfdsfsdf ${storageChargingPowerId}`);
+                    addLinks(storageUnitData);
+                }, 1400);
+                return storageUnitData;
+                }); // when
+
+
+            {#const storageAssets = ["charging_power", "capacity", "discharging_power"];#}
+            {#let interDistance = 120;#}
+            {#let temp = 0;#}
+            {#storageAssets.forEach(assetName => addNodeToDrawFlow(assetName, clientX + (temp++)*interDistance, clientY, 1, 1))#}
+            {#    .then(()=> console.log("done"));#}
+        }
+        // Add Storage Assets
+
+
+
+
+
+
+
+
 
         function IOBusOptions(nodeName, posX, posY) {
             const checkMinMax = (value, min, max) => (value <= min) ? min : (value >= max) ? max : value;
@@ -242,12 +312,12 @@
                 nodeToDbId['asset'][`${dbId}`] = nodeID;
         })
 
-        function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs = 1) {
+        async function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs = 1, nodeData = {}) {
             if(editor.editor_mode === 'fixed')
                 return false;
             pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
             pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-            createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y);
+            return createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y);
         }
 
 
@@ -307,7 +377,7 @@
 
 
     <script>
-        function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
+        async function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
             if (nodeName === "bus"){
                 const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
                 let html = `<div class="box" ondblclick="showpopup(event)">${shownName}
@@ -329,47 +399,34 @@
                     </div>
                   </div>
                 </div>
-            </div>
-            `;
-                editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
+            </div>`;
+                return editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html);
             }
             else
-                httpGetAsync(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y, createNodeDiv);
+                return fetchAssetForm(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y);
         }
 
-        /* Use this function to create nodes which will contain the full html data (forms included). */
-        function createNodeDiv(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y, innerHtmlData){
+        async function fetchAssetForm(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y) {
+            // Due to a problem with Boolean Values not showing in the modal we have to convert bool to string.
+            nodeData.optimize_cap = (nodeData.optimize_cap) ? "True" : "False";
+            nodeData.dispatchable = (nodeData.dispatchable) ? "True" : "False";
+            // ------------------------------------------------------------------------------------------------
+            const fullUrl = document.location.origin+'/asset/create/'+nodeName;
+
+            const resp = await fetch(fullUrl);
+            const data = await resp.text();
+            const formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
+
             const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
             const source_html = `<div class="box" ondblclick="showpopup(event)">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-                    <div>${innerHtmlData}</div>
+                    <div>${formData}</div>
                   </div>
                 </div>
-            </div>
-            `;
-            editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html);
-        }
-
-        function httpGetAsync(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, callback=createNodeDiv) {
-            // Due to a problem with Boolean Values not showing in the modal we have to convert bool to string.
-            nodeData.optimize_cap = (nodeData.optimize_cap) ? "True" : "False";
-            nodeData.dispatchable = (nodeData.dispatchable) ? "True" : "False";
-            // ------------------------------------------------------------------------------------------------
-
-            var fullUrl = document.location.origin+'/asset/create/'+nodeName;
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.onreadystatechange = function() {
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-                    var data = xmlHttp.responseText;
-                    var formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
-                    //console.log(formData);
-                    callback(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y, formData);
-                }
-            }
-            xmlHttp.open("GET", fullUrl, true); // true for asynchronous
-            xmlHttp.send(null);
+            </div>`;
+            return editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html);
         }
     </script>
 

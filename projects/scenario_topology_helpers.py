@@ -189,7 +189,7 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
                         if node_obj.obj_id == int(input_connection):
                             print(output_node['input_connections'][node_port_key][index])
                             setattr(connection, 'bus_connection_port', node_port_key)
-                            map_dict[int(output_connection)]['input_connections'][node_port_key][index] = '0'
+                            map_dict[int(output_connection)]['input_connections'][node_port_key][index] = '0'  # hacky solution
                             break
                     else:
                         continue
