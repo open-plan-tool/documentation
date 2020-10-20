@@ -115,13 +115,15 @@
     </script>
 
     <script>
-        const addBusses = async (data) => data['busses'].forEach(nodeData => createNodeObject(nodeData.name,
-            nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+        const addBusses = async (data) =>
+            await Promise.all(data.map(async nodeData =>
+                createNodeObject(nodeData.name, nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
 
-        const addAssets = async (data) => data['assets'].forEach(nodeData => createNodeObject(nodeData.name,
-            1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y));
+        const addAssets = async (data) =>
+            await Promise.all(data.map(async nodeData =>
+                createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
 
-        const addLinks = async (data) => data['links'].forEach(linkData => {
+        const addLinks = async (data) => data.map(async linkData => {
             let busNodeId = nodeToDbId['bus'][linkData.bus_id];
             let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
             (linkData.flow_direction === "B2A") ?
@@ -129,14 +131,24 @@
                 : editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
         });
 
+
         $(window).on('load', function() {
-            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, function (data, textStatus, jqXHR){
-                $.when(addBusses(data), addAssets(data)).always(function() {
-                    setTimeout(function () {
-                        addLinks(data);
-                    }, 700); // TODO: Consider Changing Timeout to Async/Await Implementation
+            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async function (data, textStatus, jqXHR){
+
+                console.time('Time1');
+                await addAssets(data['assets']);
+                await addBusses(data['busses']);
+                await addLinks(data['links']);
+                console.timeEnd('Time1');
+
+                /*
+                $.when(addBusses(data['busses']), addAssets(data['assets'])).then(function() {
+                    setTimeout(function () { // setTimeout can now be removed since async await takes care of everything
+                        addLinks(data['links']);
+                    }, 200); // TODO: Consider Changing Timeout to Async/Await Implementation -- DONE! Use above 3 await lines
                     return data;
                 }); // when
+                */
             })
             .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/ })
             .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
