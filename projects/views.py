@@ -15,7 +15,7 @@ from datetime import datetime
 
 from .dtos import convert_to_dto
 from .forms import *
-from .http_requests import mvs_simulation_request
+from .requests import mvs_simulation_request
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
     update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, \

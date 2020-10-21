@@ -198,7 +198,7 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
             connection.save()
 
 
-# Helper method to clean dict data from None values
+# Helper method to clean dict data from empty values
 def remove_empty_elements(d):
 
     def empty(x):
