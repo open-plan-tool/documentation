@@ -49,14 +49,14 @@ MVS_TYPE = (
     ('storage', 'h2'),
 )
 
-ASSET_CATEGORY = (
+ASSET_CATEGORY = [
     ('', 'Choose...'),
     ('energy_provider', 'energy_provider'),
     ('energy_production', 'energy_production'),
     ('energy_conversion', 'energy_conversion'),
     ('energy_storage', 'energy_storage'),
     ('energy_consumption', 'energy_consumption'),
-)
+]
 
 VALUE_TYPE = (
     ('', 'Choose...'),
