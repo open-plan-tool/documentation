@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import *
 
@@ -22,8 +22,6 @@ urlpatterns = [
     path('scenario/update/<int:scen_id>', scenario_update, name='scenario_update'),
     path('scenario/delete/<int:scen_id>', scenario_delete, name='scenario_delete'),
     path('scenario/view/<int:scen_id>', scenario_view, name='scenario_view'),
-    path('scenario/results/visualize/<int:scen_id>', scenario_visualize_results, name='scenario_visualize_results'),
-    path('scenario/results/available/<int:scen_id>', scenario_available_results, name='scenario_available_results'),
     path('scenario/duplicate/<int:scen_id>', scenario_duplicate, name='scenario_duplicate'),
     path('scenario/upload/', LoadScenarioFromFileView.as_view(), name='scenario_upload'),
     path('scenario/simulate/<int:scen_id>', start_scenario_simulation, name='start_scenario_simulation'),
@@ -35,5 +33,4 @@ urlpatterns = [
     path('asset/create_post/', asset_create, name='asset_create_post'),  # deprecated view, no long required since object are created inside the topology. can be used for validation
 
     path('topology/mvs_simulation/<int:scenario_id>', request_mvs_simulation, name='request_mvs_simulation'),
-
 ]
