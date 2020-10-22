@@ -4,7 +4,21 @@
             <img src="/static/images/eland.png" class = "logoo"  />
             <a class="navbar-brand" href="{% url 'home' %}">E-LAND EPA</a>
         </div>
-        <ul class="nav navbar-nav">
+      <!--  <ul class="nav navbar-nav">
+            <li><a href="{% url 'project_search' %}">Project List</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">PROJECTS
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'project_search' %}">SEARCH</a></li>
+                    <li><a href="{% url 'project_create' %}">CREATE</a></li>
+                </ul>
+            </li>
+
+        </ul> -->
+
+        {% if user.is_authenticated %}
+            <ul class="nav navbar-nav">
             <li><a href="{% url 'project_search' %}">Project List</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">PROJECTS
@@ -16,8 +30,6 @@
             </li>
 
         </ul>
-
-        {% if user.is_authenticated %}
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>

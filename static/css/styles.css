@@ -158,9 +158,7 @@ input[type="checkbox"] {
 
 .panel-heading {
     color: #555555;
-
-    background-color: #ffffff!important;
-    border-color: #ffffff !important;
+    margin-left: -19px;
 }
 
 .panel-title {
@@ -178,10 +176,10 @@ input[type="checkbox"] {
 .loginlogo{
     width: 250px;
     height: 250px;
-
+    position: relative;
     overflow: hidden;
     display: inline;
-    margin-left: 150px;
+   /* margin-left: 150px; */
     margin-top: 80px;
 }
 
@@ -189,10 +187,10 @@ input[type="checkbox"] {
    text-transform: uppercase;
     letter-spacing: 1.5px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    margin-left: 30px;
     text-align: center;
     font-size: 50px;
     color: #F4D9A4;
-    font-style: italic;
      text-shadow: 2px 2px 8px #547876;
 
 }
@@ -202,12 +200,15 @@ background-color: #ffffff;
 border-radius: 80%;
 border: 1px solid transparent;
 border-radius: 14px;
-box-shadow: box-shadow: 5px 10px 8px #888888;
+box-shadow: 5px 5px 19px #F4D9A4;
 }
 
 .requiredField{
     color: #555555;
     font-weight: 500;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
 }
 
 #id_username {
@@ -233,3 +234,21 @@ box-shadow: box-shadow: 5px 10px 8px #888888;
 #id_password:focus {
  border-color: #F4D9A4;
 }
+
+.questionn{
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
+    text-align: center;
+}
+
+#logg {
+    background-color: #F4D9A4;
+    border-color: #F4D9A4;
+     text-transform: uppercase;
+    font-weight: 600;
+    width: 100%;
+    box-shadow: 1px 1px 3px #888888;
+}
+
