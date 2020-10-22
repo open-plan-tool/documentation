@@ -59,7 +59,9 @@
             });
         });
 
+    </script>
 
+    <script>
         // On change reload diagrams
         $('#select-diagrams').change(function () {
 
@@ -88,13 +90,11 @@
 
         function drawGraph(dataList) {
 
-            var traceList = [];
+            const traceList = [];
 
-            dataList.forEach(function (data) {
-
-                console.log('data: ' + data)
-
-                var trace = {
+            dataList.map(async data => {
+                const trace = {
+                    name: data.title,
                     x: data.xAxis.values,
                     y: data.yAxis.values,
                     type: 'scatter'
