@@ -4,7 +4,7 @@
 
 {% block start_body_scripts %}
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-        <script src="/static/js/selectize.js"></script>
+    <script src="/static/js/selectize.js"></script>
 
 {% endblock start_body_scripts %}
 
@@ -23,18 +23,40 @@
 
     <script>
 
+        function initiateSelectize(options, optgroups) {
+            $('#select-diagrams').selectize({
+                persist: false,
+                maxItems: null,
+                valueField: 'assetType',
+                labelField: 'assetType',
+                searchField: ['assetCategory', 'assetType'],
+                // this is where you are returning the data from your JSON file
+                options: options,
+                optgroups: optgroups,
+                optgroupField: 'assetCategory', // refers to the group field in "options"
+                optgroupLabelField: 'assetCategory', // refers to the label field in "optgroups"
+                optgroupValueField: 'assetCategory', // refers to the value field in "optgroups"
 
-        $('#select-diagrams').selectize({
-            persist: false,
-            maxItems: 5,
-            valueField: 'email',
-            labelField: 'name',
-            searchField: ['name', 'email'],
-            options: [
-                {email: 'brian@thirdroute.com', name: 'Brian Reavis'},
-                {email: 'nikola@tesla.com', name: 'Nikola Tesla'},
-                {email: 'someone@gmail.com'}
-            ]
+            });
+        }
+
+        // Ajax request to retrieve all available graphs for visualization
+           $(document).ready(function() {
+            $.ajax({
+                url: "{% url 'scenario_available_results' scenario_id %}",
+                type: "GET",
+                success: function (data) {
+                    console.log(data.options.flat())
+                    console.log(data.optgroups)
+                    initiateSelectize(data.options.flat(), data.optgroups)
+                },
+                error: function (xhr, errmsg) {
+                    console.log("backend_error!")
+                    //Show the error message
+                    $('#message-div').html("<div class='alert-error'>" +
+                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                }
+            });
         });
 
     </script>

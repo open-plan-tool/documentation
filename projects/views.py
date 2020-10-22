@@ -334,6 +334,46 @@ def scenario_view(request, scen_id):
 
 
 @login_required
+@json_view
+@require_http_methods(["GET"])
+def scenario_available_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if scenario.project.user != request.user:
+        return HttpResponseForbidden()
+
+    with open('static/tempFiles/json_with_results.json') as json_file:
+        dict_values = json.load(json_file)
+
+    asset_category_list = [
+        'energyProviders', 'energyConsumption', 'energyConversion', 'energyStorage', 'energyProduction']
+
+    # Generate available asset category JSON
+    asset_category_json = [
+        {
+            'assetCategory': asset_category
+        }
+        for asset_category in asset_category_list
+    ]
+
+    # Generate available asset type JSON
+    asset_type_json = [
+        [
+            {
+                'assetCategory': asset_category,
+                'assetType': asset_type
+            }
+            for asset_type in dict_values[asset_category].keys()
+        ]
+        for asset_category in asset_category_list
+    ]
+
+    response_json = {'options': asset_type_json, 'optgroups': asset_category_json}
+
+    return JsonResponse(response_json, status=200, content_type='application/json')
+
+
+@login_required
 @require_http_methods(["GET", "POST"])
 def scenario_visualize_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
@@ -345,10 +385,13 @@ def scenario_visualize_results(request, scen_id):
         with open('static/tempFiles/json_with_results.json') as json_file:
             dict_values = json.load(json_file)
         test_data = dict_values['energyProduction']['DSO_consumption']['flow']['data']
+
+        # TODO: Take time from simulation settings
         test_times = dict_values['energyProduction']['DSO_consumption']['flow']['index']
 
         scenario_form = ScenarioUpdateForm(None, instance=scenario)
-        return render(request, 'scenario/scenario_visualize_results.html', {'scenario_form': scenario_form, 'scenario_id': scen_id, 'tData': test_data, 'tTime': test_times})
+        return render(request, 'scenario/scenario_visualize_results.html',
+                      {'scenario_form': scenario_form, 'scenario_id': scen_id, 'tData': test_data, 'tTime': test_times})
     elif request.method == "POST" and request.is_ajax():
         pass
         # return JsonResponse({"test": "1"})
@@ -397,8 +440,6 @@ def scenario_delete(request, scen_id):
         return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
-
-
 @login_required
 @require_http_methods(["GET", "POST"])
 def start_scenario_simulation(request, scen_id):
@@ -409,10 +450,10 @@ def start_scenario_simulation(request, scen_id):
         if sent_successfully:
             messages.success(request, 'Simulation Started!')
             return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
-            #return {'success': True}
+            # return {'success': True}
         else:
             messages.warning(request, 'Could not start Scenario Simulation.')
-            #return {'success': False}
+            # return {'success': False}
             return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
     else:
         messages.warning(request, 'Could not start Scenario Simulation.')
@@ -491,7 +532,7 @@ def asset_create_post(request):
             # redirect to a new URL:
             return JsonResponse({'success': True}, status=200)
 
-    #form_html = crispy_forms_filters.as_crispy_form(form)
+    # form_html = crispy_forms_filters.as_crispy_form(form)
 
 
 @login_required
@@ -504,7 +545,8 @@ def scenario_topology_view(request, scen_id):
 
     if request.method == "GET":
         request.session['scenario_id'] = scen_id  # we need to set the session since asset creation relies on it.
-        return render(request, 'asset/create_asset_topology.html', {'scenario_id': scen_id, 'project_id': request.session['project_id']})
+        return render(request, 'asset/create_asset_topology.html',
+                      {'scenario_id': scen_id, 'project_id': request.session['project_id']})
 
     elif request.method == "POST" and request.is_ajax():
         topology = json.loads(request.body)['drawflow']['Home']['data']
