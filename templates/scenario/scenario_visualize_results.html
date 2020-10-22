@@ -22,7 +22,6 @@
 {% block end_body_scripts %}
 
     <script>
-
         function initiateSelectize(options, optgroups) {
             $('#select-diagrams').selectize({
                 persist: false,
@@ -45,11 +44,7 @@
             $.ajax({
                 url: "{% url 'scenario_available_results' scenario_id %}",
                 type: "GET",
-                success: function (data) {
-                    console.log(data.options.flat())
-                    console.log(data.optgroups)
-                    initiateSelectize(data.options.flat(), data.optgroups)
-                },
+                success: data => initiateSelectize(data.options.flat(), data.optgroups),
                 error: function (xhr, errmsg) {
                     console.log("backend_error!")
                     //Show the error message
@@ -63,7 +58,7 @@
         // On change reload diagrams
         $('#select-diagrams').change(function () {
 
-            var assetNameList = $(this).val()
+            const assetNameList = $(this).val()
 
             // Ajax request to retrieve requested graph data
             $.ajax({
@@ -72,10 +67,7 @@
                 data: {
                     assetNameList: assetNameList,
                 },
-                success: function (data) {
-                    console.log(data)
-                    drawGraph(data)
-                },
+                success: data => drawGraph(data),
                 error: function (xhr, errmsg) {
                     console.log("backend_error!")
                     //Show the error message
@@ -101,7 +93,7 @@
                 traceList.push(trace)
             });
 
-              var layout = {
+              const layout = {
                     title: dataList[0].title,
                     xaxis: {
                         title: dataList[0].xAxis.label,

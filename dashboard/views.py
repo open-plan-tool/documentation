@@ -7,18 +7,6 @@ from jsonview.decorators import json_view
 from projects.models import Scenario
 
 
-@json_view
-@login_required
-@require_http_methods(["GET"])
-def timeseries_chart_jsonview(request, scen_id):
-    scenario = get_object_or_404(Scenario, pk=scen_id)
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
-
-    if request.method == "GET" and request.is_ajax():
-        return JsonResponse({"test": 1})
-
-
 @login_required
 @json_view
 @require_http_methods(["GET"])
