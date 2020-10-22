@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     
     'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
-    
+    'dashboard.apps.DashboardConfig',
+
     # 3rd Party
     'crispy_forms',
     'bootstrap_modal_forms',

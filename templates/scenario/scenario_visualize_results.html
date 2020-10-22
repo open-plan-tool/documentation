@@ -74,13 +74,13 @@
             this[index] = convertToDateTime(timeStamp);
         }, plotTime);
 
-        var trace3 = {
+        let trace3 = {
             x: plotTime,
             y: {{ tData }},
             type: 'scatter'
         };
 
-        var layout = {
+        const layout = {
             title: 'energyProduction',
             xaxis: {
                 title: 'DateTime',
@@ -94,7 +94,7 @@
         };
 
         //var data = [trace1, trace2];
-        var data = [trace3];
+        let data = [trace3];
         Plotly.newPlot('myDiv', data, layout);
     </script>
 {% endblock end_body_scripts %}

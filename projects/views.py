@@ -440,6 +440,8 @@ def scenario_delete(request, scen_id):
         return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
+
+
 @login_required
 @require_http_methods(["GET", "POST"])
 def start_scenario_simulation(request, scen_id):
