@@ -1,7 +1,16 @@
 body {
     font-size: 16px;
-    color: #000000;
-    background-color: #0ac2b2;
+    background-image: linear-gradient( #FFEAB0,#A97D67) ;
+    background-color: #A97D67;
+
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /** HEADER **/
@@ -17,8 +26,8 @@ body {
     text-transform: uppercase;
     font-weight: bold;
     text-shadow: 1px 1px 1px #222;
-
     line-height: .75;
+
 }
 
 .navbar-brand a:hover, .navbar-brand a:focus {
@@ -30,7 +39,10 @@ body {
     text-transform: uppercase;
     font-size: .7em;
     margin-top: 15px;
+
+
 }
+
 
 #nav-list a {
     color: #951C49;
@@ -101,4 +113,123 @@ input[type="checkbox"] {
     vertical-align: middle;
     width: 25px; /*Desired width*/
     height: 25px; /*Desired height*/
+}
+
+.container-fluid {
+    line-height: 50px;
+    margin-left: 40px;
+    letter-spacing: 1.5px;
+    color: white;
+    background-color: #ffffff;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+    background-color: #ffffff;
+    color: #5a6268;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.container-fluid a:hover{
+    transition: border-top .2s;
+    border-top: 5px solid #EFB03D;
+    color: #5a6268 !important;
+}
+
+.logoo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline;
+    margin-left:-6px;
+    margin-top: -8px;
+
+}
+
+.navbar-inverse {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    text-transform: uppercase;
+}
+
+.panel-heading {
+    color: #555555;
+
+    background-color: #ffffff!important;
+    border-color: #ffffff !important;
+}
+
+.panel-title {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    text-align: left;
+    margin-left: 105px;
+    font-size: 30px;
+    color:#686868;
+
+}
+
+
+.loginlogo{
+    width: 250px;
+    height: 250px;
+
+    overflow: hidden;
+    display: inline;
+    margin-left: 150px;
+    margin-top: 80px;
+}
+
+.Elandlogin{
+   text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    text-align: center;
+    font-size: 50px;
+    color: #F4D9A4;
+    font-style: italic;
+     text-shadow: 2px 2px 8px #547876;
+
+}
+
+.panel {
+background-color: #ffffff;
+border-radius: 80%;
+border: 1px solid transparent;
+border-radius: 14px;
+box-shadow: box-shadow: 5px 10px 8px #888888;
+}
+
+.requiredField{
+    color: #555555;
+    font-weight: 500;
+}
+
+#id_username {
+  background-color:#fffffd;
+    opacity: 0.9;
+
+    box-shadow: #F4D9A4 ;
+
+}
+
+#id_username:focus {
+ border-color: #F4D9A4;
+}
+
+#id_password {
+  background-color:#fffffd;
+    opacity: 0.9;
+
+    box-shadow: #F4D9A4 ;
+
+}
+
+#id_password:focus {
+ border-color: #F4D9A4;
 }
