@@ -4,47 +4,123 @@
 
 {% block start_body_scripts %}
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script src="/static/js/selectize.js"></script>
+
 {% endblock start_body_scripts %}
 
 {% block content %}
-    <div id='myDiv'></div>
+    <div class="mb-4">
+        <label for="select-diagrams">Select diagrams to draw:</label>
+        <input type="text" id="select-diagrams"/>
+    </div>
+
+    <div class="mb-4" id='graphDiv'></div>
+
 {% endblock content %}
 
 
 {% block end_body_scripts %}
-    <script>
-        const plotTime = {{ tTime }};
 
-        function convertToDateTime(unixTimestamp) {
-            const newDate = new Date(unixTimestamp);
-            return newDate;
+    <script>
+
+        function initiateSelectize(options, optgroups) {
+            $('#select-diagrams').selectize({
+                persist: false,
+                maxItems: null,
+                valueField: 'assetName',
+                labelField: 'assetName',
+                searchField: ['assetCategory', 'assetName'],
+                // this is where you are returning the data from your JSON file
+                options: options,
+                optgroups: optgroups,
+                optgroupField: 'assetCategory', // refers to the group field in "options"
+                optgroupLabelField: 'assetCategory', // refers to the label field in "optgroups"
+                optgroupValueField: 'assetCategory', // refers to the value field in "optgroups"
+
+            });
         }
 
-        plotTime.forEach(function(timeStamp, index) {
-            this[index] = convertToDateTime(timeStamp);
-        }, plotTime);
+        // Ajax request to retrieve all available graphs for visualization
+        $(document).ready(function () {
+            $.ajax({
+                url: "{% url 'scenario_available_results' scenario_id %}",
+                type: "GET",
+                success: function (data) {
+                    console.log(data.options.flat())
+                    console.log(data.optgroups)
+                    initiateSelectize(data.options.flat(), data.optgroups)
+                },
+                error: function (xhr, errmsg) {
+                    console.log("backend_error!")
+                    //Show the error message
+                    $('#message-div').html("<div class='alert-error'>" +
+                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                }
+            });
+        });
 
-        var trace3 = {
-            x: plotTime,
-            y: {{ tData }},
-            type: 'scatter'
-        };
 
-        var layout = {
-            title: 'energyProduction',
-            xaxis: {
-                title: 'DateTime',
-                showgrid: true,
-                zeroline: true
-            },
-            yaxis: {
-                title: 'Electricity',
-                showline: true
-            }
-        };
+        // On change reload diagrams
+        $('#select-diagrams').change(function () {
 
-        //var data = [trace1, trace2];
-        var data = [trace3];
-        Plotly.newPlot('myDiv', data, layout);
+            var assetNameList = $(this).val()
+
+            // Ajax request to retrieve requested graph data
+            $.ajax({
+                url: "{% url 'scenario_request_results' scenario_id %}",
+                type: "GET",
+                data: {
+                    assetNameList: assetNameList,
+                },
+                success: function (data) {
+                    console.log(data)
+                    drawGraph(data)
+                },
+                error: function (xhr, errmsg) {
+                    console.log("backend_error!")
+                    //Show the error message
+                    $('#message-div').html("<div class='alert-error'>" +
+                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                }
+            });
+        });
+
+
+        function drawGraph(dataList) {
+
+            var traceList = [];
+
+            dataList.forEach(function (data) {
+
+                console.log('data: ' + data)
+
+                var trace = {
+                    x: data.xAxis.values,
+                    y: data.yAxis.values,
+                    type: 'scatter'
+                };
+
+                traceList.push(trace)
+            });
+
+              var layout = {
+                    title: dataList[0].title,
+                    xaxis: {
+                        title: dataList[0].xAxis.label,
+                        showgrid: true,
+                        zeroline: true
+                    },
+                    yaxis: {
+                        title: dataList[0].yAxis.label,
+                        showline: true
+                    }
+                };
+
+
+            Plotly.newPlot('graphDiv', traceList, layout);
+        }
+
     </script>
+
+
 {% endblock end_body_scripts %}

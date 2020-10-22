@@ -15,7 +15,7 @@ from datetime import datetime
 
 from .dtos import convert_to_dto
 from .forms import *
-from .http_requests import mvs_simulation_request
+from .requests import mvs_simulation_request
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
     update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, \
@@ -334,27 +334,6 @@ def scenario_view(request, scen_id):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
-def scenario_visualize_results(request, scen_id):
-    scenario = get_object_or_404(Scenario, pk=scen_id)
-
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
-
-    if request.method == "GET":
-        with open('static/tempFiles/json_with_results.json') as json_file:
-            dict_values = json.load(json_file)
-        test_data = dict_values['energyProduction']['DSO_consumption']['flow']['data']
-        test_times = dict_values['energyProduction']['DSO_consumption']['flow']['index']
-
-        scenario_form = ScenarioUpdateForm(None, instance=scenario)
-        return render(request, 'scenario/scenario_visualize_results.html', {'scenario_form': scenario_form, 'scenario_id': scen_id, 'tData': test_data, 'tTime': test_times})
-    elif request.method == "POST" and request.is_ajax():
-        pass
-        # return JsonResponse({"test": "1"})
-
-
-@login_required
 @require_http_methods(["GET"])
 def scenario_duplicate(request, scen_id):
     """ duplicates the selected scenario and all of its associated components (topology data included) """
@@ -409,10 +388,10 @@ def start_scenario_simulation(request, scen_id):
         if sent_successfully:
             messages.success(request, 'Simulation Started!')
             return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
-            #return {'success': True}
+            # return {'success': True}
         else:
             messages.warning(request, 'Could not start Scenario Simulation.')
-            #return {'success': False}
+            # return {'success': False}
             return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
     else:
         messages.warning(request, 'Could not start Scenario Simulation.')
@@ -491,7 +470,7 @@ def asset_create_post(request):
             # redirect to a new URL:
             return JsonResponse({'success': True}, status=200)
 
-    #form_html = crispy_forms_filters.as_crispy_form(form)
+    # form_html = crispy_forms_filters.as_crispy_form(form)
 
 
 @login_required
@@ -504,7 +483,8 @@ def scenario_topology_view(request, scen_id):
 
     if request.method == "GET":
         request.session['scenario_id'] = scen_id  # we need to set the session since asset creation relies on it.
-        return render(request, 'asset/create_asset_topology.html', {'scenario_id': scen_id, 'project_id': request.session['project_id']})
+        return render(request, 'asset/create_asset_topology.html',
+                      {'scenario_id': scen_id, 'project_id': request.session['project_id']})
 
     elif request.method == "POST" and request.is_ajax():
         topology = json.loads(request.body)['drawflow']['Home']['data']

@@ -42,13 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.forms',
+
     
     'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
-    
+    'dashboard.apps.DashboardConfig',
+
     # 3rd Party
     'crispy_forms',
     'bootstrap_modal_forms',
+    'django_extensions',
+
 ]
 
 MIDDLEWARE = [
@@ -101,11 +105,24 @@ WSGI_APPLICATION = 'epa.wsgi.application'
 # }
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': '146.124.106.175',
+    #     'PORT': '3306',
+    #     'DATABASE': 'elanddb',
+    #     'NAME': 'elanddb',
+    #     'USER': 'elandusr',
+    #     'PASSWORD': 'elandusr123!@#',
+    #     'DEFAULT-CHARACTER-SET': 'utf8',
+    #
+    # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
