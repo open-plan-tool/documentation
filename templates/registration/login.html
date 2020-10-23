@@ -8,67 +8,67 @@
 {% block title %}Log In{% endblock title %}
 
 {% block content %}
-<br>
+    <br>
     <br>
     <br>
     <br>
     <div class="row" >
-    <div class="col-sm-3"></div>
+        <div class="col-sm-3"></div>
         <div class="col-sm-6" style="width: 100%;">
-    <div class="container" style="width: 80%;">
+            <div class="container" style="width: 80%;">
 
 
-        <div class="panel panel-default">
-<div class="row">
-                <div class="col-sm-6">
-                 <div class="row">
-                        <div class="col-sm-4"></div>
+                <div class="panel panel-default">
+                    <div class="row">
                         <div class="col-sm-6">
-                  <img src="/static/images/eland.png" class="loginlogo"  />
+                            <div class="row">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-6">
+                                    <img src="/static/images/eland.png" class="loginlogo"  />
 
-                    <p class="Elandlogin">E-land</p>
+                                    <p class="Elandlogin">E-land</p>
+                                </div>
+                            </div>
+                            <!--  <img src="/static/images/pic2.png" style="width: 90%; height: 90%; opacity: 0.6"  /> -->
                         </div>
+
+                        <br>
+                        <br>
+                        <div class="col-sm-6">
+                            <br>
+                            <div class="panel-heading"><h3 class="panel-title"><strong>LogIn </strong></h3></div>
+                            <div class="panel-body">
+                                <br>
+
+                                <row>
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-7">
+                                        <form method="post" class="from-group">
+                                            {% csrf_token %}
+                                            {{ form|crispy }}
+
+                                            <button type="submit" class="btn btn-success" id="logg">Login</button>
+                                            <br>
+                                            <br>
+                                            <p class="questionn">Don't have an account? Create one <a href="{% url 'signup' %}">here</a></p>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                </row>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
                 </div>
-                   <!--  <img src="/static/images/pic2.png" style="width: 90%; height: 90%; opacity: 0.6"  /> -->
-                    </div>
-
-            <br>
-            <br>
-                <div class="col-sm-6">
-            <br>
-            <div class="panel-heading"><h3 class="panel-title"><strong>LogIn </strong></h3></div>
-            <div class="panel-body">
-            <br>
-
-                <row>
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-7">
-                <form method="post" class="from-group">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-
-                    <button type="submit" class="btn btn-success" id="logg">Login</button>
-                    <br>
-                    <br>
-                    <p class="questionn">Don't have an account? Create one <a href="{% url 'signup' %}">here</a></p>
-                </form>
-                    </div>
-                    <div class="col-sm-3"></div>
-                    </row>
-            </div>
-            <br>
-            <br>
-                    <br>
-            <br>
             </div>
         </div>
-</div>
+        <div class="col-sm-3">
+            <span></span>
+        </div>
     </div>
-            </div>
-    <div class="col-sm-3">
-        <span></span>
-    </div>
-</div>
 
 
 {% endblock content %}
