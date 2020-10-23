@@ -115,6 +115,8 @@ input[type="checkbox"] {
     height: 25px; /*Desired height*/
 }
 
+/* IOANNA */
+
 .container-fluid {
     line-height: 50px;
     margin-left: 40px;
@@ -159,6 +161,9 @@ input[type="checkbox"] {
 .panel-heading {
     color: #555555;
     margin-left: -19px;
+    background-color: transparent !important;
+    border-bottom-color: transparent !important;
+
 }
 
 .panel-title {
@@ -199,7 +204,7 @@ input[type="checkbox"] {
 background-color: #ffffff;
 border-radius: 80%;
 border: 1px solid transparent;
-border-radius: 14px;
+border-radius: 3px;
 box-shadow: 5px 5px 19px #F4D9A4;
 }
 
@@ -208,7 +213,7 @@ box-shadow: 5px 5px 19px #F4D9A4;
     font-weight: 500;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 #id_username {
@@ -252,3 +257,111 @@ box-shadow: 5px 5px 19px #F4D9A4;
     box-shadow: 1px 1px 3px #888888;
 }
 
+#id_email {
+  background-color:#fffffd;
+    opacity: 0.9;
+
+    box-shadow: #F4D9A4 ;
+
+}
+
+#id_email:focus {
+ border-color: #F4D9A4;
+}
+
+#id_first_name {
+  background-color:#fffffd;
+    opacity: 0.9;
+
+    box-shadow: #F4D9A4 ;
+
+}
+
+#id_first_name:focus {
+ border-color: #F4D9A4;
+}
+
+#id_last_name {
+  background-color:#fffffd;
+    opacity: 0.9;
+
+    box-shadow: #F4D9A4 ;
+
+}
+
+#id_last_name:focus {
+ border-color: #F4D9A4;
+}
+
+label[for="id_last_name"]{
+  color: #555555;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.8;
+}
+
+label[for="id_first_name"]{
+  color: #555555;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.8;
+}
+
+label[for="id_email"]{
+  color: #555555;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.8;
+}
+
+#hint_id_username {
+     font-size: 11px;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
+    text-align: center;
+}
+#hint_id_password1 {
+     font-size: 11px;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
+
+}
+
+#hint_id_password2 {
+         font-size: 11px;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
+}
+
+
+
+.backk{
+
+  background-color: #F4D9A4;
+    opacity: 0.5;
+
+    width:100%;
+}
+
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 57%;
+  transform: translate(-50%, -50%);
+    font-size: 22px;
+    letter-spacing: 1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color:#ffffff;
+    width:100%;
+     text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: 1px 2px 2px #222;
+}
