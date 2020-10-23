@@ -365,3 +365,25 @@ label[for="id_email"]{
     font-weight: 700;
     text-shadow: 1px 2px 2px #222;
 }
+
+.alert-danger {
+
+    background-color: transparent;
+    border-color: transparent;
+    width:100%;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    width:100%;
+    padding:10px;
+    font-weight: 700;
+
+}
+
+.m-0{
+     list-style-type: none;
+    text-align: center;
+    margin-left: -25%;
+    margin-top: -20%;
+
+
+}
