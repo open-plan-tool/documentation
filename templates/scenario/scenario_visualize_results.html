@@ -14,12 +14,16 @@
         <input type="text" id="select-diagrams"/>
     </div>
 
-    <div class="mb-4" id='graphDiv'></div>
+    <div class="mt-4" id='graphDiv'></div>
+
+        <div id="message-div"></div>
 
 {% endblock content %}
 
 
 {% block end_body_scripts %}
+
+
 
     <script>
         function initiateSelectize(options, optgroups) {
@@ -35,7 +39,6 @@
                 optgroupField: 'assetCategory', // refers to the group field in "options"
                 optgroupLabelField: 'assetCategory', // refers to the label field in "optgroups"
                 optgroupValueField: 'assetCategory', // refers to the value field in "optgroups"
-
             });
         }
 
@@ -49,7 +52,7 @@
                     console.log("backend_error!")
                     //Show the error message
                     $('#message-div').html("<div class='alert-error'>" +
-                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                        "<strong>Error: </strong> We have encountered an error: " + errmsg + "</div>");
                 }
             });
         });
@@ -72,7 +75,7 @@
                     console.log("backend_error!")
                     //Show the error message
                     $('#message-div').html("<div class='alert-error'>" +
-                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                        "<strong>Error: </strong> We have encountered an error: " + errmsg + "</div>");
                 }
             });
         });
@@ -93,21 +96,33 @@
                 traceList.push(trace)
             });
 
-              const layout = {
-                    title: dataList[0].title,
-                    xaxis: {
-                        title: dataList[0].xAxis.label,
-                        showgrid: true,
-                        zeroline: true
-                    },
-                    yaxis: {
-                        title: dataList[0].yAxis.label,
-                        showline: true
-                    }
-                };
+            const layout = {
+                title: dataList[0].title,
+                xaxis: {
+                    title: dataList[0].xAxis.label,
+                    showgrid: true,
+                    zeroline: true
+                },
+                yaxis: {
+                    title: dataList[0].yAxis.label,
+                    showline: true
+                },
+                autosize: true,
+                width: 1500,
+                height: 750,
+                margin: {
+                    l: 50,
+                    r: 50,
+                    b: 100,
+                    t: 100,
+                    pad: 4
+                },
+                {#paper_bgcolor: '#7f7f7f',#}
+                {#plot_bgcolor: '#c7c7c7'#}
+            };
 
 
-            Plotly.newPlot('graphDiv', traceList, layout);
+            Plotly.newPlot('graphDiv', traceList, layout, {responsive: true});
         }
 
     </script>
