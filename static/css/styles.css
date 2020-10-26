@@ -1,16 +1,16 @@
 body {
     font-size: 16px;
-    background-image: linear-gradient( #FFEAB0,#A97D67) ;
+    background-image: linear-gradient(#FFEAB0, #A97D67);
     background-color: #A97D67;
 
 
-  /* Full height */
-  height: 100%;
+    /* Full height */
+    height: 100%;
 
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /** HEADER **/
@@ -118,26 +118,31 @@ input[type="checkbox"] {
 /* IOANNA */
 
 .container-fluid {
-    line-height: 50px;
-    margin-left: 40px;
-    letter-spacing: 1.5px;
-    color: white;
-    background-color: #ffffff;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    line-height: 50px !important;
+    margin-left: 40px !important;
+    letter-spacing: 1.5px !important;
+    color: white !important;
+    background-color: #ffffff !important;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
 }
-
 
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
-    background-color: #ffffff;
-    color: #5a6268;
-    font-weight: bold;
-    cursor: pointer;
+    background-color: #ffffff !important;
+    color: #5a6268 !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
 }
 
-.container-fluid a:hover{
-    transition: border-top .2s;
-    border-top: 5px solid #EFB03D;
+.container-fluid a:hover {
+    transition: border-top .2s !important;
+    border-top: 5px solid #EFB03D !important;
+    color: #5a6268 !important;
+    background-color: transparent !important;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+    background-color: transparent !important;
     color: #5a6268 !important;
 }
 
@@ -147,7 +152,7 @@ input[type="checkbox"] {
     border-radius: 50%;
     overflow: hidden;
     display: inline;
-    margin-left:-6px;
+    margin-left: -6px;
     margin-top: -8px;
 
 }
@@ -173,42 +178,42 @@ input[type="checkbox"] {
     text-align: left;
     margin-left: 105px;
     font-size: 30px;
-    color:#686868;
+    color: #686868;
 
 }
 
 
-.loginlogo{
+.loginlogo {
     width: 250px;
     height: 250px;
     position: relative;
     overflow: hidden;
     display: inline;
-   /* margin-left: 150px; */
+    /* margin-left: 150px; */
     margin-top: 80px;
 }
 
-.Elandlogin{
-   text-transform: uppercase;
+.Elandlogin {
+    text-transform: uppercase;
     letter-spacing: 1.5px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     margin-left: 30px;
     text-align: center;
     font-size: 50px;
     color: #F4D9A4;
-     text-shadow: 2px 2px 8px #547876;
+    text-shadow: 2px 2px 8px #547876;
 
 }
 
 .panel {
-background-color: #ffffff;
-border-radius: 80%;
-border: 1px solid transparent;
-border-radius: 3px;
-box-shadow: 5px 5px 19px #F4D9A4;
+    background-color: #ffffff;
+    border-radius: 80%;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: 5px 5px 19px #F4D9A4;
 }
 
-.requiredField{
+.requiredField {
     color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
@@ -217,30 +222,30 @@ box-shadow: 5px 5px 19px #F4D9A4;
 }
 
 #id_username {
-  background-color:#fffffd;
+    background-color: #fffffd;
     opacity: 0.9;
 
-    box-shadow: #F4D9A4 ;
+    box-shadow: #F4D9A4;
 
 }
 
 #id_username:focus {
- border-color: #F4D9A4;
+    border-color: #F4D9A4;
 }
 
 #id_password {
-  background-color:#fffffd;
+    background-color: #fffffd;
     opacity: 0.9;
 
-    box-shadow: #F4D9A4 ;
+    box-shadow: #F4D9A4;
 
 }
 
 #id_password:focus {
- border-color: #F4D9A4;
+    border-color: #F4D9A4;
 }
 
-.questionn{
+.questionn {
     font-size: 11px;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -251,66 +256,66 @@ box-shadow: 5px 5px 19px #F4D9A4;
 #logg {
     background-color: #F4D9A4;
     border-color: #F4D9A4;
-     text-transform: uppercase;
+    text-transform: uppercase;
     font-weight: 600;
     width: 100%;
     box-shadow: 1px 1px 3px #888888;
 }
 
 #id_email {
-  background-color:#fffffd;
+    background-color: #fffffd;
     opacity: 0.9;
 
-    box-shadow: #F4D9A4 ;
+    box-shadow: #F4D9A4;
 
 }
 
 #id_email:focus {
- border-color: #F4D9A4;
+    border-color: #F4D9A4;
 }
 
 #id_first_name {
-  background-color:#fffffd;
+    background-color: #fffffd;
     opacity: 0.9;
 
-    box-shadow: #F4D9A4 ;
+    box-shadow: #F4D9A4;
 
 }
 
 #id_first_name:focus {
- border-color: #F4D9A4;
+    border-color: #F4D9A4;
 }
 
 #id_last_name {
-  background-color:#fffffd;
+    background-color: #fffffd;
     opacity: 0.9;
 
-    box-shadow: #F4D9A4 ;
+    box-shadow: #F4D9A4;
 
 }
 
 #id_last_name:focus {
- border-color: #F4D9A4;
+    border-color: #F4D9A4;
 }
 
-label[for="id_last_name"]{
-  color: #555555;
+label[for="id_last_name"] {
+    color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     opacity: 0.8;
 }
 
-label[for="id_first_name"]{
-  color: #555555;
+label[for="id_first_name"] {
+    color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     opacity: 0.8;
 }
 
-label[for="id_email"]{
-  color: #555555;
+label[for="id_email"] {
+    color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -318,14 +323,15 @@ label[for="id_email"]{
 }
 
 #hint_id_username {
-     font-size: 11px;
+    font-size: 11px;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     opacity: 0.6;
     text-align: center;
 }
+
 #hint_id_password1 {
-     font-size: 11px;
+    font-size: 11px;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     opacity: 0.6;
@@ -333,34 +339,33 @@ label[for="id_email"]{
 }
 
 #hint_id_password2 {
-         font-size: 11px;
+    font-size: 11px;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     opacity: 0.6;
 }
 
 
+.backk {
 
-.backk{
-
-  background-color: #F4D9A4;
+    background-color: #F4D9A4;
     opacity: 0.5;
 
-    width:100%;
+    width: 100%;
 }
 
 
 .centered {
-  position: absolute;
-  top: 50%;
-  left: 57%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 57%;
+    transform: translate(-50%, -50%);
     font-size: 22px;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    color:#ffffff;
-    width:100%;
-     text-transform: uppercase;
+    color: #ffffff;
+    width: 100%;
+    text-transform: uppercase;
     text-align: center;
     font-weight: 700;
     text-shadow: 1px 2px 2px #222;
@@ -370,20 +375,223 @@ label[for="id_email"]{
 
     background-color: transparent;
     border-color: transparent;
-    width:100%;
+    width: 100%;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     font-size: 12px;
-    width:100%;
-    padding:10px;
+    width: 100%;
+    padding: 10px;
     font-weight: 700;
 
 }
 
-.m-0{
-     list-style-type: none;
+.m-0 {
+    list-style-type: none;
     text-align: center;
     margin-left: -25%;
     margin-top: -20%;
+}
+
+.container5 {
+    background-color: #F5F5F5;
+    border-radius: 80%;
+    border: 0px solid transparent;
+    border-radius: 3px;
+    box-shadow: 5px 5px 19px #686868;
+    position: relative;
+    z-index: 1 !important;
+    opacity: 0.95;
+}
+
+#list5 {
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    width: 100%;
+    padding: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1 !important;
+
+}
+
+#list6 {
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 12px;
+    width: 100%;
+    padding: 10px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1 !important;
+}
 
 
+#box2 {
+    border: 0px solid transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    position: relative;
+    z-index: 1 !important;
+}
+
+#button1 {
+    border: 1px solid #383d41;
+    background-color: #F4D9A4;
+    box-shadow: 2px 2px 2px #686868;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    border-radius: 5%;
+}
+
+
+#listtitle {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 33px !important;
+    color: #F4D9A4;
+    text-shadow: 1px 1px 1px #222;
+    position: relative;
+    z-index: 1 !important;
+    text-align: center !important;
+}
+
+#project_map {
+    height: 100% !important;
+    width: 100%;
+    position: absolute;
+
+    left: 0;
+    z-index: 0; /* Set z-index to 0 as it will be on a layer below the contact form */
+    filter: grayscale(30%);
+}
+
+.colorss {
+    background-color: #F4D9A4;
+    background-image: linear-gradient(#FFEAB0, #A97D67);
+}
+
+#mapid {
+    height: 1100px;
+!important;
+    width: 100%;
+    position: relative;
+    z-index: 1 !important;
+    object-fit: cover;
+}
+
+.container6 {
+    background-color: #ffffff;
+    border-radius: 80%;
+    border: 0px solid transparent;
+    border-radius: 3px;
+    box-shadow: 5px 5px 19px #686868;
+    position: relative;
+    z-index: 0;
+    opacity: 0.95;
+}
+
+#id_description {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_name {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_country {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
+    font-size: 10px;
+}
+
+#id_latitude {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_longitude {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_duration {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_currency {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    opacity: 0.6;
+    font-size: 10px;
+}
+
+#id_discount {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_tax {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_annuity_factor {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+#id_crf {
+    letter-spacing: 1.2px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10px;
+}
+
+.custom-control-label {
+
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#listtitle2 {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 33px !important;
+    color: #F4D9A4;
+    text-shadow: 1px 1px 1px #222;
+    position: relative;
+    z-index: 1 !important;
+}
+
+.requiredField {
+    width: 100% !important;
+    font-size: 13px !important;
+}
+
+#button2 {
+    border: 0.5px solid #171a1d;
+    background-color: #F4D9A4;
+    box-shadow: 2px 2px 2px #686868;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #171a1d;
+    text-transform: uppercase;
+    border-radius: 2%;
 }

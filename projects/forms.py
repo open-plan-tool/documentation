@@ -50,16 +50,16 @@ class ProjectCreateForm(forms.Form):
 
     country = forms.ChoiceField(label='Country', choices=COUNTRY)
     longitude = forms.FloatField(label='Location, longitude',
-                                 widget=forms.NumberInput(attrs={'placeholder': 'longitude...'}))
+                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. -77.0364'}))
     latitude = forms.FloatField(label='Location, latitude',
-                                widget=forms.NumberInput(attrs={'placeholder': 'latitude...'}))
-    duration = forms.IntegerField(label='Project Duration',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'Project Duration...'}))
+                                widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951'}))
+    duration = forms.IntegerField(label='Project Duration (days)',
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 432 '}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
-    discount = forms.IntegerField(label='Discount Factor',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'Discount Factor...'}))
-    tax = forms.IntegerField(label='Tax',
-                             widget=forms.NumberInput(attrs={'placeholder': 'Tax...'}))
+    discount = forms.IntegerField(label='Discount Factor (%)',
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 10%'}))
+    tax = forms.IntegerField(label='Tax (%)',
+                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 28%'}))
     annuity_factor = forms.FloatField(label='Annuity Factor',
                                       widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
     crf = forms.FloatField(label='CRF',
@@ -81,8 +81,8 @@ class ProjectCreateForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Submit'))
 
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
+        self.helper.label_class = 'col-lg-8'
+        self.helper.field_class = 'col-lg-10'
 
 
 class CommentForm(ModelForm):
