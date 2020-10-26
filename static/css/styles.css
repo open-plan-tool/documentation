@@ -480,6 +480,7 @@ label[for="id_email"] {
     position: relative;
     z-index: 1 !important;
     object-fit: cover;
+     background-repeat: repeat-y;
 }
 
 .container6 {
