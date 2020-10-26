@@ -198,6 +198,13 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
             connection.save()
 
 
+def create_ESS_objects(all_ess_asset_node_list, scen_id):
+    for asset in all_ess_asset_node_list:
+        if asset.name == 'capacity':
+            pass
+
+
+
 # Helper method to clean dict data from empty values
 def remove_empty_elements(d):
 

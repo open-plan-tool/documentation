@@ -210,15 +210,15 @@
                     {"bus_id":null,"asset_id":null,"flow_direction":"A2B","bus_connection_port":"input_1"}]};
              */
 
-            const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 1, 2);
+            const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 2, 1);
             const storageChargingPowerId = await addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1);
             const storageDischargingPowerId = await addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1);
             const storageCapacityId = await addNodeToDrawFlow("capacity", clientX-150, clientY+50, 0, 1);
 
             // Add Connections between Nodes.
-            editor.addConnection(storageBusNodeId, storageChargingPowerId, 'output_1', 'input_1');
-            editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_2', 'input_1');
-            editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_1');
+            editor.addConnection(storageChargingPowerId, storageBusNodeId, 'output_1', 'input_1');
+            editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_1', 'input_1');
+            editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_2');
         }
         // endregion create Storage Unit - template
 
