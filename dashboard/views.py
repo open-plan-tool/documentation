@@ -4,6 +4,9 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from jsonview.decorators import json_view
+from pandas.io.json import json_normalize
+import pandas as pd
+
 from projects.models import Scenario
 
 
@@ -106,10 +109,50 @@ def scenario_visualize_results(request, scen_id):
                   {'scenario_id': scen_id})
 
 
-def find_parent_keys(d, target_key, parent_key=None):
-    for k, v in d.items():
-        if k == target_key:
-            yield parent_key
-        if isinstance(v, dict):
-            for res in find_parent_keys(v, target_key, k):
-                yield res
+@login_required
+@json_view
+@require_http_methods(["GET"])
+def scenario_economic_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if scenario.project.user != request.user:
+        return HttpResponseForbidden()
+
+    with open('static/tempFiles/json_with_results.json') as json_file:
+        dict_values = json.load(json_file)
+    # TODO: Fix this
+
+    # energy_type_keys = ['energyConsumption', 'energyConversion', 'energyProduction', 'energyProviders', 'energyStorage']
+    kpi_economic_data_list = ["costs_total", "annuity_total", "costs_upfront_in_year_zero", "annuity_om", "levelized_cost_of_energy_of_asset"]
+    cost_matrix_cols = dict_values["kpi"]["cost_matrix"]
+    # df = json_normalize(cost_matrix_cols)
+    df = pd.DataFrame(cost_matrix_cols["data"], index=cost_matrix_cols["index"], columns=cost_matrix_cols["columns"])
+    results = list()
+
+    # for column in cost_matrix_cols:
+    #     pass
+    # for economic_kpi in kpi_economic_data_list:
+    #     values = list()
+    #     labels = list()
+    #     for energy_type in energy_type_keys:
+    #         for asset in dict_values[energy_type].keys():
+    #             if dict_values[energy_type][asset][economic_kpi] and dict_values[energy_type][asset][economic_kpi]['value'] != 0:
+    #                 values.append(dict_values[energy_type][asset][economic_kpi]['value'])
+    #                 labels.append(asset)
+    #
+    #     results.append({
+    #         'values': values,
+    #         'labels': labels,
+    #         'type': 'pie'
+    #     })
+    # Generate results JSON per asset name
+    results_json = [
+        {
+            'values': [dict_values['kpi']['cost_matrix']["data"][1]],
+            'labels': ['Residential', 'Non-Residential', 'Utility'],
+            'type': 'pie'
+        }
+        # for asset_index in asset_index_list
+    ]
+
+    return JsonResponse(results_json, status=200, content_type='application/json', safe=False)

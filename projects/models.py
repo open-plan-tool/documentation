@@ -226,6 +226,15 @@ class ConnectionLink(models.Model):
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
 
 
+class ESS(models.Model):
+    name = models.CharField(max_length=60)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE, null=False)
+    charging_power = models.ForeignKey(Asset, related_name="charging_power", on_delete=models.CASCADE, null=False)
+    discharging_power = models.ForeignKey(Asset, related_name="discharging_power", on_delete=models.CASCADE, null=False)
+    capacity = models.ForeignKey(Asset, related_name="capacity", on_delete=models.CASCADE, null=False)
+
+
 class ScenarioFile(models.Model):
     title = models.CharField(max_length=50)
     file = models.FileField(upload_to='tempFiles/', null=True, blank=True)
