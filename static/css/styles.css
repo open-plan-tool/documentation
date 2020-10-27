@@ -1,7 +1,7 @@
 body {
     font-size: 16px;
-    background-image: linear-gradient(#FFEAB0, #A97D67);
-    background-color: #A97D67;
+    background-image: linear-gradient(#FFEAB0, #A97D67, #674F44);
+    background-color: #674F44;
 
 
     /* Full height */
@@ -197,7 +197,7 @@ input[type="checkbox"] {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    margin-left: 30px;
+    margin-left: 5px;
     text-align: center;
     font-size: 50px;
     color: #F4D9A4;
@@ -435,14 +435,15 @@ label[for="id_email"] {
 }
 
 #button1 {
-    border: 1px solid #383d41;
-    background-color: #F4D9A4;
-    box-shadow: 2px 2px 2px #686868;
+    border: 0px solid #383d41;
+    background-color: #ffffff;
+    box-shadow: 4px 4px 2px #686868;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
     color: #333;
     border-radius: 5%;
+    text-transform: uppercase;
 }
 
 
@@ -480,7 +481,7 @@ label[for="id_email"] {
     position: relative;
     z-index: 1 !important;
     object-fit: cover;
-     background-repeat: repeat-y;
+    background-repeat: repeat-y;
 }
 
 .container6 {
@@ -586,13 +587,115 @@ label[for="id_email"] {
 }
 
 #button2 {
-    border: 0.5px solid #171a1d;
-    background-color: #F4D9A4;
+    border: 0px solid #171a1d;
+    background-color: #00C0C6;
     box-shadow: 2px 2px 2px #686868;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     font-size: 16px;
-    font-weight: 600;
-    color: #171a1d;
+    font-weight: 700;
+    color: #ffffff;
     text-transform: uppercase;
     border-radius: 2%;
+    width: 60%;
+    text-shadow: 1px 1px 1px #222;
+
+
+}
+
+.textinput a:hover {
+    border-top: 3px solid #F4D9A4 !important;
+}
+
+.form-control {
+    border-radius: 2px !important;
+}
+
+.tab {
+    overflow: hidden;
+
+    background-color: #F4D9A4;
+
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    color:#171a1d;
+    font-weight: 600;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+   /* background-color: #ddd; */
+     transition: border-top .2s !important;
+    border-top: 5px solid #ffffff !important;
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ffffff;
+
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background-color: #ffffff;
+    /*box-shadow: 5px 5px 19px #F4D9A4;*/
+
+}
+
+#scen{
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    box-shadow: none;
+
+
+}
+
+#comms{
+ background-color: #ffffff;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+
+#titlecoms{
+  text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 33px !important;
+    color: #F4D9A4;
+    text-shadow: 1px 1px 1px #222;
+    position: relative;
+    z-index: 1 !important;
+    text-align: center !important;
+}
+
+#titleproj{
+  text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 33px !important;
+    color: #F4D9A4;
+    text-shadow: 1px 1px 1px #222;
+    position: relative;
+    z-index: 1 !important;
+    text-align: center !important;
 }
