@@ -132,6 +132,12 @@ class NodeObject:
             setattr(asset, 'pos_y', self.pos_y)
             asset.scenario = get_object_or_404(Scenario, pk=scen_id)
             asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
+            # TODO : specifically for ESS check assettype and exclude attributes not in the list
+            # Make all asset model properties null=True and blank=False
+            # Create an exclussion list
+            #exclude_list = list()
+            #[exclude_list.append(prop) for prop in asset.asset_type.asset_fields]
+            #asset.full_clean(exclude=exclude_list)
             asset.full_clean()
         except KeyError:
             return {"success": False, "obj_type": "asset"}
@@ -198,9 +204,21 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
             connection.save()
 
 
-def create_ESS_objects(all_ess_asset_node_list, scen_id):
-    for asset in all_ess_asset_node_list:
+def create_ESS_objects(all_ess_assets_node_list, scen_id):
+    ess_obj_list = list()
+
+    charging_power_asset_id = AssetType.objects.get(asset_type="charging_power")
+    discharging_power_asset_id = AssetType.objects.get(asset_type="discharging_power")
+    capacity_asset_id = AssetType.objects.get(asset_type="capacity")
+
+    scenario_connection_links = ConnectionLink.objects.filter(scenario_id=scen_id)
+    cap_scenario_connection_links = scenario_connection_links.filter(asset__asset_type=capacity_asset_id)
+    charge_scenario_connection_links = scenario_connection_links.filter(asset__asset_type=charging_power_asset_id)
+    discharge_scenario_connection_links = scenario_connection_links.filter(asset__asset_type=discharging_power_asset_id)
+
+    for asset in all_ess_assets_node_list:
         if asset.name == 'capacity':
+            # check if there is a connection link to a bus
             pass
 
 

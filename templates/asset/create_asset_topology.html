@@ -194,12 +194,14 @@
 
         // region create Storage Unit - template
         const addStorageUnit = async (nodeName /* i.e. storage_unit */, clientX, clientY) => {
-            /* TODO: Consider using the following implementation if multiple templates are required.
+            //TODO: Consider using the following implementation if multiple templates are required.
                // Alternative Solution: Create a template using the UI and export the JSON.
                // Hardcode the JSON in separate file or here and parametrize.
                // Finally Use async/await and addBusses(), addAssets(), addLinks() functions to show template.
+
             const storageUnitData = {"busses":[
-                    {"name":"bus","data":{"name":"storage bus","bustype":"bus_electricity"},"pos_x":clientX,"pos_y":clientY,"input_ports":1,"output_ports":2}],
+                    {"name":"bus","data":{"name":"storage bus","bustype":"bus_electricity"},
+                        "pos_x":clientX,"pos_y":clientY,"input_ports":1,"output_ports":2}],
                 "assets":[
                     {"name":"charging_power","pos_x":clientX+100,"pos_y":clientY+20,"data":{}},
                     {"name":"discharging_power","pos_x":clientX+100,"pos_y":clientY+80,"data":{}},
@@ -208,8 +210,18 @@
                     {"bus_id":null,"asset_id":null,"flow_direction":"B2A","bus_connection_port":"output_1"},
                     {"bus_id":null,"asset_id":null,"flow_direction":"B2A","bus_connection_port":"output_2"},
                     {"bus_id":null,"asset_id":null,"flow_direction":"A2B","bus_connection_port":"input_1"}]};
-             */
 
+            const busses_ids = await addBusses(storageUnitData['busses']);
+            const assets_ids = await addAssets(storageUnitData['assets']);
+            console.log(busses_ids[0]);
+            assets_ids.map(id => {
+                const nodeObj = document.getElementById("node-"+id);
+                console.log(nodeObj.classList);
+            });
+            //$.when(addBusses(storageUnitData['busses']), addAssets(storageUnitData['assets']))
+              //      .then(async () => addLinks(storageUnitData['links']));
+
+            /*
             const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 2, 1);
             const storageChargingPowerId = await addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1);
             const storageDischargingPowerId = await addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1);
@@ -219,6 +231,7 @@
             editor.addConnection(storageChargingPowerId, storageBusNodeId, 'output_1', 'input_1');
             editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_1', 'input_1');
             editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_2');
+            */
         }
         // endregion create Storage Unit - template
 
@@ -398,6 +411,7 @@
     <script defer>
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function(){
+            console.log(JSON.stringify(editor.export()));
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}' },
                 type: "POST",
