@@ -210,6 +210,7 @@ class Asset(TopologyNode):
     peak_demand_pricing_period = models.FloatField(null=True, blank=True)
     renewable_share = models.FloatField(null=True, blank=True)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=False)
+    asset_self = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True)
 
 
 class Bus(TopologyNode):
@@ -224,15 +225,6 @@ class ConnectionLink(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=False)
     flow_direction = models.CharField(max_length=15, choices=FLOW_DIRECTION, null=False)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
-
-
-class ESS(models.Model):
-    name = models.CharField(max_length=60)
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
-    bus = models.ForeignKey(Bus, on_delete=models.CASCADE, null=False)
-    charging_power = models.ForeignKey(Asset, related_name="charging_power", on_delete=models.CASCADE, null=False)
-    discharging_power = models.ForeignKey(Asset, related_name="discharging_power", on_delete=models.CASCADE, null=False)
-    capacity = models.ForeignKey(Asset, related_name="capacity", on_delete=models.CASCADE, null=False)
 
 
 class ScenarioFile(models.Model):
