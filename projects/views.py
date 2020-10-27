@@ -19,7 +19,7 @@ from .requests import mvs_simulation_request
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
     update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, \
-    remove_empty_elements
+    remove_empty_elements, create_ESS_objects
 
 
 class HomeView(TemplateView):
@@ -376,8 +376,6 @@ def scenario_delete(request, scen_id):
         return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
-
-
 @login_required
 @require_http_methods(["GET", "POST"])
 def start_scenario_simulation(request, scen_id):
@@ -521,6 +519,11 @@ def scenario_topology_view(request, scen_id):
         ConnectionLink.objects.filter(scenario_id=scen_id).delete()
         for node_obj in node_list:
             create_node_interconnection_links(node_obj, node_to_db_mapping_dict, scen_id)
+
+        all_ess_assets_list = list()
+        [all_ess_assets_list.append(node_obj) for node_obj in node_list if node_obj.name in ['charging_power', 'discharging_power', 'capacity']]
+        if all_ess_assets_list: # if there are any ESS related assets
+            create_ESS_objects(all_ess_assets_list, scen_id)
 
         ''' return a dictionary as a response to the front end, containing the node_ids along with their
         # associated database_ids. This information will help the front end to identify whether the submitted

@@ -9,20 +9,84 @@
 {% endblock start_body_scripts %}
 
 {% block content %}
-    <div class="mb-4">
-        <label for="select-diagrams">Select diagrams to draw:</label>
-        <input type="text" id="select-diagrams"/>
-    </div>
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id='economicDataDiv'></div>
+
+
+<div class="mb-4">
+    <label for="select-diagrams">Select diagrams to draw:</label>
+    <input type="text" id="select-diagrams"/>
+</div>
 
     <div class="mb-4" id='graphDiv'></div>
+
 
 {% endblock content %}
 
 
 {% block end_body_scripts %}
+    <script>
+        $('#economicDataDiv').ready(function () {
+            $.ajax({
+                url: "{% url 'scenario_economic_results' scenario_id %}",
+                type: "GET",
+                success: data => data.map(dataObj => drawPieChart(dataObj)),
+                error: function (xhr, errmsg) {
+                    console.log("backend_error!")
+                    //Show the error message
+                    $('#message-div').html("<div class='alert-error'>" +
+                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                }
+            });
+        });
+
+        function drawPieChart(dataList) {
+            const data = [{
+                values: [19, 26, 55], // dataList.values
+                labels: ['Residential', 'Non-Residential', 'Utility'], // dataList.labels
+                type: 'pie',
+                textinfo: "label+percent",
+                textposition: "inside",
+                automargin: true
+            }];
+
+            const layout = {
+                title:'Economic Data', // dataList.title
+                height: 300,
+                width: 300,
+                margin: {"b": 0, "l": 0, "r": 0},
+                showlegend: false,
+                paper_bgcolor: "transparent"
+            }
+
+            // Create a new Pie under the economic data div
+            const parentDiv = document.getElementById("economicDataDiv");
+            const newGraph = document.createElement('div');
+            newGraph.id = "pie"+layout.title.replace(' ', '');
+            parentDiv.appendChild(newGraph);
+            Plotly.newPlot(newGraph.id, data, layout);
+        }
+    </script>
+
+
 
     <script>
+        // Ajax request to retrieve all available graphs for visualization
+        $(document).ready(function () {
+            // make an Ajax request for the TimeSeries Graphs
+            $.ajax({
+                url: "{% url 'scenario_available_results' scenario_id %}",
+                type: "GET",
+                success: data => initiateSelectize(data.options.flat(), data.optgroups),
+                error: function (xhr, errmsg) {
+                    console.log("backend_error!")
+                    //Show the error message
+                    $('#message-div').html("<div class='alert-error'>" +
+                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+                }
+            });
+        });
 
+        // region TimeSeries Graphs
         function initiateSelectize(options, optgroups) {
             $('#select-diagrams').selectize({
                 persist: false,
@@ -40,30 +104,10 @@
             });
         }
 
-        // Ajax request to retrieve all available graphs for visualization
-        $(document).ready(function () {
-            $.ajax({
-                url: "{% url 'scenario_available_results' scenario_id %}",
-                type: "GET",
-                success: function (data) {
-                    console.log(data.options.flat())
-                    console.log(data.optgroups)
-                    initiateSelectize(data.options.flat(), data.optgroups)
-                },
-                error: function (xhr, errmsg) {
-                    console.log("backend_error!")
-                    //Show the error message
-                    $('#message-div').html("<div class='alert-error'>" +
-                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
-                }
-            });
-        });
-
-
         // On change reload diagrams
         $('#select-diagrams').change(function () {
 
-            var assetNameList = $(this).val()
+            const assetNameList = $(this).val()
 
             // Ajax request to retrieve requested graph data
             $.ajax({
@@ -72,10 +116,7 @@
                 data: {
                     assetNameList: assetNameList,
                 },
-                success: function (data) {
-                    console.log(data)
-                    drawGraph(data)
-                },
+                success: data => drawScatterGraph(data),
                 error: function (xhr, errmsg) {
                     console.log("backend_error!")
                     //Show the error message
@@ -85,16 +126,13 @@
             });
         });
 
+        function drawScatterGraph(dataList) {
 
-        function drawGraph(dataList) {
+            const traceList = [];
 
-            var traceList = [];
-
-            dataList.forEach(function (data) {
-
-                console.log('data: ' + data)
-
-                var trace = {
+            dataList.map(async data => {
+                const trace = {
+                    name: data.title,
                     x: data.xAxis.values,
                     y: data.yAxis.values,
                     type: 'scatter'
@@ -103,23 +141,35 @@
                 traceList.push(trace)
             });
 
-              var layout = {
-                    title: dataList[0].title,
-                    xaxis: {
-                        title: dataList[0].xAxis.label,
-                        showgrid: true,
-                        zeroline: true
-                    },
-                    yaxis: {
-                        title: dataList[0].yAxis.label,
-                        showline: true
-                    }
-                };
+            const layout = {
+                title: dataList[0].title,
+                xaxis: {
+                    title: dataList[0].xAxis.label,
+                    showgrid: true,
+                    zeroline: true
+                },
+                yaxis: {
+                    title: dataList[0].yAxis.label,
+                    showline: true
+                },
+                autosize: true,
+                width: 1500,
+                height: 750,
+                margin: {
+                    l: 50,
+                    r: 50,
+                    b: 100,
+                    t: 100,
+                    pad: 4
+                },
+                //paper_bgcolor: '#7f7f7f',
+                //plot_bgcolor: '#c7c7c7'
+            };
 
 
-            Plotly.newPlot('graphDiv', traceList, layout);
+            Plotly.newPlot('graphDiv', traceList, layout, {responsive: true});
         }
-
+        // endregion
     </script>
 
 

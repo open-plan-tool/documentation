@@ -133,22 +133,10 @@
 
 
         $(window).on('load', function() {
-            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async function (data, textStatus, jqXHR){
-
-                console.time('Time1');
-                await addAssets(data['assets']);
-                await addBusses(data['busses']);
-                await addLinks(data['links']);
-                console.timeEnd('Time1');
-
-                /*
-                $.when(addBusses(data['busses']), addAssets(data['assets'])).then(function() {
-                    setTimeout(function () { // setTimeout can now be removed since async await takes care of everything
-                        addLinks(data['links']);
-                    }, 200); // TODO: Consider Changing Timeout to Async/Await Implementation -- DONE! Use above 3 await lines
-                    return data;
-                }); // when
-                */
+            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async (data, textStatus, jqXHR) => {
+                $.when(addBusses(data['busses']), addAssets(data['assets']))
+                    .then(async () => addLinks(data['links'])); // endwhen
+                return data;
             })
             .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/ })
             .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
@@ -160,9 +148,6 @@
         var id = document.getElementById("drawflow");
         const editor = new Drawflow(id);
         editor.reroute = true;
-        //editor.zoom_max = 1.2;
-        //editor.zoom_min = 0.8;
-        //editor.drawflow = {"drawflow":{"Home":{"data":{"3":{"id":3,"name":"bus","data":{"name":"SDFSDF","bustype":"bus_heat"},"class":"bus","html":"Bus","typenode":false,"inputs":{"input_1":{"connections":[]}},"outputs":{"output_1":{"connections":[]}},"pos_x":309.41,"pos_y":311}}}}};
         editor.start();
 
         /* Mouse and Touch Actions */
@@ -209,7 +194,8 @@
 
         // region create Storage Unit - template
         const addStorageUnit = async (nodeName /* i.e. storage_unit */, clientX, clientY) => {
-            /* // Alternative Solution: Create a template using the UI and export the JSON.
+            /* TODO: Consider using the following implementation if multiple templates are required.
+               // Alternative Solution: Create a template using the UI and export the JSON.
                // Hardcode the JSON in separate file or here and parametrize.
                // Finally Use async/await and addBusses(), addAssets(), addLinks() functions to show template.
             const storageUnitData = {"busses":[
@@ -224,15 +210,15 @@
                     {"bus_id":null,"asset_id":null,"flow_direction":"A2B","bus_connection_port":"input_1"}]};
              */
 
-            const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 1, 2);
+            const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 2, 1);
             const storageChargingPowerId = await addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1);
             const storageDischargingPowerId = await addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1);
             const storageCapacityId = await addNodeToDrawFlow("capacity", clientX-150, clientY+50, 0, 1);
 
             // Add Connections between Nodes.
-            editor.addConnection(storageBusNodeId, storageChargingPowerId, 'output_1', 'input_1');
-            editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_2', 'input_1');
-            editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_1');
+            editor.addConnection(storageChargingPowerId, storageBusNodeId, 'output_1', 'input_1');
+            editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_1', 'input_1');
+            editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_2');
         }
         // endregion create Storage Unit - template
 
@@ -295,9 +281,12 @@
         }
 
         // region Show Modal either by double clicking the box or the drawflow node.
+        var transform = '';
         function openModal(box) {
             box.closest(".drawflow-node").style.zIndex = "9999";
             box.children[0].style.display = "block";
+            transform = editor.precanvas.style.transform;
+            editor.precanvas.style.transform = '';
             editor.precanvas.style.left = editor.canvas_x +'px';
             editor.precanvas.style.top = editor.canvas_y +'px';
             editor.editor_mode = "fixed";
@@ -320,6 +309,7 @@
         function closeModalSteps(modal) {
             modal.style.display  ="none"; // hide the modal
             modal.closest(".drawflow-node").style.zIndex = "2"; // bring node to default z-index
+            editor.precanvas.style.transform = transform;
             editor.precanvas.style.left = '0px';
             editor.precanvas.style.top = '0px';
             editor.editor_mode = "edit";
@@ -357,6 +347,7 @@
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
+                    <h2 style="color: grey; text-align: left">${nodeName} Data</h2>
                     <div>
                         <label for="name">Name: </label>
                         <input id="name" type="text" df-name>
@@ -395,6 +386,7 @@
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
+                    <h2 style="color: grey; text-align: left">${nodeName.replace("_"," ")} Data</h2>
                     <div>${formData}</div>
                   </div>
                 </div>

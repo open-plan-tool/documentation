@@ -1,8 +1,4 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.db import models
-from django.urls import reverse
-
 from django.db import models
 
 COUNTRY = (
@@ -214,6 +210,7 @@ class Asset(TopologyNode):
     peak_demand_pricing_period = models.FloatField(null=True, blank=True)
     renewable_share = models.FloatField(null=True, blank=True)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=False)
+    asset_self = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True)
 
 
 class Bus(TopologyNode):
