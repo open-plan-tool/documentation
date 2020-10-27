@@ -3,6 +3,7 @@ from projects.models import Bus, AssetType, Scenario, ConnectionLink, Asset
 import json
 from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
+
 # region sent db nodes to js
 def load_scenario_topology_from_db(scen_id):
     bus_nodes_list = db_bus_nodes_to_list(scen_id)
@@ -18,7 +19,7 @@ def db_bus_nodes_to_list(scen_id):
         db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id},
                        "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y, "input_ports": db_bus.input_ports,
                        "output_ports": db_bus.output_ports}
-                       #"input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
+        # "input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
         bus_nodes_list.append(db_bus_dict)
     return bus_nodes_list
 
@@ -53,6 +54,8 @@ def db_connection_links_to_list(scen_id):
                               "bus_connection_port": db_connection.bus_connection_port}
         connections_list.append(db_connection_dict)
     return connections_list
+
+
 # endregion db_nodes_to_js
 
 
@@ -132,13 +135,12 @@ class NodeObject:
             setattr(asset, 'pos_y', self.pos_y)
             asset.scenario = get_object_or_404(Scenario, pk=scen_id)
             asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
-            # TODO : specifically for ESS check assettype and exclude attributes not in the list
-            # Make all asset model properties null=True and blank=False
-            # Create an exclussion list
-            #exclude_list = list()
-            #[exclude_list.append(prop) for prop in asset.asset_type.asset_fields]
-            #asset.full_clean(exclude=exclude_list)
-            asset.full_clean()
+
+            # List of fields that are not required included for the particular asset type
+            excluded_fields = [prop for prop in asset.fields if prop not in asset.asset_type.asset_fields]
+
+            asset.full_clean(exclude=excluded_fields)
+
         except KeyError:
             return {"success": False, "obj_type": "asset"}
         except ValidationError:
@@ -195,7 +197,8 @@ def create_node_interconnection_links(node_obj, map_dict, scen_id):
                         if node_obj.obj_id == int(input_connection):
                             print(output_node['input_connections'][node_port_key][index])
                             setattr(connection, 'bus_connection_port', node_port_key)
-                            map_dict[int(output_connection)]['input_connections'][node_port_key][index] = '0'  # hacky solution
+                            map_dict[int(output_connection)]['input_connections'][node_port_key][
+                                index] = '0'  # hacky solution
                             break
                     else:
                         continue
@@ -222,10 +225,8 @@ def create_ESS_objects(all_ess_assets_node_list, scen_id):
             pass
 
 
-
 # Helper method to clean dict data from empty values
 def remove_empty_elements(d):
-
     def empty(x):
         return x is None or x == {} or x == []
 
@@ -235,5 +236,3 @@ def remove_empty_elements(d):
         return [v for v in (remove_empty_elements(v) for v in d) if not empty(v)]
     else:
         return {k: v for k, v in ((k, remove_empty_elements(v)) for k, v in d.items()) if not empty(v)}
-
-
