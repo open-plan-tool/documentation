@@ -210,7 +210,7 @@ class Asset(TopologyNode):
     peak_demand_pricing_period = models.FloatField(null=True, blank=False)
     renewable_share = models.FloatField(null=True, blank=False)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=True)
-    asset_self = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True, blank=True)
+    asset_parent = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True, blank=True)
 
     @property
     def fields(self):
