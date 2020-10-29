@@ -159,10 +159,9 @@ def convert_to_dto(scenario: Scenario):
     energy_providers = []
     energy_production = []
     energy_consumption = []
-    # energy_storage = []
+    energy_storage = []
     energy_conversion = []
 
-    ess_dto_list = []
     bus_dto_list = []
 
     # Iterate over ess_assets
@@ -206,9 +205,9 @@ def convert_to_dto(scenario: Scenario):
                                  to_timeseries_data(asset, 'input_timeseries')
                                  )
 
-            ess_sub_assets.update({asset.asset_type.asset_type: asset})
+            ess_sub_assets.update({asset.asset_type.asset_type: asset_dto})
 
-        ess_dto = EssDto(ess.asset_type.asset_category,
+        ess_dto = EssDto(ess.asset_type.asset_type,
                          ess.name,
                          ess.asset_type.mvs_type,
                          ess.asset_type.energy_vector,
@@ -218,7 +217,7 @@ def convert_to_dto(scenario: Scenario):
                          ess_sub_assets['discharging_power'],
                          ess_sub_assets['capacity'], )
 
-        ess_dto_list.append(ess_dto)
+        energy_storage.append(ess_dto)
 
     # Iterate over assets
     for asset in asset_list:
@@ -229,7 +228,7 @@ def convert_to_dto(scenario: Scenario):
         input_bus_name = input_connection.bus.name if input_connection is not None else None
         output_bus_name = output_connection.bus.name if output_connection is not None else None
 
-        asset_dto = AssetDto(asset.asset_type.asset_category,
+        asset_dto = AssetDto(asset.asset_type.asset_type,
                              asset.name,
                              asset.asset_type.mvs_type,
                              asset.asset_type.energy_vector,
@@ -261,16 +260,16 @@ def convert_to_dto(scenario: Scenario):
         # map_to_dto(asset, asset_dto)
 
         # Get category of asset and append to appropriate category
-    if asset.asset_type.asset_category == 'energy_providers':
-        energy_providers.append(asset_dto)
-    elif asset.asset_type.asset_category == 'energy_production':
-        energy_production.append(asset_dto)
-    elif asset.asset_type.asset_category == 'energy_consumption':
-        energy_consumption.append(asset_dto)
-    elif asset.asset_type.asset_category == 'energy_conversion':
-        energy_conversion.append(asset_dto)
-    elif asset.asset_type.asset_category == 'energy_storage':
-        energy_storage = ess_dto_list
+        if asset.asset_type.asset_category == 'energy_providers':
+            energy_providers.append(asset_dto)
+        elif asset.asset_type.asset_category == 'energy_production':
+            energy_production.append(asset_dto)
+        elif asset.asset_type.asset_category == 'energy_consumption':
+            energy_consumption.append(asset_dto)
+        elif asset.asset_type.asset_category == 'energy_conversion':
+            energy_conversion.append(asset_dto)
+        # elif asset.asset_type.asset_category == 'energy_storage':
+        #     energy_storage.append(asset_dto)
 
     # Iterate over busses
     for bus in bus_list:
