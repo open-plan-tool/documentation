@@ -133,9 +133,9 @@ def convert_to_dto(scenario: Scenario):
     ess_list = Asset.objects.filter(Q(scenario=scenario), Q(asset_type__asset_type='ess'))
     # Exclude ESS related assets
     asset_list = Asset.objects.filter(Q(scenario=scenario)).exclude(
-        Q(asset_type__asset_type='ess') | Q(asset_parent__asset_type__asset_type='ess'))
+        Q(asset_type__asset_type='ess') | Q(parent_asset__asset_type__asset_type='ess'))
     bus_list = Bus.objects.filter(scenario=scenario).exclude(
-        Q(connectionlink__asset__asset_parent__asset_type__asset_type='ess'))
+        Q(connectionlink__asset__parent_asset__asset_type__asset_type='ess'))
 
     # Create  dto objects
     project_data_dto = ProjectDataDto(project.id,
@@ -176,7 +176,7 @@ def convert_to_dto(scenario: Scenario):
 
         ess_sub_assets = {}
 
-        for asset in Asset.objects.filter(asset_parent=ess):
+        for asset in Asset.objects.filter(parent_asset=ess):
             asset_dto = AssetDto(asset.asset_type.asset_category,
                                  asset.name,
                                  None,

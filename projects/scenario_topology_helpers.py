@@ -16,8 +16,8 @@ def db_bus_nodes_to_list(scen_id):
     all_db_busses = Bus.objects.filter(scenario_id=scen_id)
     bus_nodes_list = list()
     for db_bus in all_db_busses:
-        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type,
-                                               "databaseId": db_bus.id, "parent_asset_id": db_bus.parent_asset_id},
+        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id,
+                                               "parent_asset_id": db_bus.parent_asset_id if db_bus.parent_asset_id else ""},
                        "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y, "input_ports": db_bus.input_ports,
                        "output_ports": db_bus.output_ports}
         # "input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
@@ -195,6 +195,7 @@ class NodeObject:
             return {"success": False, "obj_type": self.node_obj_type}
         else:
             return {"success": True, "obj_type": self.node_obj_type}
+
 
 def create_node_interconnection_links(node_obj, map_dict, scen_id):
     for port_key, connections_list in node_obj.outputs.items():
