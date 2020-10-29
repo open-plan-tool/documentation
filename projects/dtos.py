@@ -176,7 +176,7 @@ def convert_to_dto(scenario: Scenario):
         ess_sub_assets = {}
 
         for asset in Asset.objects.filter(parent_asset=ess):
-            asset_dto = AssetDto(asset.asset_type.asset_category,
+            asset_dto = AssetDto(asset.asset_type.asset_type,
                                  asset.name,
                                  None,
                                  None,
