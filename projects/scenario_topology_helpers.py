@@ -16,7 +16,8 @@ def db_bus_nodes_to_list(scen_id):
     all_db_busses = Bus.objects.filter(scenario_id=scen_id)
     bus_nodes_list = list()
     for db_bus in all_db_busses:
-        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id},
+        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type,
+                                               "databaseId": db_bus.id, "parent_asset_id": db_bus.parent_asset_id},
                        "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y, "input_ports": db_bus.input_ports,
                        "output_ports": db_bus.output_ports}
         # "input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
@@ -82,6 +83,7 @@ def update_deleted_objects_from_database(scenario_id, topo_node_list):
             Bus.objects.filter(id=bus_id).delete()
 
 
+# region Scenario Duplicate
 def duplicate_scenario_objects(obj_list, scenario):
     mapping_dict = dict()
     for obj in obj_list:
@@ -102,6 +104,7 @@ def duplicate_scenario_connections(connections_list, scenario, asset_map, bus_ma
         connection.bus_id = bus_map[old_bus_id]
         connection.scenario = scenario
         connection.save()
+# endregion
 
 
 class NodeObject:
@@ -112,9 +115,10 @@ class NodeObject:
         self.pos_x = node_data['pos_x']
         self.pos_y = node_data['pos_y']
         self.db_obj_id = (node_data['data']['databaseId'] if 'databaseId' in node_data['data'] else None)
+        self.group_id = (node_data['data']['parent_asset_id'] if 'parent_asset_id' in node_data['data'] else None)
         self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
-        self.inputs = self.refactor_connections(node_data['inputs'])
-        self.outputs = self.refactor_connections(node_data['outputs'])
+        self.inputs = NodeObject.refactor_connections(node_data['inputs'])
+        self.outputs = NodeObject.refactor_connections(node_data['outputs'])
 
     @staticmethod
     def refactor_connections(input_or_output_data):
@@ -129,7 +133,8 @@ class NodeObject:
 
         try:
             for name, value in self.data.items():
-                setattr(asset, name, value)
+                if name != "parent_asset_id":
+                    setattr(asset, name, value)
 
             setattr(asset, 'pos_x', self.pos_x)
             setattr(asset, 'pos_y', self.pos_y)
@@ -174,6 +179,22 @@ class NodeObject:
                 self.db_obj_id = bus.id
             return {"success": True, "obj_type": "bus"}
 
+    def assign_asset_to_proper_group(self, node_to_db_mapping):
+        try:
+            if self.node_obj_type == "asset":
+                asset = get_object_or_404(Asset, pk=self.db_obj_id)
+                asset.parent_asset_id = node_to_db_mapping[self.group_id]["db_obj_id"] if self.group_id else None
+                asset.save()
+            else:  # i.e. "bus"
+                bus = get_object_or_404(Bus, pk=self.db_obj_id)
+                bus.parent_asset_id = node_to_db_mapping[self.group_id]["db_obj_id"] if self.group_id else None
+                bus.save()
+        except KeyError:
+            return {"success": False, "obj_type": self.node_obj_type}
+        except ValidationError:
+            return {"success": False, "obj_type": self.node_obj_type}
+        else:
+            return {"success": True, "obj_type": self.node_obj_type}
 
 def create_node_interconnection_links(node_obj, map_dict, scen_id):
     for port_key, connections_list in node_obj.outputs.items():

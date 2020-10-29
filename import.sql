@@ -33,7 +33,7 @@ insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_ty
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('capacity','electricity', 'energy_storage', 'storage', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_initial,soc_max,soc_min]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('storage','electricity', 'energy_storage', 'storage', '[name, optimize_cap]' );
+('ess','electricity', 'energy_storage', 'storage', '[name, optimize_cap]' );
 
 insert into projects_valuetype( unit, type) values ('year', 'duration' );
 insert into projects_valuetype( unit, type) values ('', 'annuity_factor' );

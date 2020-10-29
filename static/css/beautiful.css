@@ -345,19 +345,37 @@ cursor: pointer;
   background-color: #d9654e;
   text-align: left;
 }
-.drawflow-node.charging_power .input, .drawflow-node.discharging_power .input, .drawflow-node.capacity .input {
+.drawflow-node.charging_power .input, .drawflow-node.discharging_power .input, .drawflow-node.capacity .input, .drawflow-node.ess .input {
   background: green;
 }
 
-.drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output {
+.drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output, .drawflow-node.ess .output {
   background: #e64545;
 }
 
 .drawflow-node.charging_power.selected, .drawflow-node.discharging_power.selected, .drawflow-node.capacity.selected {
   background-color: #ff0015;
 }
-/*</editor-fold> */
 
+/*<editor-fold desc="Storage Asset"> */
+.drawflow-node.ess {
+  height: 250px;
+  width: 350px;
+  border-radius: 10px;
+  background-color: transparent;
+  border-color: #e7b968;
+  border-width: 5px;
+  z-index: 1;
+  text-align: left;
+}
+
+.drawflow-node.ess.selected {
+  background-color: transparent;
+  border-color: #e7b968;
+  border-width: 5px;
+}
+/*</editor-fold> */
+/*</editor-fold> */
 
 .drawflow .connection .point {
   stroke: var(--border-color);

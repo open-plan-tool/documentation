@@ -519,13 +519,7 @@ def scenario_topology_view(request, scen_id):
         ConnectionLink.objects.filter(scenario_id=scen_id).delete()
         for node_obj in node_list:
             create_node_interconnection_links(node_obj, node_to_db_mapping_dict, scen_id)
-
-        """
-        all_ess_assets_list = list()
-        [all_ess_assets_list.append(node_obj) for node_obj in node_list if node_obj.name in ['charging_power', 'discharging_power', 'capacity']]
-        if all_ess_assets_list: # if there are any ESS related assets
-            create_ESS_objects(all_ess_assets_list, scen_id)
-        """
+            node_obj.assign_asset_to_proper_group(node_to_db_mapping_dict)
 
         ''' return a dictionary as a response to the front end, containing the node_ids along with their
         # associated database_ids. This information will help the front end to identify whether the submitted

@@ -176,6 +176,7 @@ class TopologyNode(models.Model):
     pos_x = models.FloatField(default=0.0)
     pos_y = models.FloatField(default=0.0)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE,  null=False, blank=False)
+    parent_asset = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -210,7 +211,6 @@ class Asset(TopologyNode):
     peak_demand_pricing_period = models.FloatField(null=True, blank=False)
     renewable_share = models.FloatField(null=True, blank=False)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=True)
-    asset_parent = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True, blank=True)
 
     @property
     def fields(self):
