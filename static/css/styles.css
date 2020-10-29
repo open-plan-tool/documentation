@@ -2,6 +2,7 @@ body {
     font-size: 16px;
     background-image: linear-gradient(#FFEAB0, #A97D67, #674F44);
     background-color: #674F44;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
 
     /* Full height */
@@ -699,3 +700,21 @@ label[for="id_email"] {
     z-index: 1 !important;
     text-align: center !important;
 }
+#titlee{
+      text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 33px !important;
+    color: #1b1e21;
+    text-shadow: 1px 1px 1px #222;
+    position: relative;
+    z-index: 1 !important;
+    font-weight: 800;
+    text-align: center !important;
+}
+
+.table-striped>tbody>tr:nth-of-type(2n+1) {
+    background-color: #F9EBD4 !important;
+
+}
+
