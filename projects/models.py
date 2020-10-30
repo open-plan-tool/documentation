@@ -150,13 +150,12 @@ class Comment(models.Model):
 class Scenario(models.Model):
     name = models.CharField(max_length=60)
     start_date = models.DateField()
-    period = models.IntegerField()
     time_step = models.IntegerField()
     capex_fix = models.FloatField()
     capex_var = models.FloatField()
     opex_fix = models.FloatField()
     opex_var = models.FloatField()
-    lifetime = models.IntegerField()
+    evaluated_period = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

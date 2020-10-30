@@ -61,3 +61,4 @@ insert into projects_valuetype( unit, type) values ('currency/unit', 'capex_var'
 insert into projects_valuetype( unit, type) values ('currency/year', 'opex_fix' );
 insert into projects_valuetype( unit, type) values ('currency/year', 'specific_costs_om' );
 insert into projects_valuetype( unit, type) values ('kWh', 'input_timeseries' );
+insert into projects_valuetype( unit, type) values ('days', 'evaluated_period' );

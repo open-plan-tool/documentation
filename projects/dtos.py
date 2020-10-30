@@ -2,6 +2,7 @@ import json
 from typing import List
 from django.db.models import Q
 from numpy.core import long
+from datetime import date, datetime, time
 
 from projects.models import *
 
@@ -36,10 +37,10 @@ class EconomicDataDto:
 
 
 class SimulationSettingsDto:
-    def __init__(self, start_date: long, end_date: long, periods: int, evaluated_period: ValueTypeDto):
+    def __init__(self, start_date: float, time_step: int, evaluated_period: ValueTypeDto):
         self.start_date = start_date
-        self.end_date = end_date
-        self.periods = periods
+        # self.end_date = end_date
+        self.time_step = time_step
         self.evaluated_period = evaluated_period
 
 
@@ -153,6 +154,10 @@ def convert_to_dto(scenario: Scenario):
                                         to_value_type(economic_data, 'discount'),
                                         to_value_type(economic_data, 'tax'),
                                         to_value_type(economic_data, 'crf'), )
+
+    simulation_settings = SimulationSettingsDto(datetime.combine(scenario.start_date, time()).timestamp(),
+                                                scenario.time_step,
+                                                to_value_type(scenario, 'evaluated_period'))
 
     # map_to_dto(economic_data, economic_data_dto)
 
@@ -284,8 +289,15 @@ def convert_to_dto(scenario: Scenario):
 
         bus_dto_list.append(bus_dto)
 
-    mvs_request_dto = MVSRequestDto(project_data_dto, economic_data_dto, None, energy_providers, energy_consumption,
-                                    energy_conversion, energy_production, energy_storage, bus_dto_list)
+    mvs_request_dto = MVSRequestDto(project_data_dto,
+                                    economic_data_dto,
+                                    simulation_settings,
+                                    energy_providers,
+                                    energy_consumption,
+                                    energy_conversion,
+                                    energy_production,
+                                    energy_storage,
+                                    bus_dto_list)
 
     return mvs_request_dto
 
