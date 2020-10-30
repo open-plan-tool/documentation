@@ -34,16 +34,22 @@ def scenario_available_results(request, scen_id):
     ]
 
     # Generate available asset type JSON
-    asset_name_json = [
-        [
-            {
-                'assetCategory': asset_category,
-                'assetName': asset_name
-            }
-            for asset_name in dict_values[asset_category].keys()
+    try:
+        asset_name_json = [
+            [
+                {
+                    'assetCategory': asset_category,
+                    'assetName': asset_name
+                }
+                for asset_name in dict_values[asset_category].keys()
+                # show only assets of a certain Energy Vector
+                if dict_values[asset_category][asset_name]['energyVector'] == request.GET['energy_vector']
+            ]
+            for asset_category in asset_category_list
         ]
-        for asset_category in asset_category_list
-    ]
+    except KeyError:
+        return JsonResponse({"error": "energyVector field missing from asset"},
+                            status=400, content_type='application/json')
 
     response_json = {'options': asset_name_json, 'optgroups': asset_category_json}
 
@@ -73,8 +79,6 @@ def scenario_request_results(request, scen_id):
             for asset_category in asset_category_list
             for asset_name in dict_values[asset_category]
         }
-
-
 
     # Generate results JSON per asset name
     results_json = [

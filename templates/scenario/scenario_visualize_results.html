@@ -15,8 +15,8 @@
 </div>
 
 <div class="row mb-4">
-    <label for="select-diagrams">Select diagrams to draw:</label>
-    <input type="text" id="select-diagrams"/>
+    <label for="select-diagrams1">Select diagrams to draw:</label>
+    <input type="text" id="select-diagrams1" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
 </div>
 
     <div class="mb-4" id='graphDiv'></div>
@@ -74,11 +74,16 @@
     <script>
         // Ajax request to retrieve all available graphs for visualization
         $(document).ready(function () {
+            getEnergyVectorAvailableResults("Electricity", '#select-diagrams1');
+        });
+
+        function getEnergyVectorAvailableResults(energyVector, selectizeId) {
             // make an Ajax request for the TimeSeries Graphs
             $.ajax({
                 url: "{% url 'scenario_available_results' scenario_id %}",
                 type: "GET",
-                success: data => initiateSelectize(data.options.flat(), data.optgroups),
+                data: {"energy_vector":energyVector},
+                success: data => initiateSelectize(data.options.flat(), data.optgroups, selectizeId),
                 error: function (xhr, errmsg) {
                     console.log("backend_error!")
                     //Show the error message
@@ -86,11 +91,11 @@
                         "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
                 }
             });
-        });
+        }
 
         // region TimeSeries Graphs
-        function initiateSelectize(options, optgroups) {
-            $('#select-diagrams').selectize({
+        function initiateSelectize(options, optgroups, selectizeId) {
+            $(selectizeId).selectize({
                 persist: false,
                 maxItems: null,
                 valueField: 'assetName',
@@ -107,10 +112,7 @@
         }
 
         // On change reload diagrams
-        $('#select-diagrams').change(function () {
-
-            const assetNameList = $(this).val()
-
+        function reloadDiagrams(assetNameList) {
             // Ajax request to retrieve requested graph data
             $.ajax({
                 url: "{% url 'scenario_request_results' scenario_id %}",
@@ -126,7 +128,7 @@
                         "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
                 }
             });
-        });
+        }
 
         function drawScatterGraph(dataList) {
 
