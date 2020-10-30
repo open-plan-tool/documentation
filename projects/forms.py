@@ -53,7 +53,7 @@ class ProjectCreateForm(forms.Form):
                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. -77.0364'}))
     latitude = forms.FloatField(label='Location, latitude',
                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951'}))
-    duration = forms.IntegerField(label='Project Duration (days)',
+    duration = forms.IntegerField(label='Project Duration (years)',
                                   widget=forms.NumberInput(attrs={'placeholder': 'eg. 432 '}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
     discount = forms.IntegerField(label='Discount Factor (%)',
@@ -107,20 +107,37 @@ class ScenarioUpdateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_tag = False  # don't include <form> tag
         self.helper.layout = Layout(
             Row(Column('name', css_class='form-group col-xs-5'),
                 Column('start_date', css_class='form-group col-xs-4'),
                 css_class='form-row row'),
-            Row(Column('period', css_class='form-group col-xs-3'),
-                Column('time_step', css_class='form-group col-xs-3'),
-                Column('lifetime', css_class='form-group col-xs-3'),
+            Row(Column('time_step', css_class='form-group col-xs-5'),
+                Column('evaluated_period', css_class='form-group col-xs-4'),
                 css_class='form-row row'),
             Row(Column('capex_fix', css_class='form-group col-xs-2'),
                 Column('capex_var', css_class='form-group col-xs-2'),
                 Column('opex_fix', css_class='form-group col-xs-2'),
                 Column('opex_var', css_class='form-group col-xs-3'),
                 css_class='form-row row'),
+            ButtonHolder(
+                Submit('submit', 'Update', css_class='button white')
+            )
         )
+
+
+    '''
+    <form method="post" action="{% url 'scenario_update' scenario_id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ scenario_form }}
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </form>
+    '''
+    #def clean(self):
+     #   cleaned_data = super().clean()
 
 
 class LoadScenarioFromFileForm(BSModalModelForm):

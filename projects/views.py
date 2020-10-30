@@ -284,41 +284,24 @@ def scenario_create_post(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["POST"])
 def scenario_update(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
 
-        # if this is a POST request we need to process the form data
     if request.POST:
-        # create a form instance and populate it with data from the request:
         form = ScenarioUpdateForm(request.POST)
-        # check whether it's valid:
+
         if form.is_valid():
-            # process the data in form.cleaned_data as required
+            [setattr(scenario, name, value) for name, value in form.cleaned_data.items()]
 
-            scenario.name = form.cleaned_data['name']
-            scenario.start_date = form.cleaned_data['start_date']
-            scenario.period = form.cleaned_data['period']
-            scenario.time_step = form.cleaned_data['time_step']
-            scenario.capex_fix = form.cleaned_data['capex_fix']
-            scenario.capex_var = form.cleaned_data['capex_var']
-            scenario.opex_fix = form.cleaned_data['opex_fix']
-            scenario.opex_var = form.cleaned_data['opex_var']
-            scenario.lifetime = form.cleaned_data['lifetime']
-
-            scenario.save()
-
-            # redirect to a new URL:
+            scenario.save(update_fields=form.cleaned_data.keys())
             return HttpResponseRedirect(reverse('scenario_search', args=[scenario.project.id]))
 
-        # if a GET (or any other method) we'll create a blank form
     else:
-        form = ScenarioUpdateForm(instance=scenario)
-
-    return render(request, 'comment/comment_update.html', {'form': form})
+        raise Http404("An error occurred while updating the Scenario.")
 
 
 @login_required

@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from jsonview.decorators import json_view
 from pandas.io.json import json_normalize
-import pandas as pd
+# import pandas as pd
 
 from projects.models import Scenario
 
@@ -126,7 +126,7 @@ def scenario_economic_results(request, scen_id):
     kpi_economic_data_list = ["costs_total", "annuity_total", "costs_upfront_in_year_zero", "annuity_om", "levelized_cost_of_energy_of_asset"]
     cost_matrix_cols = dict_values["kpi"]["cost_matrix"]
     # df = json_normalize(cost_matrix_cols)
-    df = pd.DataFrame(cost_matrix_cols["data"], index=cost_matrix_cols["index"], columns=cost_matrix_cols["columns"])
+    # df = pd.DataFrame(cost_matrix_cols["data"], index=cost_matrix_cols["index"], columns=cost_matrix_cols["columns"])
     results = list()
 
     # for column in cost_matrix_cols:

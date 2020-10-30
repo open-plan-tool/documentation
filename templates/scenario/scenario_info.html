@@ -6,12 +6,8 @@
     <div class="panel panel-default ">
         <div class="panel-heading"><h3 class="panel-title"><strong>Scenario Details </strong></h3></div>
         <div class="panel-body">
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    {% crispy scenario_form %}
-                </div>
-                <button class="btn btn-success" type="submit">Submit</button>
+            <form action="{% url 'scenario_update' scenario_id %}" class="uniForm" method="post">
+            {% crispy scenario_form %}
             </form>
         </div>
     </div>

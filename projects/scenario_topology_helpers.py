@@ -85,6 +85,8 @@ def update_deleted_objects_from_database(scenario_id, topo_node_list):
 
 # region Scenario Duplicate
 def duplicate_scenario_objects(obj_list, scenario):
+    # FIXME: During Scenario Duplication ESS assets need special care, /
+    #  regarding the parent_asset_id
     mapping_dict = dict()
     for obj in obj_list:
         old_id = obj.id
