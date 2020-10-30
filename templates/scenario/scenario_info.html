@@ -3,20 +3,52 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="panel panel-default ">
-        <div class="panel-heading"><h3 class="panel-title"><strong>Scenario Details </strong></h3></div>
-        <div class="panel-body">
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    {% crispy scenario_form %}
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="panel panel-default ">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <div class="panel-heading"><h3 class="panel-title" id="titlee" style="width:65%;">
+                            <strong>Scenario
+                                Details </strong></h3>
+                        </div>
+
+                        <br>
+
+                        <div class="panel-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group" style="width:135%;">
+                                    {% crispy scenario_form %}
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-success" type="submit" id="button55" style="margin-left:30px;">Submit</button>
+                                    </div>
+                                    <div class="col-sm-4"></div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
-                <button class="btn btn-success" type="submit">Submit</button>
-            </form>
+
+            </div>
         </div>
+        <div class="col-sm-2"></div>
     </div>
 
-    <iframe id="topoFrame" src="{% url 'new_assets_topology' scenario_id %}" style="width: 100%; height: 100vh; display: none"></iframe>
+    <iframe id="topoFrame" src="{% url 'new_assets_topology' scenario_id %}"
+            style="width: 100%; height: 100vh; display: none"></iframe>
     <div id="destFrame"></div>
 
 {% endblock content %}

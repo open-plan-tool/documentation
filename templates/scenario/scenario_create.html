@@ -3,18 +3,28 @@
 <div id="CreateScenarioModal" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <br>
             <div class="modal-header">
                 <h1 class="modal-title">Create New Scenario</h1>
+                 <br>
             </div>
+
             <div class="modal-body">
                 <form id="CreateScenarioForm" method="POST">
                     {% csrf_token %}
                     <div id="FormGroup" class="form-group">
                         {{ form| crispy }}
                     </div>
-                    <button class="btn btn-success" type="submit">Create</button>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-success" type="submit" id="button55" style="margin-left: 50px;">Create</button>
+
+                        </div>
+                    </div>
                 </form>
             </div>
+
             <div class="modal-footer">
                 <!-- Here we create this empty div for alert messages -->
                 <div style="float: left; margin: 5px;" id="message-div"></div>
