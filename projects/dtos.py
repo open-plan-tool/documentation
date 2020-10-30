@@ -104,8 +104,9 @@ class EssDto:
 
 
 class BusDto:
-    def __init__(self, name: str, assets: List[AssetDto]):
+    def __init__(self, name: str, energy_vector: str, assets: List[AssetDto]):
         self.name = name
+        self.energy_vector = energy_vector
         self.assets = assets
 
 
@@ -260,7 +261,7 @@ def convert_to_dto(scenario: Scenario):
         # map_to_dto(asset, asset_dto)
 
         # Get category of asset and append to appropriate category
-        if asset.asset_type.asset_category == 'energy_providers':
+        if asset.asset_type.asset_category == 'energy_provider':
             energy_providers.append(asset_dto)
         elif asset.asset_type.asset_category == 'energy_production':
             energy_production.append(asset_dto)
@@ -279,7 +280,7 @@ def convert_to_dto(scenario: Scenario):
         # Find all assets associated with the connections
         bus_asset_list = list(set([connection.asset.name for connection in connections_list]))
 
-        bus_dto = BusDto(bus.name, bus_asset_list)
+        bus_dto = BusDto(bus.name, bus.type, bus_asset_list)
 
         bus_dto_list.append(bus_dto)
 

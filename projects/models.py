@@ -39,10 +39,10 @@ ENERGY_VECTOR = (
 
 MVS_TYPE = (
     ('', 'Choose...'),
-    ('source', 'electricity'),
-    ('sink', 'heat'),
-    ('transformer', 'gas'),
-    ('storage', 'h2'),
+    ('source', 'source'),
+    ('sink', 'sink'),
+    ('transformer', 'transformer'),
+    ('storage', 'storage'),
 )
 
 ASSET_CATEGORY = [
@@ -218,7 +218,7 @@ class Asset(TopologyNode):
 
 
 class Bus(TopologyNode):
-    type = models.CharField(max_length=20, choices=BUS_TYPE)
+    type = models.CharField(max_length=20, choices=ENERGY_VECTOR)
     input_ports = models.IntegerField(null=False, default=1)
     output_ports = models.IntegerField(null=False, default=1)
 
