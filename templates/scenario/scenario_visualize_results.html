@@ -3,178 +3,259 @@
 {% load crispy_forms_tags %}
 
 {% block start_body_scripts %}
-    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-    <script src="/static/js/selectize.js"></script>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script src="/static/js/selectize.js"></script>
 
 {% endblock start_body_scripts %}
 
 {% block content %}
-    <div class="row mb-4">
-
-<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id='economicDataDiv'></div>
+<div class="row">
+    <div class="panel panel-info">
+        <h2 class="panel-heading" style="text-align: center;">Economic Data Summary</h2>
+        <hr class="mt-2">
+        <div class="panel-body" id='economicDataDiv'></div>
+    </div>
 </div>
 
-<div class="row mb-4">
-    <label for="select-diagrams1">Select diagrams to draw:</label>
-    <input type="text" id="select-diagrams1" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
+<h2 class="panel-heading" style="text-align: center;">Economic and Technical Analysis, i.e. all Scalar</h2>
+
+
+<div class="row panel panel-info">
+    <h2 class="panel-heading" style="text-align: center;">Time Series Analysis</h2>
+
+    <ul class="nav nav-tabs nav-justified" id="energyVectorTab" role="tablist">
+        <li class="nav-item active">
+            <a class="nav-link active" id="electricity-tab" data-toggle="tab" href="#electricity" role="tab"
+               aria-controls="electricity" aria-selected="true">Electricity</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="heat-tab" data-toggle="tab" href="#heat" role="tab"
+               aria-controls="heat" aria-selected="false">Heat</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="gas-tab" data-toggle="tab" href="#gas" role="tab"
+               aria-controls="gas" aria-selected="false">Gas</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="energyVectorTabContent">
+        <div class="tab-pane fade" id="electricity" role="tabpanel" aria-labelledby="electricity-tab">energyVector
+            <div class="panel-body">
+                <label for="select-diagrams-electricity" style="padding: 0 10px;">Select Electricity assets:</label>
+                <input type="text" id="select-diagrams-electricity" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="heat" role="tabpanel" aria-labelledby="heat-tab">energyVector
+            <div class="panel-body">
+                <label for="select-diagrams-heat" style="padding: 0 10px;">Select Heat assets:</label>
+                <input type="text" id="select-diagrams-heat" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="gas" role="tabpanel" aria-labelledby="gas-tab">energyVector
+            <div class="panel-body">
+                <label for="select-diagrams-gas" style="padding: 0 10px;">Select Gas assets:</label>
+                <input type="text" id="select-diagrams-gas" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4 panel-body timeseriesPlotlyDiv" id='graphDiv'></div>
 </div>
 
-    <div class="mb-4" id='graphDiv'></div>
+<div class="row">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+        <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    </ul>
 
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>HOME</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Menu 2</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <h3>Menu 3</h3>
+            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        </div>
+    </div>
+</div>
+
+
+</div>
 
 {% endblock content %}
 
 
 {% block end_body_scripts %}
-    <script>
-        $('#economicDataDiv').ready(function () {
-            $.ajax({
-                url: "{% url 'scenario_economic_results' scenario_id %}",
-                type: "GET",
-                success: data => data.map(dataObj => drawPieChart(dataObj)),
-                error: function (xhr, errmsg) {
-                    console.log("backend_error!")
-                    //Show the error message
-                    $('#message-div').html("<div class='alert-error'>" +
-                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
-                }
-            });
-        });
-
-        function drawPieChart(dataList) {
-            const data = [{
-                values: [19, 26, 55], // dataList.values
-                labels: ['Residential', 'Non-Residential', 'Utility'], // dataList.labels
-                type: 'pie',
-                textinfo: "label+percent",
-                textposition: "inside",
-                automargin: true
-            }];
-
-            const layout = {
-                title:'Economic Data', // dataList.title
-                height: 300,
-                width: 300,
-                margin: {"b": 0, "l": 0, "r": 0},
-                showlegend: false,
-                paper_bgcolor: "transparent"
+<script>
+    $('#economicDataDiv').ready(function () {
+        $.ajax({
+            url: "{% url 'scenario_economic_results' scenario_id %}",
+            type: "GET",
+            success: data => data.map(dataObj => drawPieChart(dataObj)),
+            error: function (xhr, errmsg) {
+                console.log("backend_error!")
+                //Show the error message
+                $('#message-div').html("<div class='alert-error'>" +
+                    "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
             }
-
-            // Create a new Pie under the economic data div
-            const parentDiv = document.getElementById("economicDataDiv");
-            const newGraph = document.createElement('div');
-            newGraph.id = "pie"+layout.title.replace(' ', '');
-            parentDiv.appendChild(newGraph);
-            Plotly.newPlot(newGraph.id, data, layout);
-        }
-    </script>
-
-
-
-    <script>
-        // Ajax request to retrieve all available graphs for visualization
-        $(document).ready(function () {
-            getEnergyVectorAvailableResults("Electricity", '#select-diagrams1');
         });
+    });
 
-        function getEnergyVectorAvailableResults(energyVector, selectizeId) {
-            // make an Ajax request for the TimeSeries Graphs
-            $.ajax({
-                url: "{% url 'scenario_available_results' scenario_id %}",
-                type: "GET",
-                data: {"energy_vector":energyVector},
-                success: data => initiateSelectize(data.options.flat(), data.optgroups, selectizeId),
-                error: function (xhr, errmsg) {
-                    console.log("backend_error!")
-                    //Show the error message
-                    $('#message-div').html("<div class='alert-error'>" +
-                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
-                }
-            });
+    function drawPieChart(dataList) {
+        const data = [{
+            values: dataList.values, //[19, 26, 55]
+            labels: dataList.labels, //['Residential', 'Non-Residential', 'Utility']
+            type: 'pie',
+            textinfo: "label+percent",
+            textposition: "inside",
+            automargin: true
+        }];
+
+        const layout = {
+            title: {
+                text: (dataList.title.length < 40) ? dataList.title
+                    : dataList.title.substr(0, Math.ceil(dataList.title.length/2))
+                    +'<br>'+dataList.title.substr(Math.ceil(dataList.title.length/2)),
+                font: {
+                    family: 'Courier New, monospace',
+                    size: 16
+                },
+            }, // 'Economic Data'
+            height: 300,
+            width: 350,
+            margin: {"b": 0, "l": 0, "r": 0},
+            showlegend: false,
+            paper_bgcolor: "transparent"
         }
 
-        // region TimeSeries Graphs
-        function initiateSelectize(options, optgroups, selectizeId) {
-            $(selectizeId).selectize({
-                persist: false,
-                maxItems: null,
-                valueField: 'assetName',
-                labelField: 'assetName',
-                searchField: ['assetCategory', 'assetName'],
-                // this is where you are returning the data from your JSON file
-                options: options,
-                optgroups: optgroups,
-                optgroupField: 'assetCategory', // refers to the group field in "options"
-                optgroupLabelField: 'assetCategory', // refers to the label field in "optgroups"
-                optgroupValueField: 'assetCategory', // refers to the value field in "optgroups"
+        // Create a new Pie under the economic data div
+        const parentDiv = document.getElementById("economicDataDiv");
+        const newGraph = document.createElement('div');
+        newGraph.id = "pie"+layout.title.text.replace(' ', '');
+        newGraph.classList.add("col-md-4");
+        parentDiv.appendChild(newGraph);
+        Plotly.newPlot(newGraph.id, data, layout);
+    }
+</script> <!-- Economic Data -->
 
-            });
-        }
 
-        // On change reload diagrams
-        function reloadDiagrams(assetNameList) {
-            // Ajax request to retrieve requested graph data
-            $.ajax({
-                url: "{% url 'scenario_request_results' scenario_id %}",
-                type: "GET",
-                data: {
-                    assetNameList: assetNameList,
-                },
-                success: data => drawScatterGraph(data),
-                error: function (xhr, errmsg) {
-                    console.log("backend_error!")
-                    //Show the error message
-                    $('#message-div').html("<div class='alert-error'>" +
-                        "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
-                }
-            });
-        }
+<script>
+    // Ajax request to retrieve all available graphs for visualization
+    $(document).ready(function () {
+        getEnergyVectorAvailableResults("Electricity", '#select-diagrams-electricity');
+        getEnergyVectorAvailableResults("Heat", '#select-diagrams-heat');
+        getEnergyVectorAvailableResults("Gas", '#select-diagrams-gas');
+    });
 
-        function drawScatterGraph(dataList) {
+    function getEnergyVectorAvailableResults(energyVector, selectizeId) {
+        // make an Ajax request for the TimeSeries Graphs
+        $.ajax({
+            url: "{% url 'scenario_available_results' scenario_id %}",
+            type: "GET",
+            data: {"energy_vector":energyVector},
+            success: data => initiateSelectize(data.options.flat(), data.optgroups, selectizeId),
+            error: function (xhr, errmsg) {
+                console.log("backend_error!")
+                //Show the error message
+                $('#message-div').html("<div class='alert-error'>" +
+                    "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+            }
+        });
+    }
 
-            const traceList = [];
+    // region TimeSeries Graphs
+    function initiateSelectize(options, optgroups, selectizeId) {
+        $(selectizeId).selectize({
+            persist: false,
+            maxItems: null,
+            valueField: 'assetName',
+            labelField: 'assetName',
+            searchField: ['assetCategory', 'assetName'],
+            // this is where you are returning the data from your JSON file
+            options: options,
+            optgroups: optgroups,
+            optgroupField: 'assetCategory', // refers to the group field in "options"
+            optgroupLabelField: 'assetCategory', // refers to the label field in "optgroups"
+            optgroupValueField: 'assetCategory', // refers to the value field in "optgroups"
 
-            dataList.map(async data => {
-                const trace = {
-                    name: data.title,
-                    x: data.xAxis.values,
-                    y: data.yAxis.values,
-                    type: 'scatter'
-                };
+        });
+    }
 
-                traceList.push(trace)
-            });
+    // On change reload diagrams
+    function reloadDiagrams(assetNameList) {
+        // Ajax request to retrieve requested graph data
+        $.ajax({
+            url: "{% url 'scenario_request_results' scenario_id %}",
+            type: "GET",
+            data: {
+                assetNameList: assetNameList,
+            },
+            success: data => drawScatterGraph(data),
+            error: function (xhr, errmsg) {
+                console.log("backend_error!")
+                //Show the error message
+                $('#message-div').html("<div class='alert-error'>" +
+                    "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+            }
+        });
+    }
 
-            const layout = {
-                title: dataList[0].title,
-                xaxis: {
-                    title: dataList[0].xAxis.label,
-                    showgrid: true,
-                    zeroline: true
-                },
-                yaxis: {
-                    title: dataList[0].yAxis.label,
-                    showline: true
-                },
-                autosize: true,
-                width: 1500,
-                height: 750,
-                margin: {
-                    l: 50,
-                    r: 50,
-                    b: 100,
-                    t: 100,
-                    pad: 4
-                },
-                //paper_bgcolor: '#7f7f7f',
-                //plot_bgcolor: '#c7c7c7'
+    function drawScatterGraph(dataList) {
+
+        const traceList = [];
+
+        dataList.map(async data => {
+            const trace = {
+                name: data.title,
+                x: data.xAxis.values,
+                y: data.yAxis.values,
+                type: 'scatter'
             };
 
+            traceList.push(trace)
+        });
 
-            Plotly.newPlot('graphDiv', traceList, layout, {responsive: true});
-        }
-        // endregion
-    </script>
+        const layout = {
+            title: dataList[0].title,
+            xaxis: {
+                title: dataList[0].xAxis.label,
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: dataList[0].yAxis.label,
+                showline: true
+            },
+            autosize: true,
+            width: 1500,
+            height: 750,
+            margin: {
+                l: 50,
+                r: 50,
+                b: 100,
+                t: 100,
+                pad: 4
+            },
+            //paper_bgcolor: '#7f7f7f',
+            //plot_bgcolor: '#c7c7c7'
+        };
+
+
+        Plotly.newPlot('graphDiv', traceList, layout, {responsive: true});
+    }
+    // endregion
+</script> <!-- Time Series Data -->
 
 
 {% endblock end_body_scripts %}

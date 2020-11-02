@@ -152,11 +152,12 @@ def scenario_economic_results(request, scen_id):
     # Generate results JSON per asset name
     results_json = [
         {
-            'values': [dict_values['kpi']['cost_matrix']["data"][1]],
-            'labels': ['Residential', 'Non-Residential', 'Utility'],
-            'type': 'pie'
+            'values': dict_values['kpi']['cost_matrix']["data"][i][1:4],
+            'labels': ['Cost Total', 'Cost OM Total', 'Cost investment over Time'],
+            'type': 'pie',
+            'title': dict_values['kpi']['cost_matrix']["data"][i][0]
         }
-        # for asset_index in asset_index_list
+        for i in [3, 8, 10]
     ]
 
     return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
