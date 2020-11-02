@@ -105,8 +105,8 @@ class EssDto:
 
 
 class BusDto:
-    def __init__(self, name: str, energy_vector: str, assets: List[AssetDto]):
-        self.name = name
+    def __init__(self, label: str, energy_vector: str, assets: List[AssetDto]):
+        self.label = label
         self.energy_vector = energy_vector
         self.assets = assets
 
