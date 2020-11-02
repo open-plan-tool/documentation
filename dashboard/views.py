@@ -133,23 +133,6 @@ def scenario_economic_results(request, scen_id):
     # df = pd.DataFrame(cost_matrix_cols["data"], index=cost_matrix_cols["index"], columns=cost_matrix_cols["columns"])
     results = list()
 
-    # for column in cost_matrix_cols:
-    #     pass
-    # for economic_kpi in kpi_economic_data_list:
-    #     values = list()
-    #     labels = list()
-    #     for energy_type in energy_type_keys:
-    #         for asset in dict_values[energy_type].keys():
-    #             if dict_values[energy_type][asset][economic_kpi] and dict_values[energy_type][asset][economic_kpi]['value'] != 0:
-    #                 values.append(dict_values[energy_type][asset][economic_kpi]['value'])
-    #                 labels.append(asset)
-    #
-    #     results.append({
-    #         'values': values,
-    #         'labels': labels,
-    #         'type': 'pie'
-    #     })
-    # Generate results JSON per asset name
     results_json = [
         {
             'values': dict_values['kpi']['cost_matrix']["data"][i][1:4],
@@ -158,6 +141,30 @@ def scenario_economic_results(request, scen_id):
             'title': dict_values['kpi']['cost_matrix']["data"][i][0]
         }
         for i in [3, 8, 10]
+    ]
+
+    return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
+
+
+@login_required
+@json_view
+@require_http_methods(["GET"])
+def scenario_scalar_kpi_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if scenario.project.user != request.user:
+        return HttpResponseForbidden()
+
+    with open('static/tempFiles/json_with_results.json') as json_file:
+        dict_values = json.load(json_file)
+    # TODO: Fix this
+
+    results_json = [
+        {
+            'kpi': key,
+            'value': val,
+        }
+        for key, val in dict_values['kpi']['scalars'].items()
     ]
 
     return JsonResponse(results_json, status=200, content_type='application/json', safe=False)

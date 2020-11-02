@@ -17,79 +17,55 @@
     </div>
 </div>
 
-<h2 class="panel-heading" style="text-align: center;">Economic and Technical Analysis, i.e. all Scalar</h2>
+<!-- Scalar Results -->
+<div class="row panel panel-info">
+    <h2 class="panel-heading" style="text-align: center;">Economic and Technical Analysis</h2>
+    <table id="scalarTable" class="table table-hover panel-body">
+        <thead>
+        <tr>
+            <th>KPI</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 
 
+<!-- TimeSeries -->
 <div class="row panel panel-info">
     <h2 class="panel-heading" style="text-align: center;">Time Series Analysis</h2>
 
-    <ul class="nav nav-tabs nav-justified" id="energyVectorTab" role="tablist">
-        <li class="nav-item active">
-            <a class="nav-link active" id="electricity-tab" data-toggle="tab" href="#electricity" role="tab"
-               aria-controls="electricity" aria-selected="true">Electricity</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="heat-tab" data-toggle="tab" href="#heat" role="tab"
-               aria-controls="heat" aria-selected="false">Heat</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="gas-tab" data-toggle="tab" href="#gas" role="tab"
-               aria-controls="gas" aria-selected="false">Gas</a>
-        </li>
-    </ul>
-
-    <div class="tab-content" id="energyVectorTabContent">
-        <div class="tab-pane fade" id="electricity" role="tabpanel" aria-labelledby="electricity-tab">energyVector
-            <div class="panel-body">
-                <label for="select-diagrams-electricity" style="padding: 0 10px;">Select Electricity assets:</label>
-                <input type="text" id="select-diagrams-electricity" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="heat" role="tabpanel" aria-labelledby="heat-tab">energyVector
-            <div class="panel-body">
-                <label for="select-diagrams-heat" style="padding: 0 10px;">Select Heat assets:</label>
-                <input type="text" id="select-diagrams-heat" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="gas" role="tabpanel" aria-labelledby="gas-tab">energyVector
-            <div class="panel-body">
-                <label for="select-diagrams-gas" style="padding: 0 10px;">Select Gas assets:</label>
-                <input type="text" id="select-diagrams-gas" class="select-diagrams" onchange="reloadDiagrams(this.value)"/>
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-4 panel-body timeseriesPlotlyDiv" id='graphDiv'></div>
-</div>
-
-<div class="row">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-        <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a data-toggle="tab" href="#electricity">Electricity</a></li>
+        <li><a data-toggle="tab" href="#heat">Heat</a></li>
+        <li><a data-toggle="tab" href="#gas">Gas</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3>HOME</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div id="electricity" class="tab-pane fade in active">
+            <div class="panel-body">
+                <label for="select-diagrams-electricity" style="padding: 0 10px;">Select Electricity assets:</label>
+                <input type="text" id="select-diagrams-electricity" class="select-diagrams" onchange="reloadDiagrams(this.value, 'ElectricityGraphDiv')"/>
+            </div>
+            <div class="mb-4 panel-body" id='ElectricityGraphDiv'></div>
         </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div id="heat" class="tab-pane fade">
+            <div class="panel-body">
+                <label for="select-diagrams-heat" style="padding: 0 10px;">Select Heat assets:</label>
+                <input type="text" id="select-diagrams-heat" class="select-diagrams" onchange="reloadDiagrams(this.value, 'HeatGraphDiv')"/>
+            </div>
+            <div class="mb-4 panel-body" id='HeatGraphDiv'></div>
         </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        <div id="gas" class="tab-pane fade">
+            <div class="panel-body">
+                <label for="select-diagrams-gas" style="padding: 0 10px;">Select Gas assets:</label>
+                <input type="text" id="select-diagrams-gas" class="select-diagrams" onchange="reloadDiagrams(this.value, 'GasGraphDiv')"/>
+            </div>
+            <div class="mb-4 panel-body" id='GasGraphDiv'></div>
         </div>
     </div>
-</div>
-
 
 </div>
 
@@ -193,7 +169,7 @@
     }
 
     // On change reload diagrams
-    function reloadDiagrams(assetNameList) {
+    function reloadDiagrams(assetNameList, plotlyDivId) {
         // Ajax request to retrieve requested graph data
         $.ajax({
             url: "{% url 'scenario_request_results' scenario_id %}",
@@ -201,7 +177,7 @@
             data: {
                 assetNameList: assetNameList,
             },
-            success: data => drawScatterGraph(data),
+            success: data => drawScatterGraph(data, plotlyDivId),
             error: function (xhr, errmsg) {
                 console.log("backend_error!")
                 //Show the error message
@@ -211,8 +187,7 @@
         });
     }
 
-    function drawScatterGraph(dataList) {
-
+    function drawScatterGraph(dataList, plotlyDivId) {
         const traceList = [];
 
         dataList.map(async data => {
@@ -227,7 +202,7 @@
         });
 
         const layout = {
-            title: dataList[0].title,
+            title: plotlyDivId+' Timeseries', //dataList[0].title,
             xaxis: {
                 title: dataList[0].xAxis.label,
                 showgrid: true,
@@ -238,24 +213,50 @@
                 showline: true
             },
             autosize: true,
-            width: 1500,
-            height: 750,
-            margin: {
-                l: 50,
-                r: 50,
-                b: 100,
-                t: 100,
-                pad: 4
-            },
-            //paper_bgcolor: '#7f7f7f',
-            //plot_bgcolor: '#c7c7c7'
         };
 
+        const d3 = Plotly.d3;
+        const gd3 = d3.select(`#${plotlyDivId}`).style({
+            width: '95%',
+            height: '80vh',
+            'margin-top': 0 + 'vh',
+            'margin-bottom': 10 + 'vh'
+        });
+        const gd = gd3.node();
 
-        Plotly.newPlot('graphDiv', traceList, layout, {responsive: true});
+        Plotly.newPlot(gd, traceList, layout, {responsive: true});
     }
     // endregion
 </script> <!-- Time Series Data -->
 
+<script>
+    $('#scalarTable').ready(function () {
+        $.ajax({
+            url: "{% url 'scenario_scalar_kpi_results' scenario_id %}",
+            type: "GET",
+            success: data => data.map(dataObj => appendTableTr(dataObj)),
+            error: function (xhr, errmsg) {
+                console.log("Scalar backend_error!")
+                //Show the error message
+                $('#message-div').html("<div class='alert-error'>" +
+                    "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
+            }
+        });
+    });
 
+    // function appendTableTr(tableRow) {
+    //     const scalarDiv = document.getElementById('scalarTable').parentElement;
+    //     const newDiv = document.createElement("div");
+    //     newDiv.classList.add('panel');
+    //     newDiv.classList.add('panel-info');
+    //     newDiv.innerHTML = `<h3 class="panel-heading">${tableRow.kpi}</h3><h4 class="panel-body">${tableRow.value.toFixed(2)}</h4>`;
+    //     scalarDiv.appendChild(newDiv);
+    // }
+
+    function appendTableTr(tableRow) {
+        const tableBody = document.getElementById('scalarTable').getElementsByTagName('tbody')[0];
+        const newRow = tableBody.insertRow();
+        newRow.innerHTML = `<td>${tableRow.kpi}</td><td>${tableRow.value.toFixed(2)}</td>`;
+    }
+</script> <!-- Scalar Simulation Results -->
 {% endblock end_body_scripts %}
