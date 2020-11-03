@@ -21,11 +21,11 @@ insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_ty
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('solar_inverter','electricity', 'energy_conversion', 'transformer', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('dso_consumption','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,dispatchable,input_timeseries]' );
+('dso_consumption','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,dispatchable, renewable_asset, input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('pv_plant','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,input_timeseries]' );
+('pv_plant','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('wind_plant','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,input_timeseries]' );
+('wind_plant','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('charging_power','electricity', 'energy_storage', 'storage', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
@@ -62,3 +62,4 @@ insert into projects_valuetype( unit, type) values ('currency/year', 'opex_fix' 
 insert into projects_valuetype( unit, type) values ('currency/year', 'specific_costs_om' );
 insert into projects_valuetype( unit, type) values ('kWh', 'input_timeseries' );
 insert into projects_valuetype( unit, type) values ('days', 'evaluated_period' );
+insert into projects_valuetype( unit, type) values ('bool', 'renewable_asset,' );

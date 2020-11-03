@@ -59,7 +59,7 @@ class AssetDto:
                  installed_capacity: ValueTypeDto, lifetime: ValueTypeDto, maximum_capacity: ValueTypeDto,
                  energy_price: ValueTypeDto, feedin_tariff: ValueTypeDto, optimize_capacity: ValueTypeDto,
                  peak_demand_pricing: ValueTypeDto, peak_demand_pricing_period: ValueTypeDto,
-                 renewable_share: ValueTypeDto, specific_costs: ValueTypeDto, specific_costs_om: ValueTypeDto,
+                 renewable_share: ValueTypeDto,  renewable_asset: ValueTypeDto, specific_costs: ValueTypeDto, specific_costs_om: ValueTypeDto,
                  input_timeseries: TimeseriesDataDto, ):
         self.asset_type = asset_type
         self.label = label
@@ -85,6 +85,7 @@ class AssetDto:
         self.peak_demand_pricing = peak_demand_pricing
         self.peak_demand_pricing_period = peak_demand_pricing_period
         self.renewable_share = renewable_share
+        self.renewable_asset = renewable_asset
         self.specific_costs = specific_costs
         self.specific_costs_om = specific_costs_om
         self.input_timeseries = input_timeseries
@@ -206,6 +207,7 @@ def convert_to_dto(scenario: Scenario):
                                  to_value_type(asset, 'peak_demand_pricing'),
                                  to_value_type(asset, 'peak_demand_pricing_period'),
                                  to_value_type(asset, 'renewable_share'),
+                                 to_value_type(asset, 'renewable_asset'),
                                  to_value_type(asset, 'capex_var'),
                                  to_value_type(asset, 'opex_fix'),
                                  to_timeseries_data(asset, 'input_timeseries')
@@ -258,6 +260,7 @@ def convert_to_dto(scenario: Scenario):
                              to_value_type(asset, 'peak_demand_pricing'),
                              to_value_type(asset, 'peak_demand_pricing_period'),
                              to_value_type(asset, 'renewable_share'),
+                             to_value_type(asset, 'renewable_asset'),
                              to_value_type(asset, 'capex_var'),
                              to_value_type(asset, 'opex_fix'),
                              to_timeseries_data(asset, 'input_timeseries')
