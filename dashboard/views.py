@@ -167,4 +167,61 @@ def scenario_scalar_kpi_results(request, scen_id):
         for key, val in dict_values['kpi']['scalars'].items()
     ]
 
+    json_to_db()
+
     return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
+
+
+def json_to_db():
+    with open('static/tempFiles/EPA_input.json') as json_file:
+        dict_values = json.load(json_file)
+
+    energy_types = ['energyProviders', 'energy_consumption', 'energy_conversion', 'energy_production', 'energy_storage']
+
+    for item in energy_types:
+        key_list = list()
+        for obj in dict_values[item]:
+            [key_list.append(key) for key, val in obj.items() if key not in key_list]
+        print("{}: {}".format(item, key_list))
+
+    energyProviders = ['connected_consumption_sources', 'connected_feedin_sink', 'development_costs', 'dispatch_price',
+                      'energy_price', 'energy_vector', 'feedin_tariff', 'inflow_direction', 'installed_capacity',
+                      'label', 'lifetime', 'optimize_capacity', 'outflow_direction', 'peak_demand_pricing',
+                      'peak_demand_pricing_period', 'renewable_share', 'specific_costs', 'specific_costs_om',
+                      'type_oemof', 'unit']
+    energy_consumption= ['development_costs', 'dispatch_price', 'energy_vector', 'inflow_direction', 'input_bus_name',
+                         'input_timeseries', 'installed_capacity', 'label', 'lifetime', 'optimize_capacity',
+                         'specific_costs', 'specific_costs_om', 'type_oemof']
+    energy_conversion= ['age_installed', 'development_costs', 'dispatch_price', 'efficiency', 'energy_vector',
+                        'inflow_direction', 'input_bus_name', 'installed_capacity', 'label', 'lifetime',
+                        'maximum_capacity', 'optimize_capacity', 'outflow_direction', 'output_bus_name',
+                        'specific_costs', 'specific_costs_om', 'type_oemof']
+    energy_production= ['age_installed', 'development_costs', 'dispatch_price', 'dispatchable', 'energy_vector',
+                        'installed_capacity', 'label', 'lifetime', 'maximum_capacity', 'optimize_capacity',
+                        'outflow_direction', 'output_bus_name', 'renewable_asset', 'specific_costs',
+                        'specific_costs_om', 'type_oemof', 'input_timeseries']
+    energy_storage= ['energy_vector', 'inflow_direction', 'input power', 'input_bus_name', 'label', 'optimize_capacity',
+                     'outflow_direction', 'output power', 'output_bus_name', 'storage capacity', 'type_oemof']
+
+    set(energy_consumption).intersection(set(energy_conversion)).intersection(set(energy_production)) \
+        .intersection(set(energy_storage)).intersection(set(energyProviders))
+    # {'type_oemof', 'energy_vector', 'optimize_capacity', 'label'}
+
+    set(energy_consumption).intersection(set(energy_conversion)).intersection(set(energy_production))
+    # {'energy_vector', 'label', 'dispatch_price', 'specific_costs_om', 'specific_costs', 'development_costs', 'type_oemof', 'lifetime', 'optimize_capacity', 'installed_capacity'}
+
+    set(energy_production).symmetric_difference(set(energyProviders))
+
+    set(energy_production).union(set(energy_consumption)).union(set(energy_conversion)).union(set(energy_storage))
+    # {'age_installed', 'lifetime', 'dispatch_price', 'efficiency', 'type_oemof', 'development_costs',
+    # 'optimize_capacity', 'outflow_direction', 'output_bus_name', 'input_bus_name', 'output power',
+    # 'installed_capacity', 'label', 'specific_costs', 'maximum_capacity', 'inflow_direction', 'specific_costs_om',
+    # 'input_timeseries', 'input power', 'storage capacity', 'renewable_asset', 'energy_vector', 'dispatchable'}
+
+    set(energy_production).union(set(energy_consumption)).union(set(energy_conversion)).union(set(energy_storage)).union(set(energyProviders))
+    # {'efficiency', 'peak_demand_pricing_period', 'output power', 'connected_feedin_sink', 'specific_costs',
+    # 'connected_consumption_sources', 'maximum_capacity', 'renewable_share', 'input_timeseries', 'input power',
+    # 'renewable_asset', 'energy_vector', 'dispatchable', 'age_installed', 'feedin_tariff', 'lifetime',
+    # 'dispatch_price', 'type_oemof', 'development_costs', 'optimize_capacity', 'outflow_direction',
+    # 'output_bus_name', 'input_bus_name', 'installed_capacity', 'label', 'inflow_direction', 'specific_costs_om',
+    # 'storage capacity', 'unit', 'energy_price', 'peak_demand_pricing'}
