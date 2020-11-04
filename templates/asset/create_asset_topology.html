@@ -9,10 +9,11 @@
 {% endblock start_body_scripts %}
 
 {% block topology %}
+
     <div class="wrapper">
 
         <div id="accordion" class="col">
-            <h3>Energy Production</h3>
+            <h3 id="accord">Energy Production</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso_consumption">
                     <i class="fas fa-plug"></i><span> DSO Consumption </span>
@@ -27,7 +28,7 @@
                     <i class="fas fa-grip-lines"></i><span> System DSO </span>
                 </li>
             </ul>
-            <h3>Energy Conversion</h3>
+            <h3 id="accord">Energy Conversion</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_in">
                     <i class="fas fa-arrow-left"></i><span> Transformer Station In </span>
@@ -45,7 +46,7 @@
                     <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span> Solar Inverter </span>
                 </li>
             </ul>
-            <h3>Energy Storage</h3>
+            <h3 id="accord">Energy Storage</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="charging_power">
                     <i class="fas fa-battery-three-quarters"></i><span> Charging Power </span>
@@ -63,7 +64,7 @@
                     <i class="fas fa-car-battery"></i><span> Storage </span>
                 </li>
             </ul>
-            <h3>Energy Consumption</h3>
+            <h3 id="accord">Energy Consumption</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="electricity_excess">
                     <i class="fas fa-fire"></i><span> Electricity Excess </span>
@@ -75,7 +76,7 @@
                     <i class="fas fa-lightbulb"></i><span> Demand </span>
                 </li>
             </ul>
-            <h3>Energy Bus</h3>
+            <h3 id="accord">Energy Bus</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li>
                     <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
@@ -84,6 +85,11 @@
                 </li>
             </ul>
         </div>
+
+
+
+
+
 
         <div class="col-center">
             <div class="menu">
@@ -101,12 +107,14 @@
             Add here logic for the properties sidebar.
         </div>
         -->
+
     </div>
 
 {% endblock topology %}
 
 
 {% block end_body_scripts %}
+
     <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
