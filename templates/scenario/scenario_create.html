@@ -13,7 +13,17 @@
                 <form id="CreateScenarioForm" method="POST">
                     {% csrf_token %}
                     <div id="FormGroup" class="form-group">
-                        {{ form| crispy }}
+
+                       {{ form.name|as_crispy_field }}
+
+                        {{ form.start_date|as_crispy_field }}
+                        {{ form.time_step|as_crispy_field }}
+                        {{ form.lifetime|as_crispy_field }}
+                        {{ form.capex_fix|as_crispy_field }}
+                        {{ form.capex_var|as_crispy_field }}
+                        {{ form.opex_fix|as_crispy_field }}
+                        {{ form.opex_var|as_crispy_field }}
+
                     </div>
                     <div class="row">
                         <div class="col-sm-4"></div>
@@ -49,6 +59,7 @@
         event.preventDefault();
         //console.log(getFormData(form_id));
         //console.log("form submitted!")  // sanity check
+
         create_scenario();
     });
 

@@ -53,8 +53,8 @@ class ProjectCreateForm(forms.Form):
                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. -77.0364'}))
     latitude = forms.FloatField(label='Location, latitude',
                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951'}))
-    duration = forms.IntegerField(label='Project Duration (days)',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 432 '}))
+    duration = forms.IntegerField(label='Project Duration (years)',
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 '}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
     discount = forms.IntegerField(label='Discount Factor (%)',
                                   widget=forms.NumberInput(attrs={'placeholder': 'eg. 10%'}))
@@ -93,6 +93,7 @@ class CommentForm(ModelForm):
 
 class ScenarioCreateForm(ModelForm):
     start_date = forms.DateField(input_formats=['%d/%m/%Y'])
+
 
     class Meta:
         model = Scenario

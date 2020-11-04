@@ -149,6 +149,7 @@ class Comment(models.Model):
 
 class Scenario(models.Model):
     name = models.CharField(max_length=60)
+
     start_date = models.DateField()
     period = models.IntegerField()
     time_step = models.IntegerField()
