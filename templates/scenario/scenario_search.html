@@ -7,59 +7,65 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-    <h1 style="text-align: center">Project Overview</h1>
+    <br>
+    <h1 style="text-align: center" id="titlee">Project Overview</h1>
     <!-- region Project Scenarios List -->
     <a class="open-modal" data-modal="CreateScenarioModal" style="visibility: hidden">Add Scenario</a>
+    <br>
+    <br>
+    <div class="container5">
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'Project Scenarios')" id="defaultOpen">Project Scenarios
+            </button>
+            <button class="tablinks" onclick="openCity(event, 'Project Comments')">Project Comments</button>
+
+        </div>
+
+        <div id="Project Scenarios" class="tabcontent">
 
 
-    <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'Project Scenarios')" id="defaultOpen">Project Scenarios</button>
-        <button class="tablinks" onclick="openCity(event, 'Project Comments')" >Project Comments</button>
-
-    </div>
-
-    <div id="Project Scenarios" class="tabcontent">
-
-
-        <div class="panel panel-default " id="scen">
-        <br>
-            <div class="panel-heading"><h2 class="panel-title" style="text-align: center" id="titleproj"><strong>Project
-                Scenarios </strong></h2></div>
-        <br>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>&emsp;&emsp;</th>
-                            <th>Name</th>
-                            <th>Start Date</th>
-                            <th>State</th>
-                            <th>User Ranking</th>
-                            <th>Progress</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for scenario in scenario_list %}
-                            <tr class="table-row">
-                                <td>
-                                    <!-- Create the configuration glyphicon and the dropdown menu choices. -->
-                                    <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
-                                        <a href="#" data-toggle="dropdown">
-                                            <span class="glyphicon glyphicon-cog" style="font-size: 120%"></span>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
-                                                   href="{% url 'scenario_view' scenario.pk %}" name="View"> Info</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="1" class="glyphicon glyphicon-eye-open"
-                                                   href="{% url 'scenario_visualize_results' scenario.pk %}"
-                                                   name="visualizeResults"> Visualize-Results</a>
-                                            </li>
-                                            <!--
+            <div class="panel panel-default " id="scen">
+                <br>
+                <div class="panel-heading"><h2 class="panel-title" style="text-align: center" id="titleproj"><strong>Project
+                    Scenarios </strong></h2></div>
+                <br>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr style="text-transform: uppercase;">
+                                <th>&emsp;&emsp;</th>
+                                <th>Name</th>
+                                <th>Start Date</th>
+                                <th>State</th>
+                                <th>User Ranking</th>
+                                <th>Progress</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for scenario in scenario_list %}
+                                <tr class="table-row">
+                                    <td>
+                                        <!-- Create the configuration glyphicon and the dropdown menu choices. -->
+                                        <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
+                                            <a href="#" data-toggle="dropdown">
+                                                <span class="glyphicon glyphicon-cog"
+                                                      style="font-size: 120%;  color:#E3AC37; text-shadow: 1px 1px 1px #222;"></span>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
+                                                <li role="presentation"
+                                                    style="opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
+                                                       href="{% url 'scenario_view' scenario.pk %}" name="View">
+                                                        Info</a>
+                                                </li>
+                                                <li role="presentation"
+                                                    style="opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" tabindex="1" class="glyphicon glyphicon-eye-open"
+                                                       href="{% url 'scenario_visualize_results' scenario.pk %}"
+                                                       name="visualizeResults"> Visualize-Results</a>
+                                                </li>
+                                                <!--
                                         <li role="presentation">
                                             <a role="menuitem" tabindex="1" href="#">
                                                 <span class="glyphicon glyphicon-edit open-modal"
@@ -69,155 +75,218 @@
                                             </a>
                                         </li>
                                         -->
-                                            <li role="presentation">
-                                                <a role="menuitem" class="glyphicon glyphicon-picture"
-                                                   href="{% url 'new_assets_topology' scenario.pk %}" name="GridView">
-                                                    Grid-Model</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" class="glyphicon glyphicon-random"
-                                                   href="{% url 'request_mvs_simulation' scenario.pk %}"
-                                                   name="Simulation">
-                                                    Simulate</a>
-                                            </li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="1" class="glyphicon glyphicon-duplicate"
-                                                   href="{% url 'scenario_duplicate' scenario.pk %}" name="Duplicate">
-                                                    Create-a-Copy</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="-1" href="#">
-                                                    <form style="float: left;" class="form"
-                                                          action="{% url 'scenario_delete' scenario.pk %}"
-                                                          method="POST">
-                                                        {% csrf_token %}
-                                                        <label style="float: left;  margin: 5px;">
-                                                            <span class="glyphicon glyphicon-trash"> Remove</span>
-                                                            <input style="display: none" class="btn btn-sm btn-danger"
-                                                                   type="submit" value="Delete"
-                                                                   onclick="return confirm('Are you sure you want to delete?')"/>
-                                                        </label>
-                                                    </form>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td class="text"><span>{{ scenario.name }}</span></td>
-                                <td class="text"><span>{{ scenario.start_date }}</span></td>
-                                <td class="text"><span>{{ None }}</span></td>
-                                <td class="text">
-                                    <div class="rate">
-                                        <input type="radio" id="star5" name="rate" value="5"/>
-                                        <label for="star5" title="5stars">5 stars</label>
-                                        <input type="radio" id="star4" name="rate" value="4"/>
-                                        <label for="star4" title="4stars">4 stars</label>
-                                        <input type="radio" id="star3" name="rate" value="3"/>
-                                        <label for="star3" title="3stars">3 stars</label>
-                                        <input type="radio" id="star2" name="rate" value="2"/>
-                                        <label for="star2" title="2stars">2 stars</label>
-                                        <input type="radio" id="star1" name="rate" value="1"/>
-                                        <label for="star1" title="1star">1 star</label>
-                                    </div>
-                                </td>
-                                <td class="text"><span>{{ None }}</span></td>
+                                                <li role="presentation"
+                                                    style="opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" class="glyphicon glyphicon-picture"
+                                                       href="{% url 'new_assets_topology' scenario.pk %}"
+                                                       name="GridView">
+                                                        Grid-Model</a>
+                                                </li>
+                                                <li role="presentation"
+                                                    style=" opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" class="glyphicon glyphicon-random"
+                                                       href="{% url 'request_mvs_simulation' scenario.pk %}"
+                                                       name="Simulation">
+                                                        Simulate</a>
+                                                </li>
+                                                <li role="presentation" class="divider"></li>
+                                                <li role="presentation"
+                                                    style="opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" tabindex="1"
+                                                       class="glyphicon glyphicon-duplicate"
+                                                       href="{% url 'scenario_duplicate' scenario.pk %}"
+                                                       name="Duplicate">
+                                                        Create-a-Copy</a>
+                                                </li>
+                                                <li role="presentation"
+                                                    style="opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" tabindex="-1" href="#">
+                                                        <form style="float: left;" class="form"
+                                                              action="{% url 'scenario_delete' scenario.pk %}"
+                                                              method="POST">
+                                                            {% csrf_token %}
+                                                            <label style="float: left;  margin: 5px;">
+                                                                <span class="glyphicon glyphicon-trash"> Remove</span>
+                                                                <input style="display: none"
+                                                                       class="btn btn-sm btn-danger"
+                                                                       type="submit" value="Delete"
+                                                                       onclick="return confirm('Are you sure you want to delete?')"/>
+                                                            </label>
+                                                        </form>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="text"><span><b>{{ scenario.name }}</b></span></td>
+                                    <td class="text"><span>{{ scenario.start_date }}</span></td>
+                                    <td class="text"><span>{{ None }}</span></td>
+                                    <td class="text">
+                                        <div class="rate">
+                                            <input type="radio" id="star5" name="rate" value="5"/>
+                                            <label for="star5" title="5stars">5 stars</label>
+                                            <input type="radio" id="star4" name="rate" value="4"/>
+                                            <label for="star4" title="4stars">4 stars</label>
+                                            <input type="radio" id="star3" name="rate" value="3"/>
+                                            <label for="star3" title="3stars">3 stars</label>
+                                            <input type="radio" id="star2" name="rate" value="2"/>
+                                            <label for="star2" title="2stars">2 stars</label>
+                                            <input type="radio" id="star1" name="rate" value="1"/>
+                                            <label for="star1" title="1star">1 star</label>
+                                        </div>
+                                    </td>
+                                    <td class="text"><span>{{ None }}</span></td>
 
-                            </tr>
-                        {% endfor %}
-                        <tr class="table-row">
-                            <td>
-                                <a class="glyphicon glyphicon-plus open-modal" style="color: forestgreen"
-                                   data-modal="CreateScenarioModal"></a>
-                            </td>
-                            <td colspan="5">Create New Scenario</td>
-                        </tr>
-                        <tr class="table-row">
-                            <td>
-                                <a id="upload-scenario" class="glyphicon glyphicon-upload"
-                                   style="color: forestgreen"></a>
-                            </td>
-                            <td colspan="5">Load Scenario From File</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-3">
+                            <!--    <a data-modal="CreateScenarioModal" role="button" id="button55"><span
+                                        class="glyphicon glyphicon-plus open-modal"
+                                        style="color: forestgreen; text-shadow: 1px 1px 1px #222;"></span> Create New
+                                    Scenario</a> -->
+                            <a class="glyphicon glyphicon-plus open-comments-modal" style="color: transparent;"
+                               data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' %}"><span
+                                    id="button55">Create New Scenario</span></a>
+                        </div>
+
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4">
+                            <!--   <a data-modal="CreateScenarioModal" role="button" id="button55"><span
+                                       class="glyphicon glyphicon-upload"
+                                       style="color: #65C8C9; text-shadow: 1px 1px 1px #222;"></span> Load Scenario From
+                                   File</a> -->
+                            <a class="glyphicon glyphicon-upload" style="color: transparent;" id="upload-scenario"><span
+                                    id="button55">Upload Scenario From File</span></a>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
                 </div>
+
+                <!--  <tr class="table-row">
+                     <td> -
+                         <a class="glyphicon glyphicon-plus open-modal" style="color: forestgreen; text-shadow: 1px 1px 1px #222;"
+                            data-modal="CreateScenarioModal"></a>
+                     </td>
+                     <td colspan="5">Create New Scenario</td>
+                 </tr>
+
+             <tr class="table-row">
+                    <td>
+                        <a id="upload-scenario" class="glyphicon glyphicon-upload"
+                           style="color: #65C8C9; text-shadow: 1px 1px 1px #222;"></a>
+                    </td>
+                    <td colspan="5">Load Scenario From File</td>
+                </tr>
+                </tbody>
+            </table>
+        </div> -->
             </div>
         </div>
-    </div>
-    <!-- endregion -->
+        <!-- </div> -->
 
-    <!-- region Project Comments List -->
-    <div id="Project Comments" class="tabcontent">
-        <div class="panel panel-default " id="comms">
-        <br>
-            <div class="panel-heading"><h2 class="panel-title" style="text-align: center" id="titlecoms"><strong>Project
-                Comments </strong>
-            </h2></div>
-        <br>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>&emsp;&emsp;</th>
-                            <th>Title</th>
-                            <th>Comment</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for comment in comment_list %}
-                            <tr>
-                                <td>
-                                    <div class="dropdown">
-                                        <a href="#" id="dropdownMenuButton" data-toggle="dropdown">
-                                            <span class="glyphicon glyphicon-cog" style="font-size: 120%"></span>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
-                                                   href="{% url 'comment_update' comment.pk %}" name="View"> Info</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td>{{ comment.name }}</td>
-                                <td class="text"><span>{{ comment.body }}</span></td>
-                                <td>
-                                    <input style="float: left; margin: 5px;"
-                                           class="btn btn-sm btn-default open-comments-modal"
-                                           type="submit"
-                                           value="Edit" data-modal="UpdateCommentForm"
-                                           data-url="{% url 'comment_update' comment.pk %}"/>
-                                    <form style="float: left;" class="form"
-                                          action="{% url 'comment_delete' comment.pk %}"
-                                          method="POST">
-                                        {% csrf_token %}
-                                        <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
-                                               type="submit" value="Delete"
-                                               onclick="return confirm('Are you sure you want to delete?')"/>
-                                    </form>
-                                </td>
+        <!-- endregion -->
+
+        <!-- region Project Comments List -->
+        <div id="Project Comments" class="tabcontent">
+            <div class="panel panel-default " id="comms">
+                <br>
+                <div class="panel-heading"><h2 class="panel-title" style="text-align: center" id="titlecoms"><strong>Project
+                    Comments </strong>
+                </h2></div>
+                <br>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr style="text-transform: uppercase;">
+                                <th>&emsp;&emsp;</th>
+                                <th>Title</th>
+                                <th>Comment</th>
                             </tr>
-                        {% endfor %}
-                        <tr>
+                            </thead>
+                            <tbody>
+                            {% for comment in comment_list %}
+                                <tr>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" id="dropdownMenuButton" data-toggle="dropdown">
+                                                <span class="glyphicon glyphicon-cog"
+                                                      style="font-size: 120%; color: #E3AC37; text-shadow: 1px 1px 1px #222;"></span>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
+                                                <li role="presentation"
+                                                    style="opacity: 0.8; font-family: BlinkMacSystemFont; font-size: 18px;">
+                                                    <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
+                                                       href="{% url 'comment_update' comment.pk %}" name="View">
+                                                        Info</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td><b>{{ comment.name }}</b></td>
+                                    <td class="text"><span>{{ comment.body }}</span></td>
+                                    <td>
+                                        <input style="float: left; margin: 5px;"
+                                               class="btn btn-sm btn-default open-comments-modal"
+                                               type="submit"
+                                               value="Edit" data-modal="UpdateCommentForm"
+                                               data-url="{% url 'comment_update' comment.pk %}"/>
+                                        <form style="float: left;" class="form"
+                                              action="{% url 'comment_delete' comment.pk %}"
+                                              method="POST">
+                                            {% csrf_token %}
+                                            <input style="float: left;  margin: 5px;" class="btn btn-sm btn-danger"
+                                                   type="submit" value="Delete"
+                                                   onclick="return confirm('Are you sure you want to delete?')"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            <!--    <tr>
                             <td>
-                                <a class="glyphicon glyphicon-plus open-comments-modal" style="color: forestgreen"
+                                <a class="glyphicon glyphicon-plus open-comments-modal"
+                                   style="color: forestgreen; text-shadow: 1px 1px 1px #222;"
                                    data-modal="CreateCommentForm" data-url="{% url 'comment_create' %}"></a>
                             </td>
                             <td colspan="2">Add Comment</td>
 
-                        </tr>
-                        </tbody>
-                    </table>
+                        </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <!-- <a href="{% url 'comment_create' %}" data-modal="CreateCommentForm" role="button" id="button55"><span
+                                class="glyphicon glyphicon-plus open-comments-modal"
+                                style="color: forestgreen; text-shadow: 1px 1px 1px #222;"
+                                ></span> Add Comment</a> -->
+                            <a class="glyphicon glyphicon-plus open-comments-modal"
+                               style="color: transparent; text-shadow: 1px 1px 1px #222;"
+                               data-modal="CreateCommentForm" data-url="{% url 'comment_create' %}"
+                               id="button55"><span id="lo">Add Comment</span></a>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- endregion -->
+    </div>
 
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class=" modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content"></div>
         </div>

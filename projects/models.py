@@ -79,6 +79,7 @@ VALUE_TYPE = (
     ('peak_demand', 'peak_demand'),
     ('peak_demand_pricing_period', 'peak_demand_pricing_period'),
     ('renewable_share', 'renewable_share'),
+    ('renewable_asset', 'renewable_asset'),
 )
 
 ASSET_TYPE = (
@@ -149,6 +150,7 @@ class Comment(models.Model):
 
 class Scenario(models.Model):
     name = models.CharField(max_length=60)
+
     start_date = models.DateField()
     time_step = models.IntegerField()
     capex_fix = models.FloatField()
@@ -209,6 +211,7 @@ class Asset(TopologyNode):
     peak_demand_pricing = models.FloatField(null=True, blank=False)
     peak_demand_pricing_period = models.FloatField(null=True, blank=False)
     renewable_share = models.FloatField(null=True, blank=False)
+    renewable_asset = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=True)
 
     @property
