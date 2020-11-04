@@ -1,111 +1,123 @@
 :root {
-  --border-color: #cacaca;
-  --background-color: #ffffff;
-  --background-box-title: #f7f7f7;
+    --border-color: #cacaca;
+    --background-color: #ffffff;
+    --background-box-title: #f7f7f7;
 }
 
 html, body {
-  margin: 0px;
-  padding: 0px;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  font-family: 'Roboto', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
 }
 
 header {
-  height: 66px;
-  border-bottom: 1px solid var(--border-color);
-  padding-left: 20px;
+    height: 66px;
+    border-bottom: 1px solid var(--border-color);
+    padding-left: 20px;
 }
+
 header h2 {
-  margin: 0px;
-  line-height: 66px;
+    margin: 0px;
+    line-height: 66px;
 }
+
 header a {
-  color: black;
+    color: black;
 }
+
 .wrapper {
-  width: 100%;
-  height: calc(100vh - 67px);
-  display: flex;
+    width: 100%;
+    height: calc(100vh - 67px);
+    display: flex;
 }
 
 .col {
-  overflow: auto;
-  width: 300px;
-  height: 100%;
-  border-right: 1px solid var(--border-color);
-  background-color: #fffffd;
+    overflow: auto;
+    width: 300px;
+    height: 100%;
+    border-right: 1px solid var(--border-color);
+    background-color: #fffffd;
 }
 
 .drag-drawflow {
-  line-height: 50px;
-  border-bottom: 1px solid var(--border-color);
-  padding-left: 20px;
-  cursor: move;
-  user-select: none;
-  border-radius: 40px 0px 15px 0px;
+    line-height: 50px;
+    border-bottom: 1px solid var(--border-color);
+    padding-left: 20px;
+    cursor: move;
+    user-select: none;
+    border-radius: 40px 0px 15px 0px;
 }
 
 .drag-drawflow:hover {
-  background-color: #fff3cd;
+    background-color: #fff3cd;
 }
 
 .menu {
-  position: absolute;
-  height: 40px;
-  display: block;
-  background: white;
-  width: 100%;
+    position: absolute;
+    height: 40px;
+    display: block;
+    background: white;
+    width: 100%;
 }
+
 .menu ul {
-  padding: 0px;
-  margin: 0px;
-  line-height: 40px;
+    padding: 0px;
+    margin: 0px;
+    line-height: 40px;
 }
 
 .menu ul li {
-  display: inline-block;
-margin-left: 10px;
-border-right: 1px solid var(--border-color);
-padding-right: 10px;
-line-height: 40px;
-cursor: pointer;
+    display: inline-block;
+    margin-left: 10px;
+    border-right: 1px solid var(--border-color);
+    padding-right: 10px;
+    line-height: 40px;
+    cursor: pointer;
 }
 
 .menu ul li.selected {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .btn-export {
-  float: right;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: white;
-  font-weight: bold;
-  border: 1px solid #0e5ba3;
-  background: #4ea9ff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 5;
+    float: right;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #0e5ba3;
+    background: #65C8C9;
+    padding: 5px 15px;
+    border-radius: 2px;
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.3s;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    text-shadow: 1px 1px 1px #222;
 }
 
 .btn-clear {
-  float: right;
-  position: absolute;
-  top: 10px;
-  right: 85px;
-  color: white;
-  font-weight: bold;
-  border: 1px solid #96015b;
-  background: #e3195a;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 5;
+    float: right;
+    position: absolute;
+    top: 10px;
+    right: 85px;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #856404;
+    background: #E5B142;
+    padding: 5px 15px;
+    border-radius: 2px;
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.3s;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    text-shadow: 1px 1px 1px #222;
 }
 
 
@@ -139,6 +151,7 @@ cursor: pointer;
     text-decoration: none !important;
 
 }
+
 .btn-export:hover {
     padding-right: 15px;
     padding-left: 18px;
@@ -148,350 +161,362 @@ cursor: pointer;
 
 
 #drawflow {
-  position: relative;
-  width: calc(100vw - 301px);
-  height: calc(100% - 50px);
-  top: 40px;
-  background: var(--background-color);
-  background-size: 25px 25px;
-  background-image:
-   linear-gradient(to right, #f1f1f1 1px, transparent 1px),
-   linear-gradient(to bottom, #f1f1f1 1px, transparent 1px);
+    position: relative;
+    width: calc(100vw - 301px);
+    height: calc(100% - 50px);
+    top: 40px;
+    background: var(--background-color);
+    background-size: 25px 25px;
+    background-image: linear-gradient(to right, #f1f1f1 1px, transparent 1px),
+    linear-gradient(to bottom, #f1f1f1 1px, transparent 1px);
 }
 
 @media only screen and (max-width: 768px) {
-  .col {
-    width: 50px;
-  }
-  .col .drag-drawflow span {
-    display:none;
-  }
-  #drawflow {
-    width: calc(100vw - 51px);
-  }
-}
+    .col {
+        width: 50px;
+    }
 
+    .col .drag-drawflow span {
+        display: none;
+    }
+
+    #drawflow {
+        width: calc(100vw - 51px);
+    }
+}
 
 
 /* Editing Drawflow */
 
 .drawflow .drawflow-node {
-  background: var(--background-color);
-  border: 1px solid var(--border-color);
-  -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
-  box-shadow: 0 2px 15px 2px var(--border-color);
-  padding: 0px;
-  width: 200px;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
+    box-shadow: 0 2px 15px 2px var(--border-color);
+    padding: 0px;
+    width: 200px;
 }
 
-.drawflow .drawflow-node.selected  {
-  background: white;
-  border: 1px solid #4ea9ff;
-  -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
-  box-shadow: 0 2px 20px 2px #4ea9ff;
+.drawflow .drawflow-node.selected {
+    background: white;
+    border: 1px solid #4ea9ff;
+    -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+    box-shadow: 0 2px 20px 2px #4ea9ff;
 }
 
 
 .drawflow .connection .main-path {
-  stroke: #4ea9ff;
-  stroke-width: 3px;
+    stroke: #4ea9ff;
+    stroke-width: 3px;
 }
 
 .drawflow .drawflow-node .input, .drawflow .drawflow-node .output {
-  height: 15px;
-  width: 15px;
-  border: 2px solid var(--border-color);
+    height: 15px;
+    width: 15px;
+    border: 2px solid var(--border-color);
 }
 
 .drawflow .drawflow-node .input:hover, .drawflow .drawflow-node .output:hover {
-  background: #4ea9ff;
+    background: #4ea9ff;
 }
 
 .drawflow .drawflow-node .output {
-  right: 10px;
+    right: 10px;
 }
 
 .drawflow .drawflow-node .input {
-  left: -10px;
-  background: white;
+    left: -10px;
+    background: white;
 }
 
 .drawflow > .drawflow-delete {
-  border: 2px solid #43b993;
-  background: white;
-  color: #43b993;
-  -webkit-box-shadow: 0 2px 20px 2px #43b993;
-  box-shadow: 0 2px 20px 2px #43b993;
+    border: 2px solid #43b993;
+    background: white;
+    color: #43b993;
+    -webkit-box-shadow: 0 2px 20px 2px #43b993;
+    box-shadow: 0 2px 20px 2px #43b993;
 }
 
 .drawflow-delete {
-  border: 2px solid #4ea9ff;
-  background: white;
-  color: #4ea9ff;
-  -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
-  box-shadow: 0 2px 20px 2px #4ea9ff;
+    border: 2px solid #4ea9ff;
+    background: white;
+    color: #4ea9ff;
+    -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+    box-shadow: 0 2px 20px 2px #4ea9ff;
 }
 
 .drawflow-node .drawflow_content_node {
-  height: 100%;
-  width: 100% !important;
-  place-content: center;
+    height: 100%;
+    width: 100% !important;
+    place-content: center;
 }
 
 .drawflow-node .box {
-  font-size: 12px;
-  color: #2222ff;
-  text-align: center;
-  position: inherit;
-  height: 100%;
-  width: 100% !important;
-  right: 0;
-  top: 0;
+    font-size: 12px;
+    color: #2222ff;
+    text-align: center;
+    position: inherit;
+    height: 100%;
+    width: 100% !important;
+    right: 0;
+    top: 0;
 }
 
 
 .drawflow-node input, .drawflow-node select, .drawflow-node textarea {
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-  height: 30px;
-  line-height: 30px;
-  font-size: 16px;
-  width: 158px;
-  color: #555555;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    width: 158px;
+    color: #555555;
 }
 
 .drawflow-node textarea {
-  height: 100px;
+    height: 100px;
 }
 
 /* <editor-fold desc="region Bus Region"> */
 .drawflow-node.bus {
-  background: grey;
-  height: 150px;
-  width: 50px;
-  border-radius: 10px;
-  text-align: left;
-  color: white;
+    background: grey;
+    height: 150px;
+    width: 50px;
+    border-radius: 10px;
+    text-align: left;
+    color: white;
 }
+
 .drawflow-node.bus .input {
-  background: green;
+    background: green;
 }
 
 .drawflow-node.bus .output {
-  background: red;
+    background: red;
 }
 
 .drawflow-node.bus.selected {
-  background: grey;
+    background: grey;
 }
+
 /*</editor-fold> */
 
 
 /* <editor-fold desc="Sink Region"> */
 .drawflow-node.demand, .drawflow-node.electricity_excess, .drawflow-node.dso_feedin {
-  border-bottom: 50px solid #4dc3ff;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  height: 0;
-  width: 125px;
-  background: transparent;
-  text-align: left;
+    border-bottom: 50px solid #4dc3ff;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    height: 0;
+    width: 125px;
+    background: transparent;
+    text-align: left;
 }
+
 .drawflow-node.demand .input, .drawflow-node.electricity_excess .input, .drawflow-node.dso_feedin .input {
-  background: green;
-  position: absolute;
-  top: -10px;
-  left: 45%;
+    background: green;
+    position: absolute;
+    top: -10px;
+    left: 45%;
 }
 
 .drawflow-node.demand .output, .drawflow-node.electricity_excess .output, .drawflow-node.dso_feedin .output {
-  display: none;
-  background: red;
+    display: none;
+    background: red;
 }
 
-.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected{
-  border-bottom: 50px solid #4ea9ff;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  height: 0;
-  width: 125px;
-  background: transparent;
-  text-align: left;
+.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected {
+    border-bottom: 50px solid #4ea9ff;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    height: 0;
+    width: 125px;
+    background: transparent;
+    text-align: left;
 }
+
 /*</editor-fold> */
 
 
 /* <editor-fold desc="Source Region"> */
 .drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
-  border-top: 50px solid #00e600;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  height: 0;
-  width: 125px;
-  background: transparent;
-  text-align: left;
+    border-top: 50px solid #00e600;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    height: 0;
+    width: 125px;
+    background: transparent;
+    text-align: left;
 }
+
 .drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
-  background: green;
-  display: none;
+    background: green;
+    display: none;
 }
 
-.drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output{
-  background: red;
-  position: absolute;
-  top: -5px;
-  left: 50%;
+.drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
+    background: red;
+    position: absolute;
+    top: -5px;
+    left: 50%;
 }
 
-.drawflow-node.dso.selected , .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected{
-  border-top: 50px solid #00ae10;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  height: 0;
-  width: 125px;
-  background: transparent;
-  text-align: left;
+.drawflow-node.dso.selected, .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected {
+    border-top: 50px solid #00ae10;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    height: 0;
+    width: 125px;
+    background: transparent;
+    text-align: left;
 }
+
 /*</editor-fold> */
 
 
 /* <editor-fold desc="Transformer Region"> */
 .drawflow-node.transformer_station_in, .drawflow-node.transformer_station_out, .drawflow-node.storage_charge_controller_in, .drawflow-node.storage_charge_controller_out, .drawflow-node.solar_inverter {
-  height: 50px;
-  width: 100px;
-  background-color: #ffb84d;
-  text-align: left;
+    height: 50px;
+    width: 100px;
+    background-color: #ffb84d;
+    text-align: left;
 }
+
 .drawflow-node.transformer_station_in .input, .drawflow-node.transformer_station_out .input, .drawflow-node.storage_charge_controller_in .input, .drawflow-node.storage_charge_controller_out .input, .drawflow-node.solar_inverter .input {
-  background: green;
+    background: green;
 }
 
 .drawflow-node.transformer_station_in .output, .drawflow-node.transformer_station_out .output, .drawflow-node.storage_charge_controller_in .output, .drawflow-node.storage_charge_controller_out .output, .drawflow-node.solar_inverter .output {
-  background: red;
+    background: red;
 }
 
 .drawflow-node.transformer_station_in.selected, .drawflow-node.transformer_station_out.selected, .drawflow-node.storage_charge_controller_in.selected, .drawflow-node.storage_charge_controller_out.selected, .drawflow-node.solar_inverter.selected {
-  background-color: #ffa11d;
+    background-color: #ffa11d;
 }
+
 /*</editor-fold> */
 
 
 /* <editor-fold desc="Storage Region"> */
 .drawflow-node.charging_power, .drawflow-node.discharging_power, .drawflow-node.capacity {
-  height: 50px;
-  width: 100px;
-  border-radius: 10px;
-  background-color: #d9654e;
-  text-align: left;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #d9654e;
+    text-align: left;
 }
+
 .drawflow-node.charging_power .input, .drawflow-node.discharging_power .input, .drawflow-node.capacity .input, .drawflow-node.ess .input {
-  background: green;
+    background: green;
 }
 
 .drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output, .drawflow-node.ess .output {
-  background: #e64545;
+    background: #e64545;
 }
 
 .drawflow-node.charging_power.selected, .drawflow-node.discharging_power.selected, .drawflow-node.capacity.selected {
-  background-color: #ff0015;
+    background-color: #ff0015;
 }
 
 /*<editor-fold desc="Storage Asset"> */
 .drawflow-node.ess {
-  height: 250px;
-  width: 350px;
-  border-radius: 10px;
-  background-color: transparent;
-  border-color: #e7b968;
-  border-width: 5px;
-  z-index: 1;
-  text-align: left;
+    height: 250px;
+    width: 350px;
+    border-radius: 10px;
+    background-color: transparent;
+    border-color: #e7b968;
+    border-width: 5px;
+    z-index: 1;
+    text-align: left;
 }
 
 .drawflow-node.ess.selected {
-  background-color: transparent;
-  border-color: #e7b968;
-  border-width: 5px;
+    background-color: transparent;
+    border-color: #e7b968;
+    border-width: 5px;
 }
+
 /*</editor-fold> */
 /*</editor-fold> */
 
 .drawflow .connection .point {
-  stroke: var(--border-color);
-  stroke-width: 2;
-  fill: white;
-  transform: translate(-9999px, -9999px);
+    stroke: var(--border-color);
+    stroke-width: 2;
+    fill: white;
+    transform: translate(-9999px, -9999px);
 }
 
 .drawflow .connection .point.selected, .drawflow .connection .point:hover {
-  fill: #4ea9ff;
+    fill: #4ea9ff;
 }
 
 
 /* Modal */
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 7;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.7);
+    display: none;
+    position: fixed;
+    z-index: 7;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: 5% auto; /* 5% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  inline-size: border-box;
-  text-align: left;
-  width: 20vw; /* Could be more or less, depending on screen size */
+    position: relative;
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    inline-size: border-box;
+    text-align: left;
+    width: 20vw; /* Could be more or less, depending on screen size */
 }
 
 
 /* The Close Button */
 .modal .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor:pointer;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {
-  .modal-content {
-    width: 80%;
-  }
+    .modal-content {
+        width: 80%;
+    }
 }
-
 
 
 /* Make inputs to the top */
 .drawflow .parent-node .custom-node-1 .inputs {
-  position: absolute;
-  top: -10px;
-  padding-left: 50%;
+    position: absolute;
+    top: -10px;
+    padding-left: 50%;
 }
+
 /* Make outputs to the bottom */
 .drawflow .parent-node .custom-node-2 .outputs {
-  position: absolute;
-  bottom: -10px;
-  padding-left: 50%;
+    position: absolute;
+    bottom: -10px;
+    padding-left: 50%;
 }
+
 /* Make inputs to the right */
 .drawflow .parent-node .custom-node-3 .inputs {
-  position: absolute;
-  right: 0px;
+    position: absolute;
+    right: 0px;
 }
+
 /* Make outputs to the left */
 .drawflow .parent-node .custom-node-4 .outputs {
-  position: absolute;
-  left: 0px;
+    position: absolute;
+    left: 0px;
 }
 
 
