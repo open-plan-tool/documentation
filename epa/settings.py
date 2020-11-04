@@ -194,3 +194,9 @@ MVS_URL = "https://mvs-eland.rl-institut.de/uploadjson/"
 
 # Allow iframes to show in page
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
+GRAPH_MODELS = {
+  'all_applications': False,
+  'group_models': True,
+}
