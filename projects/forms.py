@@ -92,12 +92,24 @@ class CommentForm(ModelForm):
 
 
 class ScenarioCreateForm(ModelForm):
-    start_date = forms.DateField(input_formats=['%d/%m/%Y'])
-
+    #start_date = forms.DateField(input_formats=['%d/%m/%Y'])
 
     class Meta:
         model = Scenario
         exclude = ['id', 'project']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter your comments'}),
+            'start_date': forms.DateInput(format='%d/%m/%Y',
+                                          attrs={'class': 'myDateClass', 'placeholder': 'Select a date'}),
+            'time_step': forms.NumberInput(attrs={'placeholder': 'time step...'}),
+            'capex_fix': forms.NumberInput(attrs={'placeholder': 'capital fix cost'}),
+        }
+        labels = {
+            "name": "Example Label",
+            "time_step": "Time Step",
+            "capex_fix": "Fixed Capital Expenses",
+            "start_date": "Date",
+        }
 
 
 class ScenarioUpdateForm(ModelForm):
@@ -150,5 +162,6 @@ class AssetCreateForm(ModelForm):
         exclude = ['scenario']
         widgets = {
             'optimize_cap': forms.Select(choices=TRUE_FALSE_CHOICES),
-            'dispatchable': forms.Select(choices=TRUE_FALSE_CHOICES)
+            'dispatchable': forms.Select(choices=TRUE_FALSE_CHOICES),
+            'renewable_asset': forms.Select(choices=TRUE_FALSE_CHOICES)
         }

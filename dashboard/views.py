@@ -7,7 +7,7 @@ from jsonview.decorators import json_view
 from pandas.io.json import json_normalize
 # import pandas as pd
 
-from projects.models import Scenario
+from projects.models import Scenario, Asset
 
 
 @login_required
