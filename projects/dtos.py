@@ -1,7 +1,8 @@
 import json
 from typing import List
-
+from django.db.models import Q
 from numpy.core import long
+from datetime import date, datetime, time
 
 from projects.models import *
 
@@ -36,10 +37,10 @@ class EconomicDataDto:
 
 
 class SimulationSettingsDto:
-    def __init__(self, start_date: long, end_date: long, periods: int, evaluated_period: ValueTypeDto):
+    def __init__(self, start_date: float, time_step: int, evaluated_period: ValueTypeDto):
         self.start_date = start_date
-        self.end_date = end_date
-        self.periods = periods
+        # self.end_date = end_date
+        self.time_step = time_step
         self.evaluated_period = evaluated_period
 
 
@@ -58,7 +59,7 @@ class AssetDto:
                  installed_capacity: ValueTypeDto, lifetime: ValueTypeDto, maximum_capacity: ValueTypeDto,
                  energy_price: ValueTypeDto, feedin_tariff: ValueTypeDto, optimize_capacity: ValueTypeDto,
                  peak_demand_pricing: ValueTypeDto, peak_demand_pricing_period: ValueTypeDto,
-                 renewable_share: ValueTypeDto, specific_costs: ValueTypeDto, specific_costs_om: ValueTypeDto,
+                 renewable_share: ValueTypeDto,  renewable_asset: ValueTypeDto, specific_costs: ValueTypeDto, specific_costs_om: ValueTypeDto,
                  input_timeseries: TimeseriesDataDto, ):
         self.asset_type = asset_type
         self.label = label
@@ -84,6 +85,7 @@ class AssetDto:
         self.peak_demand_pricing = peak_demand_pricing
         self.peak_demand_pricing_period = peak_demand_pricing_period
         self.renewable_share = renewable_share
+        self.renewable_asset = renewable_asset
         self.specific_costs = specific_costs
         self.specific_costs_om = specific_costs_om
         self.input_timeseries = input_timeseries
@@ -104,8 +106,9 @@ class EssDto:
 
 
 class BusDto:
-    def __init__(self, name: str, assets: List[AssetDto]):
-        self.name = name
+    def __init__(self, label: str, energy_vector: str, assets: List[AssetDto]):
+        self.label = label
+        self.energy_vector = energy_vector
         self.assets = assets
 
 
@@ -128,15 +131,16 @@ class MVSRequestDto:
 # Function to serialize scenario topology models to JSON
 def convert_to_dto(scenario: Scenario):
     # Retrieve models
-    # scenario = Scenario.objects.get(pk=scenarioId)
     project = Project.objects.get(scenario=scenario)
     economic_data = EconomicData.objects.get(project=project)
-    ess_list = ESS.objects.filter(scenario=scenario)
-    asset_list = Asset.objects.filter(scenario=scenario)
-    bus_list = Bus.objects.filter(scenario=scenario)
+    ess_list = Asset.objects.filter(Q(scenario=scenario), Q(asset_type__asset_type='ess'))
+    # Exclude ESS related assets
+    asset_list = Asset.objects.filter(Q(scenario=scenario)).exclude(
+        Q(asset_type__asset_type='ess') | Q(parent_asset__asset_type__asset_type='ess'))
+    bus_list = Bus.objects.filter(scenario=scenario).exclude(
+        Q(connectionlink__asset__parent_asset__asset_type__asset_type='ess'))
 
     # Create  dto objects
-
     project_data_dto = ProjectDataDto(project.id,
                                       project.name,
                                       scenario.id,
@@ -152,18 +156,21 @@ def convert_to_dto(scenario: Scenario):
                                         to_value_type(economic_data, 'tax'),
                                         to_value_type(economic_data, 'crf'), )
 
+    simulation_settings = SimulationSettingsDto(datetime.combine(scenario.start_date, time()).timestamp(),
+                                                scenario.time_step,
+                                                to_value_type(scenario, 'evaluated_period'))
+
     # map_to_dto(economic_data, economic_data_dto)
 
     # Initialize asset lists depending on asset category
     energy_providers = []
     energy_production = []
     energy_consumption = []
-    # energy_storage = []
+    energy_storage = []
     energy_conversion = []
 
-    ess_dto_list = []
-
     bus_dto_list = []
+
     # Iterate over ess_assets
     for ess in ess_list:
         # Find all connections to ess
@@ -175,11 +182,11 @@ def convert_to_dto(scenario: Scenario):
 
         ess_sub_assets = {}
 
-        for asset in [ess.charging_power, ess.discharging_power, ess.capacity]:
-            asset_dto = AssetDto(asset.asset_type.asset_category,
+        for asset in Asset.objects.filter(parent_asset=ess):
+            asset_dto = AssetDto(asset.asset_type.asset_type,
                                  asset.name,
-                                 asset.asset_type.mvs_type,
-                                 asset.asset_type.energy_vector,
+                                 None,
+                                 None,
                                  None,
                                  None,
                                  asset.dispatchable,
@@ -200,14 +207,15 @@ def convert_to_dto(scenario: Scenario):
                                  to_value_type(asset, 'peak_demand_pricing'),
                                  to_value_type(asset, 'peak_demand_pricing_period'),
                                  to_value_type(asset, 'renewable_share'),
+                                 to_value_type(asset, 'renewable_asset'),
                                  to_value_type(asset, 'capex_var'),
                                  to_value_type(asset, 'opex_fix'),
                                  to_timeseries_data(asset, 'input_timeseries')
                                  )
 
-            ess_sub_assets.update({asset.asset_type.asset_type: asset})
+            ess_sub_assets.update({asset.asset_type.asset_type: asset_dto})
 
-        ess_dto = EssDto(ess.asset_type.asset_category,
+        ess_dto = EssDto(ess.asset_type.asset_type,
                          ess.name,
                          ess.asset_type.mvs_type,
                          ess.asset_type.energy_vector,
@@ -217,51 +225,51 @@ def convert_to_dto(scenario: Scenario):
                          ess_sub_assets['discharging_power'],
                          ess_sub_assets['capacity'], )
 
-        ess_dto_list.append(ess_dto)
+        energy_storage.append(ess_dto)
 
     # Iterate over assets
     for asset in asset_list:
-        if (asset.asset_type.asset_type not in ['charging_power', 'discharging_power','capacity']):
-            # Find all connections to asset
-            input_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
-            output_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
+        # Find all connections to asset
+        input_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='B2A').first()
+        output_connection = ConnectionLink.objects.filter(asset=asset, flow_direction='A2B').first()
 
-            input_bus_name = input_connection.bus.name if input_connection is not None else None
-            output_bus_name = output_connection.bus.name if output_connection is not None else None
+        input_bus_name = input_connection.bus.name if input_connection is not None else None
+        output_bus_name = output_connection.bus.name if output_connection is not None else None
 
-            asset_dto = AssetDto(asset.asset_type.asset_category,
-                                 asset.name,
-                                 asset.asset_type.mvs_type,
-                                 asset.asset_type.energy_vector,
-                                 input_bus_name,
-                                 output_bus_name,
-                                 asset.dispatchable,
-                                 to_value_type(asset, 'age_installed'),
-                                 to_value_type(asset, 'crate'),
-                                 to_value_type(asset, 'soc_initial'),
-                                 to_value_type(asset, 'soc_max'),
-                                 to_value_type(asset, 'soc_min'),
-                                 to_value_type(asset, 'capex_fix'),
-                                 to_value_type(asset, 'opex_var'),
-                                 to_value_type(asset, 'efficiency'),
-                                 to_value_type(asset, 'installed_capacity'),
-                                 to_value_type(asset, 'lifetime'),
-                                 to_value_type(asset, 'maximum_capacity'),
-                                 to_value_type(asset, 'energy_price'),
-                                 to_value_type(asset, 'feedin_tariff'),
-                                 to_value_type(asset, 'optimize_cap'),
-                                 to_value_type(asset, 'peak_demand_pricing'),
-                                 to_value_type(asset, 'peak_demand_pricing_period'),
-                                 to_value_type(asset, 'renewable_share'),
-                                 to_value_type(asset, 'capex_var'),
-                                 to_value_type(asset, 'opex_fix'),
-                                 to_timeseries_data(asset, 'input_timeseries')
-                                 )
+        asset_dto = AssetDto(asset.asset_type.asset_type,
+                             asset.name,
+                             asset.asset_type.mvs_type,
+                             asset.asset_type.energy_vector,
+                             input_bus_name,
+                             output_bus_name,
+                             asset.dispatchable,
+                             to_value_type(asset, 'age_installed'),
+                             to_value_type(asset, 'crate'),
+                             to_value_type(asset, 'soc_initial'),
+                             to_value_type(asset, 'soc_max'),
+                             to_value_type(asset, 'soc_min'),
+                             to_value_type(asset, 'capex_fix'),
+                             to_value_type(asset, 'opex_var'),
+                             to_value_type(asset, 'efficiency'),
+                             to_value_type(asset, 'installed_capacity'),
+                             to_value_type(asset, 'lifetime'),
+                             to_value_type(asset, 'maximum_capacity'),
+                             to_value_type(asset, 'energy_price'),
+                             to_value_type(asset, 'feedin_tariff'),
+                             to_value_type(asset, 'optimize_cap'),
+                             to_value_type(asset, 'peak_demand_pricing'),
+                             to_value_type(asset, 'peak_demand_pricing_period'),
+                             to_value_type(asset, 'renewable_share'),
+                             to_value_type(asset, 'renewable_asset'),
+                             to_value_type(asset, 'capex_var'),
+                             to_value_type(asset, 'opex_fix'),
+                             to_timeseries_data(asset, 'input_timeseries')
+                             )
 
         # map_to_dto(asset, asset_dto)
 
         # Get category of asset and append to appropriate category
-        if asset.asset_type.asset_category == 'energy_providers':
+        if asset.asset_type.asset_category == 'energy_provider':
             energy_providers.append(asset_dto)
         elif asset.asset_type.asset_category == 'energy_production':
             energy_production.append(asset_dto)
@@ -269,10 +277,10 @@ def convert_to_dto(scenario: Scenario):
             energy_consumption.append(asset_dto)
         elif asset.asset_type.asset_category == 'energy_conversion':
             energy_conversion.append(asset_dto)
-        elif asset.asset_type.asset_category == 'energy_storage':
-            energy_storage = ess_dto_list
+        # elif asset.asset_type.asset_category == 'energy_storage':
+        #     energy_storage.append(asset_dto)
 
-        # Iterate over busses
+    # Iterate over busses
     for bus in bus_list:
         # Find all connections with bus
         connections_list = ConnectionLink.objects.filter(bus=bus)
@@ -280,13 +288,19 @@ def convert_to_dto(scenario: Scenario):
         # Find all assets associated with the connections
         bus_asset_list = list(set([connection.asset.name for connection in connections_list]))
 
-        bus_dto = BusDto(bus.name, bus_asset_list)
+        bus_dto = BusDto(bus.name, bus.type, bus_asset_list)
 
         bus_dto_list.append(bus_dto)
 
-
-    mvs_request_dto = MVSRequestDto(project_data_dto, economic_data_dto, None, energy_providers, energy_consumption,
-                                    energy_conversion, energy_production, energy_storage, bus_dto_list)
+    mvs_request_dto = MVSRequestDto(project_data_dto,
+                                    economic_data_dto,
+                                    simulation_settings,
+                                    energy_providers,
+                                    energy_consumption,
+                                    energy_conversion,
+                                    energy_production,
+                                    energy_storage,
+                                    bus_dto_list)
 
     return mvs_request_dto
 

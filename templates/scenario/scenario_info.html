@@ -23,11 +23,9 @@
                         <br>
 
                         <div class="panel-body">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="form-group" style="width:135%;">
+                            <form action="{% url 'scenario_update' scenario_id %}" class="uniForm" method="post">
                                     {% crispy scenario_form %}
-                                </div>
+
 
                                 <div class="row">
                                     <div class="col-sm-4"></div>
@@ -42,13 +40,7 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
-
-    <iframe id="topoFrame" src="{% url 'new_assets_topology' scenario_id %}"
-            style="width: 100%; height: 100vh; display: none"></iframe>
+    <iframe id="topoFrame" src="{% url 'new_assets_topology' scenario_id %}" style="width: 100%; height: 100vh; display: none"></iframe>
     <div id="destFrame"></div>
 
 {% endblock content %}

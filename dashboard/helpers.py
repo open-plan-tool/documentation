@@ -14,3 +14,5 @@ class EconomicEnums:
     costs_upfront_in_year_zero = 2
     annuity_om = 3
     levelized_cost_of_energy_of_asset = 4
+
+
