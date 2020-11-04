@@ -926,18 +926,16 @@ label[for="id_email"] {
 }
 
 #accord {
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
 
     font-size: 20px;
-    color: #1b1e21;
+    color: #E5B142;
     position: relative;
     margin-left: 20px;
     cursor: pointer;
-    font-weight: 610;
+    font-weight: 700;
+    text-shadow: 1px 1px 0px #65C8C9;
 }
 
-.wrapper {
-
-}
