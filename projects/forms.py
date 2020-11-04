@@ -122,9 +122,7 @@ class ScenarioUpdateForm(ModelForm):
                 Column('opex_fix', css_class='form-group col-xs-2'),
                 Column('opex_var', css_class='form-group col-xs-3'),
                 css_class='form-row row'),
-            ButtonHolder(
-                Submit('submit', 'Update', css_class='button white')
-            )
+
         )
 
 
