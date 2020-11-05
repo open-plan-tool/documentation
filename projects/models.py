@@ -119,9 +119,9 @@ class EconomicData(models.Model):
     duration = models.IntegerField()
     currency = models.CharField(max_length=3, choices=CURRENCY)
     discount = models.FloatField()
-    annuity_factor = models.FloatField()
+    # annuity_factor = models.FloatField()
     tax = models.FloatField()
-    crf = models.FloatField()
+    # crf = models.FloatField()
 
 
 class Project(models.Model):

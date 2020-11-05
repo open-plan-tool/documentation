@@ -1,4 +1,7 @@
 import json
+import random
+from random import randrange, randint
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
@@ -133,6 +136,8 @@ def scenario_economic_results(request, scen_id):
     # df = pd.DataFrame(cost_matrix_cols["data"], index=cost_matrix_cols["index"], columns=cost_matrix_cols["columns"])
     results = list()
 
+    """
+    # non-dummy data
     results_json = [
         {
             'values': dict_values['kpi']['cost_matrix']["data"][i][1:4],
@@ -141,6 +146,22 @@ def scenario_economic_results(request, scen_id):
             'title': dict_values['kpi']['cost_matrix']["data"][i][0]
         }
         for i in [3, 8, 10]
+    ]
+    """
+
+    """
+    # dummy data
+    """
+    dummy_title_list = ["Annuity Costs", "Upfront Investment Costs", "Operation and Maintenance Costs"]
+    dummy_asset_list = ["PV Plant", "DSO Consumption Source", "Backup Diesel Generator", "Wind Plant", "Electricity Grid Consumption"]
+    results_json = [
+        {
+            'values': [randint(30, 70) for j in range(4)],
+            'labels': random.choices(dummy_asset_list, k=3),
+            'type': 'pie',
+            'title': dummy_title_list[i]
+        }
+        for i in range(3)
     ]
 
     return JsonResponse(results_json, status=200, content_type='application/json', safe=False)

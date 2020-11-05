@@ -26,14 +26,14 @@ class ValueTypeDto:
 
 
 class EconomicDataDto:
-    def __init__(self, currency: str, project_duration: ValueTypeDto, annuity_factor: ValueTypeDto,
-                 discount_factor: ValueTypeDto, tax: ValueTypeDto, crf: ValueTypeDto):
+    def __init__(self, currency: str, project_duration: ValueTypeDto,
+                 discount_factor: ValueTypeDto, tax: ValueTypeDto):
         self.currency = currency
         self.project_duration = project_duration
-        self.annuity_factor = annuity_factor
+        # self.annuity_factor = annuity_factor
         self.discount_factor = discount_factor
         self.tax = tax
-        self.crf = crf
+        # self.crf = crf
 
 
 class SimulationSettingsDto:
@@ -151,10 +151,11 @@ def convert_to_dto(scenario: Scenario):
 
     economic_data_dto = EconomicDataDto(economic_data.currency,
                                         to_value_type(economic_data, 'duration'),
-                                        to_value_type(economic_data, 'annuity_factor'),
+                                        # to_value_type(economic_data, 'annuity_factor'),
                                         to_value_type(economic_data, 'discount'),
                                         to_value_type(economic_data, 'tax'),
-                                        to_value_type(economic_data, 'crf'), )
+                                        # to_value_type(economic_data, 'crf'),
+                                        )
 
     simulation_settings = SimulationSettingsDto(datetime.combine(scenario.start_date, time()).timestamp(),
                                                 scenario.time_step,

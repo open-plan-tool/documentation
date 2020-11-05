@@ -47,33 +47,27 @@
                                                 <br/>
                                                 <div class="row">
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-3 mb-0">
+                                                        <div class="form-group col-md-4 mb-0">
                                                             {{ project_form.latitude|as_crispy_field }}
                                                         </div>
-                                                        <div class="form-group col-md-3 mb-0">
+                                                        <div class="form-group col-md-4 mb-0">
                                                             {{ project_form.longitude|as_crispy_field }}
                                                         </div>
-                                                        <div class="form-group col-md-3 mb-0">
+                                                        <div class="form-group col-md-4 mb-0">
                                                             {{ economic_data_form.duration|as_crispy_field }}
-                                                        </div>
-                                                        <div class="form-group col-md-3 mb-0">
-                                                            {{ economic_data_form.currency|as_crispy_field }}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-3 mb-0">
+                                                        <div class="form-group col-md-4 mb-0">
+                                                            {{ economic_data_form.currency|as_crispy_field }}
+                                                        </div>
+                                                        <div class="form-group col-md-4 mb-0">
                                                             {{ economic_data_form.discount|as_crispy_field }}
                                                         </div>
-                                                        <div class="form-group col-md-3 mb-0">
+                                                        <div class="form-group col-md-4 mb-0">
                                                             {{ economic_data_form.tax|as_crispy_field }}
-                                                        </div>
-                                                        <div class="form-group col-md-3 mb-0">
-                                                            {{ economic_data_form.annuity_factor|as_crispy_field }}
-                                                        </div>
-                                                        <div class="form-group col-md-3 mb-0">
-                                                            {{ economic_data_form.crf|as_crispy_field }}
                                                         </div>
                                                     </div>
                                                 </div>
