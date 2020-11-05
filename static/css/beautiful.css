@@ -1,7 +1,7 @@
 :root {
     --border-color: #f4d9a4;
     --background-color: #ffffff;
-   --background-box-title: #f7f7f7;
+    --background-box-title: #f7f7f7;
 }
 
 html, body {
@@ -169,8 +169,8 @@ header a {
     top: 40px;
     background: var(--background-color);
     background-size: 25px 25px;
-   /* background-image: linear-gradient(to right, #f1f1f1 1px, transparent 1px),
-    linear-gradient(to bottom, #f1f1f1 1px, transparent 1px); */
+    /* background-image: linear-gradient(to right, #f1f1f1 1px, transparent 1px),
+     linear-gradient(to bottom, #f1f1f1 1px, transparent 1px); */
 }
 
 @media only screen and (max-width: 768px) {
@@ -193,8 +193,8 @@ header a {
 .drawflow .drawflow-node {
     background: var(--background-color);
     border: 1px solid var(--border-color);
-   /* -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
-    box-shadow: 0 2px 15px 2px var(--border-color); */
+    /* -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
+     box-shadow: 0 2px 15px 2px var(--border-color); */
     padding: 0px;
     width: 200px;
 }
@@ -217,6 +217,7 @@ header a {
     width: 15px;
     border: 2px solid var(--border-color);
 }
+
 
 .drawflow .drawflow-node .input:hover, .drawflow .drawflow-node .output:hover {
     background: #a9d9fe;
@@ -242,7 +243,7 @@ header a {
 .drawflow-delete {
     border: 2px solid #e63946;
     background: #fcd5ce;
-    color: #e63946  ;
+    color: #e63946;
     -webkit-box-shadow: 0 2px 20px 2px #e63946;
     box-shadow: 0 1px 10px 1px #e63946;
 }
@@ -257,14 +258,14 @@ header a {
 
     text-align: left;
     position: inherit;
-    height: 100%;
-    width: 100% !important;
-    right: 0;
-    top: 0;
-    margin-top:-2em;
-margin-left: -1em;
+    height: 150% !important;
+    width: 120% !important;
+    /* right: 0;
+     top: 0;*/
+    margin-top: -1.3em;
+    margin-left: -1em;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     color: #494f54;
 
     font-weight: 700;
@@ -394,6 +395,8 @@ margin-left: -1em;
 
 .drawflow-node.transformer_station_in .input, .drawflow-node.transformer_station_out .input, .drawflow-node.storage_charge_controller_in .input, .drawflow-node.storage_charge_controller_out .input, .drawflow-node.solar_inverter .input {
     background: #4f772d;
+
+
 }
 
 .drawflow-node.transformer_station_in .output, .drawflow-node.transformer_station_out .output, .drawflow-node.storage_charge_controller_in .output, .drawflow-node.storage_charge_controller_out .output, .drawflow-node.solar_inverter .output {
@@ -528,6 +531,7 @@ margin-left: -1em;
     position: absolute;
     left: 0px;
 }
+
 
 
 
