@@ -98,17 +98,23 @@ class ScenarioCreateForm(ModelForm):
         model = Scenario
         exclude = ['id', 'project']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Enter your comments'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Name of Scenario'}),
             'start_date': forms.DateInput(format='%d/%m/%Y',
-                                          attrs={'class': 'myDateClass', 'placeholder': 'Select a date'}),
-            'time_step': forms.NumberInput(attrs={'placeholder': 'time step...'}),
-            'capex_fix': forms.NumberInput(attrs={'placeholder': 'capital fix cost'}),
+                                          attrs={'class': 'myDateClass', 'placeholder': 'Select a start date'}),
+            'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes'}),
+            'evaluated_period': forms.NumberInput(attrs={'placeholder': 'eg. 10 days'}),
+            'capex_fix': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'capex_var': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'opex_fix': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'opex_var': forms.NumberInput(attrs={'placeholder': 'Currency'}),
         }
         labels = {
-            "name": "Example Label",
-            "time_step": "Time Step",
+            "name": "Name",
+            'evaluated_period': "Evaluated Period (days)",
+            "time_step": "Time Step (minutes)",
             "capex_fix": "Fixed Capital Expenses",
-            "start_date": "Date",
+            "start_date": "Start Date",
+
         }
 
 

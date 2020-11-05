@@ -16,71 +16,71 @@
             <h3 id="accord">Energy Production</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso_consumption">
-                    <i class="fas fa-plug"></i><span> DSO Consumption </span>
+                    <i class="fas fa-plug"></i><span id="accrdrag"> DSO Consumption </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="pv_plant">
-                    <i class="fas fa-solar-panel"></i><span> PV Plant </span>
+                    <i class="fas fa-solar-panel"></i><span id="accrdrag"> PV Plant </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="wind_plant">
-                    <i class="fas fa-wind"></i><span> Wind Plant </span>
+                    <i class="fas fa-wind"></i><span id="accrdrag"> Wind Plant </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso">
-                    <i class="fas fa-grip-lines"></i><span> System DSO </span>
+                    <i class="fas fa-grip-lines"></i><span id="accrdrag"> System DSO </span>
                 </li>
             </ul>
             <h3 id="accord">Energy Conversion</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_in">
-                    <i class="fas fa-arrow-left"></i><span> Transformer Station In </span>
+                    <i class="fas fa-arrow-left"></i><span id="accrdrag"> Transformer Station In </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_out">
-                    <i class="fas fa-arrow-right"></i><span> Transformer Station Out </span>
+                    <i class="fas fa-arrow-right"></i><span id="accrdrag"> Transformer Station Out </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_charge_controller_in">
-                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-left"></i><span> Storage Charge Controller In </span>
+                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-left"></i><span id="accrdrag"> Storage Charge Controller In </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_charge_controller_out">
-                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-right"></i><span> Storage Charge Controller Out </span>
+                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-right"></i><span id="accrdrag"> Storage Charge Controller Out </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="solar_inverter">
-                    <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span> Solar Inverter </span>
+                    <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span id="accrdrag"> Solar Inverter </span>
                 </li>
             </ul>
             <h3 id="accord">Energy Storage</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="charging_power">
-                    <i class="fas fa-battery-three-quarters"></i><span> Charging Power </span>
+                    <i class="fas fa-battery-three-quarters"></i><span id="accrdrag"> Charging Power </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="discharging_power">
-                    <i class="fas fa-battery-quarter"></i><span> Discharging Power </span>
+                    <i class="fas fa-battery-quarter"></i><span id="accrdrag"> Discharging Power </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="capacity">
-                    <i class="fas fa-battery-full"></i><span> Capacity </span>
+                    <i class="fas fa-battery-full"></i><span id="accrdrag"> Capacity </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="ess">
-                    <i class="fas fa-battery-empty"></i><span> ESS </span>
+                    <i class="fas fa-battery-empty"></i><span id="accrdrag"> ESS </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_unit">
-                    <i class="fas fa-car-battery"></i><span> Storage </span>
+                    <i class="fas fa-car-battery"></i><span id="accrdrag"> Storage </span>
                 </li>
             </ul>
             <h3 id="accord">Energy Consumption</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="electricity_excess">
-                    <i class="fas fa-fire"></i><span> Electricity Excess </span>
+                    <i class="fas fa-fire"></i><span id="accrdrag"> Electricity Excess </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso_feedin">
-                    <i class="fas fa-plug"></i><span> DSO Feedin </span>
+                    <i class="fas fa-plug"></i><span id="accrdrag"> DSO Feedin </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="demand">
-                    <i class="fas fa-lightbulb"></i><span> Demand </span>
+                    <i class="fas fa-lightbulb"></i><span id="accrdrag"> Demand </span>
                 </li>
             </ul>
             <h3 id="accord">Energy Bus</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li>
                     <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
-                        <i class="fas fa-grip-lines"></i><span> Bus </span>
+                        <i class="fas fa-grip-lines"></i><span id="accrdrag"> Bus </span>
                     </div>
                 </li>
             </ul>

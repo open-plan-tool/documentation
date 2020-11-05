@@ -939,3 +939,20 @@ label[for="id_email"] {
     text-shadow: 1px 1px 0px #65C8C9;
 }
 
+#accrdrag{
+    letter-spacing: 1.1px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 15px;
+    color: #494f54;
+
+    font-weight: 700;
+}
+
+.drawflow .connection .main-path {
+    stroke: #a9d9fe !important;
+}
+
+.drawflow .connection .main-path:hover {
+     stroke: #557ca1 !important;
+
+}

@@ -1,7 +1,7 @@
 :root {
-    --border-color: #cacaca;
+    --border-color: #f4d9a4;
     --background-color: #ffffff;
-    --background-box-title: #f7f7f7;
+   --background-box-title: #f7f7f7;
 }
 
 html, body {
@@ -40,6 +40,7 @@ header a {
     height: 100%;
     border-right: 1px solid var(--border-color);
     background-color: #fffffd;
+
 }
 
 .drag-drawflow {
@@ -72,6 +73,7 @@ header a {
 .menu ul li {
     display: inline-block;
     margin-left: 10px;
+    border-bottom: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
     padding-right: 10px;
     line-height: 40px;
@@ -167,8 +169,8 @@ header a {
     top: 40px;
     background: var(--background-color);
     background-size: 25px 25px;
-    background-image: linear-gradient(to right, #f1f1f1 1px, transparent 1px),
-    linear-gradient(to bottom, #f1f1f1 1px, transparent 1px);
+   /* background-image: linear-gradient(to right, #f1f1f1 1px, transparent 1px),
+    linear-gradient(to bottom, #f1f1f1 1px, transparent 1px); */
 }
 
 @media only screen and (max-width: 768px) {
@@ -199,9 +201,9 @@ header a {
 
 .drawflow .drawflow-node.selected {
     background: white;
-    border: 1px solid #4ea9ff;
-    -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
-    box-shadow: 0 2px 20px 2px #4ea9ff;
+    border: 1px solid F4D9A4;
+    -webkit-box-shadow: 0 2px 20px 2px #F4D9A4;
+    box-shadow: 0 2px 20px 2px #F4D9A4;
 }
 
 
@@ -217,7 +219,7 @@ header a {
 }
 
 .drawflow .drawflow-node .input:hover, .drawflow .drawflow-node .output:hover {
-    background: #4ea9ff;
+    background: #a9d9fe;
 }
 
 .drawflow .drawflow-node .output {
@@ -252,14 +254,20 @@ header a {
 }
 
 .drawflow-node .box {
-    font-size: 12px;
-    color: #2222ff;
-    text-align: center;
+
+    text-align: left;
     position: inherit;
     height: 100%;
     width: 100% !important;
     right: 0;
     top: 0;
+margin-left: -19px;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 15px;
+    color: #494f54;
+
+    font-weight: 700;
+
 }
 
 
@@ -340,13 +348,14 @@ header a {
 
 /* <editor-fold desc="Source Region"> */
 .drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
-    border-top: 50px solid #00e600;
+    border-top: 50px solid #abff4f;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
     height: 0;
     width: 125px;
     background: transparent;
     text-align: left;
+    border-radius: 5px;
 }
 
 .drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
@@ -355,14 +364,14 @@ header a {
 }
 
 .drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
-    background: red;
+    background: #9e2a2b;
     position: absolute;
     top: -5px;
-    left: 50%;
+    left: 40%;
 }
 
 .drawflow-node.dso.selected, .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected {
-    border-top: 50px solid #00ae10;
+    border-top: 50px solid #00b300;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
     height: 0;
