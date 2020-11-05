@@ -50,9 +50,9 @@ class ProjectCreateForm(forms.Form):
 
     country = forms.ChoiceField(label='Country', choices=COUNTRY)
     longitude = forms.FloatField(label='Location, longitude',
-                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. -77.0364'}))
+                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. -77.0364', 'readonly': ''}))
     latitude = forms.FloatField(label='Location, latitude',
-                                widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951'}))
+                                widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951', 'readonly': ''}))
     duration = forms.IntegerField(label='Project Duration (years)',
                                   widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 '}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
@@ -60,10 +60,8 @@ class ProjectCreateForm(forms.Form):
                                   widget=forms.NumberInput(attrs={'placeholder': 'eg. 10%'}))
     tax = forms.IntegerField(label='Tax (%)',
                              widget=forms.NumberInput(attrs={'placeholder': 'eg. 28%'}))
-    annuity_factor = forms.FloatField(label='Annuity Factor',
-                                      widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
-    crf = forms.FloatField(label='CRF',
-                           widget=forms.NumberInput(attrs={'placeholder': 'CRF...'}))
+    #annuity_factor = forms.FloatField(label='Annuity Factor', widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
+    #crf = forms.FloatField(label='CRF', widget=forms.NumberInput(attrs={'placeholder': 'CRF...'}))
 
     electricity = forms.BooleanField(label='Electricity', initial=False, required=False)
     heat = forms.BooleanField(label='Heat', initial=False, required=False)

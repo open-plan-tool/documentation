@@ -67,16 +67,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-row" style="margin-left: -15px;">
-                                                    <div class="form-group col-md-5 mb-0">
-                                                        {{ form.annuity_factor|as_crispy_field }}
-                                                    </div>
-                                                    <div class="form-group col-md-5 mb-0">
-                                                        {{ form.crf|as_crispy_field }}
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                            <!-- <div class="container" style="margin-left: -30px;"> -->
 
@@ -84,8 +74,8 @@
                                                     <div class="col-sm-2">
                                                         {{ form.electricity| as_crispy_field }}
                                                         {{ form.heat| as_crispy_field }}
-                                                        <!-- {{ form.gas| as_crispy_field }} -->
-                                              <!--      </div>
+                                                        {{ form.gas| as_crispy_field }}
+                                                    </div>
                                                     <div class="col-sm-2">
                                                         {{ form.h2| as_crispy_field }}
                                                         {{ form.mobility| as_crispy_field }}
