@@ -311,12 +311,29 @@
     const nodeToDbId = {'bus':{},'asset':{}}; // a dictionary to keep the mapping between node and database ids.
 
     editor.on('nodeCreated', function (nodeID){
+        // region add new node to mapping dictionary
         const nodeType = (editor.drawflow.drawflow.Home.data[`${nodeID}`].name === "bus") ? "bus" : "asset";
         const dbId = editor.drawflow.drawflow.Home.data[`${nodeID}`]['data']['databaseId'];
         if (nodeType === "bus")
             nodeToDbId['bus'][`${dbId}`] = nodeID;
-        else
+        else {
             nodeToDbId['asset'][`${dbId}`] = nodeID;
+        }
+        // endregion
+        // region bind installed_capacity to age_installed Changes
+        const nodeIdInstalledCapInput = document.getElementById(`node-${nodeID}`).querySelector("input[name='installed_capacity']");
+        if (nodeIdInstalledCapInput)
+            nodeIdInstalledCapInput.addEventListener('change' ,function(e){
+                const ageInstalledElement = e.target.closest("#FormGroup").querySelector("input[name='age_installed']");
+                if (e.target.value === '0') {
+                    ageInstalledElement.value = 0;
+                    ageInstalledElement.readOnly = true;
+                }
+                else {
+                    ageInstalledElement.readOnly = false;
+                }
+            });
+        // endregion
     })
 
     async function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs = 1, nodeData = {}) {
@@ -329,24 +346,27 @@
 
     // region Show Modal either by double clicking the box or the drawflow node.
     var transform = '';
-    function openModal(box) {
-        box.closest(".drawflow-node").style.zIndex = "9999";
-        box.children[0].style.display = "block";
-        transform = editor.precanvas.style.transform;
-        editor.precanvas.style.transform = '';
-        editor.precanvas.style.left = editor.canvas_x +'px';
-        editor.precanvas.style.top = editor.canvas_y +'px';
-        editor.editor_mode = "fixed";
-    }
-
-    const showpopup = (e) => openModal(e.target);
 
     document.addEventListener("dblclick", function (e) {
+        const openModal = function (box) {
+            box.closest(".drawflow-node").style.zIndex = "9999";
+            box.children[0].style.display = "block";
+            transform = editor.precanvas.style.transform;
+            editor.precanvas.style.transform = '';
+            editor.precanvas.style.left = editor.canvas_x +'px';
+            editor.precanvas.style.top = editor.canvas_y +'px';
+            editor.editor_mode = "fixed";
+        }
+
         const NodeList = document.getElementsByClassName("drawflow-node");
         for (const node of NodeList) {
             if (e.target === node) {
                 const box = e.target.querySelector('.drawflow-node .box');
                 openModal(box);
+            }
+            // do the same if .box is clicked
+            else if (e.target === node.querySelector('.drawflow-node .box')) {
+                openModal(e.target);
             }
         }
     });
@@ -390,17 +410,17 @@
         async function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
             if (nodeName === "bus"){
                 const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-                let html = `<div class="box" ondblclick="showpopup(event)">${shownName}
+                let html = `<div class="box">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-                    <h2 style="color: grey; text-align: left">${nodeName} Data</h2>
+                    <h2 style="color: grey; text-align: left">${nodeName} properties</h2>
                     <div>
                         <label for="name">Name: </label>
                         <input id="name" type="text" df-name>
                     </div>
                     <div>
-                        <label for="bustype">Bus Type: </label>
+                        <label for="bustype">Energy carrier: </label>
                         <select id="bustype" df-bustype>
                             <option value="" selected disabled hidden>Choose Type...</option>
                             <option value="electricity">Electricity Bus</option>
@@ -432,18 +452,20 @@
             const formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
 
             const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-            const source_html = `<div class="box" ondblclick="showpopup(event)">${shownName}
+            const source_html = `<div class="box">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-                    <h2 style="color: grey; text-align: left">${nodeName.replace("_"," ")} Data</h2>
+                    <h2 style="color: grey; text-align: left">${nodeName.replace("_"," ")} properties</h2>
                     <div>${formData}</div>
                   </div>
                 </div>
             </div>`;
+
             return {"editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html),
                         "specificNodeType":nodeName};
         }
+
     </script>
 
     <script defer>
