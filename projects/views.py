@@ -69,8 +69,8 @@ def project_create(request):
             economic_data.currency = form.cleaned_data['currency']
             economic_data.discount = form.cleaned_data['discount']
             economic_data.tax = form.cleaned_data['tax']
-            economic_data.annuity_factor = form.cleaned_data['annuity_factor']
-            economic_data.crf = form.cleaned_data['crf']
+            # economic_data.annuity_factor = form.cleaned_data['annuity_factor']
+            # economic_data.crf = form.cleaned_data['crf']
 
             economic_data.save()
 
@@ -362,7 +362,6 @@ def scenario_delete(request, scen_id):
 @login_required
 @require_http_methods(["GET", "POST"])
 def start_scenario_simulation(request, scen_id):
-    print(scen_id)
     if request.method == 'POST' and request.is_ajax():
         sent_successfully = True
         # TODO!! send the scenario JSON to MVS

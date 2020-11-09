@@ -7,7 +7,7 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from jsonview.decorators import json_view
-from pandas.io.json import json_normalize
+# from pandas.io.json import json_normalize
 # import pandas as pd
 
 from projects.models import Scenario, Asset
