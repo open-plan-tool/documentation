@@ -831,6 +831,20 @@ label[for="id_email"] {
     }
 }
 
+#supim{
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 50rem) {
+    .centered {
+        max-width: 100%;
+        text-align: left;
+
+    }
+}
+
+
 .lala {
     height: auto !important;
     width: 100%;
