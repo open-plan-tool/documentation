@@ -186,13 +186,16 @@ input[type="checkbox"] {
 
 .loginlogo {
     width: 250px;
-    height: 250px;
+
     position: relative;
     overflow: hidden;
     display: inline;
     /* margin-left: 150px; */
     margin-top: 80px;
+    max-width: 100%;
+    height: auto;
 }
+
 
 .Elandlogin {
     text-transform: uppercase;
@@ -803,14 +806,35 @@ label[for="id_email"] {
     color: #F4D9A4;
     text-align: center;
     opacity: 0.7;
+    padding-bottom: 0vh;
 }
 
+@media (max-width: 55rem) {
+    .panel-default {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 30rem) {
+    .panel-default {
+        min-width: 140%;
+        margin-left: -3em;
+
+    }
+}
+
+@media (max-width: 45rem) {
+    .panel-default {
+        min-width: 120%;
+        margin-left: -1.5em;
+
+    }
+}
 
 .lala {
     height: auto !important;
     width: 100%;
-    position: absolute;
-
+    position: inherit;
     background-image: url("/static/images/ELA2.jpg");
     left: 0;
     right: 0;
@@ -820,7 +844,7 @@ label[for="id_email"] {
 .lala2 {
     height: auto !important;
     width: 100%;
-    position: absolute;
+    position: inherit;
     /* background: linear-gradient(to bottom, #F9EBD4 30%, #818384 70%); */
 
     background-image: url("/static/images/ELA1.jpg");
@@ -834,19 +858,20 @@ label[for="id_email"] {
 .lala1 {
     height: auto !important;
     width: 100%;
-    position: absolute;
+    position: inherit;
     /*  z-index: 1 !important;*/
 
     left: 0;
     right: 0;
     background-image: url("/static/images/ELA12.jpg");
 
+
 }
 
 .wraptextt1 {
     letter-spacing: 1.5px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    margin-left: 5px;
+    margin-left: 5rem;
     text-align: center;
     font-size: 50px;
     color: #ffffff;
@@ -858,7 +883,7 @@ label[for="id_email"] {
 .wraptextt2 {
     letter-spacing: 1.5px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    margin-left: 5px;
+    margin-left: 5rem;
     text-align: center;
     font-size: 40px;
     color: #F4D9A4;
@@ -871,7 +896,7 @@ label[for="id_email"] {
     letter-spacing: 1.5px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
-    margin-left: 5px;
+    margin-left: 5rem;
 
     font-size: 20px;
     color: #1b1e21;
@@ -939,7 +964,7 @@ label[for="id_email"] {
     text-shadow: 1px 1px 0px #65C8C9;
 }
 
-#accrdrag{
+#accrdrag {
     letter-spacing: 1.1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     font-size: 15px;
@@ -953,6 +978,26 @@ label[for="id_email"] {
 }
 
 .drawflow .connection .main-path:hover {
-     stroke: #557ca1 !important;
+    stroke: #557ca1 !important;
 
 }
+
+* {
+    box-sizing: border-box;
+}
+
+.lololo {
+    width: 100% !important;
+
+}
+
+/*kitrino back*/
+
+.wraptextt {
+    width: 90% !important;
+    margin: 0 auto !important;
+
+}
+
+/*roz back*/
+
