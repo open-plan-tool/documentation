@@ -256,14 +256,17 @@ header a {
 
 .drawflow-node .box {
 
-    text-align: left;
-    position: inherit;
+
+    position:relative;
     height: 150% !important;
     width: 120% !important;
     /* right: 0;
      top: 0;*/
+ text-align: center;
+    max-width: 120%;
     margin-top: -1.3em;
     margin-left: -1em;
+    margin-top:-3vh;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     font-size: 13px;
     color: #494f54;
@@ -290,8 +293,8 @@ header a {
 /* <editor-fold desc="region Bus Region"> */
 .drawflow-node.bus {
     background: #bcb8b1;
-    height: 150px;
-    width: 50px;
+    height: 190px;
+    width: 20px;
     border-radius: 10px;
     text-align: left;
     color: white;
@@ -358,7 +361,10 @@ header a {
     background: transparent;
     text-align: left;
     border-radius: 5px;
+
 }
+
+
 
 .drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
     background: green;
