@@ -316,29 +316,29 @@ header a {
 
 
 /* <editor-fold desc="Sink Region"> */
-.drawflow-node.demand, .drawflow-node.electricity_excess, .drawflow-node.dso_feedin {
+.drawflow-node.demand {
     border-bottom: 50px solid #62b6cb;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
-    height: 0;
+    height: 0px;
     width: 125px;
     background: transparent;
     text-align: left;
 }
 
-.drawflow-node.demand .input, .drawflow-node.electricity_excess .input, .drawflow-node.dso_feedin .input {
+.drawflow-node.demand .input{
     background: green;
     position: absolute;
     top: -10px;
     left: 45%;
 }
 
-.drawflow-node.demand .output, .drawflow-node.electricity_excess .output, .drawflow-node.dso_feedin .output {
+.drawflow-node.demand .output{
     display: none;
     background: #9e2a2b;
 }
 
-.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected {
+.drawflow-node.demand.selected{
     border-bottom: 50px solid #1b4965;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
@@ -352,7 +352,7 @@ header a {
 
 
 /* <editor-fold desc="Source Region"> */
-.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
+.drawflow-node.dso, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
     border-top: 50px solid #90a955;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
@@ -405,19 +405,19 @@ header a {
 } */
 
 
-.drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
+.drawflow-node.dso .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
     background: green;
     display: none;
 }
 
-.drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
+.drawflow-node.dso .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
     background: #9e2a2b;
     position: absolute;
     top: -5px;
     left: 40%;
 }
 
-.drawflow-node.dso.selected, .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected {
+.drawflow-node.dso.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected {
     border-top: 50px solid #4f772d;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;

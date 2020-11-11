@@ -10,7 +10,11 @@
                 <form id="CreateAssetForm" method="POST">
                     {% csrf_token %}
                     <div id="FormGroup" class="form-group">
-                        {{ form| crispy }}
+                        {% for field in form %}
+                        <div class="form-row" style="margin-left: -15px;">
+                            {{ field|as_crispy_field }}
+                        </div>
+                        {% endfor %}
                     </div>
                     <!--<button class="btn btn-success" type="submit">Save</button>-->
                 </form>
@@ -23,57 +27,3 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-<script>
-
-    var form_id = $("#CreateAssetForm");
-
-    form_id.on('submit', function (event) {
-        event.preventDefault();
-        console.log("form submitted!")  // sanity check
-    });
-
-
-    {#// AJAX for posting#}
-
-    function create_asset() {
-        $.ajax({
-            url: "{% url 'asset_create_post' %}",
-            type: "POST",
-            data: form_id.serialize(),
-            success: function (data) {
-                if (!(data['success'])) {
-                    console.log("form errors!")
-                    // Here we replace the form, for the errors to show
-                    form_id.find($("#FormGroup")).replaceWith($(data['form_html']));
-
-                } else {
-                    console.log("success!")
-                    //Remove fields to prevent accidental resubmission
-                    {% for field in form %}
-                        $('#' + '{{ field.auto_id}}').val(''); // remove the values from the inputs
-                    {% endfor %}
-                    //Show the success message
-                    $('#message-div').html("<div class='alert-success'>" +
-                        "<strong>Success: </strong>New asset was created </div>");
-                    location.reload();
-                }
-            },
-            error: function (xhr, errmsg) {
-                console.log("backend_error!")
-                //Show the error message
-                $('#message-div').html("<div class='alert-error'>" +
-                    "<strong>Success: </strong> We have encountered an error: " + errmsg + "</div>");
-            }
-        });
-    }
-
-    //Reload page when modal closes
-    $('#CreateAssetModal').on('hide.bs.modal', function () {
-        console.log("reload!")  // sanity check
-        location.reload();
-
-    });
-
-</script>

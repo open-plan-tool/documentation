@@ -85,15 +85,12 @@ VALUE_TYPE = (
 ASSET_TYPE = (
     ('', 'Choose...'),
     ('dso', 'dso'),
-    ('electricity_excess', 'electricity_excess'),
-    ('dso_feedin', 'dso_feedin'),
     ('demand', 'demand'),
     ('transformer_station_in', 'transformer_station_in'),
     ('transformer_station_out', 'transformer_station_out'),
     ('storage_charge_controller_in', 'storage_charge_controller_in'),
     ('storage_charge_controller_out', 'storage_charge_controller_out'),
     ('solar_inverter', 'solar_inverter'),
-    ('dso_consumption', 'dso_consumption'),
     ('pv_plant', 'pv_plant'),
     ('wind_plant', 'wind_plant'),
     ('charging_power', 'charging_power'),
@@ -189,14 +186,11 @@ class ValueType(models.Model):
 
 
 class Asset(TopologyNode):
-    age_installed = models.FloatField(null=True, blank=False)
-    installed_capacity = models.FloatField(null=True, blank=False)
     capex_fix = models.FloatField(null=True, blank=False)  # development_costs
     capex_var = models.FloatField(null=True, blank=False)  # specific_costs
     opex_fix = models.FloatField(null=True, blank=False)  # specific_costs_om
     opex_var = models.FloatField(null=True, blank=False)  # dispatch_price
     lifetime = models.IntegerField(null=True, blank=False)
-    optimize_cap = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES)
     input_timeseries = models.TextField(null=True, blank=False)
     crate = models.FloatField(null=True, blank=False)
     efficiency = models.FloatField(null=True, blank=False)
@@ -213,6 +207,9 @@ class Asset(TopologyNode):
     renewable_share = models.FloatField(null=True, blank=False)
     renewable_asset = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=True)
+    optimize_cap = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES)
+    installed_capacity = models.FloatField(null=True, blank=False)
+    age_installed = models.FloatField(null=True, blank=False)
 
     @property
     def fields(self):

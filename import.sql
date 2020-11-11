@@ -3,11 +3,7 @@ delete from projects_valuetype where 1=1;
 
 
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('dso','electricity', 'energy_provider', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,energy_price,feedin_tariff,peak_demand_pricing,peak_demand_pricing_period,renewable_share]' );
-insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('electricity_excess','electricity', 'energy_consumption', 'sink', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap]' );
-insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('dso_feedin','electricity', 'energy_consumption', 'sink', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap]' );
+('dso','electricity', 'energy_provider', 'source', '[name,energy_price,feedin_tariff,peak_demand_pricing,peak_demand_pricing_period,renewable_share]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('demand','electricity', 'energy_consumption', 'sink', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
@@ -20,8 +16,6 @@ insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_ty
 ('storage_charge_controller_out','electricity', 'energy_conversion', 'transformer', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('solar_inverter','electricity', 'energy_conversion', 'transformer', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]' );
-insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('dso_consumption','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,dispatchable, renewable_asset, input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('pv_plant','electricity', 'energy_production', 'source', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
