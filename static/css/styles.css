@@ -7,11 +7,11 @@ body {
 
     /* Full height */
     height: 100%;
-
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
 }
 
 /** HEADER **/
@@ -362,9 +362,9 @@ label[for="id_email"] {
 .centered {
     position: absolute;
     top: 50%;
-    left: 57%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 22px;
+    font-size: 20px;
     letter-spacing: 1px;
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     color: #ffffff;
@@ -807,6 +807,8 @@ label[for="id_email"] {
     text-align: center;
     opacity: 0.7;
     padding-bottom: 0vh;
+    bottom: 0vh !important;
+    margin-bottom: 0em;
 }
 
 @media (max-width: 55rem) {
@@ -831,7 +833,7 @@ label[for="id_email"] {
     }
 }
 
-#supim{
+#supim {
     max-width: 100%;
     height: auto;
 }
@@ -839,11 +841,16 @@ label[for="id_email"] {
 @media (max-width: 50rem) {
     .centered {
         max-width: 100%;
-        text-align: left;
+        text-align: center;
+        font-size: 17px;
 
     }
 }
 
+.container {
+    position: relative;
+    min-height: 100vh;
+}
 
 .lala {
     height: auto !important;
