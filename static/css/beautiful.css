@@ -291,21 +291,47 @@ header a {
 }
 
 /* <editor-fold desc="region Bus Region"> */
-.drawflow-node.bus {
+/*.drawflow-node.bus {
     background: #bcb8b1;
     height: 190px;
     width: 20px;
     border-radius: 10px;
     text-align: left;
     color: white;
+}*/
+
+.drawflow-node.bus {
+    background: transparent;
+    height: 10px;
+    width: 50px;
+    border: transparent;
+    text-align: left;
+    color: white;
+
+}
+
+.bus:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lalala";
+    color: transparent;
+    background: url("/static/images/power-line.png") no-repeat;
+    background-size: 100%;
+
 }
 
 .drawflow-node.bus .input {
     background: green;
+    left: -40px !important;
 }
 
 .drawflow-node.bus .output {
     background: #9e2a2b;
+    left: 60px;
 }
 
 .drawflow-node.bus.selected {
@@ -352,7 +378,7 @@ header a {
 
 
 /* <editor-fold desc="Source Region"> */
-.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
+/*.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
     border-top: 50px solid #90a955;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
@@ -361,6 +387,79 @@ header a {
     background: transparent;
     text-align: left;
     border-radius: 5px;
+
+} */
+
+.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
+
+    border-top: 50px solid transparent;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: transparent;
+    height: 0;
+    width: 125px;
+
+    text-align: left;
+    border-radius: 5px;
+
+}
+
+
+
+.drawflow-node.dso_consumption:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lala";
+    color: transparent;
+    background: url("/static/images/plug.png") no-repeat;
+    background-size: 100%;
+
+}
+
+
+.drawflow-node.dso:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lala";
+    color: transparent;
+    background: url("/static/images/plug.png") no-repeat;
+    background-size: 100%;
+
+}
+
+.drawflow-node.pv_plant:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lala";
+    color: transparent;
+    background: url("/static/images/solar-energy.png") no-repeat;
+    background-size: 100%;
+
+}
+
+.drawflow-node.wind_plant:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lala";
+    color: transparent;
+    background: url("/static/images/weather.png") no-repeat;
+    background-size: 100%;
 
 }
 
@@ -431,11 +530,88 @@ header a {
 
 
 /* <editor-fold desc="Transformer Region"> */
-.drawflow-node.transformer_station_in, .drawflow-node.transformer_station_out, .drawflow-node.storage_charge_controller_in, .drawflow-node.storage_charge_controller_out, .drawflow-node.solar_inverter {
+/*.drawflow-node.transformer_station_in, .drawflow-node.transformer_station_out, .drawflow-node.storage_charge_controller_in, .drawflow-node.storage_charge_controller_out, .drawflow-node.solar_inverter {
     height: 50px;
     width: 100px;
     background-color: #ffb84d;
     text-align: left;
+}*/
+
+.drawflow-node.transformer_station_in, .drawflow-node.transformer_station_out, .drawflow-node.storage_charge_controller_in, .drawflow-node.storage_charge_controller_out, .drawflow-node.solar_inverter {
+    height: 50px;
+    width: 100px;
+    background-color: transparent;
+    text-align: left;
+    border: transparent;
+
+}
+
+.drawflow-node.transformer_station_in:before {
+    display: inline-block;
+    width: 500px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lal";
+
+    color: transparent;
+    background: url("/static/images/tesla-coil.png") no-repeat;
+    background-size: 100%;
+
+}
+
+.drawflow-node.transformer_station_out:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lalala";
+    color: transparent;
+    background: url("/static/images/tesla-coil.png") no-repeat;
+    background-size: 100%;
+
+}
+
+.drawflow-node.storage_charge_controller_in:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lalala";
+    color: transparent;
+    background: url("/static/images/electric-station.png") no-repeat;
+    background-size: 100%;
+}
+
+.drawflow-node.storage_charge_controller_out:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -90px;
+    margin-bottom: 0em;
+    content: "lalala";
+    color: transparent;
+    background: url("/static/images/electric-station.png") no-repeat;
+    background-size: 100%;
+}
+
+.drawflow-node.solar_inverter:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -50px;
+    margin-bottom: 2em;
+    content: "lalala";
+    color: transparent;
+    background: url("/static/images/solar-panel.png") no-repeat;
+    background-size: 100%;
 }
 
 .drawflow-node.transformer_station_in .input, .drawflow-node.transformer_station_out .input, .drawflow-node.storage_charge_controller_in .input, .drawflow-node.storage_charge_controller_out .input, .drawflow-node.solar_inverter .input {
