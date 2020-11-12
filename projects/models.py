@@ -68,7 +68,6 @@ VALUE_TYPE = (
     ('input_timeseries', 'input_timeseries'),
     ('crate', 'crate'),
     ('efficiency', 'efficiency'),
-    ('self_discharge', 'self_discharge'),
     ('soc_initial', 'soc_initial'),
     ('soc_max', 'soc_max'),
     ('soc_min', 'soc_min'),
@@ -194,7 +193,6 @@ class Asset(TopologyNode):
     input_timeseries = models.TextField(null=True, blank=False)
     crate = models.FloatField(null=True, blank=False)
     efficiency = models.FloatField(null=True, blank=False)
-    self_discharge = models.FloatField(null=True, blank=False)
     soc_initial = models.FloatField(null=True, blank=False)
     soc_max = models.FloatField(null=True, blank=False)
     soc_min = models.FloatField(null=True, blank=False)
