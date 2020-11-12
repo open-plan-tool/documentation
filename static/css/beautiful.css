@@ -373,7 +373,7 @@ header a {
     content: "lal";
 
     color: transparent;
-    background: url("/static/images/tesla-coil.png") no-repeat;
+    background: url("/static/images/plug.png") no-repeat;
     background-size: 100%;
 }
 
@@ -389,6 +389,52 @@ header a {
     background: #9e2a2b;
 }
 
+/* swsti topothetisi labels */
+
+.drawflow-node.ess .box {
+    margin-top: -6vh !important;
+    margin-right: -10em;
+    width: 100% !important;
+    font-size: 16px;
+    height: 120% !important;
+}
+
+.drawflow-node.demand .box {
+    margin-top: -6vh !important;
+    margin-right: -10em;
+    width: 100% !important;
+}
+
+.drawflow-node.bus .box {
+    margin-top: -6vh;
+    right: -2em;
+    width: 200% !important;
+}
+
+.drawflow-node.dso .box, .drawflow-node.dso_consumption .box, .drawflow-node.pv_plant .box, .drawflow-node.wind_plant .box {
+    margin-top: -9vh !important;
+    right: -1em !important;
+    width: 100% !important;
+}
+
+.drawflow-node.transformer_station_in .box, .drawflow-node.transformer_station_out .box, .drawflow-node.storage_charge_controller_in .box, .drawflow-node.storage_charge_controller_out .box, .drawflow-node.solar_inverter .box {
+    margin-top: -6vh !important;
+    right: 1em;
+
+}
+
+.drawflow-node.dso .box, .drawflow-node.dso_consumption .box, .drawflow-node.pv_plant .box, .drawflow-node.wind_plant .box {
+    margin-top: -9vh !important;
+    right: -1em !important;
+    width: 100% !important;
+}
+
+.drawflow-node.charging_power .box, .drawflow-node.capacity .box, .drawflow-node.discharging_power .box {
+    margin-top: -3vh !important;
+    right: 3em !important;
+    width: 100% !important;
+}
+
 /*.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected {
     border-bottom: 50px solid #1b4965;
     border-left: 25px solid transparent;
@@ -399,7 +445,7 @@ header a {
     text-align: left;
 } */
 
-.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected {
+/*.drawflow-node.demand.selected, .drawflow-node.electricity_excess.selected, .drawflow-node.dso_feedin.selected {
     border-bottom: 50px solid transparent;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
@@ -408,7 +454,7 @@ header a {
     background: transparent;
     text-align: left;
 
-}
+} */
 
 /*</editor-fold> */
 
@@ -603,7 +649,7 @@ header a {
     content: "lal";
 
     color: transparent;
-    background: url("/static/images/tesla-coil.png") no-repeat;
+    background: url("/static/images/transformer.png") no-repeat;
     background-size: 100%;
 
 }
@@ -617,7 +663,7 @@ header a {
     margin-bottom: 0em;
     content: "lalala";
     color: transparent;
-    background: url("/static/images/tesla-coil.png") no-repeat;
+    background: url("/static/images/transformer.png") no-repeat;
     background-size: 100%;
 
 }
@@ -663,13 +709,13 @@ header a {
 
 .drawflow-node.transformer_station_in .input, .drawflow-node.transformer_station_out .input, .drawflow-node.storage_charge_controller_in .input, .drawflow-node.storage_charge_controller_out .input, .drawflow-node.solar_inverter .input {
     background: #4f772d;
-    left:-20px;
+    left: -50px;
 
 }
 
 .drawflow-node.transformer_station_in .output, .drawflow-node.transformer_station_out .output, .drawflow-node.storage_charge_controller_in .output, .drawflow-node.storage_charge_controller_out .output, .drawflow-node.solar_inverter .output {
     background: #9e2a2b;
-    left:10px;
+    left: 10px;
 }
 
 /*.drawflow-node.transformer_station_in.selected, .drawflow-node.transformer_station_out.selected, .drawflow-node.storage_charge_controller_in.selected, .drawflow-node.storage_charge_controller_out.selected, .drawflow-node.solar_inverter.selected {
@@ -734,12 +780,22 @@ header a {
     background-size: 100%;
 }
 
-.drawflow-node.charging_power .input, .drawflow-node.discharging_power .input, .drawflow-node.capacity .input, .drawflow-node.ess .input {
+.drawflow-node.charging_power .input, .drawflow-node.discharging_power .input, .drawflow-node.capacity .input {
     background: green;
-    left:-90px;
+    left: -70px;
 }
 
-.drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output, .drawflow-node.ess .output {
+.drawflow-node.ess .input {
+    background: green;
+    left: -20px;
+}
+
+.drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output{
+    background: #e64545;
+    left:-30px;
+}
+
+.drawflow-node.ess .output {
     background: #e64545;
 }
 
@@ -753,14 +809,17 @@ header a {
 
 /*<editor-fold desc="Storage Asset"> */
 .drawflow-node.ess {
-    height: 250px;
-    width: 350px;
+   /* height: 250px;
+    width: 350px; */
+    height: 350px;
+    width: 450px;
     border-radius: 10px;
     background-color: transparent;
     border-color: #e7b968;
     border-width: 5px;
     z-index: 1;
     text-align: left;
+
 }
 
 /*.drawflow-node.ess.selected {
@@ -771,7 +830,7 @@ header a {
 
 .drawflow-node.ess.selected {
     background-color: transparent;
-    border-color: transparent;
+    border-color: #e7b968;
     border-width: 5px;
 }
 
