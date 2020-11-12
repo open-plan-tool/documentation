@@ -97,7 +97,7 @@ class ScenarioCreateForm(ModelForm):
         exclude = ['id', 'project']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Name of Scenario'}),
-            'start_date': forms.DateInput(format='%d/%m/%Y',
+            'start_date': forms.DateInput(format='%m/%d/%Y',
                                           attrs={'class': 'TestDateClass', 'placeholder': 'Select a start date'}),
             'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes'}),
             'evaluated_period': forms.NumberInput(attrs={'placeholder': 'eg. 10 days'}),
