@@ -13,7 +13,7 @@
     <div class="wrapper">
 
         <div id="accordion" class="col">
-            <h3>Energy Providers</h3>
+            <h3 id="accord">Energy Providers</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso">
                     <i class="fas fa-grip-lines"></i><span id="accrdrag"> System DSO </span>
@@ -199,12 +199,12 @@
                 {"name":"bus","data":{"name":"storage bus","bustype":"electricity", "parent_asset_id":0},
                     "pos_x":clientX,"pos_y":clientY,"input_ports":2,"output_ports":1}],
             "assets":[
-                {"name":"ess","pos_x":clientX-150,"pos_y":clientY-50,"data":{"name":"ESS1","optimize_cap":true,"dispatchable":false}},
-                {"name":"charging_power","pos_x":clientX-120,"pos_y":clientY+20,"data":{"parent_asset_id":0,"name":"Charge","age_installed":22,"installed_capacity":2, "capex_fix":2,
+                {"name":"ess","pos_x":clientX-180,"pos_y":clientY-160,"data":{"name":"ESS1","optimize_cap":true,"dispatchable":false}},
+                {"name":"charging_power","pos_x":clientX-140,"pos_y":clientY-90,"data":{"parent_asset_id":0,"name":"Charge","age_installed":22,"installed_capacity":2, "capex_fix":2,
                         "capex_var":2,"opex_fix":2,"opex_var":2,"lifetime":2,"optimize_cap":false,"crate":2,"efficiency":2,"dispatchable":false}},
-                {"name":"discharging_power","pos_x":clientX+80,"pos_y":clientY+50,"data":{"parent_asset_id":0, "name":"DIscharge","age_installed":2,"installed_capacity":2, "capex_fix":2,
+                {"name":"discharging_power","pos_x":clientX+160,"pos_y":clientY-90,"data":{"parent_asset_id":0, "name":"DIscharge","age_installed":2,"installed_capacity":2, "capex_fix":2,
                         "capex_var":2,"opex_fix":2,"opex_var":2,"lifetime":2,"optimize_cap":false,"crate":2,"efficiency":2,"dispatchable":false}},
-                {"name":"capacity","pos_x":clientX-120,"pos_y":clientY+80,"data":{"parent_asset_id":0, "name":"Cap","age_installed":2,"installed_capacity":2,"capex_fix":2, "capex_var":2,
+                {"name":"capacity","pos_x":clientX-140,"pos_y":clientY+90,"data":{"parent_asset_id":0, "name":"Cap","age_installed":2,"installed_capacity":2,"capex_fix":2, "capex_var":2,
                         "opex_fix":2,"opex_var":2,"lifetime":2,"optimize_cap":false,"efficiency":2,"soc_initial":2,"soc_max":2,"soc_min":2,"dispatchable":false}}],
             "links":[
                 {"bus_id":null,"asset_id":null,"flow_direction":"B2A","bus_connection_port":"output_1"},
