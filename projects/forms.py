@@ -56,10 +56,10 @@ class ProjectCreateForm(forms.Form):
     duration = forms.IntegerField(label='Project Duration (years)',
                                   widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 '}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
-    discount = forms.IntegerField(label='Discount Factor (%)',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 10%'}))
-    tax = forms.IntegerField(label='Tax (%)',
-                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 28%'}))
+    discount = forms.FloatField(label='Discount Factor',
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.1'}))
+    tax = forms.FloatField(label='Tax',
+                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3'}))
     #annuity_factor = forms.FloatField(label='Annuity Factor', widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
     #crf = forms.FloatField(label='CRF', widget=forms.NumberInput(attrs={'placeholder': 'CRF...'}))
 
@@ -98,7 +98,7 @@ class ScenarioCreateForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Name of Scenario'}),
             'start_date': forms.DateInput(format='%d/%m/%Y',
-                                          attrs={'class': 'myDateClass', 'placeholder': 'Select a start date'}),
+                                          attrs={'class': 'TestDateClass', 'placeholder': 'Select a start date'}),
             'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes'}),
             'evaluated_period': forms.NumberInput(attrs={'placeholder': 'eg. 10 days'}),
             'capex_fix': forms.NumberInput(attrs={'placeholder': 'Currency'}),
@@ -112,7 +112,6 @@ class ScenarioCreateForm(ModelForm):
             "time_step": "Time Step (minutes)",
             "capex_fix": "Fixed Capital Expenses",
             "start_date": "Start Date",
-
         }
 
 
@@ -167,5 +166,55 @@ class AssetCreateForm(ModelForm):
         widgets = {
             'optimize_cap': forms.Select(choices=TRUE_FALSE_CHOICES),
             'dispatchable': forms.Select(choices=TRUE_FALSE_CHOICES),
-            'renewable_asset': forms.Select(choices=TRUE_FALSE_CHOICES)
+            'renewable_asset': forms.Select(choices=TRUE_FALSE_CHOICES),
+
+            'name': forms.TextInput(attrs={'placeholder': 'Unique name',
+                                           'data-toggle': 'tooltip', 'title': 'Add tooltip content here!'}),
+            'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes'}),
+            'capex_fix': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'capex_var': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'opex_fix': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'opex_var': forms.NumberInput(attrs={'placeholder': 'Currency'}),
+            'lifetime': forms.NumberInput(attrs={'placeholder': 'e.g. 10 years'}),
+            'input_timeseries': forms.Textarea(attrs={'placeholder': 'e.g. [4,3,2,5,3,...]'}),
+            'crate': forms.NumberInput(attrs={'placeholder': 'e.g. 0.7'}),
+            'efficiency': forms.NumberInput(attrs={'placeholder': 'e.g. 0.99'}),
+            'self_discharge': forms.NumberInput(attrs={'placeholder': 'e.g. 3'}),
+            'soc_initial': forms.NumberInput(attrs={'placeholder': 'e.g. 2'}),
+            'soc_max': forms.NumberInput(attrs={'placeholder': 'e.g. 190'}),
+            'soc_min': forms.NumberInput(attrs={'placeholder': 'e.g. 20'}),
+            'maximum_capacity': forms.NumberInput(attrs={'placeholder': 'e.g. 200'}),
+            'energy_price': forms.NumberInput(attrs={'placeholder': 'e.g. 42'}),
+            'feedin_tariff': forms.NumberInput(attrs={'placeholder': 'e.g. 0.5'}),
+            'peak_demand_pricing': forms.NumberInput(attrs={'placeholder': 'e.g. 5'}),
+            'peak_demand_pricing_period': forms.NumberInput(attrs={'placeholder': 'e.g. 2'}),
+            'renewable_share': forms.NumberInput(attrs={'placeholder': 'e.g. 0.7'}),
+            'installed_capacity': forms.NumberInput(attrs={'placeholder': 'e.g. 100'}),
+            'age_installed': forms.NumberInput(attrs={'placeholder': 'e.g. 10'}),
+        }
+        labels = {
+            "name": "Name",
+            "optimize_cap": "Optimize cap",
+            "dispatchable": "Dispatchable",
+            "renewable_asset": "Renewable asset",
+            "capex_fix": "Development costs",
+            "capex_var": "Specific costs",
+            "opex_fix": "Specific OM costs",
+            "opex_var": "Dispatch price",
+            "lifetime": "Asset Lifetime",
+            "input_timeseries": "Timeseries vector",
+            "crate": "Crate",
+            "efficiency": "Efficiency",
+            "self_discharge": "Self discharge",
+            "soc_initial": "SoC initial",
+            "soc_max": "SoC max",
+            "soc_min": "SoC min",
+            "maximum_capacity": "Maximum capacity",
+            "energy_price": "Energy price",
+            "feedin_tariff": "Feedin tariff",
+            "peak_demand_pricing": "Peak demand pricing",
+            "peak_demand_pricing_period": "Peak demand pricing period",
+            "renewable_share": "Renewable share",
+            "installed_capacity": "installed capacity (kW)",
+            "age_installed": "Age installed",
         }

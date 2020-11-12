@@ -104,6 +104,7 @@
     $( function() {
         $( "#accordion" ).accordion();
     } );
+
 </script>
 
 <script>
@@ -313,6 +314,11 @@
                     ageInstalledElement.readOnly = false;
                 }
             });
+        // endregion
+        // region Add Tooltip the inputs of each node
+        $("input[data-toggle='tooltip']").on('focus', function() {
+            $(this).tooltip('show');
+        });
         // endregion
     })
 

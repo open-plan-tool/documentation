@@ -1,29 +1,13 @@
 {% load crispy_forms_tags %}
 
-<div id="CreateAssetModal" class="modal fade">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title">Create New Asset</h1>
-            </div>
-            <div class="modal-body">
-                <form id="CreateAssetForm" method="POST">
-                    {% csrf_token %}
-                    <div id="FormGroup" class="form-group">
-                        {% for field in form %}
-                        <div class="form-row" style="margin-left: -15px;">
-                            {{ field|as_crispy_field }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!--<button class="btn btn-success" type="submit">Save</button>-->
-                </form>
-            </div>
-            <div class="modal-footer">
-                <!-- Here we create this empty div for alert messages -->
-                <div style="float: left; margin: 5px;" id="message-div"></div>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<form id="CreateAssetForm" method="POST">
+    {% csrf_token %}
+    <div id="FormGroup" class="form-group">
+        {% for field in form %}
+        <div class="form-row" style="margin-left: -15px;">
+            {{ field|as_crispy_field }}
+        </div>
+        {% endfor %}
+    </div>
+    <!--<button class="btn btn-success" type="submit">Save</button>-->
+</form>
