@@ -194,7 +194,7 @@
         dataList.map(async data => {
             const trace = {
                 name: data.title,
-                x: data.xAxis.values,
+                x: data.xAxis.values.map(timestamp => new Date(timestamp)),
                 y: data.yAxis.values,
                 type: 'scatter'
             };
