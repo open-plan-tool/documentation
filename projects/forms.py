@@ -89,71 +89,81 @@ class CommentForm(ModelForm):
         exclude = ['id', 'project']
 
 
+
+# region Scenarion
+
+scenario_widgets = {
+    'name': forms.TextInput(attrs={'placeholder': 'Scenario name'}),
+    'start_date': forms.DateInput(format='%m/%d/%Y',
+                                  attrs={'class': 'TestDateClass', 'placeholder': 'Select a start date'}),
+    'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes', 'data-toggle': 'tooltip',
+                                          'title': 'Length of the time-steps.'}),
+    'evaluated_period': forms.NumberInput(attrs={'placeholder': 'eg. 10 days', 'data-toggle': 'tooltip',
+                                                 'title': 'The number of days for which the simulation is to be run.'}),
+    'capex_fix': forms.NumberInput(attrs={'placeholder': 'e.g. 10000€', 'data-toggle': 'tooltip',
+                                          'title': ' A fixed cost to implement the asset, eg. planning costs which do not depend on the (optimized) asset capacity.'}),
+    'capex_var': forms.NumberInput(attrs={'placeholder': 'e.g. 1000€', 'data-toggle': 'tooltip',
+                                          'title': ' Actual CAPEX of the asset, i.e., specific investment costs'}),
+    'opex_fix': forms.NumberInput(attrs={'placeholder': 'e.g. 0€', 'data-toggle': 'tooltip',
+                                         'title': 'Actual OPEX of the asset, i.e., specific operational and maintenance costs.'}),
+    'opex_var': forms.NumberInput(attrs={'placeholder': 'e.g. 0.6€/kWh', 'data-toggle': 'tooltip',
+                                         'title': 'Variable cost associated with a flow through/from the asset (currency/kWh).'}),
+}
+
+scenario_labels = {
+    "name": "Name",
+    'evaluated_period': "Evaluated Period (days)",
+    "time_step": "Time Step (minutes)",
+    "start_date": "Start Date",
+    "capex_fix": "Development costs (currency)",
+    "capex_var": "Specific costs (currency)",
+    "opex_fix": "Specific OM costs (currency)",
+    "opex_var": "Dispatch price (currency/kWh)",
+}
+
+
 class ScenarioCreateForm(ModelForm):
     #start_date = forms.DateField(input_formats=['%d/%m/%Y'])
 
     class Meta:
         model = Scenario
         exclude = ['id', 'project']
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Scenario name'}),
-            'start_date': forms.DateInput(format='%m/%d/%Y',
-                                          attrs={'class': 'TestDateClass', 'placeholder': 'Select a start date'}),
-            'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes', 'data-toggle': 'tooltip',
-                                                  'title': 'Length of the time-steps.'}),
-            'evaluated_period': forms.NumberInput(attrs={'placeholder': 'eg. 10 days', 'data-toggle': 'tooltip',
-                                                  'title': 'The number of days for which the simulation is to be run.'}),
-            'capex_fix': forms.NumberInput(attrs={'placeholder': 'e.g. 10000€', 'data-toggle': 'tooltip',
-                                                  'title': ' A fixed cost to implement the asset, eg. planning costs which do not depend on the (optimized) asset capacity.'}),
-            'capex_var': forms.NumberInput(attrs={'placeholder': 'e.g. 1000€', 'data-toggle': 'tooltip',
-                                                  'title': ' Actual CAPEX of the asset, i.e., specific investment costs'}),
-            'opex_fix': forms.NumberInput(attrs={'placeholder': 'e.g. 0€', 'data-toggle': 'tooltip',
-                                                 'title': 'Actual OPEX of the asset, i.e., specific operational and maintenance costs.'}),
-            'opex_var': forms.NumberInput(attrs={'placeholder': 'e.g. 0.6€/kWh', 'data-toggle': 'tooltip',
-                                                 'title': 'Variable cost associated with a flow through/from the asset (currency/kWh).'}),
-        }
-        labels = {
-            "name": "Name",
-            'evaluated_period': "Evaluated Period (days)",
-            "time_step": "Time Step (minutes)",
-            "start_date": "Start Date",
-            "capex_fix": "Development costs (currency)",
-            "capex_var": "Specific costs (currency)",
-            "opex_fix": "Specific OM costs (currency)",
-            "opex_var": "Dispatch price (currency/kWh)",
-        }
+        widgets = scenario_widgets
+        labels = scenario_labels
 
 
 class ScenarioUpdateForm(ModelForm):
     class Meta:
         model = Scenario
         exclude = ['id', 'project']
+        widgets = scenario_widgets
+        labels = scenario_labels
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.form_tag = False  # don't include <form> tag
-        self.helper.layout = Layout(
-            Row(Column('name', css_class='form-group col-xs-5'),
-                Column('start_date', css_class='form-group col-xs-4'),
-                css_class='form-row row'),
-            Row(Column('time_step', css_class='form-group col-xs-5'),
-                Column('evaluated_period', css_class='form-group col-xs-4'),
-                css_class='form-row row'),
-            Row(Column('capex_fix', css_class='form-group col-xs-2'),
-                Column('capex_var', css_class='form-group col-xs-2'),
-                Column('opex_fix', css_class='form-group col-xs-2'),
-                Column('opex_var', css_class='form-group col-xs-3'),
-                css_class='form-row row'),
-
-        )
+        # self.helper.layout = Layout(
+        #     Row(Column('name', css_class='form-group col-xs-5'),
+        #         Column('start_date', css_class='form-group col-xs-4'),
+        #         css_class='form-row row'),
+        #     Row(Column('time_step', css_class='form-group col-xs-5'),
+        #         Column('evaluated_period', css_class='form-group col-xs-4'),
+        #         css_class='form-row row'),
+        #     Row(Column('capex_fix', css_class='form-group col-xs-2'),
+        #         Column('capex_var', css_class='form-group col-xs-2'),
+        #         Column('opex_fix', css_class='form-group col-xs-2'),
+        #         Column('opex_var', css_class='form-group col-xs-3'),
+        #         css_class='form-row row'),
+        # )
 
 
 class LoadScenarioFromFileForm(BSModalModelForm):
     class Meta:
         model = ScenarioFile
         fields = ['title', 'file']
+# endregion Scenario
 
 
 class AssetCreateForm(ModelForm):

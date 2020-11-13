@@ -785,6 +785,10 @@ header a {
     left: -70px;
 }
 
+.drawflow-node.charging_power .input, .drawflow-node.capacity .input {
+    display: none;
+}
+
 .drawflow-node.ess .input {
     background: green;
     left: -20px;
@@ -793,6 +797,10 @@ header a {
 .drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output{
     background: #e64545;
     left:-30px;
+}
+
+.drawflow-node.discharging_power .output{
+    display: none;
 }
 
 .drawflow-node.ess .output {

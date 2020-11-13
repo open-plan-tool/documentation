@@ -153,7 +153,7 @@ def scenario_economic_results(request, scen_id):
     # dummy data
     """
     dummy_title_list = ["Annuity Costs", "Upfront Investment Costs", "Operation and Maintenance Costs"]
-    dummy_asset_list = ["PV Plant", "DSO Consumption Source", "Backup Diesel Generator", "Wind Plant", "Electricity Grid Consumption"]
+    dummy_asset_list = ["PV Plant", "Transformer Station", "Wind Plant", "Electricity Grid Consumption"]
     results_json = [
         {
             'values': [randint(30, 70) for j in range(4)],
@@ -180,15 +180,20 @@ def scenario_scalar_kpi_results(request, scen_id):
         dict_values = json.load(json_file)
     # TODO: Fix this
 
+    keys = ['Attributed Electricity Costs', 'Renewable Share', 'Total internal non-renewable generation', 'Total internal renewable generation', 'Total non-renewable energy use', 'Total renewable energy use', 'Total Electricity demand', 'Annuity Maintenance Cost', 'Annuity Total Cost', 'Lifetime Investment cost', 'Total Maintenance Cost', 'Total Cost', 'Upfront Cost (year zero)']
+    units = ['currency', 'Factor', 'NA', 'kWh', 'kWh', 'kWh', 'kWh', 'currency/year', 'currency', 'currency', 'currency', 'currency', 'currency']
+    scalar_kpi_dict = dict(zip(keys, units))  # {keys[i]: units[i] for i in range(len(keys))}
+
     results_json = [
         {
             'kpi': key,
             'value': val,
+            'unit': scalar_kpi_dict[key]
         }
         for key, val in dict_values['kpi']['scalars'].items()
     ]
 
-    json_to_db()
+    #json_to_db()
 
     return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
 

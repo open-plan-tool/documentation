@@ -20,11 +20,12 @@
 <!-- Scalar Results -->
 <div class="row panel panel-info">
     <h2 class="panel-heading" style="text-align: center;">Economic and Technical Analysis</h2>
-    <table id="scalarTable" class="table table-hover panel-body">
+    <table id="scalarTable" class="table table-striped panel-body">
         <thead>
         <tr>
-            <th style="width: 20%">KPI</th>
+            <th style="width: 30%">KPI</th>
             <th style="width: 30%">Value</th>
+            <th style="width: 40%">Unit</th>
         </tr>
         </thead>
         <tbody>
@@ -256,7 +257,9 @@
     function appendTableTr(tableRow) {
         const tableBody = document.getElementById('scalarTable').getElementsByTagName('tbody')[0];
         const newRow = tableBody.insertRow();
-        newRow.innerHTML = `<td>${tableRow.kpi}</td><td>${tableRow.value.toFixed(2)}</td>`;
+        newRow.innerHTML = `<td>${tableRow.kpi}</td>
+                            <td>${tableRow.value.toFixed(2)}</td>
+                            <td>${tableRow.unit}</td>`;
     }
 </script> <!-- Scalar Simulation Results -->
 {% endblock end_body_scripts %}
