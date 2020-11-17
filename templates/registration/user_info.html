@@ -4,8 +4,15 @@
 
 {% block content %}
     <br>
-    <br>
+    <button onclick="goBack()" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <br>
+    <br>
     <div class="container">
         <div class="row">
             <div class="col-sm-2"></div>

@@ -264,7 +264,7 @@ header a {
 
 
     position: relative;
-    height: 150% !important;
+    height: 200% !important;
     width: 120% !important;
     /* right: 0;
      top: 0;*/
@@ -392,6 +392,7 @@ header a {
 /* swsti topothetisi labels */
 
 .drawflow-node.ess .box {
+
     margin-top: -6vh !important;
     margin-right: -10em;
     width: 100% !important;
@@ -403,6 +404,7 @@ header a {
     margin-top: -6vh !important;
     margin-right: -10em;
     width: 100% !important;
+
 }
 
 .drawflow-node.bus .box {

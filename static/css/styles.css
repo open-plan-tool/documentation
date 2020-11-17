@@ -1020,5 +1020,44 @@ label[for="id_email"] {
 
 }
 
-/*roz back*/
+#backbutton, #backbutton2 {
+    background-color: #1c1c1c;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: 0.3s;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    color: #F4D9A4;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 50px;
 
+}
+
+#backbutton:after, #backbutton2:after {
+    content: '»';
+    color: #F4D9A4;
+    position: absolute;
+    opacity: 0;
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+    text-decoration: none !important;
+
+}
+
+
+#backbutton:hover, #backbutton2:hover {
+    padding-right: 24px;
+    padding-left: 18px;
+    box-shadow: 5px 5px 5px #171a1d;
+    text-decoration: none !important;
+}
+
+#backbutton2{
+    margin-top: -1em;
+
+}

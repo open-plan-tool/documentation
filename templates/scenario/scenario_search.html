@@ -8,6 +8,15 @@
 
 {% block content %}
     <br>
+    <button onclick="goBack()"  id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <br>
+    <br>
     <h1 style="text-align: center" id="titlee">Project Overview</h1>
     <!-- region Project Scenarios List -->
     <a class="open-modal" data-modal="CreateScenarioModal" style="visibility: hidden">Add Scenario</a>

@@ -4,11 +4,21 @@
 
 {% block start_body_scripts %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/beautiful.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="/static/css/beautiful.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+          integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous"/>
 {% endblock start_body_scripts %}
 
 {% block topology %}
+
+    <button onclick="goBack()" id="backbutton2"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <br>
 
     <div class="wrapper">
 
@@ -33,14 +43,19 @@
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_in">
                     <i class="fas fa-arrow-left"></i><span id="accrdrag"> Transformer Station In </span>
                 </li>
-                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_out">
+                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)"
+                    data-node="transformer_station_out">
                     <i class="fas fa-arrow-right"></i><span id="accrdrag"> Transformer Station Out </span>
                 </li>
-                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_charge_controller_in">
-                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-left"></i><span id="accrdrag"> Storage Charge Controller In </span>
+                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)"
+                    data-node="storage_charge_controller_in">
+                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-left"></i><span
+                        id="accrdrag"> Storage Charge Controller In </span>
                 </li>
-                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_charge_controller_out">
-                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-right"></i><span id="accrdrag"> Storage Charge Controller Out </span>
+                <li class="drag-drawflow" draggable="true" ondragstart="drag(event)"
+                    data-node="storage_charge_controller_out">
+                    <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-right"></i><span
+                        id="accrdrag"> Storage Charge Controller Out </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="solar_inverter">
                     <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span id="accrdrag"> Solar Inverter </span>
@@ -70,10 +85,13 @@
         </div>
 
 
-
         <div class="col-center">
             <div class="menu">
-                <ul><li onclick="editor.changeModule('Home'); changeModule(event);" class="selected" id="accord">Topology</li></ul>
+                <ul>
+                    <li onclick="editor.changeModule('Home'); changeModule(event);" class="selected" id="accord">
+                        Topology
+                    </li>
+                </ul>
             </div>
 
             <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -96,347 +114,406 @@
 
 {% block end_body_scripts %}
 
-<script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js" integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g==" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $( function() {
-        $( "#accordion" ).accordion();
-    } );
-
-</script>
-
-<script>
-    const addBusses = async (data) =>
-        await Promise.all(data.map(async nodeData =>
-            createNodeObject(nodeData.name, nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
-
-    const addAssets = async (data) =>
-        await Promise.all(data.map(async nodeData =>
-            createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
-
-    const addLinks = async (data) => data.map(async linkData => {
-        let busNodeId = nodeToDbId['bus'][linkData.bus_id];
-        let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
-        (linkData.flow_direction === "B2A") ?
-            editor.addConnection(busNodeId, assetNodeId, linkData.bus_connection_port, 'input_1')
-            : editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
-    });
-
-
-    $(window).on('load', function() {
-        $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async (data, textStatus, jqXHR) => {
-            //console.log(JSON.stringify(data));
-            $.when(addBusses(data['busses']), addAssets(data['assets']))
-                .then(async () => addLinks(data['links'])); // endwhen
-            return data;
-        })
-            .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/ })
-            .fail(function (jqxhr,settings,ex) { alert('failed, '+ ex); });
-    });
-</script>
-
-
-<script>
-    // Initialize
-    var id = document.getElementById("drawflow");
-    const editor = new Drawflow(id);
-    editor.reroute = true;
-    editor.start();
-    // editor.drawflow.drawflow.Home.data; // All node level data are saved here
-
-    /* Mouse and Touch Actions */
-    var elements = document.getElementsByClassName('drag-drawflow');
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('touchend', drop, false);
-        elements[i].addEventListener('touchmove', positionMobile, false);
-        elements[i].addEventListener('touchstart', drag, false );
-    }
-
-    var mobile_item_selec = '';
-    var mobile_last_move = null;
-    function positionMobile(ev) {
-        mobile_last_move = event;
-    }
-
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    function drag(ev) {
-        if (ev.type === "touchstart") {
-            mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
-        } else {
-            ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
-        }
-    }
-
-    function drop(ev) {
-        if (ev.type === "touchend") {
-            const parentdrawflow = document.elementFromPoint(mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
-            if(parentdrawflow != null) {
-                addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
-            }
-            mobile_item_selec = '';
-        } else {
-            ev.preventDefault();
-            const nodeName = ev.dataTransfer.getData("node");
-            (nodeName === "bus") ? IOBusOptions(nodeName, ev.clientX, ev.clientY) :
-                (nodeName === "storage_unit") ? addStorageUnit(nodeName, ev.clientX, ev.clientY) : addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
-        }
-    }
-
-
-    // region create Storage Unit - template
-    const addStorageUnit = async (nodeName /* i.e. storage_unit */, clientX, clientY) => {
-        // Solution 1: Use a JSON file to autogenerate nodes semi-agnostic each time. Links are hand created.
-        // Alternative Solution: Create a template using the UI and export the JSON.
-        // Hardcode the JSON in separate file or here and parametrize.
-        // Finally Use async/await and addBusses(), addAssets(), addLinks() functions to show template.
-
-        const storageUnitData = {"busses":[
-                {"name":"bus","data":{"name":"storage bus","bustype":"electricity", "parent_asset_id":0},
-                    "pos_x":clientX,"pos_y":clientY,"input_ports":2,"output_ports":1}],
-            "assets":[
-                {"name":"ess","pos_x":clientX-180,"pos_y":clientY-160,"data":{"name":"ESS1","optimize_cap":true,"dispatchable":false}},
-                {"name":"charging_power","pos_x":clientX-140,"pos_y":clientY-90,"data":{"parent_asset_id":0,"name":"Charge","age_installed":22,"installed_capacity":2, "capex_fix":2,
-                        "capex_var":2,"opex_fix":2,"opex_var":2,"lifetime":2,"optimize_cap":false,"crate":2,"efficiency":2,"dispatchable":false}},
-                {"name":"discharging_power","pos_x":clientX+160,"pos_y":clientY-90,"data":{"parent_asset_id":0, "name":"DIscharge","age_installed":2,"installed_capacity":2, "capex_fix":2,
-                        "capex_var":2,"opex_fix":2,"opex_var":2,"lifetime":2,"optimize_cap":false,"crate":2,"efficiency":2,"dispatchable":false}},
-                {"name":"capacity","pos_x":clientX-140,"pos_y":clientY+90,"data":{"parent_asset_id":0, "name":"Cap","age_installed":2,"installed_capacity":2,"capex_fix":2, "capex_var":2,
-                        "opex_fix":2,"opex_var":2,"lifetime":2,"optimize_cap":false,"efficiency":2,"soc_initial":2,"soc_max":2,"soc_min":2,"dispatchable":false}}],
-            "links":[
-                {"bus_id":null,"asset_id":null,"flow_direction":"B2A","bus_connection_port":"output_1"},
-                {"bus_id":null,"asset_id":null,"flow_direction":"A2B","bus_connection_port":"input_1"},
-                {"bus_id":null,"asset_id":null,"flow_direction":"A2B","bus_connection_port":"input_2"}]};
-
-        const busses_dict = await addBusses(storageUnitData['busses']);
-        const assets_dict = await addAssets(storageUnitData['assets']);
-        const essAsset = assets_dict.find(a => a.specificNodeType === "ess"); // find the ess storage asset
-        // Add ESS nodeId to each node of the storage unit
-        editor.drawflow.drawflow.Home.data[busses_dict[0].editorNodeId].data.parent_asset_id = essAsset.editorNodeId;
-        assets_dict.map(item => {
-            if (item.specificNodeType !== "ess")
-                editor.drawflow.drawflow.Home.data[item.editorNodeId].data.parent_asset_id = essAsset.editorNodeId;
-        });
-        // Create DrawFlow Connections
-        assets_dict.map(item => {
-            if (item.specificNodeType === "charging_power") {
-                editor.addConnection(item.editorNodeId, busses_dict[0].editorNodeId, 'output_1', 'input_1');
-            }
-            else if (item.specificNodeType === "discharging_power") {
-                editor.addConnection(busses_dict[0].editorNodeId, item.editorNodeId, 'output_1', 'input_1');
-            }
-            else if (item.specificNodeType === "capacity") {
-                editor.addConnection(item.editorNodeId, busses_dict[0].editorNodeId, 'output_1', 'input_2')
-            }
-            else {
-                /* it is the ess asset */
-            }
+    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.1.0/jquery.serializejson.min.js"
+            integrity="sha512-4y8bsEzrXJqRyl2dqjdKk/DetH59JcFTtYNMsy5DUpvVV8CXiSrQ1gSCL3+dFgj1Xco0ONPizsYd6wX2eAXL2g=="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#accordion").accordion();
         });
 
-        /* // Solution 2: Specifically define assets, busses and connections foreach template.
-        const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 2, 1);
-        const storageChargingPowerId = await addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1);
-        const storageDischargingPowerId = await addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1);
-        const storageCapacityId = await addNodeToDrawFlow("capacity", clientX-150, clientY+50, 0, 1);
+    </script>
 
-        // Add Connections between Nodes.
-        editor.addConnection(storageChargingPowerId, storageBusNodeId, 'output_1', 'input_1');
-        editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_1', 'input_1');
-        editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_2');
-        */
-    }
-    // endregion create Storage Unit - template
+    <script>
+        const addBusses = async (data) =>
+            await Promise.all(data.map(async nodeData =>
+                createNodeObject(nodeData.name, nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
+
+        const addAssets = async (data) =>
+            await Promise.all(data.map(async nodeData =>
+                createNodeObject(nodeData.name, 1, 1, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
+
+        const addLinks = async (data) => data.map(async linkData => {
+            let busNodeId = nodeToDbId['bus'][linkData.bus_id];
+            let assetNodeId = nodeToDbId['asset'][linkData.asset_id];
+            (linkData.flow_direction === "B2A") ?
+                editor.addConnection(busNodeId, assetNodeId, linkData.bus_connection_port, 'input_1')
+                : editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
+        });
 
 
-    function IOBusOptions(nodeName, posX, posY) {
-        const checkMinMax = (value, min, max) => (value <= min) ? min : (value >= max) ? max : value;
-        Swal.mixin({
-            input: 'number',
-            confirmButtonText: 'Next',
-            showCancelButton: true,
-            progressSteps: ['1', '2']
-        })
-            .queue([
-                {
-                    title: 'Bus Inputs',
-                    text: 'Provide the number of bus Inputs (default 1)',
-                    //html: '<div>Testing Here</div>'
-                },
-                {
-                    title: 'Bus Outputs',
-                    text: 'Provide the number of bus Outputs (default 1)',
-                }
-            ])
-            .then((result) => {
-                if (result.value) {
-                    const inputs =  checkMinMax(result.value[0], 1, 7);
-                    const outputs = checkMinMax(result.value[1], 1, 7);
-                    addNodeToDrawFlow(nodeName, posX, posY, inputs, outputs);
-                }
+        $(window).on('load', function () {
+            $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async (data, textStatus, jqXHR) => {
+                //console.log(JSON.stringify(data));
+                $.when(addBusses(data['busses']), addAssets(data['assets']))
+                    .then(async () => addLinks(data['links'])); // endwhen
+                return data;
             })
-    }
+                .done(function (data) { /*console.log(`Finished loading nodes and links! ${JSON.stringify(data)}`);*/
+                })
+                .fail(function (jqxhr, settings, ex) {
+                    alert('failed, ' + ex);
+                });
+        });
+    </script>
 
-    // Disallow Any Connection to be created without a bus.
-    editor.on('connectionCreated', function(connection) {
-        var nodeIn = editor.getNodeFromId(connection['input_id']);
-        var nodeOut = editor.getNodeFromId(connection['output_id']);
-        if ((nodeIn['name'] !== 'bus' && nodeOut['name'] !== 'bus') || (nodeIn['name'] === 'bus' && nodeOut['name'] === 'bus')) {
-            editor.removeSingleConnection(connection['output_id'],connection['input_id'],connection['output_class'],connection['input_class']);
-            Swal.fire('Unexpected Connection', 'Please connect assets to each other\n only through a bus node. Interconnecting busses is also not allowed.', 'error')
+
+    <script>
+        // Initialize
+        var id = document.getElementById("drawflow");
+        const editor = new Drawflow(id);
+        editor.reroute = true;
+        editor.start();
+        // editor.drawflow.drawflow.Home.data; // All node level data are saved here
+
+        /* Mouse and Touch Actions */
+        var elements = document.getElementsByClassName('drag-drawflow');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener('touchend', drop, false);
+            elements[i].addEventListener('touchmove', positionMobile, false);
+            elements[i].addEventListener('touchstart', drag, false);
         }
-    })
 
-    const nodeToDbId = {'bus':{},'asset':{}}; // a dictionary to keep the mapping between node and database ids.
+        var mobile_item_selec = '';
+        var mobile_last_move = null;
 
-    editor.on('nodeCreated', function (nodeID){
-        // region add new node to mapping dictionary
-        const nodeType = (editor.drawflow.drawflow.Home.data[`${nodeID}`].name === "bus") ? "bus" : "asset";
-        const dbId = editor.drawflow.drawflow.Home.data[`${nodeID}`]['data']['databaseId'];
-        if (nodeType === "bus")
-            nodeToDbId['bus'][`${dbId}`] = nodeID;
-        else {
-            nodeToDbId['asset'][`${dbId}`] = nodeID;
+        function positionMobile(ev) {
+            mobile_last_move = event;
         }
-        // endregion
-        // region bind installed_capacity to age_installed Changes
-        const nodeIdInstalledCapInput = document.getElementById(`node-${nodeID}`).querySelector("input[name='installed_capacity']");
-        if (nodeIdInstalledCapInput)
-            nodeIdInstalledCapInput.addEventListener('change' ,function(e){
-                const ageInstalledElement = e.target.closest("#FormGroup").querySelector("input[name='age_installed']");
-                if (e.target.value === '0') {
-                    ageInstalledElement.value = 0;
-                    ageInstalledElement.readOnly = true;
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            if (ev.type === "touchstart") {
+                mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
+            } else {
+                ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
+            }
+        }
+
+        function drop(ev) {
+            if (ev.type === "touchend") {
+                const parentdrawflow = document.elementFromPoint(mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
+                if (parentdrawflow != null) {
+                    addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
                 }
-                else {
-                    ageInstalledElement.readOnly = false;
+                mobile_item_selec = '';
+            } else {
+                ev.preventDefault();
+                const nodeName = ev.dataTransfer.getData("node");
+                (nodeName === "bus") ? IOBusOptions(nodeName, ev.clientX, ev.clientY) :
+                    (nodeName === "storage_unit") ? addStorageUnit(nodeName, ev.clientX, ev.clientY) : addNodeToDrawFlow(nodeName, ev.clientX, ev.clientY);
+            }
+        }
+
+
+        // region create Storage Unit - template
+        const addStorageUnit = async (nodeName /* i.e. storage_unit */, clientX, clientY) => {
+            // Solution 1: Use a JSON file to autogenerate nodes semi-agnostic each time. Links are hand created.
+            // Alternative Solution: Create a template using the UI and export the JSON.
+            // Hardcode the JSON in separate file or here and parametrize.
+            // Finally Use async/await and addBusses(), addAssets(), addLinks() functions to show template.
+
+            const storageUnitData = {
+                "busses": [
+                    {
+                        "name": "bus", "data": {"name": "storage bus", "bustype": "electricity", "parent_asset_id": 0},
+                        "pos_x": clientX, "pos_y": clientY, "input_ports": 2, "output_ports": 1
+                    }],
+                "assets": [
+                    {
+                        "name": "ess",
+                        "pos_x": clientX - 180,
+                        "pos_y": clientY - 160,
+                        "data": {"name": "ESS1", "optimize_cap": true, "dispatchable": false}
+                    },
+                    {
+                        "name": "charging_power", "pos_x": clientX - 140, "pos_y": clientY - 90, "data": {
+                            "parent_asset_id": 0,
+                            "name": "Charge",
+                            "age_installed": 22,
+                            "installed_capacity": 2,
+                            "capex_fix": 2,
+                            "capex_var": 2,
+                            "opex_fix": 2,
+                            "opex_var": 2,
+                            "lifetime": 2,
+                            "optimize_cap": false,
+                            "crate": 2,
+                            "efficiency": 2,
+                            "dispatchable": false
+                        }
+                    },
+                    {
+                        "name": "discharging_power", "pos_x": clientX + 160, "pos_y": clientY - 90, "data": {
+                            "parent_asset_id": 0,
+                            "name": "DIscharge",
+                            "age_installed": 2,
+                            "installed_capacity": 2,
+                            "capex_fix": 2,
+                            "capex_var": 2,
+                            "opex_fix": 2,
+                            "opex_var": 2,
+                            "lifetime": 2,
+                            "optimize_cap": false,
+                            "crate": 2,
+                            "efficiency": 2,
+                            "dispatchable": false
+                        }
+                    },
+                    {
+                        "name": "capacity", "pos_x": clientX - 140, "pos_y": clientY + 90, "data": {
+                            "parent_asset_id": 0,
+                            "name": "Cap",
+                            "age_installed": 2,
+                            "installed_capacity": 2,
+                            "capex_fix": 2,
+                            "capex_var": 2,
+                            "opex_fix": 2,
+                            "opex_var": 2,
+                            "lifetime": 2,
+                            "optimize_cap": false,
+                            "efficiency": 2,
+                            "soc_initial": 2,
+                            "soc_max": 2,
+                            "soc_min": 2,
+                            "dispatchable": false
+                        }
+                    }],
+                "links": [
+                    {"bus_id": null, "asset_id": null, "flow_direction": "B2A", "bus_connection_port": "output_1"},
+                    {"bus_id": null, "asset_id": null, "flow_direction": "A2B", "bus_connection_port": "input_1"},
+                    {"bus_id": null, "asset_id": null, "flow_direction": "A2B", "bus_connection_port": "input_2"}]
+            };
+
+            const busses_dict = await addBusses(storageUnitData['busses']);
+            const assets_dict = await addAssets(storageUnitData['assets']);
+            const essAsset = assets_dict.find(a => a.specificNodeType === "ess"); // find the ess storage asset
+            // Add ESS nodeId to each node of the storage unit
+            editor.drawflow.drawflow.Home.data[busses_dict[0].editorNodeId].data.parent_asset_id = essAsset.editorNodeId;
+            assets_dict.map(item => {
+                if (item.specificNodeType !== "ess")
+                    editor.drawflow.drawflow.Home.data[item.editorNodeId].data.parent_asset_id = essAsset.editorNodeId;
+            });
+            // Create DrawFlow Connections
+            assets_dict.map(item => {
+                if (item.specificNodeType === "charging_power") {
+                    editor.addConnection(item.editorNodeId, busses_dict[0].editorNodeId, 'output_1', 'input_1');
+                } else if (item.specificNodeType === "discharging_power") {
+                    editor.addConnection(busses_dict[0].editorNodeId, item.editorNodeId, 'output_1', 'input_1');
+                } else if (item.specificNodeType === "capacity") {
+                    editor.addConnection(item.editorNodeId, busses_dict[0].editorNodeId, 'output_1', 'input_2')
+                } else {
+                    /* it is the ess asset */
                 }
             });
-        // endregion
-        // region Add Tooltip to the inputs of each node
-        $("input[data-toggle='tooltip']").on('focus', function() {
-            $(this).tooltip('show');
+
+            /* // Solution 2: Specifically define assets, busses and connections foreach template.
+            const storageBusNodeId = await addNodeToDrawFlow("bus", clientX, clientY, 2, 1);
+            const storageChargingPowerId = await addNodeToDrawFlow("charging_power", clientX+100, clientY+20, 1, 1);
+            const storageDischargingPowerId = await addNodeToDrawFlow("discharging_power", clientX+100, clientY+80, 1, 1);
+            const storageCapacityId = await addNodeToDrawFlow("capacity", clientX-150, clientY+50, 0, 1);
+
+            // Add Connections between Nodes.
+            editor.addConnection(storageChargingPowerId, storageBusNodeId, 'output_1', 'input_1');
+            editor.addConnection(storageBusNodeId, storageDischargingPowerId, 'output_1', 'input_1');
+            editor.addConnection(storageCapacityId, storageBusNodeId, 'output_1', 'input_2');
+            */
+        }
+
+        // endregion create Storage Unit - template
+
+
+        function IOBusOptions(nodeName, posX, posY) {
+            const checkMinMax = (value, min, max) => (value <= min) ? min : (value >= max) ? max : value;
+            Swal.mixin({
+                input: 'number',
+                confirmButtonText: 'Next',
+                showCancelButton: true,
+                progressSteps: ['1', '2']
+            })
+                .queue([
+                    {
+                        title: 'Bus Inputs',
+                        text: 'Provide the number of bus Inputs (default 1)',
+                        //html: '<div>Testing Here</div>'
+                    },
+                    {
+                        title: 'Bus Outputs',
+                        text: 'Provide the number of bus Outputs (default 1)',
+                    }
+                ])
+                .then((result) => {
+                    if (result.value) {
+                        const inputs = checkMinMax(result.value[0], 1, 7);
+                        const outputs = checkMinMax(result.value[1], 1, 7);
+                        addNodeToDrawFlow(nodeName, posX, posY, inputs, outputs);
+                    }
+                })
+        }
+
+        // Disallow Any Connection to be created without a bus.
+        editor.on('connectionCreated', function (connection) {
+            var nodeIn = editor.getNodeFromId(connection['input_id']);
+            var nodeOut = editor.getNodeFromId(connection['output_id']);
+            if ((nodeIn['name'] !== 'bus' && nodeOut['name'] !== 'bus') || (nodeIn['name'] === 'bus' && nodeOut['name'] === 'bus')) {
+                editor.removeSingleConnection(connection['output_id'], connection['input_id'], connection['output_class'], connection['input_class']);
+                Swal.fire('Unexpected Connection', 'Please connect assets to each other\n only through a bus node. Interconnecting busses is also not allowed.', 'error')
+            }
+        })
+
+        const nodeToDbId = {'bus': {}, 'asset': {}}; // a dictionary to keep the mapping between node and database ids.
+
+        editor.on('nodeCreated', function (nodeID) {
+            // region add new node to mapping dictionary
+            const nodeType = (editor.drawflow.drawflow.Home.data[`${nodeID}`].name === "bus") ? "bus" : "asset";
+            const dbId = editor.drawflow.drawflow.Home.data[`${nodeID}`]['data']['databaseId'];
+            if (nodeType === "bus")
+                nodeToDbId['bus'][`${dbId}`] = nodeID;
+            else {
+                nodeToDbId['asset'][`${dbId}`] = nodeID;
+            }
+            // endregion
+            // region bind installed_capacity to age_installed Changes
+            const nodeIdInstalledCapInput = document.getElementById(`node-${nodeID}`).querySelector("input[name='installed_capacity']");
+            if (nodeIdInstalledCapInput)
+                nodeIdInstalledCapInput.addEventListener('change', function (e) {
+                    const ageInstalledElement = e.target.closest("#FormGroup").querySelector("input[name='age_installed']");
+                    if (e.target.value === '0') {
+                        ageInstalledElement.value = 0;
+                        ageInstalledElement.readOnly = true;
+                    } else {
+                        ageInstalledElement.readOnly = false;
+                    }
+                });
+            // endregion
+            // region Add Tooltip to the inputs of each node
+            $("input[data-toggle='tooltip']").on('focus', function () {
+                $(this).tooltip('show');
+            });
+            // endregion
+        })
+
+        async function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs = 1, nodeData = {}) {
+            if (editor.editor_mode === 'fixed')
+                return false;
+            pos_x = pos_x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+            pos_y = pos_y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+            return createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y);
+        }
+
+        // region Show Modal either by double clicking the box or the drawflow node.
+        var transform = '';
+
+        document.addEventListener("dblclick", function (e) {
+            const openModal = function (box) {
+                box.closest(".drawflow-node").style.zIndex = "9999";
+                box.children[0].style.display = "block";
+                transform = editor.precanvas.style.transform;
+                editor.precanvas.style.transform = '';
+                editor.precanvas.style.left = editor.canvas_x + 'px';
+                editor.precanvas.style.top = editor.canvas_y + 'px';
+                editor.editor_mode = "fixed";
+            }
+
+            const NodeList = document.getElementsByClassName("drawflow-node");
+            for (const node of NodeList) {
+                if (e.target === node) {
+                    const box = e.target.querySelector('.drawflow-node .box');
+                    openModal(box);
+                }
+                // do the same if .box is clicked
+                else if (e.target === node.querySelector('.drawflow-node .box')) {
+                    openModal(e.target);
+                }
+            }
         });
         // endregion
-    })
 
-    async function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs = 1, nodeData = {}) {
-        if(editor.editor_mode === 'fixed')
-            return false;
-        pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
-        pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-        return createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y);
-    }
-
-    // region Show Modal either by double clicking the box or the drawflow node.
-    var transform = '';
-
-    document.addEventListener("dblclick", function (e) {
-        const openModal = function (box) {
-            box.closest(".drawflow-node").style.zIndex = "9999";
-            box.children[0].style.display = "block";
-            transform = editor.precanvas.style.transform;
-            editor.precanvas.style.transform = '';
-            editor.precanvas.style.left = editor.canvas_x +'px';
-            editor.precanvas.style.top = editor.canvas_y +'px';
-            editor.editor_mode = "fixed";
+        // region close Modal on: 1. click 'x', 2. press 'esc' and 3. click outside the modal.
+        function closeModalSteps(modal) {
+            modal.style.display = "none"; // hide the modal
+            modal.closest(".drawflow-node").style.zIndex =
+                (modal.closest(".drawflow-node").classList.contains("storage")) ? "1" : "2"; // bring node to default z-index
+            editor.precanvas.style.transform = transform;
+            editor.precanvas.style.left = '0px';
+            editor.precanvas.style.top = '0px';
+            editor.editor_mode = "edit";
         }
 
-        const NodeList = document.getElementsByClassName("drawflow-node");
-        for (const node of NodeList) {
-            if (e.target === node) {
-                const box = e.target.querySelector('.drawflow-node .box');
-                openModal(box);
+        const closemodal = (e) => closeModalSteps(e.target.closest(".modal"));
+
+        document.addEventListener('keydown', function (e) {
+            const modalList = document.getElementsByClassName("modal");
+            if (e.keyCode === 27) {
+                for (let modalDiv of modalList) {
+                    if (modalDiv.style.display === "block")
+                        closeModalSteps(modalDiv);
+                }
             }
-            // do the same if .box is clicked
-            else if (e.target === node.querySelector('.drawflow-node .box')) {
-                openModal(e.target);
-            }
-        }
-    });
-    // endregion
+        })
 
-    // region close Modal on: 1. click 'x', 2. press 'esc' and 3. click outside the modal.
-    function closeModalSteps(modal) {
-        modal.style.display  ="none"; // hide the modal
-        modal.closest(".drawflow-node").style.zIndex =
-            (modal.closest(".drawflow-node").classList.contains("storage")) ? "1": "2"; // bring node to default z-index
-        editor.precanvas.style.transform = transform;
-        editor.precanvas.style.left = '0px';
-        editor.precanvas.style.top = '0px';
-        editor.editor_mode = "edit";
-    }
-
-    const closemodal = (e) => closeModalSteps(e.target.closest(".modal"));
-
-    document.addEventListener('keydown', function(e) {
-        const modalList = document.getElementsByClassName("modal");
-        if (e.keyCode === 27) {
-            for (let modalDiv of modalList) {
-                if (modalDiv.style.display === "block")
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (e) {
+            const modalList = document.getElementsByClassName("modal");
+            for (const modalDiv of modalList) {
+                if (e.target === modalDiv && modalDiv.style.display === "block")
                     closeModalSteps(modalDiv);
             }
         }
-    })
+        // endregion set
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(e) {
-        const modalList = document.getElementsByClassName("modal");
-        for (const modalDiv of modalList) {
-            if (e.target === modalDiv && modalDiv.style.display === "block")
-                closeModalSteps(modalDiv);
+        // region multiple items selection
+        //
+        /*
+        var div = document.getElementById('area-selection-div'), x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+        function reCalc() {
+            var x3 = Math.min(x1,x2);
+            var x4 = Math.max(x1,x2);
+            var y3 = Math.min(y1,y2);
+            var y4 = Math.max(y1,y2);
+            div.style.left = x3 + 'px';
+            div.style.top = y3 + 'px';
+            div.style.width = x4 - x3 + 'px';
+            div.style.height = y4 - y3 + 'px';
         }
-    }
-    // endregion set
 
-    // region multiple items selection
-    // TODO! Feature test
-    /*
-    var div = document.getElementById('area-selection-div'), x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-    function reCalc() {
-        var x3 = Math.min(x1,x2);
-        var x4 = Math.max(x1,x2);
-        var y3 = Math.min(y1,y2);
-        var y4 = Math.max(y1,y2);
-        div.style.left = x3 + 'px';
-        div.style.top = y3 + 'px';
-        div.style.width = x4 - x3 + 'px';
-        div.style.height = y4 - y3 + 'px';
-    }
+        onmousedown = function(e) {
+            div.hidden = 0;
+            x1 = e.clientX;
+            y1 = e.clientY;
+            reCalc();
+        };
+        onmousemove = function(e) {
+            x2 = e.clientX;
+            y2 = e.clientY;
+            reCalc();
+        };
+        onmouseup = function(e) {
+            div.hidden = 1;
+        };
 
-    onmousedown = function(e) {
-        div.hidden = 0;
-        x1 = e.clientX;
-        y1 = e.clientY;
-        reCalc();
-    };
-    onmousemove = function(e) {
-        x2 = e.clientX;
-        y2 = e.clientY;
-        reCalc();
-    };
-    onmouseup = function(e) {
-        div.hidden = 1;
-    };
+        ////////////
+        let log = document.querySelector('#area-selection-div');
+        document.addEventListener('click', logKey);
 
-    ////////////
-    let log = document.querySelector('#area-selection-div');
-    document.addEventListener('click', logKey);
+        function logKey(e) {
+            log.textContent = `The ctrl key is pressed: ${e.ctrlKey}`;
+        }
+        */
+        // endregion
+    </script>
 
-    function logKey(e) {
-        log.textContent = `The ctrl key is pressed: ${e.ctrlKey}`;
-    }
-    */
-    // endregion
-</script>
-
-<script>
-    async function createNodeObject(nodeName, connectionInputs=1, connectionOutputs=1, nodeData={}, pos_x, pos_y) {
-        if (nodeName === "bus"){
-            const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-            let html = `<div class="box">${shownName}
+    <script>
+        async function createNodeObject(nodeName, connectionInputs = 1, connectionOutputs = 1, nodeData = {}, pos_x, pos_y) {
+            if (nodeName === "bus") {
+                const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
+                let html = `<div class="box">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -459,67 +536,70 @@
                   </div>
                 </div>
             </div>`;
-            return {"editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html),
-                "specificNodeType":nodeName};
+                return {
+                    "editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html),
+                    "specificNodeType": nodeName
+                };
+            } else
+                return fetchAssetForm(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y);
         }
-        else
-            return fetchAssetForm(nodeName, connectionInputs, connectionOutputs, nodeData, pos_x, pos_y);
-    }
 
-    async function fetchAssetForm(nodeName, connectionInputs=1, connectionOutputs=1, nodeData, pos_x, pos_y) {
-        // Due to a problem with Boolean Values not showing in the modal we have to convert bool to string.
-        nodeData.optimize_cap = (nodeData.optimize_cap) ? "True" : "False";
-        nodeData.dispatchable = (nodeData.dispatchable) ? "True" : "False";
-        // ------------------------------------------------------------------------------------------------
-        const fullUrl = document.location.origin+'/asset/create/'+nodeName;
+        async function fetchAssetForm(nodeName, connectionInputs = 1, connectionOutputs = 1, nodeData, pos_x, pos_y) {
+            // Due to a problem with Boolean Values not showing in the modal we have to convert bool to string.
+            nodeData.optimize_cap = (nodeData.optimize_cap) ? "True" : "False";
+            nodeData.dispatchable = (nodeData.dispatchable) ? "True" : "False";
+            // ------------------------------------------------------------------------------------------------
+            const fullUrl = document.location.origin + '/asset/create/' + nodeName;
 
-        const resp = await fetch(fullUrl);
-        const data = await resp.text();
-        console.log(data);
-        const formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
+            const resp = await fetch(fullUrl);
+            const data = await resp.text();
+            console.log(data);
+            const formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
 
-        const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-        const source_html = `<div class="box">${shownName}
+            const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
+            const source_html = `<div class="box">${shownName}
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
 
-                    <h2 style="color: grey; text-align: left">${nodeName.replace("_"," ")} Properties</h2>
+                    <h2 style="color: grey; text-align: left">${nodeName.replace("_", " ")} Properties</h2>
                     <div>${formData}</div>
                   </div>
                 </div>
             </div>`;
 
-        return {"editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html),
-            "specificNodeType":nodeName};
-    }
+            return {
+                "editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html),
+                "specificNodeType": nodeName
+            };
+        }
 
-</script>
+    </script>
 
-<script defer>
-    /* Export Topology to JSON and send to back-end. */
-    $(".btn-export").click(function(){
-        console.log(JSON.stringify(editor.export()));
-        $.ajax({
-            headers: {'X-CSRFToken': '{{ csrf_token }}' },
-            type: "POST",
-            url: "{% url 'new_assets_topology' scenario_id %}",
-            data: JSON.stringify(editor.export()),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(resp){
-                var node = resp.data;
-                $.each(node, function(key, val){
-                    // add database id to the node data dictionary, in order to discriminate among existing and new nodes.
-                    editor.drawflow.drawflow.Home.data[`${key}`].data['databaseId'] = val;
-                });
-                window.location.href = "{% url 'scenario_search' project_id %}";
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                Swal.fire('Grid Model Error', `Please fill in all ${XMLHttpRequest.responseJSON.obj_type} fields.`, 'error');
-            }
+    <script defer>
+        /* Export Topology to JSON and send to back-end. */
+        $(".btn-export").click(function () {
+            console.log(JSON.stringify(editor.export()));
+            $.ajax({
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                type: "POST",
+                url: "{% url 'new_assets_topology' scenario_id %}",
+                data: JSON.stringify(editor.export()),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resp) {
+                    var node = resp.data;
+                    $.each(node, function (key, val) {
+                        // add database id to the node data dictionary, in order to discriminate among existing and new nodes.
+                        editor.drawflow.drawflow.Home.data[`${key}`].data['databaseId'] = val;
+                    });
+                    window.location.href = "{% url 'scenario_search' project_id %}";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire('Grid Model Error', `Please fill in all ${XMLHttpRequest.responseJSON.obj_type} fields.`, 'error');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 {% endblock end_body_scripts %}
