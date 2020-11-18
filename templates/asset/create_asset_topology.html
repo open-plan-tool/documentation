@@ -517,14 +517,23 @@
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-                    <h2 style="color: grey; text-align: left">${nodeName} Properties</h2>
-                    <div>
-                        <label for="name">Name: </label>
-                        <input id="name" type="text" df-name>
-                    </div>
-                    <div>
-                        <label for="bustype">Energy carrier: </label>
-                        <select id="bustype" df-bustype>
+                    <h2 text-align: left" id="titlee">${nodeName} Properties</h2><br><br>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
+                        <label for="name" style="font-weight: 600; text-transform: uppercase; color:#1c1c1c; opacity: 0.9;">Name: </label>
+                        </div>
+                        <div class="col-md-7">
+                        <input id="name" style="font-size:13px; font-weight:400;" type="text" df-name>
+                        </div>
+                    </div><br><br>
+                    <div  class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
+                        <label for="bustype" style="font-weight: 600; text-transform: uppercase; color:#1c1c1c; opacity: 0.9;">Energy carrier: </label>
+                         </div>
+                        <div class="col-md-7">
+                        <select id="bustype" style="font-size:13px; font-weight:400;" df-bustype>
                             <option value="" selected disabled hidden>Choose Type...</option>
                             <option value="electricity">Electricity Bus</option>
                             <option value="heat">Heat Bus</option>
@@ -532,6 +541,7 @@
                             <option value="h2">H2 Bus</option>
                             <option value="mobility">Mobility Bus</option>
                         </select>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -561,9 +571,15 @@
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-
-                    <h2 style="color: grey; text-align: left">${nodeName.replace("_", " ")} Properties</h2>
-                    <div>${formData}</div>
+                    <br>
+                    <h2 id="titlee" text-align: left">${nodeName.replace("_", " ")} Properties</h2>
+                    <br>
+                    <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        ${formData}
+                    </div>
+                    </div>
                   </div>
                 </div>
             </div>`;

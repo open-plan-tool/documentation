@@ -2,8 +2,7 @@ body {
     font-size: 16px;
     background-image: linear-gradient(#FFEAB0, #A97D67, #674F44);
     background-color: #674F44;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-
+    font-family: "Century Gothic";
 
     /* Full height */
     height: 100%;
@@ -124,7 +123,7 @@ input[type="checkbox"] {
     letter-spacing: 1.5px !important;
     color: white !important;
     background-color: #ffffff !important;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+    font-family: "Century Gothic";
 }
 
 
@@ -175,7 +174,7 @@ input[type="checkbox"] {
 .panel-title {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     text-align: left;
     margin-left: 105px;
     font-size: 30px;
@@ -200,7 +199,7 @@ input[type="checkbox"] {
 .Elandlogin {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     margin-left: 5px;
     text-align: center;
     font-size: 50px;
@@ -219,11 +218,12 @@ input[type="checkbox"] {
 
 .requiredField {
     color: #555555;
-    font-weight: 500;
+    font-weight: 650;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.8;
 }
+
 
 #id_username {
     background-color: #fffffd;
@@ -252,7 +252,7 @@ input[type="checkbox"] {
 .questionn {
     font-size: 11px;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.6;
     text-align: center;
 }
@@ -306,7 +306,7 @@ label[for="id_last_name"] {
     color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.8;
 }
 
@@ -314,7 +314,7 @@ label[for="id_first_name"] {
     color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.8;
 }
 
@@ -322,14 +322,14 @@ label[for="id_email"] {
     color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.8;
 }
 
 #hint_id_username {
     font-size: 11px;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.6;
     text-align: center;
 }
@@ -337,7 +337,7 @@ label[for="id_email"] {
 #hint_id_password1 {
     font-size: 11px;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.6;
 
 }
@@ -345,7 +345,7 @@ label[for="id_email"] {
 #hint_id_password2 {
     font-size: 11px;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.6;
 }
 
@@ -366,7 +366,7 @@ label[for="id_email"] {
     transform: translate(-50%, -50%);
     font-size: 20px;
     letter-spacing: 1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     color: #ffffff;
     width: 100%;
     text-transform: uppercase;
@@ -380,7 +380,7 @@ label[for="id_email"] {
     background-color: transparent;
     border-color: transparent;
     width: 100%;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 12px;
     width: 100%;
     padding: 10px;
@@ -407,7 +407,7 @@ label[for="id_email"] {
 }
 
 #list5 {
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 12px;
     width: 100%;
     padding: 10px;
@@ -420,7 +420,7 @@ label[for="id_email"] {
 }
 
 #list6 {
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 12px;
     width: 100%;
     padding: 10px;
@@ -442,7 +442,7 @@ label[for="id_email"] {
     border: 0px solid #383d41;
     background-color: #ffffff;
     box-shadow: 4px 4px 2px #686868;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 14px;
     font-weight: 700;
     color: #333;
@@ -454,7 +454,7 @@ label[for="id_email"] {
 #listtitle {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 33px !important;
     color: #F4D9A4;
     text-shadow: 1px 1px 1px #222;
@@ -501,75 +501,75 @@ label[for="id_email"] {
 
 #id_description {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_name {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_country {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.6;
     font-size: 13px;
 }
 
 #id_latitude {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_longitude {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_duration {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_currency {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     opacity: 0.6;
     font-size: 13px;
 }
 
 #id_discount {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_tax {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_annuity_factor {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 #id_crf {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
 }
 
 .custom-control-label {
 
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 13px;
     font-weight: 600;
 }
@@ -577,7 +577,7 @@ label[for="id_email"] {
 #listtitle2 {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 33px !important;
     color: #F4D9A4;
     text-shadow: 1px 1px 1px #222;
@@ -594,7 +594,7 @@ label[for="id_email"] {
     border: 0px solid #171a1d;
     background-color: #00C0C6;
     box-shadow: 2px 2px 2px #686868;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 16px;
     font-weight: 700;
     color: #ffffff;
@@ -630,7 +630,7 @@ label[for="id_email"] {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 16px;
     color: #171a1d;
     font-weight: 600;
@@ -683,7 +683,7 @@ label[for="id_email"] {
 #titlecoms {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 33px !important;
     color: #F4D9A4;
     text-shadow: 1px 1px 1px #222;
@@ -696,7 +696,7 @@ label[for="id_email"] {
 #titleproj {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 33px !important;
     color: #F4D9A4;
     text-shadow: 1px 1px 1px #222;
@@ -709,7 +709,7 @@ label[for="id_email"] {
 #titlee {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 33px !important;
     color: #1b1e21;
     text-shadow: 1px 1px 1px #222;
@@ -732,7 +732,7 @@ label[for="id_email"] {
     cursor: pointer;
     padding: 16px 30px;
     transition: 0.3s;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 16px;
     color: #F4D9A4;
     font-weight: 600;
@@ -761,7 +761,7 @@ label[for="id_email"] {
 }
 
 #lo {
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 16px;
     color: #F4D9A4 !important;
     font-weight: 600;
@@ -775,7 +775,7 @@ label[for="id_email"] {
 .modal-title {
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 33px !important;
     color: #1b1e21;
     text-shadow: 1px 1px 1px #222;
@@ -891,7 +891,7 @@ label[for="id_email"] {
 
 .wraptextt1 {
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     margin-left: 5rem;
     text-align: center;
     font-size: 50px;
@@ -903,7 +903,7 @@ label[for="id_email"] {
 
 .wraptextt2 {
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     margin-left: 5rem;
     text-align: center;
     font-size: 40px;
@@ -915,8 +915,7 @@ label[for="id_email"] {
 
 .wraptextt {
     letter-spacing: 1.5px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-
+    font-family: "Century Gothic";
     margin-left: 5rem;
 
     font-size: 20px;
@@ -973,9 +972,8 @@ label[for="id_email"] {
 
 #accord {
     letter-spacing: 1.2px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
-
+    font-family: "Century Gothic";
     font-size: 20px;
     color: #E5B142;
     position: relative;
@@ -987,7 +985,7 @@ label[for="id_email"] {
 
 #accrdrag {
     letter-spacing: 1.1px;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 15px;
     color: #494f54;
 
@@ -1028,7 +1026,7 @@ label[for="id_email"] {
     cursor: pointer;
     padding: 6px 10px;
     transition: 0.3s;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "Century Gothic";
     font-size: 16px;
     color: #F4D9A4;
     font-weight: 600;
@@ -1057,7 +1055,7 @@ label[for="id_email"] {
     text-decoration: none !important;
 }
 
-#backbutton2{
+#backbutton2 {
     margin-top: -1em;
 
 }
