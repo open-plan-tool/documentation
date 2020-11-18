@@ -423,8 +423,13 @@
 
             const NodeList = document.getElementsByClassName("drawflow-node");
             for (const node of NodeList) {
+                let nodeContent = node.querySelector('.drawflow-node .drawflow_content_node');
                 if (e.target === node) {
                     const box = e.target.querySelector('.drawflow-node .box');
+                    openModal(box);
+                }
+                else if (e.target === nodeContent){
+                    const box = e.target.querySelector('.drawflow_content_node .box');
                     openModal(box);
                 }
                 // do the same if .box is clicked
