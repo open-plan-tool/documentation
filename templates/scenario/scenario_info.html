@@ -3,9 +3,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <style>
+        @media screen and (max-width: 991px) {
+            #titlee {
+                text-align: center !important;
+                font-size: 23px !important;
+                margin-left: 3em;
+
+            }
+        }
+        @media screen and (max-width: 767px) {
+            #button55{
+                width: 30%;
+                padding:1em;
+                font-size: 13px;
+            }
+        }
+    </style>
     <br>
 
-    <button onclick="goBack()"  id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="goBack()" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
     <script>
         function goBack() {
