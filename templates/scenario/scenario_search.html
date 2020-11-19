@@ -7,8 +7,86 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <style>
+
+
+        @media screen and (max-width: 990px) {
+            .btn-danger {
+
+                width: 90% !important;
+                font-size: 80%;
+
+
+            }
+
+            .btn-default {
+
+
+                font-size: 80%;
+
+
+            }
+
+
+
+            .rate:not(:checked) > label {
+                font-size: 18px;
+            }
+
+            tr {
+                font-size: 80%;
+            }
+
+            #titleproj, #titlecoms {
+                font-size: 23px !important;
+            }
+
+            #button55 {
+                width: 70%;
+                font-size: 70% !important;
+                padding: 1em;
+            }
+
+            #lo {
+
+                font-size: 12px !important;
+
+            }
+
+            .tab button, .tab button.active {
+                font-size: 70%;
+            }
+            .dropdown-menu > li > a{
+                font-size: 80%;
+            }
+        }
+
+        @media screen and (max-width: 690px) {
+            .rate:not(:checked) > label {
+                font-size: 14px;
+            }
+        }
+        @media screen and (max-width: 768px) {
+        .modal-content{
+            width: 350px!important;
+
+        }
+          .requiredField{
+                font-size: 12px !important;
+            }
+          .form-control{
+              font-size:10px !important;
+          }
+          .modal-title{
+              font-size: 25px !important;
+          }
+#div_id_file{
+    font-size: 13px !important;
+}
+        }
+    </style>
     <br>
-    <button onclick="goBack()"  id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="goBack()" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
     <script>
         function goBack() {

@@ -3,8 +3,59 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <style>
+        @media screen and (max-width: 800px) {
+            .panel-default {
+                background: transparent;
+                box-shadow: none;
+            }
+
+            #button55 {
+                font-size: 80%;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .requiredField {
+                width: 50%;
+                margin-left: 5rem;
+            }
+
+            .numberinput {
+                width: 80%;
+                margin-left: 5rem;
+            }
+
+            .select {
+                width: 80%;
+                margin-left: 5rem;
+            }
+
+
+            #listtitle2 {
+                font-size: 60%;
+                width: 100%;
+                margin-left: 1rem;
+                text-align: center;
+
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            #button55 {
+                width: 30%;
+                margin-left: 12rem;
+                font-size: 80%;
+            }
+        }
+         @media screen and (max-width: 991px) {
+             #mapid{
+                 height:2300px;
+             }
+         }
+    </style>
     <br>
-    <button onclick="goBack()"  id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="goBack()" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
     <script>
         function goBack() {

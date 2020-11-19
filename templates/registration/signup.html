@@ -5,32 +5,61 @@
 {% block title %}Sign Up{% endblock title %}
 
 {% block content %}
+    <style>
+        @media screen and (max-width: 767px) {
+            .panel-title {
+                margin-left: 130px !important;
+                font-size: 20px;
+
+            }
+
+            .container {
+                width: 100% !important;
+
+            }
+            .form-group{
+                font-size: 12px !important;
+            }
+        }
+
+        @media screen and (max-width: 990px) and (min-width: 768px) {
+            .form-control {
+                width: 90%;
+            }
+
+            .panel-body {
+                width: 120%;
+
+            }
+
+        }
+    </style>
     <br>
     <br>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6" style="width: 100%;">
             <div class="container" style="width: 80%;">
 
-                <div class="panel panel-default" >
+                <div class="panel panel-default">
 
 
+                    <div class="row">
 
-                    <div class="row" >
-
-                        <div class="col-sm-4"  >
+                        <div class="col-sm-4">
 
                             <!--<br> <br>
                             <br> <br>
                             <br> <br>
                             <br> <br>
                             <br> <br>-->
-                            <img src="/static/images/ELA3.jpg" style="width: auto; height: 700px; opacity: 0.5; object-fit: cover; " id="supim"/>
+                            <img src="/static/images/ELA3.jpg"
+                                 style="width: auto; height: 700px; opacity: 0.5; object-fit: cover; " id="supim"/>
 
                             <div class="centered"> Welcome to <br> E-LAND <br> <br>Create your Account <br> Here</div>
 
-                            <div class="row" >
+                            <div class="row">
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-9">
                                     <!-- <img src="/static/images/account.png" style="width: 100%; height: 100%; opacity: 0.8; "  /> !-->
@@ -61,7 +90,9 @@
                                             {{ form|crispy }}
                                             <div class="row"></div>
                                             <div class="col-sm-2"></div>
-                                            <button class="btn btn-success" type="submit" id="logg" style="width: 55%;">Sign Up</button>
+                                            <button class="btn btn-success" type="submit" id="logg" style="width: 55%;">
+                                                Sign Up
+                                            </button>
                                         </form>
                                         <br>
                                         <br>

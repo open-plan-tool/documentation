@@ -4,7 +4,7 @@
 
 {% block content %}
     <br>
-    <button onclick="goBack()"  id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="goBack()" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
     <script>
         function goBack() {
@@ -13,7 +13,51 @@
     </script>
     <br>
     <br>
+    <style>
+        @media screen and (max-width: 800px) {
+            .panel-default {
+                background: transparent;
+                box-shadow: none;
+            }
+             #button2 {
+                font-size: 80%;
+            }
+        }
 
+        @media screen and (max-width: 767px) {
+            .requiredField {
+                width: 50%;
+                margin-left: 5rem;
+            }
+
+            .numberinput {
+                width: 80%;
+                margin-left: 5rem;
+            }
+
+            .select {
+                width: 80%;
+                margin-left: 5rem;
+            }
+
+
+
+            #listtitle2 {
+                font-size: 60%;
+                width: 100%;
+                margin-left: 1rem;
+                text-align: center;
+
+            }
+
+            @media screen and (max-width: 767px) {
+                #button2 {
+                    width: 30%;
+                    margin-left: 12rem;
+                    font-size: 80%;
+                }
+            }
+    </style>
     <div class="row">
 
 
@@ -76,9 +120,9 @@
                                                 </div>
                                             </div>
 
-                                           <!-- <div class="container" style="margin-left: -30px;"> -->
+                                            <!-- <div class="container" style="margin-left: -30px;"> -->
 
-                                                <!-- <div class="row" style="color:#555555; opacity: 0.8;">
+                                            <!-- <div class="row" style="color:#555555; opacity: 0.8;">
                                                     <div class="col-sm-2">
                                                         {{ form.electricity| as_crispy_field }}
                                                         {{ form.heat| as_crispy_field }}
@@ -92,7 +136,7 @@
                                                         {{ form.gas| as_crispy_field }}
                                                     </div>
                                                 </div> -->
-                                          <!--  </div> -->
+                                            <!--  </div> -->
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4"></div>

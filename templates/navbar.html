@@ -1,3 +1,22 @@
+<style>
+@media screen and (max-width: 767px) {
+
+.nav > li > a, .dropdown-menu{
+    font-size: 13px !important;
+}
+    .navbar-nav{
+    text-align: center;
+    }
+     .navbar-header{
+         border-bottom: 1px solid #EFB03D;
+         width: 95%;
+     }
+     .navbar-nav{
+         width: 95%;
+     }
+}
+
+</style>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -14,7 +33,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right" >
                 <li class="dropdown" >
-                    <a class="glyphicon glyphicon-user dropdown-toggle" data-toggle="dropdown" href="#" >
+                    <a data-toggle="dropdown" href="#" ><span class="glyphicon glyphicon-user dropdown-toggle"></span>
                         {{ user.username }}
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
