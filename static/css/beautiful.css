@@ -692,8 +692,8 @@ header a {
 
 .drawflow-node.transformer_station_out:before {
     display: inline-block;
-    width: 200px;
-    height: 150%;
+    width: 100px;
+    height: 180%;
     min-height: 100%;
     margin-right: -90px;
     margin-bottom: 0em;
@@ -706,8 +706,8 @@ header a {
 
 .drawflow-node.storage_charge_controller_in:before {
     display: inline-block;
-    width: 200px;
-    height: 150%;
+    width: 100px;
+    height: 180%;
     min-height: 100%;
     margin-right: -90px;
     margin-bottom: 0em;

@@ -185,7 +185,7 @@ class AssetCreateForm(ModelForm):
         widgets = {
             'optimize_cap': forms.Select(choices=TRUE_FALSE_CHOICES,
                                          attrs={'data-toggle': 'tooltip', 'title': 'True if the user wants to perform capacity optimization for various components as part of the simulation.',
-                                                'style': 'font-weight:400; font-size:13px;'}),
+                                                'style': 'font-weight:400; font-size:13px; height:40px;'}),
             'dispatchable': forms.Select(choices=TRUE_FALSE_CHOICES),
             'renewable_asset': forms.Select(choices=TRUE_FALSE_CHOICES),
 
