@@ -30,16 +30,17 @@ body {
 
 }
 
-.navbar-brand a:hover, .navbar-brand a:focus{
+.navbar-brand a:hover, .navbar-brand a:focus {
     text-decoration: none;
 
 }
 
 .navbar-brand, #MVS, #userr {
-  color: #5a6268 !important;
+    color: #5a6268 !important;
     opacity: 0.7;
 
 }
+
 .navbar-brand p {
     color: #ffffff;
     text-transform: uppercase;
@@ -1248,4 +1249,13 @@ label[for="id_email"] {
     .myimg15 {
         width: 200px !important;
     }
+}
+
+#colname {
+
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%; /*Specify the width of block*/
+    word-break: break-word;
+
 }

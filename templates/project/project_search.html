@@ -5,35 +5,62 @@
 {% block content %}
     <!-- <div class="container5"> -->
     <style>
-    @media screen and (max-width: 1200px) {
-        .btn-success{
-            margin-top:4rem;
-            margin-left: -45rem;
+        @media screen and (max-width: 1900px) {
+            .btn-success {
+                margin-top: 4rem;
+                margin-left: -35rem;
+
+            }
+
+            .btn-danger {
+                margin-top: 4rem;
+                margin-left: -25rem;
+
+            }
+
+            .btn-info {
+                margin-top: 4rem;
+                margin-left: -15rem;
+
+            }
+
+            .btn-default {
+                margin-top: 4rem;
+                margin-left: -5rem;
+
+            }
+
+            #listtitle {
+                margin: 5% auto;
+            }
 
         }
-        .btn-danger{
-            margin-top:4rem;
-            margin-left: -35rem;
 
-        }
-        .btn-info{
-            margin-top:4rem;
-            margin-left: -25rem;
+        @media screen and (max-width: 1199px) {
+            #list6 {
+                font-size: 10px;
 
-        }
-        .btn-default{
-            margin-top:4rem;
-            margin-left: -15rem;
+            }
 
+            #box2 {
+                min-width: 120% !important;
+            }
         }
-        #listtitle{
-            margin: 5% auto;
+
+        @media screen and (max-width: 767px) {
+
+            #box2 {
+                min-width: 100% !important;
+            }
+
+            #colname {
+                max-width: 10% !important;
+            }
         }
-    }
 
     </style>
     <div class="backg">
-        <div id="project_map" ></div>
+        <div id="project_map"></div>
         <br>
 
         <br>
@@ -118,36 +145,40 @@
                                     {% for project in project_list %}
                                         <tr id="list6">
                                             <th scope="row">{{ forloop.counter }}</th>
-                                            <td>{{ project.name }}</td>
+                                            <td style="max-width: 300px;" id="colname">{{ project.name }}</td>
                                             <td>{{ project.date_created }}</td>
                                             <td>{{ project.date_updated }}</td>
                                             <td>{{ project.country }}</td>
                                             <td>
 
-
-                                                <form style="float: left;" class="form"
-                                                      action="{% url 'scenario_search' project.pk %}"
-                                                      method="GET">
-                                                    <input class="btn btn-sm btn-success" type="submit" value="Open"/>&emsp;
-                                                </form>
-                                                <form style="float: left;" class="form"
-                                                      action="{% url 'project_detail' project.pk %}"
-                                                      method="GET">
-                                                    <input class="btn btn-sm btn-info" type="submit" value="Show"/>&emsp;
-                                                </form>
-                                                <form style="float: left;" class="form"
-                                                      action="{% url 'project_update' project.pk %}"
-                                                      method="GET">
-                                                    <input class="btn btn-sm btn-default" type="submit" value="Edit"/>&emsp;
-                                                </form>
-                                                <form style="float: left;" class="form"
-                                                      action="{% url 'project_delete' project.pk %}"
-                                                      method="POST">
-                                                    {% csrf_token %}
-                                                    <input class="btn btn-sm btn-danger" type="submit" value="Delete"
-                                                           onclick="return confirm('Are you sure you want to delete?' + '\n' +
+                                                <div class="buttons">
+                                                    <form style="float: left;" class="form"
+                                                          action="{% url 'scenario_search' project.pk %}"
+                                                          method="GET">
+                                                        <input class="btn btn-sm btn-success" type="submit"
+                                                               value="Open"/>&emsp;
+                                                    </form>
+                                                    <form style="float: left;" class="form"
+                                                          action="{% url 'project_detail' project.pk %}"
+                                                          method="GET">
+                                                        <input class="btn btn-sm btn-info" type="submit" value="Show"/>&emsp;
+                                                    </form>
+                                                    <form style="float: left;" class="form"
+                                                          action="{% url 'project_update' project.pk %}"
+                                                          method="GET">
+                                                        <input class="btn btn-sm btn-default" type="submit"
+                                                               value="Edit"/>&emsp;
+                                                    </form>
+                                                    <form style="float: left;" class="form"
+                                                          action="{% url 'project_delete' project.pk %}"
+                                                          method="POST">
+                                                        {% csrf_token %}
+                                                        <input class="btn btn-sm btn-danger" type="submit"
+                                                               value="Delete"
+                                                               onclick="return confirm('Are you sure you want to delete?' + '\n' +
                              'This will also delete all related project data.')"/>
-                                                </form>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     {% endfor %}
