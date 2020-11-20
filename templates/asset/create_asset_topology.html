@@ -600,7 +600,7 @@
     <script defer>
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function () {
-            console.log(JSON.stringify(editor.export()));
+            //console.log(JSON.stringify(editor.export()));
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 type: "POST",

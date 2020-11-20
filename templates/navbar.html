@@ -17,14 +17,29 @@
 }
 
 </style>
+
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
             <img src="/static/images/eland.png" class = "logoo"  />
-            <a class="navbar-brand" href="{% url 'home' %}">E-LAND EPA</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="{% url 'project_search' %}">Project List</a></li>
+            <li>
+                <a class="navbar-brand" href="https://elandh2020.eu/" target="_blank">E-LAND</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{% url 'home' %}">EPA</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="https://github.com/rl-institut/multi-vector-simulator" target="_blank">
+                    <i class="fab fa-github fa-lg"></i> MVS
+                </a>
+            </li>
         </ul>
 
         {% if user.is_authenticated %}
@@ -53,6 +68,9 @@
 
         {% endif %}
 
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'project_search' %}">Project List</a></li>
+        </ul>
 
     </div>
 </nav>
