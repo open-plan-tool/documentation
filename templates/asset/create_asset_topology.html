@@ -169,6 +169,7 @@
         editor.start();
         // editor.drawflow.drawflow.Home.data; // All node level data are saved here
 
+
         /* Mouse and Touch Actions */
         var elements = document.getElementsByClassName('drag-drawflow');
         for (var i = 0; i < elements.length; i++) {
@@ -382,20 +383,33 @@
             // region bind installed_capacity to age_installed Changes
             const nodeIdInstalledCapInput = document.getElementById(`node-${nodeID}`).querySelector("input[name='installed_capacity']");
             if (nodeIdInstalledCapInput)
+            {
                 nodeIdInstalledCapInput.addEventListener('change', function (e) {
                     const ageInstalledElement = e.target.closest("#FormGroup").querySelector("input[name='age_installed']");
                     if (e.target.value === '0') {
-                        ageInstalledElement.value = 0;
+                        ageInstalledElement.value = '0';
                         ageInstalledElement.readOnly = true;
-                    } else {
-                        ageInstalledElement.readOnly = false;
+
+                        /* Drawflow listens for input event to update df-*. - check editor.updateNodeValue(e); */
+                        /* Solution #1: add age-installed value directly to the JSON */
+                        /* Solution #2: create an Event and dispatch it to the input without user interaction */
+                        // #1: editor.drawflow.drawflow.Home.data[`${nodeID}`].data['age_installed'] = 0; // hot fix, write directly to drawflow data.
+                        // #2: below
+                        let notifyAgeInputEvent = new Event("input",{bubbles: true});
+                        ageInstalledElement.dispatchEvent(notifyAgeInputEvent);
                     }
+                    else
+                        ageInstalledElement.readOnly = false;
                 });
+                // for existing nodes check if installed cap is zero and set age_installed to read only
+                if (nodeIdInstalledCapInput.value === '0')
+                    nodeIdInstalledCapInput.closest("#FormGroup").querySelector("input[name='age_installed']").readOnly = true;
+            }
             // endregion
             // region Add Tooltip to the inputs of each node
-            $("input[data-toggle='tooltip']").on('focus', function () {
-                $(this).tooltip('show');
-            });
+            //$("input[data-toggle='tooltip']").on('focus', function () {
+            //    $(this).tooltip('show');
+            //});
             // endregion
         })
 
@@ -568,7 +582,6 @@
 
             const resp = await fetch(fullUrl);
             const data = await resp.text();
-            console.log(data);
             const formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
 
             const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
@@ -600,7 +613,8 @@
     <script defer>
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function () {
-            //console.log(JSON.stringify(editor.export()));
+            var data1 = JSON.stringify(editor.export());
+            debugger
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 type: "POST",
