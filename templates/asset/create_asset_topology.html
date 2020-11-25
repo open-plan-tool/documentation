@@ -613,8 +613,6 @@
     <script defer>
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function () {
-            var data1 = JSON.stringify(editor.export());
-            debugger
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 type: "POST",
@@ -631,7 +629,10 @@
                     window.location.href = "{% url 'scenario_search' project_id %}";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    Swal.fire('Grid Model Error', `Please fill in all ${XMLHttpRequest.responseJSON.obj_type} fields.`, 'error');
+                    debugger
+                    const jsonData = XMLHttpRequest.responseJSON;
+                    Swal.fire('Grid Model Error', `Please fill in all ${jsonData.specific_obj_type.bold()} fields. \n
+                       Asset ${jsonData.obj_name.bold()} has empty fields.`, 'error');
                 }
             });
         });

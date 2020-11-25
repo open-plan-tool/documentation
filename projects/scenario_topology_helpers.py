@@ -148,10 +148,12 @@ class NodeObject:
 
             asset.full_clean(exclude=excluded_fields)
 
-        except KeyError:
-            return {"success": False, "obj_type": "asset"}
-        except ValidationError:
-            return {"success": False, "obj_type": "asset"}
+        except (KeyError, ValidationError) as error:
+            return {"success": False,
+                    "specific_obj_type": self.name,
+                    "obj_name": self.data['name'],
+                    "full_error": str(error)
+                    }
         else:
             asset.save()
             if self.db_obj_id is None:
@@ -171,10 +173,12 @@ class NodeObject:
             bus.scenario = get_object_or_404(Scenario, pk=scen_id)
 
             bus.full_clean()
-        except KeyError:
-            return {"success": False, "obj_type": "bus"}
-        except ValidationError:
-            return {"success": False, "obj_type": "bus"}
+        except (KeyError, ValidationError) as error:
+            return {"success": False,
+                    "specific_obj_type": self.name,
+                    "obj_name": self.data['name'],
+                    "full_error": str(error)
+                    }
         else:
             bus.save()
             if self.db_obj_id is None:
