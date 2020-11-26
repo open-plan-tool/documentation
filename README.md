@@ -11,7 +11,7 @@ utilized in a simulation environment.
 
 #### Deploy using Docker Compose
 
-1. `git clone --single-branch --branch dc-deploy https://colab-repo.intracom-telecom.com/colab-projects/eland/epa.git`
+1. `git clone --single-branch --branch production https://colab-repo.intracom-telecom.com/colab-projects/eland/epa.git`
 2. cd inside the created folder
 3. Modify the proxy in app/Dockerfile to fit your needs.
 3. `docker-compose up -d --build`
