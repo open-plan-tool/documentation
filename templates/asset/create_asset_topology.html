@@ -629,10 +629,14 @@
                     window.location.href = "{% url 'scenario_search' project_id %}";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    debugger
                     const jsonData = XMLHttpRequest.responseJSON;
-                    Swal.fire('Grid Model Error', `Please fill in all ${jsonData.specific_obj_type.bold()} fields. \n
+                    if (jsonData.specific_obj_type){
+                        Swal.fire('Grid Model Error', `Please fill in all ${jsonData.specific_obj_type.bold()} fields. \n
                        Asset ${jsonData.obj_name.bold()} has empty fields.`, 'error');
+                    }
+                    else{
+                        Swal.fire('Grid Model Error',`Asset ${jsonData.obj_name.bold()} has empty fields.`, 'error');
+                    }
                 }
             });
         });

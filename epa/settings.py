@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import ast
 import os
 from django.contrib.messages import constants as messages
 
@@ -18,16 +18,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'cdn_static_root')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v@p9^=@lc3#1u_xtx*^xhrv0l3li1(+8ik^k@g-_bzmexb0$7n'
-
+SECRET_KEY = os.getenv('EPA_SECRET_KEY', 'v@p9^=@lc3#1u_xtx*^xhrv0l3li1(+8ik^k@g-_bzmexb0$7n')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = ast.literal_eval(os.getenv('DEBUG', 'True'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -105,6 +104,7 @@ WSGI_APPLICATION = 'epa.wsgi.application'
 # }
 
 DATABASES = {
+    # ICOM internal server with mysql
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
     #     'HOST': '146.124.106.175',
@@ -116,10 +116,20 @@ DATABASES = {
     #     'DEFAULT-CHARACTER-SET': 'utf8',
     #
     # }
+    # local with sqlite
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    # ELAND dockerized mysql container
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'epa-app-db',
+    #     'USER': 'root',
+    #     'PASSWORD': '4kFDg@G@*G,#)Fa',
+    #     'HOST': 'db',
+    #     'PORT': 3306,
+    # }
 }
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

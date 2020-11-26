@@ -1,7 +1,7 @@
-FROM python:3.6
+FROM python:3.8
 
 RUN \
-    export http_proxy=http://company.proxy.com:port \
+    export http_proxy=http:// \
     && apt-get update -y && apt-get upgrade -y \
     && apt-get install -y sqlite3 libsqlite3-dev
 
@@ -10,7 +10,7 @@ WORKDIR /deployment
 ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt --proxy="company.proxy.com:port"
+RUN pip install -r requirements.txt --proxy=""
 
 # copy project
 COPY . .
