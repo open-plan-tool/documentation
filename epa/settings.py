@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('EPA_SECRET_KEY', 'v@p9^=@lc3#1u_xtx*^xhrv0l3li1(+8ik^k@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ast.literal_eval(os.getenv('DEBUG', 'True'))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -90,19 +90,6 @@ WSGI_APPLICATION = 'epa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         #'ENGINE': 'django.db.backends.sqlite3',
-#         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'epadb',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     }
-# }
-
 DATABASES = {
     # ICOM internal server with mysql
     # 'default': {
@@ -117,19 +104,19 @@ DATABASES = {
     #
     # }
     # local with sqlite
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-    # ELAND dockerized mysql container
     # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'epa-app-db',
-    #     'USER': 'root',
-    #     'PASSWORD': '4kFDg@G@*G,#)Fa',
-    #     'HOST': 'db',
-    #     'PORT': 3306,
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
+    # ELAND dockerized mysql container
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'epa-app-db',
+        'USER': 'root',
+        'PASSWORD': '4kFDg@G@*G,#)Fa',
+        'HOST': 'db',
+        'PORT': 3306,
+    }
 }
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
