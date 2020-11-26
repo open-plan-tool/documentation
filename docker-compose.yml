@@ -12,14 +12,14 @@ services:
       #MYSQL_USER: 'EPAUser'
       #MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: "4kFDg@G@*G,#)Fa"
-    #volumes:
+    # volumes:
     #  - db_data:/var/lib/mysql
   app:
-    build: epa
+    build: app
     container_name: django-gunicorn
     restart: always
     env_file:
-      - epa/epa.env
+      - app/epa.env
     ports:
       - "8000:8000"
     volumes:
@@ -40,7 +40,9 @@ services:
       - ./src/cdn_static_root:/static
     depends_on:
       - app
-#volumes:
+# volumes:
 #  db_data: {}
 # need to execute 'docker-compose run app python manage.py makemigrations'
 # and 'docker-compose run app python manage.py migrate'
+
+# Based on: https://github.com/wiamsuri/django-gunicorn-nginx-docker
