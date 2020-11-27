@@ -24,3 +24,8 @@ To clear local data afer usage execute:
 `docker-compose down --volumes --rmi 'local'`
 <hr>
  
+ ### Errors
+ 1. An error might occure on `setup.sh` execution.
+ This is because of the underlying OS and the way it handles EOL.
+ Windows (CRLF), Unix (LF) and Mac (CR). 
+ Try to execute the commands in the file sequentially instead.
