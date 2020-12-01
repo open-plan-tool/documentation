@@ -104,19 +104,19 @@ DATABASES = {
     #
     # }
     # local with sqlite
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    # ELAND dockerized mysql container
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'epa-app-db',
-        'USER': 'root',
-        'PASSWORD': '4kFDg@G@*G,#)Fa',
-        'HOST': 'db',
-        'PORT': 3306,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    # ELAND dockerized mysql container
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'epa-app-db',
+    #     'USER': 'root',
+    #     'PASSWORD': '4kFDg@G@*G,#)Fa',
+    #     'HOST': 'db',
+    #     'PORT': 3306,
+    # }
 }
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -187,7 +187,8 @@ PROXY_CONFIG = {
     "https": "https://icache.intracomtel.com:80",
 }
 
-MVS_URL = "https://mvs-eland.rl-institut.de/uploadjson/"
+MVS_POST_URL = "https://mvs-eland.rl-institut.de/sendjson/"
+MVS_GET_URL = "https://mvs-eland.rl-institut.de/check/"
 
 # Allow iframes to show in page
 X_FRAME_OPTIONS = 'SAMEORIGIN'

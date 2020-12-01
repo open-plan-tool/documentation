@@ -104,10 +104,17 @@ BUS_TYPE = (
 )
 
 SIMULATION_STATUS = (
-    ('Failed', 'Failed'),
-    ('Completed', 'Completed'),
-    ('Running', 'Running'),
-    ('Cancelled', 'Cancelled'),
+    ('FAILED', 'FAILED'),
+    ('COMPLETED', 'COMPLETED'),
+    ('PENDING', 'PENDING'),
+)
+
+USER_RATING = (
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
 )
 
 
@@ -236,6 +243,9 @@ class ScenarioFile(models.Model):
 class Simulation(models.Model):
     start_date = models.DateTimeField(auto_now_add=True, null=False)
     end_date = models.DateTimeField(null=True)
+    elapsed_seconds = models.FloatField(null=True)
+    mvs_token = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=20, choices=SIMULATION_STATUS, null=False)
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
-    results = models.BinaryField(null=True, max_length=30e6)
+    scenario = models.OneToOneField(Scenario, on_delete=models.CASCADE, null=False)
+    user_rating = models.PositiveSmallIntegerField(null=True, choices=USER_RATING, default=None)
+    results = models.TextField(null=True, max_length=30e6)

@@ -5,6 +5,9 @@ from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
 
 # region sent db nodes to js
+from projects.dtos import convert_to_dto
+
+
 def load_scenario_topology_from_db(scen_id):
     bus_nodes_list = db_bus_nodes_to_list(scen_id)
     asset_nodes_list = db_asset_nodes_to_list(scen_id)
@@ -264,3 +267,11 @@ def remove_empty_elements(d):
         return [v for v in (remove_empty_elements(v) for v in d) if not empty(v)]
     else:
         return {k: v for k, v in ((k, remove_empty_elements(v)) for k, v in d.items()) if not empty(v)}
+
+
+# Helper to convert Scenario data to MVS importable json
+def get_topology_json(scenario_to_convert):
+    mvs_request_dto = convert_to_dto(scenario_to_convert)
+    dumped_data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
+    # Remove None values
+    return remove_empty_elements(dumped_data)

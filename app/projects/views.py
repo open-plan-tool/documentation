@@ -13,13 +13,11 @@ from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
 from datetime import datetime
 
-from .dtos import convert_to_dto
 from .forms import *
-from .requests import mvs_simulation_request
+from .requests import mvs_simulation_request, mvs_simulation_check
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
-    update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, \
-    remove_empty_elements, create_ESS_objects
+    update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, get_topology_json
 
 
 class HomeView(TemplateView):
@@ -231,25 +229,33 @@ def comment_delete(request, com_id):
 
 
 # region Scenario
+def check_mvs_simulation(simulation):
+    response = mvs_simulation_check(token=simulation.mvs_token)
+    simulation.results = response['results']
+    simulation.status = response['status']
+    simulation.save()
+
 
 @login_required
 @require_http_methods(["GET"])
 def scenario_search(request, proj_id):
     project = get_object_or_404(Project, pk=proj_id)
     request.session['project_id'] = proj_id  # set the session according to current project
-    scenario_list = Scenario.objects.filter(project=project)
-
     comment_list = Comment.objects.filter(project=project)
 
+    simulations_list = Simulation.objects.filter(scenario__project=project)
+    # update the simulation status from MVS
+    [check_mvs_simulation(simulation) for simulation in simulations_list]
+    # get the updated simulations list
+    simulations_list = Simulation.objects.filter(scenario__project=project)
+
     return render(request, 'scenario/scenario_search.html',
-                  {'scenario_list': scenario_list, 'comment_list': comment_list})
+                  {'comment_list': comment_list, 'simulations_list': simulations_list})
 
 
 @login_required
 @require_http_methods(["GET"])
 def scenario_create(request):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
-
     form = ScenarioCreateForm()
 
     return render(request, 'scenario/scenario_create.html', {'form': form})
@@ -356,25 +362,6 @@ def scenario_delete(request, scen_id):
     if request.POST:
         scenario.delete()
         messages.success(request, 'scenario successfully deleted!')
-        return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
-
-
-@login_required
-@require_http_methods(["GET", "POST"])
-def start_scenario_simulation(request, scen_id):
-    if request.method == 'POST' and request.is_ajax():
-        sent_successfully = True
-        # TODO!! send the scenario JSON to MVS
-        if sent_successfully:
-            messages.success(request, 'Simulation Started!')
-            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
-            # return {'success': True}
-        else:
-            messages.warning(request, 'Could not start Scenario Simulation.')
-            # return {'success': False}
-            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
-    else:
-        messages.warning(request, 'Could not start Scenario Simulation.')
         return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
 
@@ -520,60 +507,61 @@ def scenario_topology_view(request, scen_id):
 
 # region MVS JSON Related
 
-# End-point to return scenario topology JSON
-@login_required
-@require_http_methods(["GET"])
-def get_topology_json(request, scenario_id):
-    # Load scenario
-    scenario = Scenario.objects.get(pk=scenario_id)
-
-    # Convert scenario topology to dto's
-    mvs_request_dto = convert_to_dto(scenario)
-
-    # Create data dict from dto objects
-    data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
-
-    # Remove None values
-    data_clean = remove_empty_elements(data)
-
-    return JsonResponse(data_clean, status=200, content_type='application/json')
-
-
 # End-point to send MVS simulation request
 @json_view
 @login_required
-@require_http_methods(["GET"])
-def request_mvs_simulation(request, scenario_id):
+@require_http_methods(["GET", "POST"])
+def request_mvs_simulation(request, scenario_id=0):
+    if scenario_id == 0:
+        return JsonResponse({"status": "error", "error": "No scenario id provided"},
+                            status=500, content_type='application/json')
     # Load scenario
     scenario = Scenario.objects.get(pk=scenario_id)
 
-    # Convert scenario topology to dto's
-    mvs_request_dto = convert_to_dto(scenario)
-
-    # Create data dict from dto objects
-    data = json.loads(json.dumps(mvs_request_dto.__dict__, default=lambda o: o.__dict__))
-    # Remove None values
-    data_clean = remove_empty_elements(data)
+    data_clean = get_topology_json(scenario)
 
     # Create empty Simulation model object
-    simulation = Simulation()
-    simulation.status = "Running"
-    simulation.scenario_id = scenario_id
-    simulation.save()
+    simulation, simulation_created = Simulation.objects.get_or_create(scenario_id=scenario_id)
+    if simulation_created:
+        simulation.start_date = datetime.now()
+        simulation.scenario_id = scenario_id
 
     # Make simulation request to MVS
     results = mvs_simulation_request(data_clean)
-    if results is None:
-        simulation.status = "Failed"
-    else:
-        simulation.status = "Completed"
-        # TODO: Store results in GZIP format
-        simulation.results = results
+    if results['id']:
+        simulation.mvs_token = results['id']
 
-    simulation.end_date = datetime.now()
+    if results['status'] and results['status'] == 'PENDING':
+        simulation.status = "PENDING"
+    elif results['status'] and results['status'] == 'DONE':
+        simulation.status = "COMPLETED"
+        simulation.results = results['results']
+        simulation.end_date = datetime.now()
+    else:
+        simulation.status = "FAILED"
+        simulation.end_date = datetime.now()
+        simulation.results = results['results']
+
+    simulation.elapsed_seconds = (datetime.now() - simulation.start_date).seconds
     simulation.save()
 
-    return data_clean
-    # return JsonResponse({'success': True}, status=200, content_type='application/json')
+    return JsonResponse({'status': simulation.status,
+                         'secondsElapsed': simulation.elapsed_seconds,
+                         'rating': simulation.user_rating
+                         },
+                        status=200, content_type='application/json')
+
+
+@json_view
+@login_required
+@require_http_methods(["POST"])
+def update_simulation_rating(request):
+    try:
+        simulation = Simulation.objects.filter(scenario_id=request.POST['scen_id']).first()
+        simulation.user_rating = request.POST['user_rating']
+        simulation.save()
+        return JsonResponse({'success': True}, status=200, content_type='application/json')
+    except Exception as e:
+        return JsonResponse({'success': False, 'cause': str(e)}, status=200, content_type='application/json')
 
 # endregion MVS JSON Related
