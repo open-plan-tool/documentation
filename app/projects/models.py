@@ -105,7 +105,7 @@ BUS_TYPE = (
 
 SIMULATION_STATUS = (
     ('FAILED', 'FAILED'),
-    ('COMPLETED', 'COMPLETED'),
+    ('DONE', 'DONE'),
     ('PENDING', 'PENDING'),
 )
 

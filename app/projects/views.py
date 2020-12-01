@@ -14,7 +14,7 @@ from crispy_forms.templatetags import crispy_forms_filters
 from datetime import datetime
 
 from .forms import *
-from .requests import mvs_simulation_request, mvs_simulation_check
+from .requests import mvs_simulation_request, mvs_simulation_check, check_mvs_simulation
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
     update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, get_topology_json
@@ -229,12 +229,6 @@ def comment_delete(request, com_id):
 
 
 # region Scenario
-def check_mvs_simulation(simulation):
-    response = mvs_simulation_check(token=simulation.mvs_token)
-    simulation.results = response['results']
-    simulation.status = response['status']
-    simulation.save()
-
 
 @login_required
 @require_http_methods(["GET"])
@@ -249,6 +243,7 @@ def scenario_search(request, proj_id):
     # get the updated simulations list
     simulations_list = Simulation.objects.filter(scenario__project=project)
 
+    # TODO: In case of MVS DONE with errors handle accordingly
     return render(request, 'scenario/scenario_search.html',
                   {'comment_list': comment_list, 'simulations_list': simulations_list})
 
@@ -517,30 +512,23 @@ def request_mvs_simulation(request, scenario_id=0):
                             status=500, content_type='application/json')
     # Load scenario
     scenario = Scenario.objects.get(pk=scenario_id)
-
     data_clean = get_topology_json(scenario)
 
+    # delete existing simulation
+    Simulation.objects.filter(scenario_id=scenario_id).delete()
     # Create empty Simulation model object
-    simulation, simulation_created = Simulation.objects.get_or_create(scenario_id=scenario_id)
-    if simulation_created:
-        simulation.start_date = datetime.now()
-        simulation.scenario_id = scenario_id
-
+    simulation = Simulation(scenario_id=scenario_id)
     # Make simulation request to MVS
     results = mvs_simulation_request(data_clean)
-    if results['id']:
-        simulation.mvs_token = results['id']
 
-    if results['status'] and results['status'] == 'PENDING':
-        simulation.status = "PENDING"
-    elif results['status'] and results['status'] == 'DONE':
-        simulation.status = "COMPLETED"
+    simulation.mvs_token = results['id'] if results['id'] else None
+
+    if results['status'] and (results['status'] == 'DONE' or results['status'] == 'FAILED'):
+        simulation.status = results['status']
         simulation.results = results['results']
         simulation.end_date = datetime.now()
-    else:
-        simulation.status = "FAILED"
-        simulation.end_date = datetime.now()
-        simulation.results = results['results']
+    else:  # PENDING
+        simulation.status = results['status']
 
     simulation.elapsed_seconds = (datetime.now() - simulation.start_date).seconds
     simulation.save()

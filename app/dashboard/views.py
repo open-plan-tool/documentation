@@ -109,6 +109,7 @@ def scenario_request_results(request, scen_id):
 def scenario_visualize_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
+    # TODO: Handle the MVS file results and show to user
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
 

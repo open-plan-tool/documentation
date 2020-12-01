@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 import json
 from requests.exceptions import HTTPError
@@ -39,3 +41,13 @@ def mvs_simulation_check(token):
     else:
         print('Success!')
         return json.loads(response.text)
+
+
+def check_mvs_simulation(simulation):
+    if simulation.status not in ['FAILED', 'DONE']:
+        response = mvs_simulation_check(token=simulation.mvs_token)
+        simulation.results = response['results']
+        simulation.status = response['status']
+        simulation.elapsed_seconds = (datetime.now() - simulation.start_date).seconds
+        simulation.end_date = datetime.now() if response['status'] == 'DONE' else None
+        simulation.save()
