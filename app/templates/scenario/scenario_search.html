@@ -134,7 +134,7 @@
                         </thead>
                         <tbody>
 
-                        {% for simulation in simulations_list %}
+                        {% for scenario in scenarios_list %}
                         <tr class="table-row">
                             <td>
                                 <!-- Create the configuration glyphicon and the dropdown menu choices. -->
@@ -147,20 +147,20 @@
                                         <li role="presentation"
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
-                                               href="{% url 'scenario_view' simulation.scenario.pk %}" name="View">
+                                               href="{% url 'scenario_view' scenario.pk %}" name="View">
                                                 Info</a>
                                         </li>
                                         <li role="presentation"
                                             style="opacity: 0.8; font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-eye-open"
-                                               style="display: {% if simulation.status == 'DONE' %}block{% else %}none{% endif %}" name="visualizeResults"
-                                               href="{% url 'scenario_visualize_results' simulation.scenario.pk %}">
+                                               style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %}" name="visualizeResults"
+                                               href="{% url 'scenario_visualize_results' scenario.pk %}">
                                                 Visualize-Results</a>
                                         </li>
                                         <li role="presentation"
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" class="glyphicon glyphicon-picture"
-                                               href="{% url 'new_assets_topology' simulation.scenario.pk %}"
+                                               href="{% url 'new_assets_topology' scenario.pk %}"
                                                name="GridView">
                                                 Grid-Model</a>
                                         </li>
@@ -168,7 +168,7 @@
                                             style=" opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" class="glyphicon glyphicon-random"
                                                name="Simulation"
-                                               onclick="request_mvs_simulation(this, {{ simulation.scenario.pk }})">
+                                               onclick="request_mvs_simulation(this, {{ scenario.pk }})">
                                                 Simulate</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
@@ -176,7 +176,7 @@
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="1"
                                                class="glyphicon glyphicon-duplicate"
-                                               href="{% url 'scenario_duplicate' simulation.scenario.pk %}"
+                                               href="{% url 'scenario_duplicate' scenario.pk %}"
                                                name="Duplicate">
                                                 Create-a-Copy</a>
                                         </li>
@@ -184,7 +184,7 @@
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="-1" href="#">
                                                 <form style="float: left;" class="form"
-                                                      action="{% url 'scenario_delete' simulation.scenario.pk %}"
+                                                      action="{% url 'scenario_delete' scenario.pk %}"
                                                       method="POST">
                                                     {% csrf_token %}
                                                     <label style="float: left;  margin: 5px;">
@@ -200,25 +200,27 @@
                                     </ul>
                                 </div>
                             </td>
-                            <td class="text"><span><b>{{ simulation.scenario.name }}</b></span></td>
-                            <td class="text"><span>{{ simulation.scenario.start_date }}</span></td>
-                            <td class="text"><span class="State">{% if simulation.status %} {{ simulation.status }} {% else %} Not Started {% endif %}</span></td>
+                            <td class="text"><span><b>{{ scenario.name }}</b></span></td>
+                            <td class="text"><span>{{ scenario.start_date }}</span></td>
+
+                            <td class="text"><span class="State">{% if scenario.simulation.status %} {{ scenario.simulation.status }} {% else %} Not Started {% endif %}</span></td>
                             <td class="text">
-                                <div class="rate" style="display: {% if simulation.status == 'DONE' %}block{% else %}none{% endif %};" onchange="updateSimulationRating(this, {{ simulation.scenario.pk }})">
-                                    <input type="radio" id="star5" name="rate" value="5" {% if simulation.user_rating == 5 %}checked{% endif %}/>
-                                    <label for="star5" title="5stars">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" {% if simulation.user_rating == 4 %}checked{% endif %}/>
-                                    <label for="star4" title="4stars">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" {% if simulation.user_rating == 3 %}checked{% endif %}/>
-                                    <label for="star3" title="3stars">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2"{% if simulation.user_rating == 2 %}checked{% endif %}/>
-                                    <label for="star2" title="2stars">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1"{% if simulation.user_rating == 1 %}checked{% endif %}/>
-                                    <label for="star1" title="1star">1 star</label>
+                                <div id="sdf{{ scenario.pk }}" class="rate" style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %};" onchange="updateSimulationRating(this, {{ scenario.pk }})">
+                                    <input type="radio" id="star5{{ scenario.pk }}" name="rate" value="5" {% if scenario.simulation.user_rating == 5 %}checked{% endif %}/>
+                                    <label for="star5{{ scenario.pk }}" title="5stars">5 stars</label>
+                                    <input type="radio" id="star4{{ scenario.pk }}" name="rate" value="4" {% if scenario.simulation.user_rating == 4 %}checked{% endif %}/>
+                                    <label for="star4{{ scenario.pk }}" title="4stars">4 stars</label>
+                                    <input type="radio" id="star3{{ scenario.pk }}" name="rate" value="3" {% if scenario.simulation.user_rating == 3 %}checked{% endif %}/>
+                                    <label for="star3{{ scenario.pk }}" title="3stars">3 stars</label>
+                                    <input type="radio" id="star2{{ scenario.pk }}" name="rate" value="2"{% if scenario.simulation.user_rating == 2 %}checked{% endif %}/>
+                                    <label for="star2{{ scenario.pk }}" title="2stars">2 stars</label>
+                                    <input type="radio" id="star1{{ scenario.pk }}" name="rate" value="1"{% if scenario.simulation.user_rating == 1 %}checked{% endif %}/>
+                                    <label for="star1{{ scenario.pk }}" title="1star">1 star</label>
                                 </div>
                             </td>
-                            <td class="text"><span class="Progress">{% if simulation.elapsed_seconds %} {{ simulation.elapsed_seconds | beautiful_seconds }} {% else %} Not Started {% endif %}</span></td>
+                            <td class="text"><span class="Progress">{% if scenario.simulation.elapsed_seconds %} {{ scenario.simulation.elapsed_seconds | beautiful_seconds }} {% else %} Not Started {% endif %}</span></td>
                         </tr>
+
                         {% endfor %}
 
                     </table>
@@ -439,6 +441,7 @@
 
     function updateSimulationRating(elem, scen_id) {
         const selectedRating = elem.querySelector('input[name="rate"]:checked').value;
+        debugger
         $.ajax({
             headers: {'X-CSRFToken': '{{ csrf_token }}'},
             url: "{% url 'update_simulation_rating' %}",

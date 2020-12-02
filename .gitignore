@@ -5,3 +5,4 @@ __pycache__/
 migrations/
 !migrations/__init__.py
 /cdn_static_root/
+PersonalTODOs

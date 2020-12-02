@@ -237,6 +237,8 @@ def scenario_search(request, proj_id):
     request.session['project_id'] = proj_id  # set the session according to current project
     comment_list = Comment.objects.filter(project=project)
 
+    scenarios_list = Scenario.objects.filter(project=project)
+
     simulations_list = Simulation.objects.filter(scenario__project=project)
     # update the simulation status from MVS
     [check_mvs_simulation(simulation) for simulation in simulations_list]
@@ -245,7 +247,9 @@ def scenario_search(request, proj_id):
 
     # TODO: In case of MVS DONE with errors handle accordingly
     return render(request, 'scenario/scenario_search.html',
-                  {'comment_list': comment_list, 'simulations_list': simulations_list})
+                  {'comment_list': comment_list,
+                   'scenarios_list': scenarios_list,
+                   'simulations_list': simulations_list})
 
 
 @login_required
@@ -517,7 +521,7 @@ def request_mvs_simulation(request, scenario_id=0):
     # delete existing simulation
     Simulation.objects.filter(scenario_id=scenario_id).delete()
     # Create empty Simulation model object
-    simulation = Simulation(scenario_id=scenario_id)
+    simulation = Simulation(start_date=datetime.now(), scenario_id=scenario_id)
     # Make simulation request to MVS
     results = mvs_simulation_request(data_clean)
 

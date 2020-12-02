@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 
@@ -192,6 +194,7 @@ class ValueType(models.Model):
 
 
 class Asset(TopologyNode):
+    unique_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     capex_fix = models.FloatField(null=True, blank=False)  # development_costs
     capex_var = models.FloatField(null=True, blank=False)  # specific_costs
     opex_fix = models.FloatField(null=True, blank=False)  # specific_costs_om

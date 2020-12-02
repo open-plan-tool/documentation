@@ -9,19 +9,17 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: "epa-app-db"
-      #MYSQL_USER: 'EPAUser'
-      #MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: "4kFDg@G@*G,#)Fa"
-    # volumes:
-    #  - db_data:/var/lib/mysql
+    volumes:
+      - db_data:/var/lib/mysql/
   app:
-    build: app
+    build: ./app
     container_name: django-gunicorn
     restart: always
     env_file:
       - app/epa.env
-    ports:
-      - "8000:8000"
+    expose:
+      - 8000  # use expose insted of port to expose ports internal between containers and not to the host maschine
     volumes:
       - ./src/cdn_static_root:/src/cdn_static_root
     command: "gunicorn --workers=2 --bind=0.0.0.0:8000 epa.wsgi:application"
@@ -40,8 +38,8 @@ services:
       - ./src/cdn_static_root:/static
     depends_on:
       - app
-# volumes:
-#  db_data: {}
+volumes:
+  db_data:
 # need to execute 'docker-compose run app python manage.py makemigrations'
 # and 'docker-compose run app python manage.py migrate'
 
