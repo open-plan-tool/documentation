@@ -32,11 +32,11 @@ FLOW_DIRECTION = (
 
 ENERGY_VECTOR = (
     ('', 'Choose...'),
-    ('electricity', 'electricity'),
-    ('heat', 'heat'),
-    ('gas', 'gas'),
-    ('h2', 'h2'),
-    ('mobility', 'mobility'),
+    ('Electricity', 'Electricity'),
+    ('Heat', 'Heat'),
+    ('Gas', 'Gas'),
+    ('H2', 'H2'),
+    ('Mobility', 'Mobility'),
 )
 
 MVS_TYPE = (
@@ -124,9 +124,7 @@ class EconomicData(models.Model):
     duration = models.IntegerField()
     currency = models.CharField(max_length=3, choices=CURRENCY)
     discount = models.FloatField()
-    # annuity_factor = models.FloatField()
     tax = models.FloatField()
-    # crf = models.FloatField()
 
 
 class Project(models.Model):
@@ -194,7 +192,7 @@ class ValueType(models.Model):
 
 
 class Asset(TopologyNode):
-    unique_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    unique_id = models.CharField(max_length=120, default=uuid.uuid4, unique=True, editable=False)
     capex_fix = models.FloatField(null=True, blank=False)  # development_costs
     capex_var = models.FloatField(null=True, blank=False)  # specific_costs
     opex_fix = models.FloatField(null=True, blank=False)  # specific_costs_om
@@ -211,7 +209,7 @@ class Asset(TopologyNode):
     energy_price = models.FloatField(null=True, blank=False)
     feedin_tariff = models.FloatField(null=True, blank=False)
     peak_demand_pricing = models.FloatField(null=True, blank=False)
-    peak_demand_pricing_period = models.FloatField(null=True, blank=False)
+    peak_demand_pricing_period = models.SmallIntegerField(null=True, blank=False)
     renewable_share = models.FloatField(null=True, blank=False)
     renewable_asset = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=True)

@@ -197,6 +197,7 @@
                                                 </form>
                                             </a>
                                         </li>
+
                                     </ul>
                                 </div>
                             </td>
@@ -422,6 +423,9 @@
         $.ajax({
             url: "{% url 'request_mvs_simulation' %}"+scen_id,
             success: function (data) {
+                // log EPA to MVS JSON data
+                console.log(data['mvs_request_json']);
+                // ------------------------
                 const itemState = elem.closest('tr').querySelector('.State');
                 const itemProgress = elem.closest('tr').querySelector('.Progress');
                 const itemRate = elem.closest('tr').querySelector('.rate');

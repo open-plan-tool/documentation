@@ -51,9 +51,9 @@ class TimeseriesDataDto:
 
 
 class AssetDto:
-    def __init__(self, asset_type: str, label: str, type_oemof: str, energy_vector: str, input_bus_name: str,
-                 output_bus_name: str, dispatchable: bool, age_installed: ValueTypeDto, c_rate: ValueTypeDto,
-                 soc_initial: ValueTypeDto,
+    def __init__(self, asset_type: str, label: str, unique_id: str, type_oemof: str, energy_vector: str,
+                 input_bus_name: str, output_bus_name: str, dispatchable: bool, age_installed: ValueTypeDto,
+                 c_rate: ValueTypeDto, soc_initial: ValueTypeDto,
                  soc_max: ValueTypeDto, soc_min: ValueTypeDto, development_costs: ValueTypeDto,
                  dispatch_price: ValueTypeDto, efficiency: ValueTypeDto,
                  installed_capacity: ValueTypeDto, lifetime: ValueTypeDto, maximum_capacity: ValueTypeDto,
@@ -63,6 +63,7 @@ class AssetDto:
                  input_timeseries: TimeseriesDataDto, ):
         self.asset_type = asset_type
         self.label = label
+        self.unique_id = unique_id
         self.type_oemof = type_oemof
         self.energy_vector = energy_vector
         self.input_bus_name = input_bus_name
@@ -186,6 +187,7 @@ def convert_to_dto(scenario: Scenario):
         for asset in Asset.objects.filter(parent_asset=ess):
             asset_dto = AssetDto(asset.asset_type.asset_type,
                                  asset.name,
+                                 asset.unique_id,
                                  None,
                                  None,
                                  None,
@@ -239,6 +241,7 @@ def convert_to_dto(scenario: Scenario):
 
         asset_dto = AssetDto(asset.asset_type.asset_type,
                              asset.name,
+                             asset.unique_id,
                              asset.asset_type.mvs_type,
                              asset.asset_type.energy_vector,
                              input_bus_name,

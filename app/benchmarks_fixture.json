@@ -1,0 +1,873 @@
+[
+{
+  "model": "users.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$216000$CeAfxctQMejL$/w3D+gU9AX1V2F3PZoubKAR4UOpE+Q/GGnNKXmE0waI=",
+    "last_login": "2020-12-03T10:30:55.429",
+    "is_superuser": false,
+    "username": "testUser",
+    "first_name": "User First Name",
+    "last_name": "User Last Name",
+    "email": "test@user.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-12-03T10:30:48.422",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "projects.economicdata",
+  "pk": 1,
+  "fields": {
+    "duration": 30,
+    "currency": "EUR",
+    "discount": 0.08,
+    "tax": 0.0
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 1,
+  "fields": {
+    "date_created": "2020-12-03T10:32:52.962",
+    "date_updated": "2020-12-03T10:32:52.962",
+    "name": "Benchmark test for simple case electricity bus",
+    "description": "Project Descritpion",
+    "country": "Germany",
+    "latitude": 51.756961,
+    "longitude": 12.517865,
+    "economic_data": 1,
+    "user": 1
+  }
+},
+{
+  "model": "projects.scenario",
+  "pk": 1,
+  "fields": {
+    "name": "A+B+E",
+    "start_date": "2018-01-01",
+    "time_step": 60,
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "evaluated_period": 7,
+    "project": 1
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 1,
+  "fields": {
+    "asset_type": "dso",
+    "asset_category": "energy_provider",
+    "energy_vector": "Electricity",
+    "mvs_type": "source",
+    "asset_fields": "[name,energy_price,feedin_tariff,peak_demand_pricing,peak_demand_pricing_period,renewable_share]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 2,
+  "fields": {
+    "asset_type": "demand",
+    "asset_category": "energy_consumption",
+    "energy_vector": "Electricity",
+    "mvs_type": "sink",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,input_timeseries]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 3,
+  "fields": {
+    "asset_type": "transformer_station_in",
+    "asset_category": "energy_conversion",
+    "energy_vector": "Electricity",
+    "mvs_type": "transformer",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 4,
+  "fields": {
+    "asset_type": "transformer_station_out",
+    "asset_category": "energy_conversion",
+    "energy_vector": "Electricity",
+    "mvs_type": "transformer",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 5,
+  "fields": {
+    "asset_type": "storage_charge_controller_in",
+    "asset_category": "energy_conversion",
+    "energy_vector": "Electricity",
+    "mvs_type": "transformer",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 6,
+  "fields": {
+    "asset_type": "storage_charge_controller_out",
+    "asset_category": "energy_conversion",
+    "energy_vector": "Electricity",
+    "mvs_type": "transformer",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 7,
+  "fields": {
+    "asset_type": "solar_inverter",
+    "asset_category": "energy_conversion",
+    "energy_vector": "Electricity",
+    "mvs_type": "transformer",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 8,
+  "fields": {
+    "asset_type": "pv_plant",
+    "asset_category": "energy_production",
+    "energy_vector": "Electricity",
+    "mvs_type": "source",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 9,
+  "fields": {
+    "asset_type": "wind_plant",
+    "asset_category": "energy_production",
+    "energy_vector": "Electricity",
+    "mvs_type": "source",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 10,
+  "fields": {
+    "asset_type": "charging_power",
+    "asset_category": "energy_storage",
+    "energy_vector": "Electricity",
+    "mvs_type": "storage",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 11,
+  "fields": {
+    "asset_type": "discharging_power",
+    "asset_category": "energy_storage",
+    "energy_vector": "Electricity",
+    "mvs_type": "storage",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 12,
+  "fields": {
+    "asset_type": "capacity",
+    "asset_category": "energy_storage",
+    "energy_vector": "Electricity",
+    "mvs_type": "storage",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_initial,soc_max,soc_min]"
+  }
+},
+{
+  "model": "projects.assettype",
+  "pk": 13,
+  "fields": {
+    "asset_type": "ess",
+    "asset_category": "energy_storage",
+    "energy_vector": "Electricity",
+    "mvs_type": "storage",
+    "asset_fields": "[name, optimize_cap]"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 1,
+  "fields": {
+    "type": "duration",
+    "unit": "year"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 2,
+  "fields": {
+    "type": "annuity_factor",
+    "unit": ""
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 3,
+  "fields": {
+    "type": "discount",
+    "unit": "factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 4,
+  "fields": {
+    "type": "tax",
+    "unit": "factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 5,
+  "fields": {
+    "type": "crf",
+    "unit": ""
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 6,
+  "fields": {
+    "type": "crate",
+    "unit": "factor of total capacity (kWh)"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 7,
+  "fields": {
+    "type": "age_installed",
+    "unit": "year"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 8,
+  "fields": {
+    "type": "soc_initial",
+    "unit": "None or factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 9,
+  "fields": {
+    "type": "soc_max",
+    "unit": "factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 10,
+  "fields": {
+    "type": "soc_min",
+    "unit": "factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 11,
+  "fields": {
+    "type": "capex_fix",
+    "unit": "currency"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 12,
+  "fields": {
+    "type": "opex_var",
+    "unit": "currency/unit/year"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 13,
+  "fields": {
+    "type": "efficiency",
+    "unit": "factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 14,
+  "fields": {
+    "type": "installed_capacity",
+    "unit": "unit"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 15,
+  "fields": {
+    "type": "lifetime",
+    "unit": "year"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 16,
+  "fields": {
+    "type": "maximum_capacity",
+    "unit": "kW"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 17,
+  "fields": {
+    "type": "energy_price",
+    "unit": "currency/kWh"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 18,
+  "fields": {
+    "type": "feedin_tariff",
+    "unit": "currency/kWh"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 19,
+  "fields": {
+    "type": "optimize_cap",
+    "unit": "bool"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 20,
+  "fields": {
+    "type": "peak_demand_pricing",
+    "unit": "currency/kW"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 21,
+  "fields": {
+    "type": "peak_demand_pricing_period",
+    "unit": "times per year (1,2,3,4,6,12)"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 22,
+  "fields": {
+    "type": "renewable_share",
+    "unit": "factor"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 23,
+  "fields": {
+    "type": "capex_var",
+    "unit": "currency/unit"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 24,
+  "fields": {
+    "type": "opex_fix",
+    "unit": "currency/year"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 25,
+  "fields": {
+    "type": "specific_costs_om",
+    "unit": "currency/year"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 26,
+  "fields": {
+    "type": "input_timeseries",
+    "unit": "kWh"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 27,
+  "fields": {
+    "type": "evaluated_period",
+    "unit": "days"
+  }
+},
+{
+  "model": "projects.valuetype",
+  "pk": 28,
+  "fields": {
+    "type": "renewable_asset,",
+    "unit": "bool"
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 1,
+  "fields": {
+    "name": "demand_01",
+    "pos_x": 1317.0,
+    "pos_y": 237.33333333333334,
+    "scenario": 1,
+    "parent_asset": null,
+    "unique_id": "5ba307e6-5c5b-4129-833a-d8e1651a83db",
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "lifetime": 10,
+    "input_timeseries": "[638.4483146841566, 756.0975609756099, 857.1252591153891, 934.6465384314336, 983.3784518483262, 1000.0, 983.3784518483262, 934.6465384314336, 857.1252591153892, 756.0975609756099, 638.4483146841567, 512.1951219512197, 385.94192921828267, 268.29268292682946, 167.26498478705022, 89.74370547100571, 41.011792054113045, 24.39024390243905, 41.011792054112995, 89.7437054710056, 167.26498478704994, 268.2926829268291, 385.9419292182822, 512.1951219512194, 638.4483146841567, 756.0975609756099, 857.125259115389, 934.6465384314334, 983.3784518483262, 1000.0, 983.3784518483262, 934.6465384314338, 857.125259115389, 756.0975609756098, 638.4483146841566, 512.1951219512198, 385.94192921828295, 268.29268292682974, 167.2649847870505, 89.74370547100554, 41.011792054113315, 24.39024390243905, 41.011792054112995, 89.74370547100533, 167.26498478705017, 268.2926829268286, 385.94192921828255, 512.1951219512193, 638.4483146841562, 756.0975609756102, 857.1252591153888, 934.6465384314336, 983.3784518483262, 1000.0, 983.378451848326, 934.6465384314339, 857.1252591153897, 756.0975609756099, 638.4483146841567, 512.1951219512208, 385.94192921828306, 268.29268292682985, 167.26498478704994, 89.74370547100602, 41.0117920541131, 24.39024390243905, 41.01179205411294, 89.74370547100571, 167.26498478704946, 268.2926829268293, 385.9419292182833, 512.1951219512192, 638.4483146841552, 756.0975609756093, 857.1252591153892, 934.6465384314332, 983.3784518483262, 1000.0, 983.3784518483262, 934.6465384314336, 857.1252591153897, 756.0975609756115, 638.448314684156, 512.19512195122, 385.9419292182823, 268.29268292682997, 167.26498478705125, 89.74370547100608, 41.01179205411315, 24.39024390243905, 41.01179205411288, 89.74370547100479, 167.2649847870494, 268.2926829268292, 385.9419292182832, 512.1951219512192, 638.4483146841552, 756.0975609756092, 857.1252591153891, 934.646538431434, 983.378451848326, 1000.0, 983.3784518483262, 934.6465384314336, 857.1252591153886, 756.0975609756101, 638.4483146841577, 512.1951219512201, 385.94192921828414, 268.29268292682855, 167.2649847870501, 89.74370547100614, 41.01179205411315, 24.39024390243905, 41.011792054113315, 89.7437054710056, 167.26498478704931, 268.29268292682906, 385.94192921828136, 512.1951219512172, 638.4483146841567, 756.0975609756091, 857.1252591153878, 934.646538431433, 983.378451848326, 1000.0, 983.3784518483258, 934.6465384314345, 857.1252591153899, 756.0975609756102, 638.4483146841562, 512.1951219512185, 385.94192921828426, 268.2926829268302, 167.26498478705022, 89.74370547100533, 41.011792054112775, 24.39024390243905, 41.01179205411283, 89.74370547100548, 167.264984787048, 268.2926829268305, 385.94192921828125, 512.1951219512189, 638.4483146841566, 756.0975609756075, 857.1252591153901, 934.646538431433, 983.378451848326, 1000.0, 983.3784518483269, 934.6465384314346, 857.12525911539, 756.0975609756103, 638.4483146841563, 512.1951219512221, 385.9419292182844, 268.29268292683025, 167.26498478705028, 89.74370547100538, 41.0117920541137, 24.39024390243905, 41.01179205411283, 89.74370547100371, 167.2649847870479, 268.29268292683037, 385.9419292182845, 512.1951219512188, 638.4483146841565, 756.0975609756105, 857.1252591153876, 934.646538431433, 983.378451848326, 1000.0, 983.3784518483269, 934.6465384314347, 857.1252591153876, 756.0975609756105, 638.4483146841565, 512.1951219512188, 385.9419292182845, 268.29268292683037, 167.2649847870504, 89.74370547100716, 41.0117920541137, 24.39024390243905, 41.0117920541137, 89.74370547100538, 167.26498478705028, 268.29268292683025, 385.941929218281, 512.1951219512187]",
+    "crate": null,
+    "efficiency": null,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": null,
+    "asset_type": 2,
+    "optimize_cap": false,
+    "installed_capacity": 50.0,
+    "age_installed": 10.0
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 2,
+  "fields": {
+    "name": "Electricity_grid_DSO",
+    "pos_x": 292.6666666666667,
+    "pos_y": 152.0,
+    "scenario": 1,
+    "parent_asset": null,
+    "unique_id": "4db66fd3-9a2b-459c-b577-9521accc0cc3",
+    "capex_fix": null,
+    "capex_var": null,
+    "opex_fix": null,
+    "opex_var": null,
+    "lifetime": null,
+    "input_timeseries": null,
+    "crate": null,
+    "efficiency": null,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": 0.54,
+    "feedin_tariff": 0.4,
+    "peak_demand_pricing": 0.0,
+    "peak_demand_pricing_period": 1,
+    "renewable_share": 0.1,
+    "renewable_asset": null,
+    "asset_type": 1,
+    "optimize_cap": false,
+    "installed_capacity": null,
+    "age_installed": null
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 3,
+  "fields": {
+    "name": "pv_plant_01",
+    "pos_x": 498.0,
+    "pos_y": 390.3333333333333,
+    "scenario": 1,
+    "parent_asset": null,
+    "unique_id": "23827549-fdf2-4237-bfa5-1cfd7dc1997a",
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "lifetime": 30,
+    "input_timeseries": "[0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.031, 0.08, 0.161, 0.269, 0.408, 0.591, 0.677, 0.71, 0.713, 0.68, 0.574, 0.441, 0.324, 0.228, 0.124, 0.055, 0.012, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.017, 0.048, 0.101, 0.165, 0.233, 0.293, 0.32, 0.307, 0.305, 0.322, 0.306, 0.238, 0.173, 0.113, 0.062, 0.028, 0.005, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.032, 0.066, 0.176, 0.351, 0.511, 0.637, 0.751, 0.811, 0.826, 0.8, 0.702, 0.579, 0.436, 0.276, 0.118, 0.053, 0.015, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.012, 0.05, 0.111, 0.198, 0.305, 0.343, 0.331, 0.484, 0.652, 0.762, 0.523, 0.312, 0.329, 0.265, 0.129, 0.06, 0.014, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.002, 0.033, 0.056, 0.185, 0.386, 0.57, 0.714, 0.776, 0.603, 0.387, 0.284, 0.264, 0.228, 0.187, 0.156, 0.107, 0.056, 0.015, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.032, 0.064, 0.174, 0.349, 0.523, 0.666, 0.765, 0.773, 0.757, 0.711, 0.606, 0.45, 0.242, 0.145, 0.099, 0.052, 0.011, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.023, 0.07, 0.14, 0.228, 0.317, 0.414, 0.506, 0.537, 0.535, 0.534, 0.472, 0.427, 0.312, 0.209, 0.109, 0.05, 0.012, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.031, 0.078, 0.165, 0.292, 0.371, 0.357, 0.317, 0.291, 0.292, 0.335, 0.355, 0.312, 0.255, 0.176, 0.107, 0.05, 0.009, 0.0]",
+    "crate": null,
+    "efficiency": null,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": true,
+    "asset_type": 8,
+    "optimize_cap": false,
+    "installed_capacity": 1000.0,
+    "age_installed": 0.0
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 4,
+  "fields": {
+    "name": "storage",
+    "pos_x": 794.0,
+    "pos_y": 472.0,
+    "scenario": 1,
+    "parent_asset": null,
+    "unique_id": "c0fe20fe-ea6b-43f9-b307-f318824b9a84",
+    "capex_fix": null,
+    "capex_var": null,
+    "opex_fix": null,
+    "opex_var": null,
+    "lifetime": null,
+    "input_timeseries": null,
+    "crate": null,
+    "efficiency": null,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": null,
+    "asset_type": 13,
+    "optimize_cap": false,
+    "installed_capacity": null,
+    "age_installed": null
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 5,
+  "fields": {
+    "name": "capacity",
+    "pos_x": 846.0,
+    "pos_y": 732.0,
+    "scenario": 1,
+    "parent_asset": 4,
+    "unique_id": "e9e1d7f3-58d6-4e13-b731-ee98112b9164",
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "lifetime": 10,
+    "input_timeseries": null,
+    "crate": null,
+    "efficiency": 0.001,
+    "soc_initial": 0.0,
+    "soc_max": 1.0,
+    "soc_min": 0.2,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": null,
+    "asset_type": 12,
+    "optimize_cap": false,
+    "installed_capacity": 500.0,
+    "age_installed": 0.0
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 6,
+  "fields": {
+    "name": "input power",
+    "pos_x": 846.0,
+    "pos_y": 552.0,
+    "scenario": 1,
+    "parent_asset": 4,
+    "unique_id": "c6ff1ee7-87d3-46bc-b6a7-58fc45523e68",
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "lifetime": 10,
+    "input_timeseries": null,
+    "crate": 0.2,
+    "efficiency": 0.8,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": null,
+    "asset_type": 10,
+    "optimize_cap": false,
+    "installed_capacity": 100.0,
+    "age_installed": 0.0
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 7,
+  "fields": {
+    "name": "output power",
+    "pos_x": 1146.0,
+    "pos_y": 552.0,
+    "scenario": 1,
+    "parent_asset": 4,
+    "unique_id": "46a1aeae-989a-4af9-b53d-87dacbccabb0",
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "lifetime": 10,
+    "input_timeseries": null,
+    "crate": 1.0,
+    "efficiency": 0.8,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": null,
+    "asset_type": 11,
+    "optimize_cap": false,
+    "installed_capacity": 500.0,
+    "age_installed": 0.0
+  }
+},
+{
+  "model": "projects.asset",
+  "pk": 8,
+  "fields": {
+    "name": "transformer_station_in",
+    "pos_x": 788.6666666666666,
+    "pos_y": 211.0,
+    "scenario": 1,
+    "parent_asset": null,
+    "unique_id": "2ede85aa-c9c5-4f1e-a603-98afeb450105",
+    "capex_fix": 0.0,
+    "capex_var": 0.0,
+    "opex_fix": 0.0,
+    "opex_var": 0.0,
+    "lifetime": 30,
+    "input_timeseries": null,
+    "crate": null,
+    "efficiency": 0.96,
+    "soc_initial": null,
+    "soc_max": null,
+    "soc_min": null,
+    "dispatchable": false,
+    "maximum_capacity": null,
+    "energy_price": null,
+    "feedin_tariff": null,
+    "peak_demand_pricing": null,
+    "peak_demand_pricing_period": null,
+    "renewable_share": null,
+    "renewable_asset": null,
+    "asset_type": 3,
+    "optimize_cap": false,
+    "installed_capacity": 1250.0,
+    "age_installed": 5.0
+  }
+},
+{
+  "model": "projects.bus",
+  "pk": 1,
+  "fields": {
+    "name": "Electricity (DSO)",
+    "pos_x": 501.3333333333333,
+    "pos_y": 136.0,
+    "scenario": 1,
+    "parent_asset": null,
+    "type": "Electricity",
+    "input_ports": 1,
+    "output_ports": 1
+  }
+},
+{
+  "model": "projects.bus",
+  "pk": 2,
+  "fields": {
+    "name": "storage bus",
+    "pos_x": 986.0,
+    "pos_y": 642.0,
+    "scenario": 1,
+    "parent_asset": 4,
+    "type": "Electricity",
+    "input_ports": 2,
+    "output_ports": 1
+  }
+},
+{
+  "model": "projects.bus",
+  "pk": 3,
+  "fields": {
+    "name": "Electricity",
+    "pos_x": 1018.6666666666666,
+    "pos_y": 253.0,
+    "scenario": 1,
+    "parent_asset": null,
+    "type": "Electricity",
+    "input_ports": 3,
+    "output_ports": 2
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 11,
+  "fields": {
+    "bus": 1,
+    "bus_connection_port": "output_1",
+    "asset": 8,
+    "flow_direction": "B2A",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 12,
+  "fields": {
+    "bus": 2,
+    "bus_connection_port": "output_1",
+    "asset": 7,
+    "flow_direction": "B2A",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 13,
+  "fields": {
+    "bus": 3,
+    "bus_connection_port": "output_1",
+    "asset": 1,
+    "flow_direction": "B2A",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 14,
+  "fields": {
+    "bus": 3,
+    "bus_connection_port": "output_2",
+    "asset": 4,
+    "flow_direction": "B2A",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 15,
+  "fields": {
+    "bus": 3,
+    "bus_connection_port": "input_3",
+    "asset": 4,
+    "flow_direction": "A2B",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 16,
+  "fields": {
+    "bus": 1,
+    "bus_connection_port": "input_1",
+    "asset": 2,
+    "flow_direction": "A2B",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 17,
+  "fields": {
+    "bus": 3,
+    "bus_connection_port": "input_2",
+    "asset": 3,
+    "flow_direction": "A2B",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 18,
+  "fields": {
+    "bus": 2,
+    "bus_connection_port": "input_1",
+    "asset": 6,
+    "flow_direction": "A2B",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 19,
+  "fields": {
+    "bus": 2,
+    "bus_connection_port": "input_2",
+    "asset": 5,
+    "flow_direction": "A2B",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.connectionlink",
+  "pk": 20,
+  "fields": {
+    "bus": 3,
+    "bus_connection_port": "input_1",
+    "asset": 8,
+    "flow_direction": "A2B",
+    "scenario": 1
+  }
+},
+{
+  "model": "projects.simulation",
+  "pk": 1,
+  "fields": {
+    "start_date": "2020-12-03T11:27:27.894",
+    "end_date": "2020-12-03T11:29:37.464",
+    "elapsed_seconds": 129.0,
+    "mvs_token": "f4864940-3e73-40f5-b186-6c65d9b5ebce",
+    "status": "DONE",
+    "scenario": 1,
+    "user_rating": null,
+    "results": "\"ERROR: Traceback (most recent call last):\\n  File \\\"/queue/tasks.py\\\", line 25, in run_simulation\\n    dict_values = convert_epa_params_to_mvs(simulation_input)\\n  File \\\"/usr/local/lib/python3.7/site-packages/multi_vector_simulator/utils/data_parser.py\\\", line 303, in convert_epa_params_to_mvs\\n    raise (MissingParameterError(\\\"\\\\n\\\".join(errror_msg)))\\nmulti_vector_simulator.A1_csv_to_json.MissingParameterError:  \\n \\nThe following parameter groups and sub parameters are missing from input parameters:\\nproject_data\\n\\t`label` parameter\\neconomic_data\\n\\t`label` parameter\\nsimulation_settings\\n\\t`timestep` parameter\\n\\t`store_oemof_results` parameter\\n\\t`label` parameter\\n\\t`output_lp_file` parameter\\nenergyProviders\\nfixcost\\nconstraints\\n\\t`minimal_renewable_factor` parameter\\n\""
+  }
+}
+]

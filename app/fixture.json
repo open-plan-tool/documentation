@@ -5,7 +5,7 @@
   "fields": {
     "asset_type": "dso",
     "asset_category": "energy_provider",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "source",
     "asset_fields": "[name,energy_price,feedin_tariff,peak_demand_pricing,peak_demand_pricing_period,renewable_share]"
   }
@@ -16,7 +16,7 @@
   "fields": {
     "asset_type": "demand",
     "asset_category": "energy_consumption",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "sink",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,input_timeseries]"
   }
@@ -27,7 +27,7 @@
   "fields": {
     "asset_type": "transformer_station_in",
     "asset_category": "energy_conversion",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "transformer",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
   }
@@ -38,7 +38,7 @@
   "fields": {
     "asset_type": "transformer_station_out",
     "asset_category": "energy_conversion",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "transformer",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
   }
@@ -49,7 +49,7 @@
   "fields": {
     "asset_type": "storage_charge_controller_in",
     "asset_category": "energy_conversion",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "transformer",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
   }
@@ -60,7 +60,7 @@
   "fields": {
     "asset_type": "storage_charge_controller_out",
     "asset_category": "energy_conversion",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "transformer",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
   }
@@ -71,7 +71,7 @@
   "fields": {
     "asset_type": "solar_inverter",
     "asset_category": "energy_conversion",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "transformer",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]"
   }
@@ -82,7 +82,7 @@
   "fields": {
     "asset_type": "pv_plant",
     "asset_category": "energy_production",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "source",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]"
   }
@@ -93,7 +93,7 @@
   "fields": {
     "asset_type": "wind_plant",
     "asset_category": "energy_production",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "source",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]"
   }
@@ -104,7 +104,7 @@
   "fields": {
     "asset_type": "charging_power",
     "asset_category": "energy_storage",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]"
   }
@@ -115,7 +115,7 @@
   "fields": {
     "asset_type": "discharging_power",
     "asset_category": "energy_storage",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]"
   }
@@ -126,7 +126,7 @@
   "fields": {
     "asset_type": "capacity",
     "asset_category": "energy_storage",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_initial,soc_max,soc_min]"
   }
@@ -137,7 +137,7 @@
   "fields": {
     "asset_type": "ess",
     "asset_category": "energy_storage",
-    "energy_vector": "electricity",
+    "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name, optimize_cap]"
   }
