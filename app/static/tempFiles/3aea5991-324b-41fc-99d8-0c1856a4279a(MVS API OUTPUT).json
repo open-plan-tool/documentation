@@ -1,0 +1,2458 @@
+{
+    "id": "3aea5991-324b-41fc-99d8-0c1856a4279a",
+    "status": "DONE",
+    "results": {
+        "constraints": {
+            "minimal_renewable_factor": {
+                "unit": "factor",
+                "value": 0.3
+            }
+        },
+        "energyProviders": [
+            {
+                "connected_consumption_sources": "Electricity_grid_DSO_consumption_source",
+                "connected_feedin_sink": "Electricity_grid_DSO_feedin_sink",
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/unit/year",
+                    "value": 0
+                },
+                "energy_price": {
+                    "unit": "currency/kWh",
+                    "value": 0.1
+                },
+                "energy_vector": "Electricity",
+                "feedin_tariff": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "inflow_direction": "Electricity (DSO)",
+                "installed_capacity": {
+                    "unit": "unit",
+                    "value": 0.0
+                },
+                "label": "Electricity_grid_DSO",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity (DSO)",
+                "peak_demand_pricing": {
+                    "unit": "currency/kW",
+                    "value": 60
+                },
+                "peak_demand_pricing_period": {
+                    "unit": "times per year (1,2,3,4,6,12)",
+                    "value": 2
+                },
+                "renewable_share": {
+                    "unit": "factor",
+                    "value": 0.1
+                },
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/year",
+                    "value": 0
+                },
+                "type_oemof": "source",
+                "unit": "kW"
+            }
+        ],
+        "energy_busses": [
+            {
+                "assets": [
+                    "Backup_diesel_generator",
+                    "Diesel",
+                    "Fuel_bus_excess"
+                ],
+                "energy_vector": "Electricity",
+                "label": "Fuel_bus"
+            },
+            {
+                "assets": [
+                    "Backup_diesel_generator",
+                    "Charge_contoller_ESS_Li-Ion_(charge)",
+                    "Charge_contoller_ESS_Li-Ion_(discharge)",
+                    "Transformer_station_(DSO)_feedin",
+                    "solar_inverter_(mono)",
+                    "transformer_station_(DSO)_consumption",
+                    "Harbor",
+                    "Remaining_demand",
+                    "Shore_power_(docked_ships)",
+                    "Electricity_bus_excess"
+                ],
+                "energy_vector": "Electricity",
+                "label": "Electricity_bus"
+            },
+            {
+                "assets": [
+                    "Charge_contoller_ESS_Li-Ion_(charge)",
+                    "Charge_contoller_ESS_Li-Ion_(discharge)",
+                    "storage_01",
+                    "ESS Li-Ion_bus_excess"
+                ],
+                "energy_vector": "Electricity",
+                "label": "ESS Li-Ion_bus"
+            },
+            {
+                "assets": [
+                    "Electricity_grid_DSO_consumption_period_1",
+                    "Electricity_grid_DSO_consumption_period_2",
+                    "Electricity_grid_DSO_consumption",
+                    "Electricity (DSO)_pdp_bus_excess"
+                ],
+                "energy_vector": "Electricity",
+                "label": "Electricity (DSO)_pdp_bus"
+            },
+            {
+                "assets": [
+                    "Electricity_grid_DSO_consumption_period_1",
+                    "Electricity_grid_DSO_consumption_period_2",
+                    "Transformer_station_(DSO)_feedin",
+                    "transformer_station_(DSO)_consumption",
+                    "Electricity_grid_DSO",
+                    "Electricity (DSO)_bus_excess",
+                    "Electricity_grid_DSO_feedin_sink"
+                ],
+                "energy_vector": "Electricity",
+                "label": "Electricity (DSO)_bus"
+            },
+            {
+                "assets": [
+                    "solar_inverter_(mono)",
+                    "PV_plant_(mono)",
+                    "PV plant (mono)_bus_excess"
+                ],
+                "energy_vector": "Electricity",
+                "label": "PV plant (mono)_bus"
+            }
+        ],
+        "energy_consumption": [
+            {
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/unit/year",
+                    "value": 0
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity",
+                "input_bus_name": "Electricity_bus",
+                "input_timeseries": {
+                    "data": [
+                        144.37,
+                        144.15,
+                        141.58,
+                        137.67,
+                        139.23,
+                        145.41,
+                        153.76,
+                        152.99,
+                        147.58,
+                        133.64,
+                        111.66,
+                        112.99,
+                        115.97,
+                        115.28,
+                        108.42,
+                        111.25,
+                        125.01,
+                        139.87,
+                        138.5,
+                        146.34,
+                        162.11,
+                        156.96,
+                        157.35,
+                        157.88,
+                        157.03,
+                        147.05,
+                        150.6,
+                        143.59,
+                        146.08,
+                        151.38,
+                        155.08,
+                        160.3,
+                        170.13,
+                        149.2,
+                        113.87,
+                        106.72,
+                        108.12,
+                        103.74,
+                        116.07,
+                        121.93,
+                        138.56,
+                        156.61,
+                        154.31,
+                        155.43,
+                        157.92,
+                        173.73,
+                        198.72,
+                        201.1,
+                        203.77,
+                        199.24,
+                        188.14,
+                        195.27,
+                        192.83,
+                        177.79,
+                        167.39,
+                        175.12,
+                        192.64,
+                        166.07,
+                        131.96,
+                        122.6,
+                        123.34,
+                        126.37,
+                        129.75,
+                        133.66,
+                        144.92,
+                        165.79,
+                        158.77,
+                        158.34,
+                        165.6,
+                        163.03,
+                        179.96,
+                        187.5,
+                        184.47,
+                        186.78,
+                        179.36,
+                        166.95,
+                        166.89,
+                        186.63,
+                        204.76,
+                        206.88,
+                        208.72,
+                        193.74,
+                        161.23,
+                        147.26,
+                        141.43,
+                        148.71,
+                        136.99,
+                        142.77,
+                        157.45,
+                        165.79,
+                        168.26,
+                        175.13,
+                        176.4,
+                        153.92,
+                        146.15,
+                        146.05,
+                        143.9,
+                        143.04,
+                        143.24,
+                        142.75,
+                        148.16,
+                        149.09,
+                        148.24,
+                        153.63,
+                        147.07,
+                        129.32,
+                        107.57,
+                        100.43,
+                        100.62,
+                        100.96,
+                        103.47,
+                        107.2,
+                        125.5,
+                        144.1,
+                        146.33,
+                        154.5,
+                        151.3,
+                        147.13,
+                        150.04,
+                        145.32,
+                        146.78,
+                        149.87,
+                        150.39,
+                        144.01,
+                        145.62,
+                        151.99,
+                        146.63,
+                        148.7,
+                        147.96,
+                        130.3,
+                        114.76,
+                        110.81,
+                        107.45,
+                        104.77,
+                        104.27,
+                        112.2,
+                        128.46,
+                        145.2,
+                        154.86,
+                        156.28,
+                        156.32,
+                        156.19,
+                        154.91,
+                        151.93,
+                        149.63,
+                        154.89,
+                        168.33,
+                        174.02,
+                        173.63,
+                        181.8,
+                        172.88,
+                        175.83,
+                        207.65,
+                        181.68,
+                        166.93,
+                        153.41,
+                        151.06,
+                        157.82,
+                        153.07,
+                        164.2,
+                        150.67,
+                        160.57,
+                        177.8,
+                        194.85,
+                        209.94,
+                        209.78,
+                        208.19,
+                        200.63
+                    ],
+                    "unit": "?"
+                },
+                "installed_capacity": {
+                    "unit": "unit",
+                    "value": 0.0
+                },
+                "label": "Harbor",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": false
+                },
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/year",
+                    "value": 0
+                },
+                "type_oemof": "sink"
+            },
+            {
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/unit/year",
+                    "value": 0
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity",
+                "input_bus_name": "Electricity_bus",
+                "input_timeseries": {
+                    "data": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "unit": "?"
+                },
+                "installed_capacity": {
+                    "unit": "unit",
+                    "value": 0.0
+                },
+                "label": "Remaining_demand",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": false
+                },
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/year",
+                    "value": 0
+                },
+                "type_oemof": "sink"
+            },
+            {
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/unit/year",
+                    "value": 0
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity",
+                "input_bus_name": "Electricity_bus",
+                "input_timeseries": {
+                    "data": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        300,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "unit": "?"
+                },
+                "installed_capacity": {
+                    "unit": "unit",
+                    "value": 0.0
+                },
+                "label": "Shore_power_(docked_ships)",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": false
+                },
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/year",
+                    "value": 0
+                },
+                "type_oemof": "sink"
+            }
+        ],
+        "energy_conversion": [
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 0.33
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Fuel",
+                "input_bus_name": "Fuel_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 0
+                },
+                "label": "Backup_diesel_generator",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 15
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": 1
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity",
+                "output_bus_name": "Electricity_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 600
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 5
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity",
+                "input_bus_name": "Electricity_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 0
+                },
+                "label": "Charge_contoller_ESS_Li-Ion_(charge)",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 10
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "ESS Li-Ion",
+                "output_bus_name": "ESS Li-Ion_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 0
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "ESS Li-Ion",
+                "input_bus_name": "ESS Li-Ion_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 0
+                },
+                "label": "Charge_contoller_ESS_Li-Ion_(discharge)",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 10
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity",
+                "output_bus_name": "Electricity_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 0
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kW/hour",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity (DSO)_pdp",
+                "input_bus_name": "Electricity (DSO)_pdp_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 0
+                },
+                "label": "Electricity_grid_DSO_consumption_period_1",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity (DSO)",
+                "output_bus_name": "Electricity (DSO)_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 60
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kW/hour",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity (DSO)_pdp",
+                "input_bus_name": "Electricity (DSO)_pdp_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 0
+                },
+                "label": "Electricity_grid_DSO_consumption_period_2",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity (DSO)",
+                "output_bus_name": "Electricity (DSO)_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 60
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 5
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 0.96
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity",
+                "input_bus_name": "Electricity_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 1250
+                },
+                "label": "Transformer_station_(DSO)_feedin",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": false
+                },
+                "outflow_direction": "Electricity (DSO)",
+                "output_bus_name": "Electricity (DSO)_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 0
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "PV plant (mono)",
+                "input_bus_name": "PV plant (mono)_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 0
+                },
+                "label": "solar_inverter_(mono)",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 15
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity",
+                "output_bus_name": "Electricity_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 3000
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 0
+                },
+                "type_oemof": "transformer"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 5
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 0.96
+                },
+                "energy_vector": "Electricity",
+                "inflow_direction": "Electricity (DSO)",
+                "input_bus_name": "Electricity (DSO)_bus",
+                "installed_capacity": {
+                    "unit": "kW",
+                    "value": 1250
+                },
+                "label": "transformer_station_(DSO)_consumption",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": false
+                },
+                "outflow_direction": "Electricity",
+                "output_bus_name": "Electricity_bus",
+                "specific_costs": {
+                    "unit": "currency/kW",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kW/year",
+                    "value": 0
+                },
+                "type_oemof": "transformer"
+            }
+        ],
+        "energy_production": [
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0.64
+                },
+                "dispatchable": true,
+                "energy_vector": "Electricity",
+                "installed_capacity": {
+                    "unit": "kWp",
+                    "value": 0
+                },
+                "label": "Diesel",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 20
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Fuel",
+                "output_bus_name": "Fuel_bus",
+                "renewable_asset": {
+                    "unit": "bool",
+                    "value": false
+                },
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/unit/year",
+                    "value": 0
+                },
+                "type_oemof": "source"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0.1
+                },
+                "dispatchable": true,
+                "energy_vector": "Electricity",
+                "installed_capacity": {
+                    "unit": "unit",
+                    "value": 0.0
+                },
+                "label": "Electricity_grid_DSO_consumption",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "Electricity (DSO)_pdp",
+                "output_bus_name": "Electricity (DSO)_pdp_bus",
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/year",
+                    "value": 0
+                },
+                "type_oemof": "source"
+            },
+            {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 10000
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "dispatchable": false,
+                "energy_vector": "Electricity",
+                "input_timeseries": {
+                    "data": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.012,
+                        0.022000000000000002,
+                        0.022000000000000002,
+                        0.012,
+                        0.001,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.002,
+                        0.005,
+                        0.005,
+                        0.002,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.001,
+                        0.026000000000000002,
+                        0.045,
+                        0.028999999999999998,
+                        0.011000000000000001,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.001,
+                        0.015,
+                        0.019,
+                        0.013000000000000001,
+                        0.006,
+                        0.002,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.008,
+                        0.02,
+                        0.019,
+                        0.011000000000000001,
+                        0.001,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.001,
+                        0.003,
+                        0.019,
+                        0.013999999999999999,
+                        0.001,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.002,
+                        0.009000000000000001,
+                        0.019,
+                        0.012,
+                        0.002,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "unit": "?"
+                },
+                "installed_capacity": {
+                    "unit": "kWp",
+                    "value": 50
+                },
+                "label": "PV_plant_(mono)",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 30
+                },
+                "maximum_capacity": {
+                    "unit": "?",
+                    "value": null
+                },
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "PV plant (mono)",
+                "output_bus_name": "PV plant (mono)_bus",
+                "renewable_asset": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "specific_costs": {
+                    "unit": "currency/unit",
+                    "value": 7200
+                },
+                "specific_costs_om": {
+                    "unit": "currency/unit/year",
+                    "value": 80
+                },
+                "type_oemof": "source"
+            }
+        ],
+        "energy_storage": [
+            {
+                "energy_vector": "Electricity",
+                "inflow_direction": "ESS Li-Ion",
+                "input power": {
+                    "Replacement_costs_during_project_lifetime": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "Specific_replacement_costs_of_installed_capacity": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "Specific_replacement_costs_of_optimized_capacity": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "age_installed": {
+                        "unit": "year",
+                        "value": 0
+                    },
+                    "annual_total_flow": {
+                        "unit": "kWh",
+                        "value": 190995.83125000002
+                    },
+                    "annuity_of_specific_investment_costs_and_specific_annual_om": {
+                        "unit": "currency/kWh/year",
+                        "value": 0.0
+                    },
+                    "annuity_om": {
+                        "unit": "currency/year",
+                        "value": 0.0
+                    },
+                    "annuity_total": {
+                        "unit": "currency/year",
+                        "value": 0.0
+                    },
+                    "average_flow": {
+                        "unit": "kW",
+                        "value": 21.803177083333335
+                    },
+                    "c_rate": {
+                        "unit": "factor of total capacity (kWh)",
+                        "value": 1
+                    },
+                    "costs_cost_om": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_dispatch": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_investment_over_lifetime": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_om_total": {
+                        "value": 0.0
+                    },
+                    "costs_total": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_upfront_in_year_zero": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "development_costs": {
+                        "unit": "currency",
+                        "value": 0
+                    },
+                    "dispatch_price": {
+                        "unit": "currency/kWh",
+                        "value": 0
+                    },
+                    "efficiency": {
+                        "unit": "factor",
+                        "value": 0.9500000000000001
+                    },
+                    "flow": {
+                        "data_type": "pandas_Series",
+                        "value": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            127.89858,
+                            286.2743,
+                            283.2943,
+                            124.27858,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            175.93179,
+                            276.6643,
+                            275.9243,
+                            93.225365,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            138.21822,
+                            232.04108,
+                            118.09179,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            52.13572,
+                            298.8343,
+                            278.68108,
+                            118.63536,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            271.85108,
+                            174.71501,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            26.258935,
+                            228.24108,
+                            81.73858,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    "installedCap": {
+                        "unit": "kWh",
+                        "value": 0
+                    },
+                    "label": "storage_01_ESS Li-Ion_storage_01 input power",
+                    "levelized_cost_of_energy_of_asset": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "lifetime": {
+                        "unit": "year",
+                        "value": 10
+                    },
+                    "lifetime_price_dispatch": {
+                        "unit": "kW/hour",
+                        "value": 0.0
+                    },
+                    "lifetime_specific_cost": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "lifetime_specific_cost_om": {
+                        "unit": "currency/kWh/ye",
+                        "value": 0.0
+                    },
+                    "maximumCap": {
+                        "unit": "kW",
+                        "value": null
+                    },
+                    "optimizeCap": {
+                        "unit": "bool",
+                        "value": false
+                    },
+                    "optimizedAddCap": {
+                        "unit": "kW",
+                        "value": 975.82309
+                    },
+                    "peak_flow": {
+                        "unit": "kW",
+                        "value": 298.8343
+                    },
+                    "simulation_annuity": {
+                        "unit": "currency/unit/evaluated_period",
+                        "value": 0.0
+                    },
+                    "specific_costs": {
+                        "unit": "currency/kWh",
+                        "value": 0
+                    },
+                    "specific_costs_om": {
+                        "unit": "currency/kWh/year",
+                        "value": 0
+                    },
+                    "total_flow": {
+                        "unit": "kWh",
+                        "value": 3662.93375
+                    },
+                    "unit": "kW"
+                },
+                "input_bus_name": "ESS Li-Ion_bus",
+                "label": "storage_01",
+                "optimize_capacity": {
+                    "unit": "bool",
+                    "value": true
+                },
+                "outflow_direction": "ESS Li-Ion",
+                "output power": {
+                    "Replacement_costs_during_project_lifetime": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "Specific_replacement_costs_of_installed_capacity": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "Specific_replacement_costs_of_optimized_capacity": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "age_installed": {
+                        "unit": "year",
+                        "value": 0
+                    },
+                    "annual_total_flow": {
+                        "unit": "kWh",
+                        "value": 172373.73961285714
+                    },
+                    "annuity_of_specific_investment_costs_and_specific_annual_om": {
+                        "unit": "currency/kWh/year",
+                        "value": 0.0
+                    },
+                    "annuity_om": {
+                        "unit": "currency/year",
+                        "value": 0.0
+                    },
+                    "annuity_total": {
+                        "unit": "currency/year",
+                        "value": 0.0
+                    },
+                    "average_flow": {
+                        "unit": "kW",
+                        "value": 19.677367535714286
+                    },
+                    "c_rate": {
+                        "unit": "factor of total capacity (kWh)",
+                        "value": 1
+                    },
+                    "costs_cost_om": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_dispatch": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_investment_over_lifetime": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_om_total": {
+                        "value": 0.0
+                    },
+                    "costs_total": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_upfront_in_year_zero": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "development_costs": {
+                        "unit": "currency",
+                        "value": 0
+                    },
+                    "dispatch_price": {
+                        "unit": "currency/kWh",
+                        "value": 0
+                    },
+                    "efficiency": {
+                        "unit": "factor",
+                        "value": 0.9500000000000001
+                    },
+                    "flow": {
+                        "data_type": "pandas_Series",
+                        "value": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            17.941975,
+                            20.431975,
+                            25.731975,
+                            29.431975,
+                            34.651975,
+                            44.481975,
+                            23.551975,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            12.911975,
+                            30.961975,
+                            28.661975,
+                            29.781975,
+                            32.271975,
+                            48.081975,
+                            73.071975,
+                            75.451975,
+                            78.121975,
+                            73.591975,
+                            62.491975,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            129.75,
+                            133.66,
+                            144.92,
+                            165.79,
+                            158.77,
+                            8.735548,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            28.93071,
+                            97.06357,
+                            142.77,
+                            157.45,
+                            14.522592,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            83.506785,
+                            107.2,
+                            125.5,
+                            144.1,
+                            146.33,
+                            68.691754,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            84.306785,
+                            112.2,
+                            128.46,
+                            78.059116,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            113.14357,
+                            164.2,
+                            26.111766,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    "installedCap": {
+                        "unit": "kWh",
+                        "value": 0
+                    },
+                    "label": "storage_01_ESS Li-Ion_storage_01 output power",
+                    "levelized_cost_of_energy_of_asset": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "lifetime": {
+                        "unit": "year",
+                        "value": 10
+                    },
+                    "lifetime_price_dispatch": {
+                        "unit": "kW/hour",
+                        "value": 0.0
+                    },
+                    "lifetime_specific_cost": {
+                        "unit": "currency/kWh",
+                        "value": 0.0
+                    },
+                    "lifetime_specific_cost_om": {
+                        "unit": "currency/kWh/ye",
+                        "value": 0.0
+                    },
+                    "maximumCap": {
+                        "unit": "kW",
+                        "value": null
+                    },
+                    "optimizeCap": {
+                        "unit": "bool",
+                        "value": false
+                    },
+                    "optimizedAddCap": {
+                        "unit": "kW",
+                        "value": 975.82309
+                    },
+                    "peak_flow": {
+                        "unit": "kW",
+                        "value": 165.79
+                    },
+                    "simulation_annuity": {
+                        "unit": "currency/unit/evaluated_period",
+                        "value": 0.0
+                    },
+                    "specific_costs": {
+                        "unit": "currency/kWh",
+                        "value": 0
+                    },
+                    "specific_costs_om": {
+                        "unit": "currency/kWh/year",
+                        "value": 0
+                    },
+                    "total_flow": {
+                        "unit": "kWh",
+                        "value": 3305.797746
+                    },
+                    "unit": "kW"
+                },
+                "output_bus_name": "ESS Li-Ion_bus",
+                "storage capacity": {
+                    "Replacement_costs_during_project_lifetime": {
+                        "unit": "NOK",
+                        "value": 3957920.095957978
+                    },
+                    "Specific_replacement_costs_of_installed_capacity": {
+                        "unit": "currency/kWh",
+                        "value": 4055.981188104473
+                    },
+                    "Specific_replacement_costs_of_optimized_capacity": {
+                        "unit": "currency/kWh",
+                        "value": 4055.981188104473
+                    },
+                    "age_installed": {
+                        "unit": "year",
+                        "value": 0
+                    },
+                    "annual_total_flow": {
+                        "unit": "kWh",
+                        "value": 3543446.4140071548
+                    },
+                    "annuity_of_specific_investment_costs_and_specific_annual_om": {
+                        "unit": "currency/kWh/year",
+                        "value": 585.2582643000873
+                    },
+                    "annuity_om": {
+                        "unit": "currency/year",
+                        "value": 0.0
+                    },
+                    "annuity_total": {
+                        "unit": "currency/year",
+                        "value": 571108.5279173477
+                    },
+                    "average_flow": {
+                        "unit": "kW",
+                        "value": 404.50301529762044
+                    },
+                    "costs_cost_om": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_dispatch": {
+                        "unit": "NOK",
+                        "value": 0.0
+                    },
+                    "costs_investment_over_lifetime": {
+                        "unit": "NOK",
+                        "value": 7861212.455957978
+                    },
+                    "costs_om_total": {
+                        "value": 0.0
+                    },
+                    "costs_total": {
+                        "unit": "NOK",
+                        "value": 7861212.455957978
+                    },
+                    "costs_upfront_in_year_zero": {
+                        "unit": "NOK",
+                        "value": 3903292.36
+                    },
+                    "development_costs": {
+                        "unit": "currency",
+                        "value": 0
+                    },
+                    "dispatch_price": {
+                        "unit": "currency/unit/year",
+                        "value": 0
+                    },
+                    "efficiency": {
+                        "unit": "factor",
+                        "value": 0
+                    },
+                    "flow": {
+                        "data_type": "pandas_Series",
+                        "value": [
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            316.66827,
+                            588.62885,
+                            857.75844,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            975.82309,
+                            956.9368,
+                            935.42946,
+                            908.34317,
+                            877.36214,
+                            840.88638,
+                            794.06325,
+                            769.2717,
+                            769.2717,
+                            769.2717,
+                            769.2717,
+                            769.2717,
+                            769.2717,
+                            769.2717,
+                            755.68014,
+                            723.08859,
+                            692.91809,
+                            661.56864,
+                            627.59814,
+                            576.98554,
+                            500.06767,
+                            420.64454,
+                            338.41088,
+                            260.94564,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            362.29982,
+                            625.13091,
+                            887.25899,
+                            975.82309,
+                            839.24414,
+                            698.54941,
+                            546.00204,
+                            371.48625,
+                            204.35993,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            326.47193,
+                            546.91096,
+                            659.09817,
+                            628.64479,
+                            526.47261,
+                            376.1884,
+                            210.45156,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            244.69355,
+                            528.58614,
+                            793.33317,
+                            906.03676,
+                            818.13489,
+                            705.29278,
+                            573.18752,
+                            421.50331,
+                            267.47173,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            453.42315,
+                            619.40241,
+                            530.65842,
+                            412.55316,
+                            277.33211,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            220.11061,
+                            436.93964,
+                            514.59129,
+                            395.49279,
+                            222.65069,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462,
+                            195.16462
+                        ]
+                    },
+                    "installedCap": {
+                        "unit": "kWh",
+                        "value": 0
+                    },
+                    "label": "storage_01_ESS Li-Ion_storage_01 storage capacity",
+                    "levelized_cost_of_energy_of_asset": {
+                        "unit": "currency/kWh",
+                        "value": 8.404030117838145
+                    },
+                    "lifetime": {
+                        "unit": "year",
+                        "value": 10
+                    },
+                    "lifetime_price_dispatch": {
+                        "unit": "kWh/hour",
+                        "value": 0.0
+                    },
+                    "lifetime_specific_cost": {
+                        "unit": "currency/kWh",
+                        "value": 8055.981188104473
+                    },
+                    "lifetime_specific_cost_om": {
+                        "unit": "currency/kWh/ye",
+                        "value": 0.0
+                    },
+                    "maximumCap": {
+                        "unit": "kWh",
+                        "value": null
+                    },
+                    "optimizeCap": {
+                        "unit": "bool",
+                        "value": false
+                    },
+                    "optimizedAddCap": {
+                        "unit": "kWh",
+                        "value": 975.82309
+                    },
+                    "peak_flow": {
+                        "unit": "kW",
+                        "value": 975.82309
+                    },
+                    "simulation_annuity": {
+                        "unit": "currency/unit/evaluated_period",
+                        "value": 11.224131096166058
+                    },
+                    "soc_initial": {
+                        "unit": "None or factor",
+                        "value": null
+                    },
+                    "soc_max": {
+                        "unit": "factor",
+                        "value": 1
+                    },
+                    "soc_min": {
+                        "unit": "factor",
+                        "value": 0.2
+                    },
+                    "specific_costs": {
+                        "unit": "currency/kWh",
+                        "value": 4000
+                    },
+                    "specific_costs_om": {
+                        "unit": "currency/kWh/year",
+                        "value": 0
+                    },
+                    "total_flow": {
+                        "unit": "kWh",
+                        "value": 67956.50657000023
+                    },
+                    "unit": "kWh"
+                },
+                "type_oemof": "storage"
+            }
+        ],
+        "kpi": {
+            "scalars": {
+                "Attributed costsElectricity": 166522578.08790004,
+                "Degree of autonomy": 0.23863831106614172,
+                "Levelized costs of electricity equivalent": 368.9146112238089,
+                "Levelized costs of electricity equivalentElectricity": 368.9146112238089,
+                "Onsite energy fraction": 1.0,
+                "Onsite energy matching": 0.2090660061221055,
+                "Renewable factor": 0.2999999990089482,
+                "Renewable share of local generation": 1.0,
+                "Total internal generation": 7825.5802250000015,
+                "Total internal non-renewable generation": 0.0,
+                "Total internal renewable generation": 7825.5802250000015,
+                "Total non-renewable energy use": 24650.57786580001,
+                "Total renewable energy use": 10564.533321200002,
+                "Total_demandElectricity": 32792.64,
+                "Total_demandElectricity_electricity_equivalent": 32792.64,
+                "Total_demand_electricity_equivalent": 32792.64,
+                "Total_excessElectricity": 969.75395,
+                "Total_excessElectricity_electricity_equivalent": 969.75395,
+                "Total_excess_electricity_equivalent": 969.75395,
+                "Total_feedinElectricity": 0.0,
+                "Total_feedinElectricity_electricity_equivalent": 0.0,
+                "Total_feedin_electricity_equivalent": 0.0,
+                "annuity_om": 1541510.25692,
+                "annuity_total": 12097684.03661,
+                "costs_cost_om": 21180927.17787,
+                "costs_dispatch": 37701.2269,
+                "costs_investment_over_lifetime": 145303949.68313,
+                "costs_om_total": 21218628.40477,
+                "costs_total": 166522578.08790004,
+                "costs_upfront_in_year_zero": 140846232.45999998
+            }
+        },
+        "project_data": {}
+    }
+}
