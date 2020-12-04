@@ -6,3 +6,4 @@ migrations/
 !migrations/__init__.py
 /cdn_static_root/
 PersonalTODOs
+/app/cdn_static_root/

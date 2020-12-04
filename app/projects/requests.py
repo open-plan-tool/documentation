@@ -5,6 +5,7 @@ import json
 from requests.exceptions import HTTPError
 
 from epa.settings import PROXY_CONFIG, MVS_POST_URL, MVS_GET_URL
+from dashboard.models import KPIResults
 
 
 def mvs_simulation_request(data: dict):
@@ -44,10 +45,40 @@ def mvs_simulation_check(token):
 
 
 def check_mvs_simulation(simulation):
-    if simulation.status not in ['FAILED', 'DONE']:
+    DONE = 'DONE'
+    FAILED = 'FAILED'
+    if simulation.status not in ['3']:  #[FAILED, DONE]:
         response = mvs_simulation_check(token=simulation.mvs_token)
-        simulation.results = response['results']
         simulation.status = response['status']
+
+        simulation.results = parse_mvs_results(simulation, response['results']) if simulation.status == DONE else None
+
         simulation.elapsed_seconds = (datetime.now() - simulation.start_date).seconds
-        simulation.end_date = datetime.now() if response['status'] == 'DONE' else None
+        simulation.end_date = datetime.now() if response['status'] in [FAILED, DONE] else None
         simulation.save()
+
+
+def parse_mvs_results(simulation, response_results):
+    with open('static/tempFiles/json_with_results.json', 'r') as expected_file:
+        expected_json = json.load(expected_file)
+
+    # keys for json_with_results.json
+    asset_key_list = ['energyProviders', 'energyConsumption', 'energyConversion',
+                      'energyProduction', 'energyStorage', 'kpi']
+
+    # keys for 3aea5991-324b-41fc-99d8-0c1856a4279a(MVS API OUTPUT).json
+    asset_key_list = ['energyProviders', 'energyConsumption', 'energyConversion',
+                      'energyProduction', 'energyStorage', 'kpi']
+
+    if not set(asset_key_list).issubset(expected_json.keys()):
+        return "ERROR"
+
+    # write the scalar results to db
+    kpi_results = KPIResults(simulation=simulation, attributed_costsElectricity=0.3)
+
+
+
+    gather_all_objects = [expected_json[item] for item in asset_key_list]
+
+    print(expected_json.keys())
+

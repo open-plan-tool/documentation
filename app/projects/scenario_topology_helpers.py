@@ -1,3 +1,5 @@
+import uuid
+
 from django.shortcuts import get_object_or_404
 from projects.models import Bus, AssetType, Scenario, ConnectionLink, Asset
 import json
@@ -87,16 +89,37 @@ def update_deleted_objects_from_database(scenario_id, topo_node_list):
 
 
 # region Scenario Duplicate
-def duplicate_scenario_objects(obj_list, scenario):
-    # FIXME: During Scenario Duplication ESS assets need special care, /
-    #  regarding the parent_asset_id
+def duplicate_scenario_objects(obj_list, scenario, asset_mapping_dict=None):
+    """
+    Implement the Node Level (Assets and Busses) duplication of the scenario.
+    The functionality is utilized in the scenario search page for each project in the UI of EPA.
+    :param obj_list: list of objects to duplicate, can be either bus objects list of assets list
+    :param scenario: the scenario under which the assets will be created
+    :param asset_mapping_dict: specifically for the case of busses which are part of a storage asset,
+    the parent ESS asset id is required. This value is passed with a mapping dict.
+    :return: a map dictionary between old and new nodes (assets or busses) ids.
+    """
+
+    storage_subasset_list = list()
     mapping_dict = dict()
+
     for obj in obj_list:
         old_id = obj.id
+
+        if hasattr(obj, 'unique_id'):  # i.e. it's an asset
+            obj.unique_id = str(uuid.uuid4())
         obj.id = None
         obj.scenario = scenario
         obj.save()
         mapping_dict[old_id] = obj.id
+        if obj.parent_asset:
+            storage_subasset_list.append(obj)
+
+    # now properly update the parent id of all new storage assets
+    for obj in storage_subasset_list:
+        obj.parent_asset_id = asset_mapping_dict[obj.parent_asset_id] if type(obj) == Bus else mapping_dict[obj.parent_asset_id]
+        obj.save()
+
     return mapping_dict
 
 

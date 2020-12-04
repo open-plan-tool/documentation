@@ -333,16 +333,16 @@ def scenario_duplicate(request, scen_id):
     asset_list = Asset.objects.filter(scenario=scenario)
     bus_list = Bus.objects.filter(scenario=scenario)
     connections_list = ConnectionLink.objects.filter(scenario=scenario)
-    simulation_list = Simulation.objects.filter(scenario=scenario)
+    # simulation_list = Simulation.objects.filter(scenario=scenario)
 
     # first duplicate the scenario
     scenario.pk = None
     scenario.save()
     # from now on we are working with the duplicated scenario, not the original
     old2new_asset_ids_map = duplicate_scenario_objects(asset_list, scenario)
-    old2new_bus_ids_map = duplicate_scenario_objects(bus_list, scenario)
+    old2new_bus_ids_map = duplicate_scenario_objects(bus_list, scenario, old2new_asset_ids_map)
     duplicate_scenario_connections(connections_list, scenario, old2new_asset_ids_map, old2new_bus_ids_map)
-    duplicate_scenario_objects(simulation_list, scenario)
+    # duplicate_scenario_objects(simulation_list, scenario)
 
     return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
 
