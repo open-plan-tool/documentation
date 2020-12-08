@@ -3,14 +3,12 @@ body {
     background-image: linear-gradient(#FFEAB0, #A97D67, #674F44);
     background-color: #674F44;
     font-family: "Century Gothic";
-
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-
 }
 
 /** HEADER **/
@@ -27,18 +25,15 @@ body {
     font-weight: bold;
     text-shadow: 1px 1px 1px #222;
     line-height: .75;
-
 }
 
 .navbar-brand a:hover, .navbar-brand a:focus {
     text-decoration: none;
-
 }
 
 .navbar-brand, #MVS, #userr {
     color: #5a6268 !important;
     opacity: 0.7;
-
 }
 
 .navbar-brand p {
@@ -46,8 +41,6 @@ body {
     text-transform: uppercase;
     font-size: .7em;
     margin-top: 15px;
-
-
 }
 
 
@@ -113,7 +106,6 @@ body {
 
 .table > tbody > tr.active > td {
     background: #7abaff;
-    /*color: #fff;*/
 }
 
 input[type="checkbox"] {
@@ -163,7 +155,6 @@ input[type="checkbox"] {
     display: inline;
     margin-left: -6px;
     margin-top: -8px;
-
 }
 
 .navbar-inverse {
@@ -177,7 +168,6 @@ input[type="checkbox"] {
     margin-left: -19px;
     background-color: transparent !important;
     border-bottom-color: transparent !important;
-
 }
 
 .panel-title {
@@ -188,17 +178,14 @@ input[type="checkbox"] {
     margin-left: 105px;
     font-size: 30px;
     color: #686868;
-
 }
 
 
 .loginlogo {
     width: 250px;
-
     position: relative;
     overflow: hidden;
     display: inline;
-    /* margin-left: 150px; */
     margin-top: 80px;
     max-width: 100%;
     height: auto;
@@ -216,12 +203,10 @@ input[type="checkbox"] {
     text-shadow: 2px 2px 8px #547876;
     position: absolute;
     margin-left: 3em;
-
 }
 
 .panel {
     background-color: #ffffff;
-    border-radius: 80%;
     border: 1px solid transparent;
     border-radius: 3px;
     box-shadow: 5px 5px 19px #F4D9A4;
@@ -245,27 +230,13 @@ input[type="checkbox"] {
     font-weight: 700;
 }
 
-#id_username {
+#id_password, #id_email, #id_first_name, #id_last_name, #id_username {
     background-color: #fffffd;
     opacity: 0.9;
-
     box-shadow: #F4D9A4;
-
 }
 
-#id_username:focus {
-    border-color: #F4D9A4;
-}
-
-#id_password {
-    background-color: #fffffd;
-    opacity: 0.9;
-
-    box-shadow: #F4D9A4;
-
-}
-
-#id_password:focus {
+#id_password1:focus, #id_password2:focus, #id_username:focus, #id_email:focus, #id_first_name:focus, #id_last_name:focus {
     border-color: #F4D9A4;
 }
 
@@ -277,7 +248,7 @@ input[type="checkbox"] {
     text-align: center;
 }
 
-#logg {
+#loginbutton, #submitbutton {
     background-color: #F4D9A4;
     border-color: #F4D9A4;
     text-transform: uppercase;
@@ -286,43 +257,7 @@ input[type="checkbox"] {
     box-shadow: 1px 1px 3px #888888;
 }
 
-#id_email {
-    background-color: #fffffd;
-    opacity: 0.9;
-
-    box-shadow: #F4D9A4;
-
-}
-
-#id_email:focus {
-    border-color: #F4D9A4;
-}
-
-#id_first_name {
-    background-color: #fffffd;
-    opacity: 0.9;
-
-    box-shadow: #F4D9A4;
-
-}
-
-#id_first_name:focus {
-    border-color: #F4D9A4;
-}
-
-#id_last_name {
-    background-color: #fffffd;
-    opacity: 0.9;
-
-    box-shadow: #F4D9A4;
-
-}
-
-#id_last_name:focus {
-    border-color: #F4D9A4;
-}
-
-label[for="id_last_name"] {
+label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     color: #555555;
     font-weight: 500;
     letter-spacing: 1px;
@@ -330,54 +265,14 @@ label[for="id_last_name"] {
     opacity: 0.8;
 }
 
-label[for="id_first_name"] {
-    color: #555555;
-    font-weight: 500;
-    letter-spacing: 1px;
-    font-family: "Century Gothic";
-    opacity: 0.8;
-}
 
-label[for="id_email"] {
-    color: #555555;
-    font-weight: 500;
-    letter-spacing: 1px;
-    font-family: "Century Gothic";
-    opacity: 0.8;
-}
-
-#hint_id_username {
+#hint_id_username, #hint_id_password1, #hint_id_password2 {
     font-size: 11px;
     letter-spacing: 1px;
     font-family: "Century Gothic";
     opacity: 0.6;
     text-align: center;
 }
-
-#hint_id_password1 {
-    font-size: 11px;
-    letter-spacing: 1px;
-    font-family: "Century Gothic";
-    opacity: 0.6;
-
-}
-
-#hint_id_password2 {
-    font-size: 11px;
-    letter-spacing: 1px;
-    font-family: "Century Gothic";
-    opacity: 0.6;
-}
-
-
-.backk {
-
-    background-color: #F4D9A4;
-    opacity: 0.5;
-
-    width: 100%;
-}
-
 
 .centered {
     position: absolute;
@@ -396,7 +291,6 @@ label[for="id_email"] {
 }
 
 .alert-danger {
-
     background-color: transparent;
     border-color: transparent;
     width: 100%;
@@ -405,7 +299,6 @@ label[for="id_email"] {
     width: 100%;
     padding: 10px;
     font-weight: 700;
-
 }
 
 .m-0 {
@@ -417,7 +310,6 @@ label[for="id_email"] {
 
 .container5 {
     background-color: #F5F5F5;
-    border-radius: 80%;
     border: 0px solid transparent;
     border-radius: 3px;
     box-shadow: 5px 5px 19px #686868;
@@ -426,29 +318,24 @@ label[for="id_email"] {
     opacity: 0.95;
 }
 
-#list5 {
+#list5, #list6 {
     font-family: "Century Gothic";
     font-size: 12px;
     width: 100%;
     padding: 10px;
+    position: relative;
+    z-index: 1 !important;
+}
+
+#list5 {
     font-weight: 700;
     text-transform: uppercase;
     opacity: 0.9;
-    position: relative;
-    z-index: 1 !important;
-
 }
 
 #list6 {
-    font-family: "Century Gothic";
-    font-size: 12px;
-    width: 100%;
-    padding: 10px;
     font-weight: 500;
-    position: relative;
-    z-index: 1 !important;
 }
-
 
 #box2 {
     border: 0px solid transparent !important;
@@ -741,26 +628,24 @@ label[for="id_email"] {
 
 .table-striped > tbody > tr:nth-of-type(2n+1) {
     background-color: #F9EBD4 !important;
-
 }
 
-#button55 {
-    background-color: #171a1d;
+.submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom {
+    background-color: #171a1d !important;
     float: left;
-    border: none;
+    border: none !important;
     outline: none;
     cursor: pointer;
     padding: 16px 30px;
     transition: 0.3s;
     font-family: "Century Gothic";
     font-size: 16px;
-    color: #F4D9A4;
+    color: #F4D9A4 !important;
     font-weight: 600;
     text-align: center;
-
 }
 
-#button55:after {
+.submit-btn.btn.btn-primary:after, .btn.btn-primary.btn-lg:after, #createnewscen:after, #uploadscen:after, #addcom:after, #backbutton:after, #backbutton2:after {
     content: '»';
     color: #F4D9A4;
     position: absolute;
@@ -769,22 +654,14 @@ label[for="id_email"] {
     right: -20px;
     transition: 0.5s;
     text-decoration: none !important;
-
 }
 
-
-#button55:hover {
+.submit-btn.btn.btn-primary:hover, .btn.btn-primary.btn-lg:hover, #createnewscen:hover, #uploadscen:hover, #addcom:hover,
+#backbutton:hover, #backbutton2:hover {
     padding-right: 24px;
     padding-left: 18px;
-    box-shadow: 5px 5px 5px #171a1d;
+    box-shadow: 5px 5px 5px #171a1d !important;
     text-decoration: none !important;
-}
-
-#lo {
-    font-family: "Century Gothic";
-    font-size: 16px;
-    color: #F4D9A4 !important;
-    font-weight: 600;
 }
 
 .modal-dialog {
@@ -804,12 +681,6 @@ label[for="id_email"] {
     font-weight: 800;
     text-align: center !important;
 }
-
-#sceninfo {
-    width: 100%;
-    margin-left: 90px;
-}
-
 
 #footer {
     position: absolute;
@@ -835,16 +706,12 @@ label[for="id_email"] {
     .panel-default {
         min-width: 100%;
     }
-
-
 }
-
 
 @media screen and (max-width: 800px) {
     .container6 {
         width: 90%;
         margin: 5% auto;
-
     }
 
     .footer-copyright {
@@ -856,7 +723,6 @@ label[for="id_email"] {
     .container5 {
         width: 100%;
         margin: 5% auto;
-
     }
 }
 
@@ -879,72 +745,52 @@ label[for="id_email"] {
     min-height: 100vh;
 }
 
-.lala {
+.parag01, .parag02, .parag03 {
     height: auto !important;
     width: 100%;
     position: inherit;
+    left: 0;
+    right: 0;
+}
+
+.parag01 {
     background-image: url("/static/images/ELA2.jpg");
-    left: 0;
-    right: 0;
-    /*z-index: 1;*/
 }
 
-.lala2 {
-    height: auto !important;
-    width: 100%;
-    position: inherit;
-    /* background: linear-gradient(to bottom, #F9EBD4 30%, #818384 70%); */
-
+.parag02 {
     background-image: url("/static/images/ELA1.jpg");
-
-    left: 0;
-    right: 0;
-
 }
 
 
-.lala1 {
-    height: auto !important;
-    width: 100%;
-    position: inherit;
-    /*  z-index: 1 !important;*/
-
-    left: 0;
-    right: 0;
+.parag03 {
     background-image: url("/static/images/ELA12.jpg");
+}
 
-
+.wraptextt1, .wraptextt2 {
+    letter-spacing: 1.5px;
+    margin-left: 5rem;
+    position: relative;
+    text-shadow: 2px 2px 8px #547876;
+    text-align: center;
+    font-family: "Century Gothic";
 }
 
 .wraptextt1 {
-    letter-spacing: 1.5px;
-    font-family: "Century Gothic";
-    margin-left: 5rem;
-    text-align: center;
     font-size: 50px;
     color: #ffffff;
     font-weight: 800;
-    text-shadow: 2px 2px 8px #547876;
-    position: relative;
 }
 
 .wraptextt2 {
-    letter-spacing: 1.5px;
-    font-family: "Century Gothic";
-    margin-left: 5rem;
-    text-align: center;
     font-size: 40px;
     color: #F4D9A4;
-    text-shadow: 2px 2px 8px #547876;
     font-weight: 700;
-    position: relative;
 }
 
 .wraptextt {
     letter-spacing: 1.5px;
     font-family: "Century Gothic";
     margin-left: 5rem;
-
     font-size: 20px;
     color: #1b1e21;
     position: relative;
@@ -956,9 +802,7 @@ label[for="id_email"] {
 
 .moving-mouse-holder {
     margin: auto;
-
     width: 170px;
-
 }
 
 .moving-mouse-holder .mouse {
@@ -966,7 +810,6 @@ label[for="id_email"] {
     height: 40px;
     position: relative;
     right: 0;
-
     border-radius: 18px;
     border: 2px solid #fff3cd;;
 }
@@ -998,9 +841,8 @@ label[for="id_email"] {
     }
 }
 
-#accord {
+.accord {
     letter-spacing: 1.2px;
-
     font-family: "Century Gothic";
     font-size: 20px;
     color: #E5B142;
@@ -1011,12 +853,11 @@ label[for="id_email"] {
     text-shadow: 1px 1px 0px #65C8C9;
 }
 
-#accrdrag {
+.accrdrag {
     letter-spacing: 1.1px;
     font-family: "Century Gothic";
     font-size: 15px;
     color: #494f54;
-
     font-weight: 700;
 }
 
@@ -1026,24 +867,18 @@ label[for="id_email"] {
 
 .drawflow .connection .main-path:hover {
     stroke: #557ca1 !important;
-
 }
 
 * {
     box-sizing: border-box;
 }
 
-.lololo {
-    width: 100% !important;
-
-}
 
 /*kitrino back*/
 
 .wraptextt {
     width: 90% !important;
     margin: 0 auto !important;
-
 }
 
 #backbutton, #backbutton2 {
@@ -1060,87 +895,36 @@ label[for="id_email"] {
     font-weight: 600;
     text-align: center;
     border-radius: 50px;
-
-}
-
-#backbutton:after, #backbutton2:after {
-    content: '»';
-    color: #F4D9A4;
-    position: absolute;
-    opacity: 0;
-    top: 14px;
-    right: -20px;
-    transition: 0.5s;
-    text-decoration: none !important;
-
-}
-
-
-#backbutton:hover, #backbutton2:hover {
-    padding-right: 24px;
-    padding-left: 18px;
-    box-shadow: 5px 5px 5px #171a1d;
-    text-decoration: none !important;
 }
 
 #backbutton2 {
     margin-top: -1em;
-
 }
 
 .wrapper-hero {
+    background-color: #ffffff;
+}
+
+.wrapper-hero, .wrapper-hero8 {
     padding: 0;
-
     height: 100%;
-
     width: 100%;
-
     position: relative;
-
     overflow: hidden;
-
     text-align: center;
     z-index: 3;
-    background-color: #ffffff;
-
-
     background-position: center top;
-
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     color: black;
-
 }
-
 
 .wrapper-hero8 {
-    padding: 0;
-
-    height: 100%;
-
-    width: 100%;
-
-    position: relative;
-
-    overflow: hidden;
-
-    text-align: center;
-    z-index: 3;
     background-image: linear-gradient(to bottom, #ffff 50%, #151616 50%);
-
-
-    background-position: center top;
-
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    color: black;
-
 }
 
-
-.wrapper-hero p {
+.wrapper-hero p, .wrapper-hero3 p, .wrapper-hero4 p {
     color: #010707;
     font-family: "Century Gothic" !important;
     line-height: 1.1;
@@ -1149,66 +933,41 @@ label[for="id_email"] {
     font-weight: 200;
     letter-spacing: normal;
     opacity: 0.5;
-
 }
 
 .wrapper-hero3 p {
-    color: #010707;
-    font-family: "Century Gothic" !important;
-    line-height: 1.1;
-    font-size: 15px;
-    text-align: justify;
-    font-weight: 200;
-    letter-spacing: normal;
-    opacity: 0.9;
-
+    opacity: 0.9 !important;
 }
 
 .wrapper-hero4 p {
-    color: #010707;
-    font-family: "Century Gothic" !important;
-    line-height: 1.1;
-    font-size: 15px;
-    text-align: justify;
-    font-weight: 200;
-    letter-spacing: normal;
-    opacity: 0.9;
-
+    opacity: 0.9 !important;
 }
 
 
 .wrapper-hero h1 {
     color: black;
     font-family: Bebas Neue, sans-serif;
-
     font-size: 30px;
     line-height: 35px;
     letter-spacing: 0.025em;
     position: absolute;
-
-
     left: 0;
-
     right: 0;
     transform: translateY(-50%);
     text-transform: uppercase;
-
 }
 
 .wrapper-hero h3 {
     color: black;
     font-family: Bebas Neue, sans-serif;
-
     font-size: 30px;
     line-height: 35px;
     letter-spacing: -0.045em;
     line-height: 0.8;
     text-transform: uppercase;
-
 }
 
 .wrapper-hero .lexio-title {
-
     font-family: BebasNeue, sans-serif;
     font-size: 80px !important;
     letter-spacing: -0.025em;
@@ -1217,7 +976,6 @@ label[for="id_email"] {
     position: relative;
     margin-top: 0;
     line-height: 0.5;
-
 }
 
 .container1 {
@@ -1225,37 +983,14 @@ label[for="id_email"] {
 }
 
 @media screen and (max-width: 864px) {
-    .wrapper-hero p, .wrapper-hero4 p, .wrapper-hero8 p, .wrapper-hero3 p {
+    .wrapper-hero p, .wrapper-hero4 p, .wrapper-hero8 p, .wrapper-hero3 p, #wrap1 {
         padding: 0em !important;
         font-size: 12px !important;
         margin: 2em !important;
     }
 
-    #wrap1 {
-        padding: 0em !important;
-        font-size: 12px !important;
-        margin: 2em !important;
-
-    }
-
-    .myimg1 {
-        width: 200px !important;
-    }
-
-    .myimg10 {
-        width: 200px !important;
-    }
-
-    .myimg15 {
+    .myimg1, .myimg10, .myimg15 {
         width: 200px !important;
     }
 }
 
-#colname {
-
-    display: inline-block;
-    vertical-align: middle;
-    width: 100%; /*Specify the width of block*/
-    word-break: break-word;
-
-}

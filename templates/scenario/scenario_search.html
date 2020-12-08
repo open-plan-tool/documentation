@@ -12,22 +12,14 @@
 
         @media screen and (max-width: 990px) {
             .btn-danger {
-
                 width: 90% !important;
                 font-size: 80%;
-
-
             }
 
             .btn-default {
-
-
                 font-size: 80%;
 
-
             }
-
-
 
             .rate:not(:checked) > label {
                 font-size: 18px;
@@ -41,16 +33,14 @@
                 font-size: 23px !important;
             }
 
-            #button55 {
+            .submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom {
                 width: 70%;
                 font-size: 70% !important;
                 padding: 1em;
             }
 
             #lo {
-
                 font-size: 12px !important;
-
             }
 
             .tab button, .tab button.active {
@@ -234,23 +224,23 @@
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-3">
-                            <!--    <a data-modal="CreateScenarioModal" role="button" id="button55"><span
+                            <!--    <a data-modal="CreateScenarioModal" role="button" id=" "><span
                                         class="glyphicon glyphicon-plus open-modal"
                                         style="color: forestgreen; text-shadow: 1px 1px 1px #222;"></span> Create New
                                     Scenario</a> -->
                             <a class="glyphicon glyphicon-plus open-comments-modal" style="color: transparent;"
                                data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' %}"><span
-                                    id="button55">Create New Scenario</span></a>
+                                    id="createnewscen">Create New Scenario</span></a>
                         </div>
 
                         <div class="col-sm-2"></div>
                         <div class="col-sm-4">
-                            <!--   <a data-modal="CreateScenarioModal" role="button" id="button55"><span
+                            <!--   <a data-modal="CreateScenarioModal" role="button" id=" "><span
                                        class="glyphicon glyphicon-upload"
                                        style="color: #65C8C9; text-shadow: 1px 1px 1px #222;"></span> Load Scenario From
                                    File</a> -->
                             <a class="glyphicon glyphicon-upload" style="color: transparent;" id="upload-scenario"><span
-                                    id="button55">Upload Scenario From File</span></a>
+                                    id="uploadscen">Upload Scenario From File</span></a>
                         </div>
                         <div class="col-sm-1"></div>
                     </div>
@@ -341,14 +331,14 @@
                     <div class="row">
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4">
-                            <!-- <a href="{% url 'comment_create' %}" data-modal="CreateCommentForm" role="button" id="button55"><span
+                            <!-- <a href="{% url 'comment_create' %}" data-modal="CreateCommentForm" role="button" id=" "><span
                                 class="glyphicon glyphicon-plus open-comments-modal"
                                 style="color: forestgreen; text-shadow: 1px 1px 1px #222;"
                                 ></span> Add Comment</a> -->
                             <a class="glyphicon glyphicon-plus open-comments-modal"
                                style="color: transparent; text-shadow: 1px 1px 1px #222;"
                                data-modal="CreateCommentForm" data-url="{% url 'comment_create' %}"
-                               id="button55"><span id="lo">Add Comment</span></a>
+                               id="addcom"><span id="lo">Add Comment</span></a>
 
 
                         </div>
