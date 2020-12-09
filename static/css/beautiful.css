@@ -224,7 +224,7 @@ header a {
     font-weight: 550;
 }
 
-#titlee {
+.panel-heading {
     font-size: 25px !important;
 }
 
@@ -517,19 +517,6 @@ header a {
     border: transparent;
     text-align: left;
 }
-
-.drawflow-node.charging_power:before, .drawflow-node.discharging_power:before, .drawflow-node.capacity:before {
-    display: inline-block;
-    width: 200px;
-    height: 150%;
-    min-height: 100%;
-    margin-right: -10px;
-    margin-bottom: 0em;
-    content: "lalala";
-    color: transparent;
-    background-size: 100%;
-}
-
 .drawflow-node.charging_power:before {
     background: url("/static/images/lighting.png") no-repeat;
 }
@@ -540,6 +527,17 @@ header a {
 
 .drawflow-node.capacity:before {
     background: url("/static/images/status.png") no-repeat;
+}
+.drawflow-node.charging_power:before, .drawflow-node.discharging_power:before, .drawflow-node.capacity:before {
+    display: inline-block;
+    width: 200px;
+    height: 150%;
+    min-height: 100%;
+    margin-right: -10px;
+    margin-bottom: 0em;
+    content: "lalala";
+    color: transparent;
+    background-size: 100%;
 }
 
 .drawflow-node.charging_power .input, .drawflow-node.discharging_power .input, .drawflow-node.capacity .input {

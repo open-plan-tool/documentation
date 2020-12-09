@@ -308,14 +308,17 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     margin-top: -20%;
 }
 
-.container5 {
+.container5, .container6 {
     background-color: #F5F5F5;
     border: 0px solid transparent;
     border-radius: 3px;
     box-shadow: 5px 5px 19px #686868;
     position: relative;
-    z-index: 1 !important;
     opacity: 0.95;
+}
+
+.container5 {
+    z-index: 1 !important;
 }
 
 #list5, #list6 {
@@ -345,20 +348,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     z-index: 1 !important;
 }
 
-#button1 {
-    border: 0px solid #383d41;
-    background-color: #ffffff;
-    box-shadow: 4px 4px 2px #686868;
-    font-family: "Century Gothic";
-    font-size: 14px;
-    font-weight: 700;
-    color: #333;
-    border-radius: 5%;
-    text-transform: uppercase;
-}
-
-
-#listtitle {
+#listtitle, #listtitle2 {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-family: "Century Gothic";
@@ -367,6 +357,12 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     text-shadow: 1px 1px 1px #222;
     position: relative;
     z-index: 1 !important;
+}
+#listtitle2 {
+    text-align: left !important;
+}
+
+#listtitle {
     text-align: center !important;
 }
 
@@ -374,20 +370,14 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     height: 100% !important;
     width: 100%;
     position: fixed;
-
     left: 0;
     z-index: 0; /* Set z-index to 0 as it will be on a layer below the contact form */
     filter: grayscale(30%);
 }
 
-.colorss {
-    background-color: #F4D9A4;
-    background-image: linear-gradient(#FFEAB0, #A97D67);
-}
 
 #mapid {
-    height: 1100px;
-!important;
+    height: 1100px !important;
     width: 100%;
     position: relative;
     z-index: 1 !important;
@@ -395,122 +385,25 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     background-repeat: repeat-y;
 }
 
-.container6 {
-    background-color: #ffffff;
-    border-radius: 80%;
-    border: 0px solid transparent;
-    border-radius: 3px;
-    box-shadow: 5px 5px 19px #686868;
-    position: relative;
-    z-index: 0;
-    opacity: 0.95;
-}
-
-#id_description {
+#id_name, #id_description, #id_latitude, #id_longitude, #id_duration, #id_currency, #id_discount, #id_tax, #id_annuity_factor, #id_crf {
     letter-spacing: 1.2px;
     font-family: "Century Gothic";
     font-size: 13px;
 }
 
-#id_name {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_country {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
+#id_country, #id_currency {
     opacity: 0.6;
-    font-size: 13px;
-}
-
-#id_latitude {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_longitude {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_duration {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_currency {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    opacity: 0.6;
-    font-size: 13px;
-}
-
-#id_discount {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_tax {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_annuity_factor {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
-}
-
-#id_crf {
-    letter-spacing: 1.2px;
-    font-family: "Century Gothic";
-    font-size: 13px;
 }
 
 .custom-control-label {
-
     font-family: "Century Gothic";
     font-size: 13px;
     font-weight: 600;
 }
 
-#listtitle2 {
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-family: "Century Gothic";
-    font-size: 33px !important;
-    color: #F4D9A4;
-    text-shadow: 1px 1px 1px #222;
-    position: relative;
-    z-index: 1 !important;
-}
-
 .requiredField {
     width: 100% !important;
     font-size: 13px !important;
-}
-
-#button2 {
-    border: 0px solid #171a1d;
-    background-color: #00C0C6;
-    box-shadow: 2px 2px 2px #686868;
-    font-family: "Century Gothic";
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-    text-transform: uppercase;
-    border-radius: 2%;
-    width: 60%;
-    text-shadow: 1px 1px 1px #222;
-
-
 }
 
 .textinput a:hover {
@@ -523,9 +416,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 
 .tab {
     overflow: hidden;
-
     background-color: #F4D9A4;
-
 }
 
 /* Style the buttons inside the tab */
@@ -545,7 +436,6 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    /* background-color: #ddd; */
     transition: border-top .2s !important;
     border-top: 5px solid #ffffff !important;
     color: #ffffff !important;
@@ -555,7 +445,6 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 /* Create an active/current tablink class */
 .tab button.active {
     background-color: #ffffff;
-
     font-weight: 700;
     font-size: 16px;
 }
@@ -567,70 +456,41 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     border: 1px solid #ccc;
     border-top: none;
     background-color: #ffffff;
-    /*box-shadow: 5px 5px 19px #F4D9A4;*/
-
 }
 
-#scen {
-    background-color: #ffffff;
-    border-radius: 3px;
-    border: 1px solid transparent;
-    box-shadow: none;
-
-
-}
-
-#comms {
+#scen, #comms {
     background-color: #ffffff;
     border-radius: 3px;
     border: 1px solid transparent;
     box-shadow: none;
 }
 
-#titlecoms {
+#titlecoms, #titleproj, .panel-heading, .panel-title, .modal-title {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-family: "Century Gothic";
     font-size: 33px !important;
     color: #F4D9A4;
-    text-shadow: 1px 1px 1px #222;
+    text-shadow: 1px 1px 1px #222!important;
     position: relative;
     z-index: 1 !important;
-    text-align: center !important;
+    text-align: center;
+}
+
+#titlecoms, #titleproj {
     margin-left: 0px !important;
 }
 
-#titleproj {
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-family: "Century Gothic";
-    font-size: 33px !important;
-    color: #F4D9A4;
-    text-shadow: 1px 1px 1px #222;
-    position: relative;
-    z-index: 1 !important;
-    text-align: center !important;
-    margin-left: 0px !important;
-}
-
-#titlee {
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-family: "Century Gothic";
-    font-size: 33px !important;
-    color: #1b1e21;
-    text-shadow: 1px 1px 1px #222;
-    position: relative;
-    z-index: 1 !important;
+.panel-heading, .panel-title, .modal-title {
+    color: #1c1c1c!important;
     font-weight: 800;
-    text-align: center !important;
 }
 
 .table-striped > tbody > tr:nth-of-type(2n+1) {
     background-color: #F9EBD4 !important;
 }
 
-.submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom {
+.submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom,#backbutton, #backbutton2 {
     background-color: #171a1d !important;
     float: left;
     border: none !important;
@@ -669,19 +529,6 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     width: 50%;
 }
 
-.modal-title {
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-family: "Century Gothic";
-    font-size: 33px !important;
-    color: #1b1e21;
-    text-shadow: 1px 1px 1px #222;
-    position: relative;
-    z-index: 1 !important;
-    font-weight: 800;
-    text-align: center !important;
-}
-
 #footer {
     position: absolute;
     bottom: 0 !important;
@@ -702,42 +549,9 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     margin-bottom: 0em;
 }
 
-@media (max-width: 55rem) {
-    .panel-default {
-        min-width: 100%;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .container6 {
-        width: 90%;
-        margin: 5% auto;
-    }
-
-    .footer-copyright {
-        font-size: 80%;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .container5 {
-        width: 100%;
-        margin: 5% auto;
-    }
-}
-
-#supim {
+#signupimg {
     max-width: 100%;
     height: auto;
-}
-
-@media (max-width: 50rem) {
-    .centered {
-        max-width: 100%;
-        text-align: center;
-        font-size: 17px;
-
-    }
 }
 
 .container {
@@ -760,7 +574,6 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 .parag02 {
     background-image: url("/static/images/ELA1.jpg");
 }
-
 
 .parag03 {
     background-image: url("/static/images/ELA12.jpg");
@@ -841,7 +654,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     }
 }
 
-.accord {
+.accordtitle {
     letter-spacing: 1.2px;
     font-family: "Century Gothic";
     font-size: 20px;
@@ -853,7 +666,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     text-shadow: 1px 1px 0px #65C8C9;
 }
 
-.accrdrag {
+.accordsubtitle {
     letter-spacing: 1.1px;
     font-family: "Century Gothic";
     font-size: 15px;
@@ -873,27 +686,14 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     box-sizing: border-box;
 }
 
-
 /*kitrino back*/
-
 .wraptextt {
     width: 90% !important;
     margin: 0 auto !important;
 }
 
 #backbutton, #backbutton2 {
-    background-color: #1c1c1c;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 6px 10px;
-    transition: 0.3s;
-    font-family: "Century Gothic";
-    font-size: 16px;
-    color: #F4D9A4;
-    font-weight: 600;
-    text-align: center;
+    padding: 6px 10px!important;
     border-radius: 50px;
 }
 
@@ -935,21 +735,16 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     opacity: 0.5;
 }
 
-.wrapper-hero3 p {
+.wrapper-hero3 p, .wrapper-hero4 p {
     opacity: 0.9 !important;
 }
 
-.wrapper-hero4 p {
-    opacity: 0.9 !important;
-}
-
-
-.wrapper-hero h1 {
+.wrapper-hero h1, .wrapper-hero h3 {
     color: black;
     font-family: Bebas Neue, sans-serif;
     font-size: 30px;
     line-height: 35px;
-    letter-spacing: 0.025em;
+    letter-spacing: -0.045em;
     position: absolute;
     left: 0;
     right: 0;
@@ -957,14 +752,12 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     text-transform: uppercase;
 }
 
-.wrapper-hero h3 {
-    color: black;
-    font-family: Bebas Neue, sans-serif;
-    font-size: 30px;
-    line-height: 35px;
-    letter-spacing: -0.045em;
-    line-height: 0.8;
-    text-transform: uppercase;
+.wrapper-hero h1 {
+    letter-spacing: 0.025em!important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
 }
 
 .wrapper-hero .lexio-title {
@@ -994,3 +787,34 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     }
 }
 
+@media (max-width: 55rem) {
+    .panel-default {
+        min-width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .container6 {
+        width: 90%;
+        margin: 5% auto;
+    }
+
+    .footer-copyright {
+        font-size: 80%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .container5 {
+        width: 100%;
+        margin: 5% auto;
+    }
+}
+
+@media (max-width: 50rem) {
+    .centered {
+        max-width: 100%;
+        text-align: center;
+        font-size: 17px;
+    }
+}
