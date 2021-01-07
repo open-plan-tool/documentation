@@ -5,7 +5,7 @@
 {% block content %}
     <style>
         @media screen and (max-width: 991px) {
-            #titlee {
+            .panel-heading {
                 text-align: center !important;
                 font-size: 23px !important;
                 margin-left: 3em;
@@ -13,7 +13,7 @@
             }
         }
         @media screen and (max-width: 767px) {
-            #button55{
+            .btn btn-success, .submit-btn btn btn-primary {
                 width: 30%;
                 padding:1em;
                 font-size: 13px;
@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-10">
-                        <div class="panel-heading"><h3 class="panel-title" id="titlee" style="width:65%;">
+                        <div class="panel-heading"><h3 class="panel-title"  style="width:65%;">
                             <strong>Scenario Details</strong></h3>
                         </div>
                         <br>
@@ -51,8 +51,7 @@
                                 <div class="row">
                                     <div class="col-sm-4"></div>
                                     <div class="col-sm-4">
-                                        <button class="btn btn-success" type="submit" id="button55"
-                                                style="margin-left:30px;">
+                                        <button class="btn btn-primary btn-lg" type="submit" style="margin-left:30px;" type="submit">
                                             Submit
                                         </button>
                                     </div>

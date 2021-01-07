@@ -23,62 +23,62 @@
     <div class="wrapper">
 
         <div id="accordion" class="col">
-            <h3 id="accord">Energy Providers</h3>
+            <h3 class="accordtitle">Energy Providers</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dso">
-                    <i class="fas fa-grip-lines"></i><span id="accrdrag"> System DSO </span>
+                    <i class="fas fa-grip-lines"></i><span class="accordsubtitle"> System DSO </span>
                 </li>
             </ul>
-            <h3 id="accord">Energy Production</h3>
+            <h3 class="accordtitle">Energy Production</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="pv_plant">
-                    <i class="fas fa-solar-panel"></i><span id="accrdrag"> PV Plant </span>
+                    <i class="fas fa-solar-panel"></i><span class="accordsubtitle"> PV Plant </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="wind_plant">
-                    <i class="fas fa-wind"></i><span id="accrdrag"> Wind Plant </span>
+                    <i class="fas fa-wind"></i><span class="accordsubtitle"> Wind Plant </span>
                 </li>
             </ul>
-            <h3 id="accord">Energy Conversion</h3>
+            <h3 class="accordtitle">Energy Conversion</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="transformer_station_in">
-                    <i class="fas fa-arrow-left"></i><span id="accrdrag"> Transformer Station In </span>
+                    <i class="fas fa-arrow-left"></i><span class="accordsubtitle"> Transformer Station In </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)"
                     data-node="transformer_station_out">
-                    <i class="fas fa-arrow-right"></i><span id="accrdrag"> Transformer Station Out </span>
+                    <i class="fas fa-arrow-right"></i><span class="accordsubtitle"> Transformer Station Out </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)"
                     data-node="storage_charge_controller_in">
                     <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-left"></i><span
-                        id="accrdrag"> Storage Charge Controller In </span>
+                        class="accordsubtitle"> Storage Charge Controller In </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)"
                     data-node="storage_charge_controller_out">
                     <i class="fas fa-charging-station"></i> <i class="fas fa-long-arrow-alt-right"></i><span
-                        id="accrdrag"> Storage Charge Controller Out </span>
+                        class="accordsubtitle"> Storage Charge Controller Out </span>
                 </li>
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="solar_inverter">
-                    <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span id="accrdrag"> Solar Inverter </span>
+                    <i class="fas fa-solar-panel"></i> <i class="fas fa-arrows-alt"></i><span class="accordsubtitle"> Solar Inverter </span>
                 </li>
                 <br>
             </ul>
-            <h3 id="accord">Energy Storage</h3>
+            <h3 class="accordtitle">Energy Storage</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="storage_unit">
-                    <i class="fas fa-car-battery"></i><span id="accrdrag"> Storage </span>
+                    <i class="fas fa-car-battery"></i><span class="accordsubtitle"> Storage </span>
                 </li>
             </ul>
-            <h3 id="accord">Energy Consumption</h3>
+            <h3 class="accordtitle">Energy Consumption</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="demand">
-                    <i class="fas fa-lightbulb"></i><span id="accrdrag"> Demand </span>
+                    <i class="fas fa-lightbulb"></i><span class="accordsubtitle"> Demand </span>
                 </li>
             </ul>
-            <h3 id="accord">Energy Bus</h3>
+            <h3 class="accordtitle">Energy Bus</h3>
             <ul style="list-style-type: none;padding: 0;">
                 <li>
                     <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="bus">
-                        <i class="fas fa-grip-lines"></i><span id="accrdrag"> Bus </span>
+                        <i class="fas fa-grip-lines"></i><span class="accordsubtitle"> Bus </span>
                     </div>
                 </li>
             </ul>
@@ -88,7 +88,7 @@
         <div class="col-center">
             <div class="menu">
                 <ul>
-                    <li onclick="editor.changeModule('Home'); changeModule(event);" class="selected" id="accord">
+                    <li onclick="editor.changeModule('Home'); changeModule(event);" class="selected" class="accordtitle">
                         Topology
                     </li>
                 </ul>
@@ -536,7 +536,7 @@
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
-                    <h2 text-align: left" id="titlee">${nodeName} Properties</h2><br><br>
+                    <h2 text-align: left" class="panel-heading">${nodeName} Properties</h2><br><br>
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-3">
@@ -592,7 +592,7 @@
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
                     <br>
-                    <h2 id="titlee" text-align: left">${nodeName.replace("_", " ")} Properties</h2>
+                    <h2 class="panel-heading" text-align: left">${nodeName.replace("_", " ")} Properties</h2>
                     <br>
                     <div class="row">
                     <div class="col-md-1"></div>
