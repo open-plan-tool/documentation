@@ -4,6 +4,7 @@ __pycache__/
 *.sqlite3
 migrations/
 !migrations/__init__.py
+/src/
 /cdn_static_root/
 PersonalTODOs
 /app/cdn_static_root/

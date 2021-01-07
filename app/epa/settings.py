@@ -16,6 +16,8 @@ from django.contrib.messages import constants as messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'cdn_static_root')
@@ -28,7 +30,7 @@ SECRET_KEY = os.getenv('EPA_SECRET_KEY', 'v@p9^=@lc3#1u_xtx*^xhrv0l3li1(+8ik^k@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ast.literal_eval(os.getenv('DEBUG', 'True'))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -117,8 +119,6 @@ DATABASES = {
     #     'PORT': 3306,
     # }
 }
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -152,9 +152,7 @@ USE_L10N = True
 USE_TZ = False
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+# Other configs
 
 AUTH_USER_MODEL = 'users.CustomUser'
 

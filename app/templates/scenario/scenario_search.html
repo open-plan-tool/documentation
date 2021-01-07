@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_filters %}
 
 {% block head_block %}
-<link rel="stylesheet" href="/static/css/user-ranking-stars.css"/>
+<link rel="stylesheet" href="{% static 'css/user-ranking-stars.css' %}" type="text/css"/>
 {% endblock head_block %}
 
 {% load crispy_forms_tags %}
@@ -42,7 +43,7 @@
             font-size: 23px !important;
         }
 
-        #button55 {
+        .submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom {
             width: 70%;
             font-size: 70% !important;
             padding: 1em;
@@ -98,7 +99,7 @@
 </script>
 <br>
 <br>
-<h1 style="text-align: center" id="titlee">Project Overview</h1>
+    <h1 style="text-align: center" class="panel-heading">Project Overview</h1>
 <!-- region Project Scenarios List -->
 <a class="open-modal" data-modal="CreateScenarioModal" style="visibility: hidden">Add Scenario</a>
 <br>
@@ -154,7 +155,7 @@
                                             style="opacity: 0.8; font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-eye-open"
                                                style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %}" name="visualizeResults"
-                                               href="{% url 'scenario_visualize_results' scenario.pk %}">
+                                               href="{% url 'scenario_visualize_results' scenario.pk %}" name="visualizeResults">
                                                 Visualize-Results</a>
                                         </li>
                                         <li role="presentation"
@@ -232,13 +233,13 @@
                     <div class="col-sm-3">
                         <a class="glyphicon glyphicon-plus open-comments-modal" style="color: transparent;"
                            data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' %}"><span
-                                id="button55">Create New Scenario</span></a>
+                                    id="createnewscen">Create New Scenario</span></a>
                     </div>
 
                     <div class="col-sm-2"></div>
                     <div class="col-sm-4">
                         <a class="glyphicon glyphicon-upload" style="color: transparent;" id="upload-scenario"><span
-                                id="button55">Upload Scenario From File</span></a>
+                                    id="uploadscen">Upload Scenario From File</span></a>
                     </div>
                     <div class="col-sm-1"></div>
                 </div>
@@ -305,7 +306,9 @@
                         <a class="glyphicon glyphicon-plus open-comments-modal"
                            style="color: transparent; text-shadow: 1px 1px 1px #222;"
                            data-modal="CreateCommentForm" data-url="{% url 'comment_create' %}"
-                           id="button55"><span id="lo">Add Comment</span></a>
+                               id="addcom"><span id="lo">Add Comment</span></a>
+
+
                     </div>
                 </div>
             </div>

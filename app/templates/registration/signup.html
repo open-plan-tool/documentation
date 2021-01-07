@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %}Sign Up{% endblock title %}
@@ -58,7 +58,7 @@
                             <br> <br>
                             <br> <br>
                             <br> <br>-->
-                            <img src="/static/images/ELA3.jpg"
+                            <img src="{% static 'images/ELA3.jpg' %}"
                                  style="width: auto; height: 700px; opacity: 0.5; object-fit: cover; " id="signupimg"/>
 
                             <div class="centered"> Welcome to <br> E-LAND <br> <br>Create your Account <br> Here</div>

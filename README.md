@@ -18,9 +18,14 @@ utilized in a simulation environment.
 4. `docker-compose exec app sh ./setup.sh`
 5. Open browser and navigate to localhost.
 
-#### That should get everything up and running.
+That should get everything up and running.
+<hr>
 
-To clear local data afer usage execute:
+### Use
+> To see the preconfigured energy grid and other data login with credentials:  `testUser:ASas12,.`
+
+### Tear down
+>To clear local data afer usage execute:
 `docker-compose down --volumes --rmi 'local'`
 <hr>
  
