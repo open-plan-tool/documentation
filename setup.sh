@@ -1,5 +1,7 @@
-#!/bin/sh
-python manage.py makemigrations users projects dashboard
-python manage.py migrate
-python manage.py loaddata 'benchmarks_fixture.json'
-python manage.py collectstatic
+#!/usr/local/bin/python
+
+python manage.py makemigrations users projects dashboard && \
+python manage.py migrate && \
+python manage.py loaddata 'benchmarks_fixture.json' && \
+python manage.py collectstatic && \
+echo 'Completed Setup Successfully!!'

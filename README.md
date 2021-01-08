@@ -1,5 +1,5 @@
 # EPA - Energy Planning Application
-## Containerized Deployment
+## Containerized Deployment (use `production` branch)
 
 A Web App created for the needs of E-Land EU Project.  
 The application provides a front-end environment where users can provide  
@@ -15,7 +15,7 @@ utilized in a simulation environment.
 2. cd inside the created folder
 3. Modify the proxy in app/Dockerfile to fit your needs.
 3. `docker-compose up -d --build`
-4. `docker-compose exec app sh ./setup.sh`
+4. `docker-compose exec app bash ./setup.sh`
 5. Open browser and navigate to localhost.
 
 That should get everything up and running.
@@ -34,3 +34,25 @@ That should get everything up and running.
  This is because of the underlying OS and the way it handles EOL.
  Windows (CRLF), Unix (LF) and Mac (CR). 
  Try to execute the commands in the file sequentially instead.
+
+
+ ## Deployment
+
+ To create the production branch:
+ 1. Checkout a new temp branch `git checkout -b temp_prod dev`
+ 2. copy all django files and folder in 'app' folder
+ 3. move files and folder out of the 'deploymet_helpers' in the root of working directory, i.e. 'epa'
+ 4. modify epa.env to DEBUG=False
+ 5. modify app/epa/settings.py database to docker MySQL
+
+Then Either:
+> 6. Delete the old local production branch `git branch -d production`
+> 7. Rename 'temp_prod' to 'production' `git branch -m temp_prod production`
+> 8. Push to origin `git push orogin :production production`
+> 9. Upldate branch traces `git push -u origin production`
+
+Or:
+> 6. Delete the old local and remote production branch `git push -d origin production` and `git branch -d production`
+> 7. Rename 'temp_prod' to 'production' `git branch -m temp_prod production`
+> 8. Push new branch to origin `git push -u origin new_branch`
+
