@@ -45,14 +45,7 @@ That should get everything up and running.
  4. modify epa.env to DEBUG=False
  5. modify app/epa/settings.py database to docker MySQL
 
-Then Either:
-> 6. Delete the old local production branch `git branch -d production`
-> 7. Rename 'temp_prod' to 'production' `git branch -m temp_prod production`
-> 8. Push to origin `git push orogin :production production`
-> 9. Upldate branch traces `git push -u origin production`
-
-Or:
-> 6. Delete the old local and remote production branch `git push -d origin production` and `git branch -d production`
-> 7. Rename 'temp_prod' to 'production' `git branch -m temp_prod production`
-> 8. Push new branch to origin `git push -u origin new_branch`
+6. Delete the old local and remote production branch `git push -d origin production` and `git branch -d production`
+7. Rename 'temp_prod' to 'production' `git branch -m temp_prod production`
+8. Push new branch to origin `git push -u origin production`
 
