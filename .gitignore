@@ -8,3 +8,4 @@ migrations/
 /cdn_static_root/
 PersonalTODOs
 /app/cdn_static_root/
+.vscode/settings.json

@@ -11,6 +11,8 @@
             "program": "${workspaceFolder}\\manage.py",
             "args": [
                 "runserver"
+                // "test",
+                // "users"
             ],
             "django": true
         }

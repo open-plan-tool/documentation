@@ -31,16 +31,17 @@ class EconomicDataDetailForm(ModelForm):
             field.disabled = True
 
 
-class ProjectUpdateForm(ModelForm):
-    class Meta:
-        model = Project
-        exclude = ['date_created', 'date_updated', 'economic_data', 'user']
-
+economic_widgets = {
+    'discount': forms.NumberInput(attrs={'placeholder': 'eg. 0.1', 'min':'0.0', 'max':'1.0', 'step':'0.0001',
+                                            'title': 'Investment Discount factor.'}),
+    'tax': forms.NumberInput(attrs={'placeholder': 'eg. 0.3', 'min':'0.0', 'max':'1.0', 'step':'0.0001'}),
+}
 
 class EconomicDataUpdateForm(ModelForm):
     class Meta:
         model = EconomicData
         fields = '__all__'
+        widgets = economic_widgets
 
 
 class ProjectCreateForm(forms.Form):
@@ -54,12 +55,12 @@ class ProjectCreateForm(forms.Form):
     latitude = forms.FloatField(label='Location, latitude',
                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951', 'readonly': ''}))
     duration = forms.IntegerField(label='Project Duration (years)',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 '}))
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 ', 'min':'0', 'max':'100', 'step':'1'}))
     currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
     discount = forms.FloatField(label='Discount Factor',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.1'}))
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.1', 'min':'0.0', 'max':'1.0', 'step':'0.0001'}))
     tax = forms.FloatField(label='Tax',
-                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3'}))
+                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3', 'min':'0.0', 'max':'1.0', 'step':'0.0001'}))
     #annuity_factor = forms.FloatField(label='Annuity Factor', widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
     #crf = forms.FloatField(label='CRF', widget=forms.NumberInput(attrs={'placeholder': 'CRF...'}))
 
@@ -81,6 +82,12 @@ class ProjectCreateForm(forms.Form):
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-8'
         self.helper.field_class = 'col-lg-10'
+
+
+class ProjectUpdateForm(ModelForm):
+    class Meta:
+        model = Project
+        exclude = ['date_created', 'date_updated', 'economic_data', 'user']
 
 
 class CommentForm(ModelForm):
