@@ -5,7 +5,7 @@ delete from projects_valuetype where 1=1;
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('dso','Electricity', 'energy_provider', 'source', '[name,energy_price,feedin_tariff,peak_demand_pricing,peak_demand_pricing_period,renewable_share]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
-('demand','Electricity', 'energy_consumption', 'sink', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,input_timeseries]' );
+('demand','Electricity', 'energy_consumption', 'sink', '[name,input_timeseries]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values
 ('transformer_station_in','Electricity', 'energy_conversion', 'transformer', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency]' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields) values

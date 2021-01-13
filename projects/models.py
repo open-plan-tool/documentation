@@ -2,6 +2,7 @@ import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 COUNTRY = (
     ('', 'Choose...'),
@@ -200,7 +201,7 @@ class Asset(TopologyNode):
     lifetime = models.IntegerField(null=True, blank=False)
     input_timeseries = models.TextField(null=True, blank=False)
     crate = models.FloatField(null=True, blank=False)
-    efficiency = models.FloatField(null=True, blank=False)
+    efficiency = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
     soc_initial = models.FloatField(null=True, blank=False)
     soc_max = models.FloatField(null=True, blank=False)
     soc_min = models.FloatField(null=True, blank=False)

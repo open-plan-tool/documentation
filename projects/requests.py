@@ -51,7 +51,10 @@ def check_mvs_simulation(simulation):
         response = mvs_simulation_check(token=simulation.mvs_token)
         simulation.status = response['status']
 
-        simulation.results = parse_mvs_results(simulation, response['results']) if simulation.status == DONE else None
+        try:
+            simulation.results = parse_mvs_results(simulation, response['results']) if simulation.status == DONE else None
+        except:
+            simulation.results = None
 
         simulation.elapsed_seconds = (datetime.now() - simulation.start_date).seconds
         simulation.end_date = datetime.now() if response['status'] in [FAILED, DONE] else None
@@ -59,7 +62,7 @@ def check_mvs_simulation(simulation):
 
 
 def parse_mvs_results(simulation, response_results):
-    with open('static/tempFiles/json_with_results.json', 'r') as expected_file:
+    with open('../static/tempFiles/json_with_results.json', 'r') as expected_file:
         expected_json = json.load(expected_file)
 
     # keys for json_with_results.json

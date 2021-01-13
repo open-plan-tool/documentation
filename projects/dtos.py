@@ -45,9 +45,9 @@ class SimulationSettingsDto:
 
 
 class TimeseriesDataDto:
-    def __init__(self, unit: str, data: List[List[float]]):
+    def __init__(self, unit: str, value: List[List[float]]):
         self.unit = unit
-        self.data = data
+        self.value = value
 
 
 class AssetDto:
