@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 delete from projects_assettype where 1=1;
 delete from projects_valuetype where 1=1;
 
@@ -56,4 +58,4 @@ insert into projects_valuetype( unit, type) values ('currency/year', 'opex_fix' 
 insert into projects_valuetype( unit, type) values ('currency/year', 'specific_costs_om' );
 insert into projects_valuetype( unit, type) values ('kWh', 'input_timeseries' );
 insert into projects_valuetype( unit, type) values ('days', 'evaluated_period' );
-insert into projects_valuetype( unit, type) values ('bool', 'renewable_asset,' );
+insert into projects_valuetype( unit, type) values ('bool', 'renewable_asset' );

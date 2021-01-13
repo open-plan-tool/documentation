@@ -37,7 +37,7 @@ class EconomicDataDto:
 
 
 class SimulationSettingsDto:
-    def __init__(self, start_date: float, time_step: int, evaluated_period: ValueTypeDto):
+    def __init__(self, start_date: str, time_step: int, evaluated_period: ValueTypeDto):
         self.start_date = start_date
         # self.end_date = end_date
         self.time_step = time_step
@@ -60,7 +60,7 @@ class AssetDto:
                  energy_price: ValueTypeDto, feedin_tariff: ValueTypeDto, optimize_capacity: ValueTypeDto,
                  peak_demand_pricing: ValueTypeDto, peak_demand_pricing_period: ValueTypeDto,
                  renewable_share: ValueTypeDto,  renewable_asset: ValueTypeDto, specific_costs: ValueTypeDto, specific_costs_om: ValueTypeDto,
-                 input_timeseries: TimeseriesDataDto, ):
+                 input_timeseries: TimeseriesDataDto, unit: str):
         self.asset_type = asset_type
         self.label = label
         self.unique_id = unique_id
@@ -90,6 +90,7 @@ class AssetDto:
         self.specific_costs = specific_costs
         self.specific_costs_om = specific_costs_om
         self.input_timeseries = input_timeseries
+        self.unit = unit
 
 
 class EssDto:
@@ -158,7 +159,7 @@ def convert_to_dto(scenario: Scenario):
                                         # to_value_type(economic_data, 'crf'),
                                         )
 
-    simulation_settings = SimulationSettingsDto(datetime.combine(scenario.start_date, time()).timestamp(),
+    simulation_settings = SimulationSettingsDto(scenario.start_date.strftime('%Y-%m-%d %H:%M'),  # datetime.combine(scenario.start_date, time()).timestamp(),
                                                 scenario.time_step,
                                                 to_value_type(scenario, 'evaluated_period'))
 
@@ -213,7 +214,8 @@ def convert_to_dto(scenario: Scenario):
                                  to_value_type(asset, 'renewable_asset'),
                                  to_value_type(asset, 'capex_var'),
                                  to_value_type(asset, 'opex_fix'),
-                                 to_timeseries_data(asset, 'input_timeseries')
+                                 to_timeseries_data(asset, 'input_timeseries'),
+                                 asset.asset_type.unit
                                  )
 
             ess_sub_assets.update({asset.asset_type.asset_type: asset_dto})
@@ -267,7 +269,8 @@ def convert_to_dto(scenario: Scenario):
                              to_value_type(asset, 'renewable_asset'),
                              to_value_type(asset, 'capex_var'),
                              to_value_type(asset, 'opex_fix'),
-                             to_timeseries_data(asset, 'input_timeseries')
+                             to_timeseries_data(asset, 'input_timeseries'),
+                             asset.asset_type.unit
                              )
 
         # map_to_dto(asset, asset_dto)

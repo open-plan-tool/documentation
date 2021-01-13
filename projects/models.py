@@ -155,7 +155,7 @@ class Comment(models.Model):
 class Scenario(models.Model):
     name = models.CharField(max_length=60)
 
-    start_date = models.DateField()
+    start_date = models.DateTimeField()
     time_step = models.IntegerField()
     capex_fix = models.FloatField()
     capex_var = models.FloatField()
@@ -174,6 +174,7 @@ class AssetType(models.Model):
     energy_vector = models.CharField(max_length=20, choices=ENERGY_VECTOR)
     mvs_type = models.CharField(max_length=20, choices=MVS_TYPE)
     asset_fields = models.TextField(null=True)
+    unit = models.CharField(max_length=30, null=True)
 
 
 class TopologyNode(models.Model):

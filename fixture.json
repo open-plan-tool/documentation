@@ -362,7 +362,7 @@
   "model": "projects.valuetype",
   "pk": 28,
   "fields": {
-    "type": "renewable_asset,",
+    "type": "renewable_asset",
     "unit": "bool"
   }
 }
