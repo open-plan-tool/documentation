@@ -1,7 +1,9 @@
+from dashboard.models import KPICostsMatrixResults, KPIScalarResults
 import json
 import random
 from random import randrange, randint
-
+from itertools import groupby
+from operator import itemgetter
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
@@ -121,49 +123,53 @@ def scenario_visualize_results(request, scen_id):
 @json_view
 @require_http_methods(["GET"])
 def scenario_economic_results(request, scen_id):
+    """
+    This view gather all simulation specific cost matrix KPI results
+    and send them to the clent for representation.
+    """
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
+    
+    try:
+        kpi_cost_results_obj = KPICostsMatrixResults.objects.get(simulation=scenario.simulation)
+        kpi_cost_values_dict = json.loads(kpi_cost_results_obj.cost_values)
 
-    with open('static/tempFiles/json_with_results.json') as json_file:
-        dict_values = json.load(json_file)
-    # TODO: Fix this
-
-    # energy_type_keys = ['energyConsumption', 'energyConversion', 'energyProduction', 'energyProviders', 'energyStorage']
-    kpi_economic_data_list = ["costs_total", "annuity_total", "costs_upfront_in_year_zero", "annuity_om", "levelized_cost_of_energy_of_asset"]
-    cost_matrix_cols = dict_values["kpi"]["cost_matrix"]
-    # df = json_normalize(cost_matrix_cols)
-    # df = pd.DataFrame(cost_matrix_cols["data"], index=cost_matrix_cols["index"], columns=cost_matrix_cols["columns"])
-    results = list()
-
-    """
-    # non-dummy data
-    results_json = [
-        {
-            'values': dict_values['kpi']['cost_matrix']["data"][i][1:4],
-            'labels': ['Cost Total', 'Cost OM Total', 'Cost investment over Time'],
-            'type': 'pie',
-            'title': dict_values['kpi']['cost_matrix']["data"][i][0]
-        }
-        for i in [3, 8, 10]
-    ]
-    """
-
+        new_dict = dict()
+        for asset_name in kpi_cost_values_dict.keys():
+            for category,v in kpi_cost_values_dict[asset_name].items():
+                new_dict.setdefault(category, {})[asset_name] = v
+        
+        # non-dummy data
+        results_json = [
+            {
+                'values': list(new_dict[category].values()),
+                'labels': list(new_dict[category].keys()),
+                'type': 'pie',
+                'title': category
+            }
+            for category in new_dict.keys()
+            if sum(new_dict[category].values()) > 0.0  # there is at least one non zero value
+            and len(list(filter(lambda asset_name: new_dict[category][asset_name] > 0.0 ,new_dict[category]))) > 1.0
+            # there are more than one assets with value > 0
+        ]
+    except:
+        pass
     """
     # dummy data
     """
     dummy_title_list = ["Annuity Costs", "Upfront Investment Costs", "Operation and Maintenance Costs"]
     dummy_asset_list = ["PV Plant", "Transformer Station", "Wind Plant", "Electricity Grid Consumption"]
-    results_json = [
-        {
-            'values': [randint(30, 70) for j in range(4)],
-            'labels': random.choices(dummy_asset_list, k=3),
-            'type': 'pie',
-            'title': dummy_title_list[i]
-        }
-        for i in range(3)
-    ]
+    # results_json = [
+    #     {
+    #         'values': [randint(30, 70) for j in range(4)],
+    #         'labels': random.choices(dummy_asset_list, k=3),
+    #         'type': 'pie',
+    #         'title': dummy_title_list[i]
+    #     }
+    #     for i in range(3)
+    # ]
 
     return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
 
@@ -172,83 +178,28 @@ def scenario_economic_results(request, scen_id):
 @json_view
 @require_http_methods(["GET"])
 def scenario_scalar_kpi_results(request, scen_id):
+    """
+    This view gather scalar KPI Results from the database and sends them
+    in JSON format to the front end for representation.
+    # TODO: Integrate to scenario_visualize_results view and render data in for loop template
+    """
     scenario = get_object_or_404(Scenario, pk=scen_id)
-
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
 
-    with open('static/tempFiles/json_with_results.json') as json_file:
-        dict_values = json.load(json_file)
-    # TODO: Fix this
+    try:
+        kpi_scalar_results_obj = KPIScalarResults.objects.get(simulation=scenario.simulation)
+        kpi_scalar_values_dict = json.loads(kpi_scalar_results_obj.scalar_values)
 
-    keys = ['Attributed Electricity Costs', 'Renewable Share', 'Total internal non-renewable generation', 'Total internal renewable generation', 'Total non-renewable energy use', 'Total renewable energy use', 'Total Electricity demand', 'Annuity Maintenance Cost', 'Annuity Total Cost', 'Lifetime Investment cost', 'Total Maintenance Cost', 'Total Cost', 'Upfront Cost (year zero)']
-    units = ['currency', 'Factor', 'NA', 'kWh', 'kWh', 'kWh', 'kWh', 'currency/year', 'currency', 'currency', 'currency', 'currency', 'currency']
-    scalar_kpi_dict = dict(zip(keys, units))  # {keys[i]: units[i] for i in range(len(keys))}
+        results_json = [
+            {
+                'kpi': key.replace('_',' '),
+                'value': val,
+                'unit': 'currency' if 'cost' in key else ('energy' if 'electricity' or 'energy' in key else None) 
+            }
+            for key, val in kpi_scalar_values_dict.items()
+        ]
 
-    results_json = [
-        {
-            'kpi': key,
-            'value': val,
-            'unit': scalar_kpi_dict[key]
-        }
-        for key, val in dict_values['kpi']['scalars'].items()
-    ]
-
-    #json_to_db()
-
-    return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
-
-
-def json_to_db():
-    with open('static/tempFiles/EPA_input.json') as json_file:
-        dict_values = json.load(json_file)
-
-    energy_types = ['energyProviders', 'energy_consumption', 'energy_conversion', 'energy_production', 'energy_storage']
-
-    for item in energy_types:
-        key_list = list()
-        for obj in dict_values[item]:
-            [key_list.append(key) for key, val in obj.items() if key not in key_list]
-        print("{}: {}".format(item, key_list))
-
-    energyProviders = ['connected_consumption_sources', 'connected_feedin_sink', 'development_costs', 'dispatch_price',
-                      'energy_price', 'energy_vector', 'feedin_tariff', 'inflow_direction', 'installed_capacity',
-                      'label', 'lifetime', 'optimize_capacity', 'outflow_direction', 'peak_demand_pricing',
-                      'peak_demand_pricing_period', 'renewable_share', 'specific_costs', 'specific_costs_om',
-                      'type_oemof', 'unit']
-    energy_consumption= ['development_costs', 'dispatch_price', 'energy_vector', 'inflow_direction', 'input_bus_name',
-                         'input_timeseries', 'installed_capacity', 'label', 'lifetime', 'optimize_capacity',
-                         'specific_costs', 'specific_costs_om', 'type_oemof']
-    energy_conversion= ['age_installed', 'development_costs', 'dispatch_price', 'efficiency', 'energy_vector',
-                        'inflow_direction', 'input_bus_name', 'installed_capacity', 'label', 'lifetime',
-                        'maximum_capacity', 'optimize_capacity', 'outflow_direction', 'output_bus_name',
-                        'specific_costs', 'specific_costs_om', 'type_oemof']
-    energy_production= ['age_installed', 'development_costs', 'dispatch_price', 'dispatchable', 'energy_vector',
-                        'installed_capacity', 'label', 'lifetime', 'maximum_capacity', 'optimize_capacity',
-                        'outflow_direction', 'output_bus_name', 'renewable_asset', 'specific_costs',
-                        'specific_costs_om', 'type_oemof', 'input_timeseries']
-    energy_storage= ['energy_vector', 'inflow_direction', 'input power', 'input_bus_name', 'label', 'optimize_capacity',
-                     'outflow_direction', 'output power', 'output_bus_name', 'storage capacity', 'type_oemof']
-
-    set(energy_consumption).intersection(set(energy_conversion)).intersection(set(energy_production)) \
-        .intersection(set(energy_storage)).intersection(set(energyProviders))
-    # {'type_oemof', 'energy_vector', 'optimize_capacity', 'label'}
-
-    set(energy_consumption).intersection(set(energy_conversion)).intersection(set(energy_production))
-    # {'energy_vector', 'label', 'dispatch_price', 'specific_costs_om', 'specific_costs', 'development_costs', 'type_oemof', 'lifetime', 'optimize_capacity', 'installed_capacity'}
-
-    set(energy_production).symmetric_difference(set(energyProviders))
-
-    set(energy_production).union(set(energy_consumption)).union(set(energy_conversion)).union(set(energy_storage))
-    # {'age_installed', 'lifetime', 'dispatch_price', 'efficiency', 'type_oemof', 'development_costs',
-    # 'optimize_capacity', 'outflow_direction', 'output_bus_name', 'input_bus_name', 'output power',
-    # 'installed_capacity', 'label', 'specific_costs', 'maximum_capacity', 'inflow_direction', 'specific_costs_om',
-    # 'input_timeseries', 'input power', 'storage capacity', 'renewable_asset', 'energy_vector', 'dispatchable'}
-
-    set(energy_production).union(set(energy_consumption)).union(set(energy_conversion)).union(set(energy_storage)).union(set(energyProviders))
-    # {'efficiency', 'peak_demand_pricing_period', 'output power', 'connected_feedin_sink', 'specific_costs',
-    # 'connected_consumption_sources', 'maximum_capacity', 'renewable_share', 'input_timeseries', 'input power',
-    # 'renewable_asset', 'energy_vector', 'dispatchable', 'age_installed', 'feedin_tariff', 'lifetime',
-    # 'dispatch_price', 'type_oemof', 'development_costs', 'optimize_capacity', 'outflow_direction',
-    # 'output_bus_name', 'input_bus_name', 'installed_capacity', 'label', 'inflow_direction', 'specific_costs_om',
-    # 'storage capacity', 'unit', 'energy_price', 'peak_demand_pricing'}
+        return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
+    except:
+        return JsonResponse({'error'}, status=404, content_type='application/json', safe=False)

@@ -59,39 +59,13 @@ from projects.models import Asset
 #
 # class Simulation(models.Model):
 #     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE, null=False)
-#
-#
 
 
-class KPIResults(models.Model):
-    simulation = models.ForeignKey(Simulation, on_delete=models.CASCADE, null=False)
-    attributed_costsElectricity = models.FloatField(null=True, verbose_name="Attributed costsElectricity")
-    degree_of_autonomy = models.FloatField(null=True, verbose_name="Degree of autonomy")
-    levelized_costs_of_electricity_equivalent = models.FloatField(null=True, verbose_name="Levelized costs of electricity equivalent")
-    Levelized_costs_of_electricity_equivalentElectricity = models.FloatField(null=True, verbose_name="Levelized costs of electricity equivalentElectricity")
-    onsite_energy_fraction = models.FloatField(null=True, verbose_name="Onsite energy fraction")
-    onsite_energy_matching = models.FloatField(null=True, verbose_name="Onsite energy matching")
-    renewable_factor = models.FloatField(null=True, verbose_name="Renewable factor")
-    renewable_share = models.FloatField(null=True, verbose_name="Renewable share of local generation")
-    total_internal_generation = models.FloatField(null=True, verbose_name="Total internal generation")
-    total_internal_non_renewable_generation = models.FloatField(null=True, verbose_name="Total internal non-renewable generation")
-    total_internal_renewable_generation = models.FloatField(null=True, verbose_name="Total internal renewable generation")
-    total_non_renewable_energy_use = models.FloatField(null=True, verbose_name="Total non-renewable energy use")
-    total_renewable_energy_use = models.FloatField(null=True, verbose_name="Total renewable energy use")
-    total_demand_electricity = models.FloatField(null=True, verbose_name="Total_demandElectricity")
-    total_demand_electricity_electricity_equivalent = models.FloatField(null=True, verbose_name="Total_demandElectricity_electricity_equivalent")
-    total_demand_electricity_equivalent = models.FloatField(null=True, verbose_name="Total_demand_electricity_equivalent")
-    total_excess_electricity = models.FloatField(null=True, verbose_name="Total_excessElectricity")
-    total_excess_electricity_electricity_equivalent = models.FloatField(null=True, verbose_name="Total_excessElectricity_electricity_equivalent")
-    total_excess_electricity_equivalent = models.FloatField(null=True, verbose_name="Total_excess_electricity_equivalent")
-    total_feedin_electricity = models.FloatField(null=True, verbose_name="Total_feedinElectricity")
-    total_feedin_electricity_electricity_equivalent = models.FloatField(null=True, verbose_name="Total_feedinElectricity_electricity_equivalent")
-    total_feedin_electricity_equivalent = models.FloatField(null=True, verbose_name="Total_feedin_electricity_equivalent")
-    annuity_om = models.FloatField(null=True, verbose_name="annuity_om")
-    annuity_total = models.FloatField(null=True, verbose_name="annuity_total")
-    costs_cost_om = models.FloatField(null=True, verbose_name="costs_cost_om")
-    costs_dispatch = models.FloatField(null=True, verbose_name="costs_dispatch")
-    costs_investment_over_lifetime = models.FloatField(null=True, verbose_name="costs_investment_over_lifetime")
-    costs_om_total = models.FloatField(null=True, verbose_name="costs_om_total")
-    costs_total = models.FloatField(null=True, verbose_name="costs_total")
-    costs_upfront_in_year_zero = models.FloatField(null=True, verbose_name="costs_upfront_in_year_zero")
+class KPIScalarResults(models.Model):
+    scalar_values = models.TextField()  # to store the scalars dict
+    simulation = models.ForeignKey(Simulation, on_delete=models.CASCADE)
+
+
+class KPICostsMatrixResults(models.Model):
+    cost_values = models.TextField()  # to store the scalars dict
+    simulation = models.ForeignKey(Simulation, on_delete=models.CASCADE)

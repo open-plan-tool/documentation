@@ -5,7 +5,7 @@ import json
 from requests.exceptions import HTTPError
 
 from epa.settings import PROXY_CONFIG, MVS_POST_URL, MVS_GET_URL
-from dashboard.models import KPIResults
+from dashboard.models import KPICostsMatrixResults, KPIScalarResults
 
 
 def mvs_simulation_request(data: dict):
@@ -47,7 +47,7 @@ def mvs_simulation_check(token):
 def check_mvs_simulation(simulation):
     DONE = 'DONE'
     FAILED = 'FAILED'
-    if simulation.status not in ['3']:  #[FAILED, DONE]:
+    if simulation.status not in ['3']:  #[FAILED, DONE]:  # TODO: Change it in production
         response = mvs_simulation_check(token=simulation.mvs_token)
         simulation.status = response['status']
 
@@ -62,26 +62,15 @@ def check_mvs_simulation(simulation):
 
 
 def parse_mvs_results(simulation, response_results):
-    with open('../static/tempFiles/json_with_results.json', 'r') as expected_file:
-        expected_json = json.load(expected_file)
+    data = json.loads(response_results)
+    asset_key_list = ['energy_consumption', 'energy_conversion', 'energy_production', 
+                        'energy_providers', 'energy_storage']
 
-    # keys for json_with_results.json
-    asset_key_list = ['energyProviders', 'energyConsumption', 'energyConversion',
-                      'energyProduction', 'energyStorage', 'kpi']
-
-    # keys for 3aea5991-324b-41fc-99d8-0c1856a4279a(MVS API OUTPUT).json
-    asset_key_list = ['energyProviders', 'energyConsumption', 'energyConversion',
-                      'energyProduction', 'energyStorage', 'kpi']
-
-    if not set(asset_key_list).issubset(expected_json.keys()):
+    if not set(asset_key_list).issubset(data.keys()):
         return "ERROR"
 
-    # write the scalar results to db
-    kpi_results = KPIResults(simulation=simulation, attributed_costsElectricity=0.3)
-
-
-
-    gather_all_objects = [expected_json[item] for item in asset_key_list]
-
-    print(expected_json.keys())
+    # Write Scalar KPIs to db
+    KPIScalarResults.objects.create(scalar_values=json.dumps(data['kpi']['scalars']), simulation=simulation)
+    # Write Cost Matrix KPIs to db
+    KPICostsMatrixResults.objects.create(cost_values=json.dumps(data['kpi']['cost_matrix']), simulation=simulation)
 
