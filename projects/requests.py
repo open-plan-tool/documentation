@@ -5,7 +5,7 @@ import json
 from requests.exceptions import HTTPError
 
 from epa.settings import PROXY_CONFIG, MVS_POST_URL, MVS_GET_URL
-from dashboard.models import KPICostsMatrixResults, KPIScalarResults
+from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults
 
 
 def mvs_simulation_request(data: dict):
@@ -73,4 +73,7 @@ def parse_mvs_results(simulation, response_results):
     KPIScalarResults.objects.create(scalar_values=json.dumps(data['kpi']['scalars']), simulation=simulation)
     # Write Cost Matrix KPIs to db
     KPICostsMatrixResults.objects.create(cost_values=json.dumps(data['kpi']['cost_matrix']), simulation=simulation)
+    # Write Assets to db
+    data_subdict={category:v for category,v in data.items() if category in asset_key_list}
+    AssetsResults.objects.create(assets_list=json.dumps(data_subdict), simulation=simulation)
 

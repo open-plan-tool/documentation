@@ -1,18 +1,11 @@
-from dashboard.models import KPICostsMatrixResults, KPIScalarResults
-import json
-import random
-from random import randrange, randint
-from itertools import groupby
-from operator import itemgetter
+from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from jsonview.decorators import json_view
-# from pandas.io.json import json_normalize
-# import pandas as pd
-
-from projects.models import Scenario, Asset
+from projects.models import Scenario
+import json
 
 
 @login_required
@@ -20,45 +13,33 @@ from projects.models import Scenario, Asset
 @require_http_methods(["GET"])
 def scenario_available_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
-
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
-
-    with open('static/tempFiles/json_with_results.json') as json_file:
-        dict_values = json.load(json_file)
-
-    asset_category_list = [
-        'energyProviders', 'energyConsumption', 'energyConversion', 'energyStorage', 'energyProduction']
-
-    # Generate available asset category JSON
-    asset_category_json = [
-        {
-            'assetCategory': asset_category
-        }
-        for asset_category in asset_category_list
-    ]
-
-    # Generate available asset type JSON
+    
     try:
-        asset_name_json = [
+        assets_results_obj = AssetsResults.objects.get(simulation=scenario.simulation)
+        assets_results_json = json.loads(assets_results_obj.assets_list)
+
+        # Generate available asset category JSON
+        asset_category_json = [{'assetCategory': asset_category} for asset_category in assets_results_json.keys()]
+        # Generate available asset type JSON
+        assets_names_json = [
             [
                 {
                     'assetCategory': asset_category,
-                    'assetName': asset_name
+                    'assetName': asset['label']
                 }
-                for asset_name in dict_values[asset_category].keys()
+                for asset in assets_results_json[asset_category]
                 # show only assets of a certain Energy Vector
-                if dict_values[asset_category][asset_name]['energyVector'] == request.GET['energy_vector']
+                if asset['energy_vector'] == request.GET['energy_vector']
             ]
-            for asset_category in asset_category_list
+            for asset_category in assets_results_json.keys()
         ]
-    except KeyError:
-        return JsonResponse({"error": "energyVector field missing from asset"},
-                            status=400, content_type='application/json')
-
-    response_json = {'options': asset_name_json, 'optgroups': asset_category_json}
-
-    return JsonResponse(response_json, status=200, content_type='application/json')
+        response_json = {'options': assets_names_json, 'optgroups': asset_category_json}
+        return JsonResponse(response_json, status=200, content_type='application/json')
+    except:
+        return JsonResponse({"error": "Could not retrieve asset names and categories."},
+                            status=404, content_type='application/json')
 
 
 @login_required
@@ -147,20 +128,21 @@ def scenario_economic_results(request, scen_id):
                 'values': list(new_dict[category].values()),
                 'labels': list(new_dict[category].keys()),
                 'type': 'pie',
-                'title': category
+                'title': category.replace('_',' ')
             }
             for category in new_dict.keys()
             if sum(new_dict[category].values()) > 0.0  # there is at least one non zero value
             and len(list(filter(lambda asset_name: new_dict[category][asset_name] > 0.0 ,new_dict[category]))) > 1.0
             # there are more than one assets with value > 0
         ]
+        return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
     except:
-        pass
+        return JsonResponse({"error":"Could not retrieve kpi cost data."}, status=404, content_type='application/json', safe=False)
     """
     # dummy data
     """
-    dummy_title_list = ["Annuity Costs", "Upfront Investment Costs", "Operation and Maintenance Costs"]
-    dummy_asset_list = ["PV Plant", "Transformer Station", "Wind Plant", "Electricity Grid Consumption"]
+    # dummy_title_list = ["Annuity Costs", "Upfront Investment Costs", "Operation and Maintenance Costs"]
+    # dummy_asset_list = ["PV Plant", "Transformer Station", "Wind Plant", "Electricity Grid Consumption"]
     # results_json = [
     #     {
     #         'values': [randint(30, 70) for j in range(4)],
@@ -170,8 +152,6 @@ def scenario_economic_results(request, scen_id):
     #     }
     #     for i in range(3)
     # ]
-
-    return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
 
 
 @login_required
