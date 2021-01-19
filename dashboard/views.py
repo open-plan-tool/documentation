@@ -6,6 +6,7 @@ from django.views.decorators.http import require_http_methods
 from jsonview.decorators import json_view
 from projects.models import Scenario
 import json
+import datetime
 
 
 @login_required
@@ -32,6 +33,7 @@ def scenario_available_results(request, scen_id):
                 for asset in assets_results_json[asset_category]
                 # show only assets of a certain Energy Vector
                 if asset['energy_vector'] == request.GET['energy_vector']
+                and 'flow' in asset.keys()
             ]
             for asset_category in assets_results_json.keys()
         ]
@@ -50,41 +52,53 @@ def scenario_request_results(request, scen_id):
 
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
+    
+    # real data
+    try:
+        asset_name_list = request.GET.get('assetNameList').split(',')
+        assets_results_obj = AssetsResults.objects.get(simulation=scenario.simulation)
+        assets_results_json = json.loads(assets_results_obj.assets_list)
 
-    with open('static/tempFiles/json_with_results.json') as json_file:
-        dict_values = json.load(json_file)
+        # Generate available asset category list
+        asset_category_list = [asset_category for asset_category in assets_results_json.keys()]
+        
+        # Asset category to asset type
+        asset_name_to_category = {
+                asset_name['label']: asset_category
+                for asset_category in asset_category_list
+                for asset_name in assets_results_json[asset_category]
+            }
 
-    asset_name_list = request.GET.get('assetNameList').split(',')
+        # Create the datetimes index. Constrains: step in minutes and evaluated_period in days
+        base_date = scenario.start_date
+        datetime_list = [
+            datetime.datetime.timestamp(base_date + datetime.timedelta(minutes=step)) 
+            for step in range(0, 24*scenario.evaluated_period*scenario.time_step, scenario.time_step)
+            ]
 
-    asset_category_list = [
-        'energyProviders', 'energyConsumption', 'energyConversion', 'energyStorage', 'energyProduction']
+        # Generate results JSON per asset name
+        results_json = [
+            {
+                'xAxis':
+                    {
+                        'values': datetime_list,
+                        'label': 'Time'
+                    },
+                'yAxis':
+                    {
+                        'values': asset['flow']['value'],
+                        'label': 'Power'  # or asset['flow']['unit']
+                    },
+                'title': asset_name
+            }
+            for asset_name in asset_name_list
+            for asset in assets_results_json[asset_name_to_category[asset_name]]
+            if asset['label'] == asset_name
+        ]
 
-    # Asset category to asset type
-    asset_name_to_category = {
-            asset_name: asset_category
-            for asset_category in asset_category_list
-            for asset_name in dict_values[asset_category]
-        }
-
-    # Generate results JSON per asset name
-    results_json = [
-        {
-            'xAxis':
-                {
-                    'values': dict_values[asset_name_to_category[asset_name]][asset_name]['flow']['index'],
-                    'label': 'Time'
-                },
-            'yAxis':
-                {
-                    'values': dict_values[asset_name_to_category[asset_name]][asset_name]['flow']['data'],
-                    'label': 'Power'
-                },
-            'title': asset_name
-        }
-        for asset_name in asset_name_list
-    ]
-
-    return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
+        return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
+    except:
+        return JsonResponse({"Error":"Could not retrieve timeseries data."}, status=404, content_type='application/json', safe=False)
 
 
 @login_required
@@ -92,7 +106,6 @@ def scenario_request_results(request, scen_id):
 def scenario_visualize_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
-    # TODO: Handle the MVS file results and show to user
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
 

@@ -47,7 +47,7 @@ def mvs_simulation_check(token):
 def check_mvs_simulation(simulation):
     DONE = 'DONE'
     FAILED = 'FAILED'
-    if simulation.status not in ['3']:  #[FAILED, DONE]:  # TODO: Change it in production
+    if simulation.status not in [FAILED, DONE]:
         response = mvs_simulation_check(token=simulation.mvs_token)
         simulation.status = response['status']
 

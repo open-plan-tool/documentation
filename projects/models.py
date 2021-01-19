@@ -203,7 +203,7 @@ class Asset(TopologyNode):
     input_timeseries = models.TextField(null=True, blank=False)
     crate = models.FloatField(null=True, blank=False)
     efficiency = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    soc_initial = models.FloatField(null=True, blank=False)
+    soc_initial = models.FloatField(null=True, blank=True)  # allow blank since null is acceptable value
     soc_max = models.FloatField(null=True, blank=False)
     soc_min = models.FloatField(null=True, blank=False)
     dispatchable = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)
