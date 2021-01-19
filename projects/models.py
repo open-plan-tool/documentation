@@ -183,7 +183,6 @@ class TopologyNode(models.Model):
     pos_y = models.FloatField(default=0.0)
     scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE,  null=False, blank=False)
     parent_asset = models.ForeignKey(to='Asset', on_delete=models.CASCADE, null=True, blank=True)
-
     class Meta:
         abstract = True
 
@@ -194,6 +193,11 @@ class ValueType(models.Model):
 
 
 class Asset(TopologyNode):
+    def save(self, *args, **kwargs):
+        if self.asset_type.asset_type == 'dso':
+            self.optimize_cap = True
+        super().save(*args, **kwargs)
+    
     unique_id = models.CharField(max_length=120, default=uuid.uuid4, unique=True, editable=False)
     capex_fix = models.FloatField(null=True, blank=False)  # development_costs
     capex_var = models.FloatField(null=True, blank=False)  # specific_costs
@@ -218,7 +222,7 @@ class Asset(TopologyNode):
     optimize_cap = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES)
     installed_capacity = models.FloatField(null=True, blank=False)
     age_installed = models.FloatField(null=True, blank=False)
-
+    
     @property
     def fields(self):
         return [f.name for f in self._meta.fields + self._meta.many_to_many]

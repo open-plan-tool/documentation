@@ -11,13 +11,10 @@
 
 {% block topology %}
 
-    <button onclick="goBack()" id="backbutton2"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="window.history.back();" id="backbutton2">
+        <span class="glyphicon glyphicon-chevron-left"></span> Back
+    </button>
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
     <br>
 
     <div class="wrapper">
@@ -84,11 +81,10 @@
             </ul>
         </div>
 
-
         <div class="col-center">
             <div class="menu">
                 <ul>
-                    <li onclick="editor.changeModule('Home'); changeModule(event);" class="selected" class="accordtitle">
+                    <li onclick="editor.changeModule('Home'); changeModule(event);" class="selected">
                         Topology
                     </li>
                 </ul>
@@ -100,12 +96,6 @@
                 <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
             </div>
         </div>
-
-        <!--
-        <div class="col-right" style="display: none">
-            Add here logic for the properties sidebar.
-        </div>
-        -->
 
     </div>
 
@@ -121,10 +111,7 @@
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function () {
-            $("#accordion").accordion();
-        });
-
+            $("#accordion").accordion({collapsible: true, heightStyle: "content"});
     </script>
 
     <script>

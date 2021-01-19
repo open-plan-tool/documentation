@@ -502,7 +502,7 @@
     "renewable_share": 0.1,
     "renewable_asset": null,
     "asset_type": 1,
-    "optimize_cap": false,
+    "optimize_cap": true,
     "installed_capacity": null,
     "age_installed": null
   }
