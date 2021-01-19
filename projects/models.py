@@ -37,7 +37,7 @@ ENERGY_VECTOR = (
     ('Heat', 'Heat'),
     ('Gas', 'Gas'),
     ('H2', 'H2'),
-    ('Mobility', 'Mobility'),
+    ('Diesel', 'Diesel'),
 )
 
 MVS_TYPE = (

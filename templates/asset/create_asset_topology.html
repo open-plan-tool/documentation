@@ -558,7 +558,7 @@
                             <option value="Heat">Heat Bus</option>
                             <option value="Gas">Gas Bus</option>
                             <option value="H2">H2 Bus</option>
-                            <option value="Mobility">Mobility Bus</option>
+                            <option value="Diesel">Diesel Bus</option>
                         </select>
                         </div>
                     </div>
@@ -617,6 +617,21 @@
     <script defer>
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function () {
+            // Data Pre-check
+            /* 
+            /* Check if there are duplicate node names in the model
+            /* and prevent user from saving the model if there are.
+            */
+            data = editor.export().drawflow.Home.data;
+            node_list = Object.values(data)
+            node_names = node_list.map(obj => obj.data.name);
+            duplicate_names = node_names.filter((name, i, a) => a.indexOf(name) !== i)
+            
+            if(duplicate_names.length!=0)
+                return Swal.fire('Grid Model Error',
+                    `There are nodes with duplicate names. \n Rename nodes with names: ${duplicate_names.toString()}`, 'error');
+            // End Data Pre-check
+            else{
             $.ajax({
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 type: "POST",
@@ -643,6 +658,7 @@
                     }
                 }
             });
+        }
         });
     </script>
 

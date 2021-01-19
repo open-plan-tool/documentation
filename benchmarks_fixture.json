@@ -78,7 +78,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "sink",
     "asset_fields": "[name,input_timeseries]",
-    "unit": null
+    "unit": "kWh"
   }
 },
 {
@@ -150,7 +150,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "source",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]",
-    "unit": null
+    "unit": "kWh"
   }
 },
 {
@@ -162,7 +162,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "source",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap, renewable_asset, input_timeseries]",
-    "unit": null
+    "unit": "kWh"
   }
 },
 {
@@ -174,7 +174,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]",
-    "unit": null
+    "unit": "kW"
   }
 },
 {
@@ -186,7 +186,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]",
-    "unit": null
+    "unit": "kW"
   }
 },
 {
@@ -198,7 +198,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_initial,soc_max,soc_min]",
-    "unit": null
+    "unit": "kWh"
   }
 },
 {
@@ -210,7 +210,7 @@
     "energy_vector": "Electricity",
     "mvs_type": "storage",
     "asset_fields": "[name, optimize_cap]",
-    "unit": null
+    "unit": "kW"
   }
 },
 {

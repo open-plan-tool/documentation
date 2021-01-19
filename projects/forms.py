@@ -66,9 +66,9 @@ class ProjectCreateForm(forms.Form):
 
     electricity = forms.BooleanField(label='Electricity', initial=False, required=False)
     heat = forms.BooleanField(label='Heat', initial=False, required=False)
-    gas = forms.BooleanField(label='Gas (LNG)', initial=False, required=False)
+    gas = forms.BooleanField(label='Gas', initial=False, required=False)
     h2 = forms.BooleanField(label='H2', initial=False, required=False)
-    mobility = forms.BooleanField(label='Electric Mobility', initial=False, required=False)
+    diesel = forms.BooleanField(label='Diesel', initial=False, required=False)
 
     # Render form
     def __init__(self, *args, **kwargs):
