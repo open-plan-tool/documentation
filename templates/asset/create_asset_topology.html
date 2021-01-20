@@ -115,6 +115,7 @@
     </script>
 
     <script>
+        /* Script to retrieve nodes (assets and busses) and links data from the backend. */
         const addBusses = async (data) =>
             await Promise.all(data.map(async nodeData =>
                 createNodeObject(nodeData.name, nodeData.input_ports, nodeData.output_ports, nodeData.data, nodeData.pos_x, nodeData.pos_y)));
@@ -131,10 +132,8 @@
                 : editor.addConnection(assetNodeId, busNodeId, 'output_1', linkData.bus_connection_port);
         });
 
-
         $(window).on('load', function () {
             $.getJSON("{% url 'new_assets_topology' scenario_id %}", {}, async (data, textStatus, jqXHR) => {
-                //console.log(JSON.stringify(data));
                 $.when(addBusses(data['busses']), addAssets(data['assets']))
                     .then(async () => addLinks(data['links'])); // endwhen
                 return data;
@@ -149,13 +148,12 @@
 
 
     <script>
-        // Initialize
+        // Initialize Drawflow
         var id = document.getElementById("drawflow");
         const editor = new Drawflow(id);
         editor.reroute = true;
         editor.start();
         // editor.drawflow.drawflow.Home.data; // All node level data are saved here
-
 
         /* Mouse and Touch Actions */
         var elements = document.getElementsByClassName('drag-drawflow');
@@ -218,58 +216,65 @@
                         "name": "ess",
                         "pos_x": clientX - 180,
                         "pos_y": clientY - 160,
-                        "data": {"name": "ESS1", "optimize_cap": true, "dispatchable": false}
+                        "data": {"name": "ESS1"}
                     },
                     {
-                        "name": "charging_power", "pos_x": clientX - 140, "pos_y": clientY - 90, "data": {
+                        "name": "charging_power", 
+                        "pos_x": clientX - 140, 
+                        "pos_y": clientY - 90, 
+                        "data": {
                             "parent_asset_id": 0,
                             "name": "Charge",
-                            "age_installed": 22,
-                            "installed_capacity": 2,
+                            "age_installed": 0,
+                            "installed_capacity": 100,
                             "capex_fix": 2,
                             "capex_var": 2,
                             "opex_fix": 2,
                             "opex_var": 2,
-                            "lifetime": 2,
-                            "optimize_cap": false,
-                            "crate": 2,
-                            "efficiency": 2,
+                            "lifetime": 10,
+                            "crate": 0.2,
+                            "efficiency": 0.9, 
                             "dispatchable": false
                         }
                     },
                     {
-                        "name": "discharging_power", "pos_x": clientX + 160, "pos_y": clientY - 90, "data": {
+                        "name": "discharging_power", 
+                        "pos_x": clientX + 160, 
+                        "pos_y": clientY - 90, 
+                        "data": {
                             "parent_asset_id": 0,
                             "name": "DIscharge",
-                            "age_installed": 2,
-                            "installed_capacity": 2,
+                            "age_installed": 0,
+                            "installed_capacity": 500,
                             "capex_fix": 2,
                             "capex_var": 2,
                             "opex_fix": 2,
                             "opex_var": 2,
                             "lifetime": 2,
-                            "optimize_cap": false,
-                            "crate": 2,
-                            "efficiency": 2,
-                            "dispatchable": false
+                            "crate": 1,
+                            "efficiency": 0.9,
+                            "dispatchable": false,
                         }
                     },
                     {
-                        "name": "capacity", "pos_x": clientX - 140, "pos_y": clientY + 90, "data": {
+                        "name": "capacity", 
+                        "pos_x": clientX - 140, 
+                        "pos_y": clientY + 90, 
+                        "data": {
                             "parent_asset_id": 0,
                             "name": "Cap",
-                            "age_installed": 2,
-                            "installed_capacity": 2,
+                            "age_installed": 0,
+                            "installed_capacity": 500,
                             "capex_fix": 2,
-                            "capex_var": 2,
+                            "capex_var": 200,
                             "opex_fix": 2,
                             "opex_var": 2,
-                            "lifetime": 2,
-                            "optimize_cap": false,
-                            "efficiency": 2,
-                            "soc_initial": 2,
-                            "soc_max": 2,
-                            "soc_min": 2,
+                            "lifetime": 10,
+                            "optimize_cap": true,
+                            "efficiency": 0.999,
+                            "soc_initial": undefined,
+                            "soc_max": 1,
+                            "soc_min": 0.2,
                             "dispatchable": false
                         }
                     }],
@@ -564,8 +569,12 @@
 
         async function fetchAssetForm(nodeName, connectionInputs = 1, connectionOutputs = 1, nodeData, pos_x, pos_y) {
             // Due to a problem with Boolean Values not showing in the modal we have to convert bool to string.
-            nodeData.optimize_cap = (nodeData.optimize_cap) ? "True" : "False";
-            nodeData.dispatchable = (nodeData.dispatchable) ? "True" : "False";
+            const trueFalseNullSelector = (param) => (param) ? "True" : (param == false ? "False" : undefined);
+            //console.log(`${nodeData.name} => ${nodeData.optimize_cap}`);
+            nodeData.optimize_cap = trueFalseNullSelector(nodeData.optimize_cap);
+            nodeData.dispatchable = trueFalseNullSelector(nodeData.dispatchable);
+            nodeData.renewable_asset = trueFalseNullSelector(nodeData.renewable_asset);
+            
             // ------------------------------------------------------------------------------------------------
             const fullUrl = document.location.origin + '/asset/create/' + nodeName;
 

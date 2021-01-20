@@ -4,6 +4,7 @@ import json
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponseForbidden, JsonResponse
+from django.http.response import Http404
 from django.shortcuts import *
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.http import require_http_methods
@@ -371,7 +372,6 @@ class LoadScenarioFromFileView(BSModalCreateView):
         proj_id = self.request.session['project_id']
         return reverse_lazy('scenario_search', args=[proj_id])
 
-
 # endregion Scenario
 
 
@@ -379,62 +379,22 @@ class LoadScenarioFromFileView(BSModalCreateView):
 
 @login_required
 @require_http_methods(["GET"])
-def asset_search(request, scen_id):
-    scenario = get_object_or_404(Scenario, pk=scen_id)
-    request.session['scenario_id'] = scenario.id
-
-    asset_list = Asset.objects.filter(scenario=scenario)
-
-    asset_type_list = json.dumps(list(AssetType.objects.all().values()), cls=DjangoJSONEncoder)
-
-    return render(request, 'asset_search.html', {'asset_list': asset_list, 'asset_type_list': asset_type_list})
-
-
-@login_required
-@require_http_methods(["GET"])
-def asset_create(request, asset_type_name):
+def get_asset_create_form(request, asset_type_name):
+    """
+    This view is responsible to serve the appropriate form for each asset.
+    Utilized in the 'create_asset_topology.html' template and retrieves 
+    form data from the backend.
+    """
     form = AssetCreateForm()
     # Retrieve asset type
     asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)
     request.session['asset_type_name'] = asset_type_name
 
     form_fields = list(form.fields)
-
     # Remove form fields that do not correspond to the model
-    for field in form_fields:
-        if field not in asset_type.asset_fields:
-            form.fields.pop(field)
-
+    [form.fields.pop(field) for field in form_fields if field not in asset_type.asset_fields]
+    
     return render(request, 'asset/asset_create_form.html', {'form': form})
-
-
-@json_view
-@login_required
-@require_http_methods(["POST"])
-def asset_create_post(request):
-    if request.method == "POST":
-        form = AssetCreateForm(request.POST)
-        asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
-        form_fields = list(form.fields)
-
-        # Remove form fields that do not correspond to the model
-        for field in form_fields:
-            if field not in asset_type.asset_fields:
-                form.fields.pop(field)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            asset = Asset()
-
-            for name, value in form.cleaned_data.items():
-                setattr(asset, name, value)
-            asset.scenario = get_object_or_404(Scenario, pk=request.session['scenario_id'])
-            asset.asset_type = get_object_or_404(AssetType, asset_type=request.session['asset_type_name'])
-            asset.save()
-            # redirect to a new URL:
-            return JsonResponse({'success': True}, status=200)
-
-    # form_html = crispy_forms_filters.as_crispy_form(form)
 
 
 @login_required
@@ -498,7 +458,6 @@ def scenario_topology_view(request, scen_id):
     else:
         return JsonResponse({"success": False, "request": "bad request type. couldn't respond."}, status=400)
 
-
 # endregion Asset
 
 
@@ -525,7 +484,7 @@ def request_mvs_simulation(request, scenario_id=0):
 
     simulation.mvs_token = results['id'] if results['id'] else None
 
-    if results['status'] and (results['status'] == 'DONE' or results['status'] == 'FAILED'):
+    if 'status' in results.keys() and (results['status'] == 'DONE' or results['status'] == 'FAILED'):
         simulation.status = results['status']
         simulation.results = results['results']
         simulation.end_date = datetime.now()

@@ -26,8 +26,8 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <img src="{% static 'images/eland.png' %}" class="logoo"/><a class="navbar-brand" href="https://elandh2020.eu/"
-                                                                  target="_blank">E-LAND</a>
+            <img src="{% static 'images/eland.png' %}" class="logoo"/>
+            <a class="navbar-brand" href="https://elandh2020.eu/" target="_blank">E-LAND</a>
         </div>
 
         <ul class="nav navbar-nav">
@@ -45,13 +45,17 @@
 
         {% if user.is_authenticated %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'logout' %}">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
+                <li>
+                    <a href="{% url 'logout' %}">Logout <span class="glyphicon glyphicon-log-out"></span></a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a data-toggle="dropdown" href="#" id="userr"><span class="glyphicon glyphicon-user dropdown-toggle"></span>
+                    <a data-toggle="dropdown" href="#" id="userr">
+                        <span class="glyphicon glyphicon-user dropdown-toggle"></span>
                         {{ user.username }}
-                        <span class="caret"></span></a>
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'user_info' %}">User Info</a></li>
                         <li><a href="{% url 'change_password' %}">Change Password</a></li>
@@ -63,11 +67,15 @@
             </ul>
         {% else %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li>
+                    <a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'signup' %}"> Sign up</a></li>
+                <li>
+                    <a href="{% url 'signup' %}"> Sign up</a>
+                </li>
             </ul>
 
         {% endif %}

@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% load crispy_forms_tags %}
 
 {% block head_block %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'css/user-ranking-stars.css' %}" type="text/css"/>
 {% endblock head_block %}
 
-{% load crispy_forms_tags %}
+{% block start_body_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+        integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+{% endblock %}
 
 {% block content %}
 <style>
@@ -169,7 +175,7 @@
                                             style=" opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" class="glyphicon glyphicon-random"
                                                name="Simulation"
-                                               onclick="request_mvs_simulation(this, {{ scenario.pk }})">
+                                               onclick="request_mvs_simulation(this, `{% url 'request_mvs_simulation' scenario.pk %}`)">
                                                 Simulate</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
@@ -422,9 +428,9 @@
 </script>
 
 <script>
-    function request_mvs_simulation(elem, scen_id) {
+    function request_mvs_simulation(elem, requestUrl) {
         $.ajax({
-            url: "{% url 'request_mvs_simulation' %}"+scen_id,
+            url: requestUrl,
             success: function (data) {
                 // log EPA to MVS JSON data
                 console.log(data['mvs_request_json']);

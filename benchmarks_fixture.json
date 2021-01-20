@@ -173,7 +173,7 @@
     "asset_category": "energy_storage",
     "energy_vector": "Electricity",
     "mvs_type": "storage",
-    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,crate,efficiency]",
     "unit": "kW"
   }
 },
@@ -185,7 +185,7 @@
     "asset_category": "energy_storage",
     "energy_vector": "Electricity",
     "mvs_type": "storage",
-    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,crate,efficiency]",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,crate,efficiency]",
     "unit": "kW"
   }
 },
@@ -209,7 +209,7 @@
     "asset_category": "energy_storage",
     "energy_vector": "Electricity",
     "mvs_type": "storage",
-    "asset_fields": "[name, optimize_cap]",
+    "asset_fields": "[name]",
     "unit": "kW"
   }
 },
@@ -572,7 +572,7 @@
     "renewable_share": null,
     "renewable_asset": null,
     "asset_type": 13,
-    "optimize_cap": false,
+    "optimize_cap": null,
     "installed_capacity": null,
     "age_installed": null
   }
@@ -642,7 +642,7 @@
     "renewable_share": null,
     "renewable_asset": null,
     "asset_type": 10,
-    "optimize_cap": false,
+    "optimize_cap": null,
     "installed_capacity": 100.0,
     "age_installed": 0.0
   }
@@ -677,7 +677,7 @@
     "renewable_share": null,
     "renewable_asset": null,
     "asset_type": 11,
-    "optimize_cap": false,
+    "optimize_cap": null,
     "installed_capacity": 500.0,
     "age_installed": 0.0
   }
