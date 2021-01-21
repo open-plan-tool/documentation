@@ -334,6 +334,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     font-weight: 700;
     text-transform: uppercase;
     opacity: 0.9;
+
 }
 
 #list6 {
@@ -358,6 +359,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     position: relative;
     z-index: 1 !important;
 }
+
 #listtitle2 {
     text-align: left !important;
 }
@@ -366,13 +368,16 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     text-align: center !important;
 }
 
-#project_map {
-    height: 100% !important;
+.mapp {
+    height: 90%;
     width: 100%;
-    position: fixed;
-    left: 0;
-    z-index: 0; /* Set z-index to 0 as it will be on a layer below the contact form */
-    filter: grayscale(30%);
+    position: relative;
+    z-index: 1 !important;
+    object-fit: cover;
+    background-repeat: repeat-y;
+    filter: grayscale(35%);
+    opacity: 0.8;
+    border-right: 6px solid #967b65;
 }
 
 
@@ -471,7 +476,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     font-family: "Century Gothic";
     font-size: 33px !important;
     color: #F4D9A4;
-    text-shadow: 1px 1px 1px #222!important;
+    text-shadow: 1px 1px 1px #222 !important;
     position: relative;
     z-index: 1 !important;
     text-align: center;
@@ -482,7 +487,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 }
 
 .panel-heading, .panel-title, .modal-title {
-    color: #1c1c1c!important;
+    color: #1c1c1c !important;
     font-weight: 800;
 }
 
@@ -490,7 +495,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     background-color: #F9EBD4 !important;
 }
 
-.submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom,#backbutton, #backbutton2 {
+.submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom, #backbutton, #backbutton2 {
     background-color: #171a1d !important;
     float: left;
     border: none !important;
@@ -693,7 +698,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 }
 
 #backbutton, #backbutton2 {
-    padding: 6px 10px!important;
+    padding: 6px 10px !important;
     border-radius: 50px;
 }
 
@@ -753,7 +758,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 }
 
 .wrapper-hero h1 {
-    letter-spacing: 0.025em!important;
+    letter-spacing: 0.025em !important;
     position: absolute;
     left: 0;
     right: 0;

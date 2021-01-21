@@ -431,8 +431,12 @@ header a {
 .drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
     background: #9e2a2b;
     position: absolute;
-    top: -5px;
-    left: 100px;
+    top: -35px;
+    left: 120px;
+}
+
+.drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
+    top:-15px;
 }
 
 .drawflow-node.dso.selected, .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected {
@@ -495,11 +499,14 @@ header a {
     background-size: 100%;
 }
 
-.drawflow-node.transformer_station_in .input, .drawflow-node.transformer_station_out .input, .drawflow-node.storage_charge_controller_in .input, .drawflow-node.storage_charge_controller_out .input, .drawflow-node.solar_inverter .input {
+.drawflow-node.transformer_station_in .input, .drawflow-node.transformer_station_out .input, .drawflow-node.storage_charge_controller_in .input, .drawflow-node.storage_charge_controller_out .input {
     background: #4f772d;
     left: -50px;
 }
-
+.drawflow-node.solar_inverter .input {
+background: #4f772d;
+    left: -78px;
+}
 .drawflow-node.transformer_station_in .output, .drawflow-node.transformer_station_out .output, .drawflow-node.storage_charge_controller_in .output, .drawflow-node.storage_charge_controller_out .output, .drawflow-node.solar_inverter .output {
     background: #9e2a2b;
     left: 10px;
@@ -551,7 +558,7 @@ header a {
 
 .drawflow-node.ess .input {
     background: green;
-    left: -20px;
+    left: 355px;
 }
 
 .drawflow-node.charging_power .output, .drawflow-node.discharging_power .output, .drawflow-node.capacity .output {
@@ -565,6 +572,7 @@ header a {
 
 .drawflow-node.ess .output {
     background: #e64545;
+    left:-370px;
 }
 
 .drawflow-node.charging_power.selected, .drawflow-node.discharging_power.selected, .drawflow-node.capacity.selected {
@@ -573,8 +581,8 @@ header a {
 
 /*<editor-fold desc="Storage Asset"> */
 .drawflow-node.ess {
-    height: 350px;
-    width: 450px;
+    height: 270px;
+    width: 370px;
     border-radius: 10px;
     background-color: transparent;
     border-color: #e7b968;
