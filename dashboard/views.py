@@ -1,3 +1,4 @@
+from dashboard.helpers import storage_asset_to_list
 from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
@@ -21,6 +22,9 @@ def scenario_available_results(request, scen_id):
         assets_results_obj = AssetsResults.objects.get(simulation=scenario.simulation)
         assets_results_json = json.loads(assets_results_obj.assets_list)
 
+        # bring all storage subasset one level up to show their flows.
+        storage_asset_to_list(assets_results_json)
+
         # Generate available asset category JSON
         asset_category_json = [{'assetCategory': asset_category} for asset_category in assets_results_json.keys()]
         # Generate available asset type JSON
@@ -33,7 +37,7 @@ def scenario_available_results(request, scen_id):
                 for asset in assets_results_json[asset_category]
                 # show only assets of a certain Energy Vector
                 if asset['energy_vector'] == request.GET['energy_vector']
-                and 'flow' in asset.keys()
+                and any(key in ['flow','timeseries_soc'] for key in asset.keys())
             ]
             for asset_category in assets_results_json.keys()
         ]
@@ -62,6 +66,9 @@ def scenario_request_results(request, scen_id):
         # Generate available asset category list
         asset_category_list = [asset_category for asset_category in assets_results_json.keys()]
         
+        # bring all storage subasset one level up to show their flows.
+        storage_asset_to_list(assets_results_json)
+
         # Asset category to asset type
         asset_name_to_category = {
                 asset_name['label']: asset_category
@@ -86,7 +93,7 @@ def scenario_request_results(request, scen_id):
                     },
                 'yAxis':
                     {
-                        'values': asset['flow']['value'],
+                        'values': asset['flow']['value'] if 'flow' in asset else asset['timeseries_soc']['value'],
                         'label': 'Power'  # or asset['flow']['unit']
                     },
                 'title': asset_name

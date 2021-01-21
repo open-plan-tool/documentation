@@ -49,11 +49,12 @@ def check_mvs_simulation(simulation):
     FAILED = 'FAILED'
     if simulation.status not in [FAILED, DONE]:
         response = mvs_simulation_check(token=simulation.mvs_token)
-        simulation.status = response['status']
-
+        
         try:
+            simulation.status = response['status']
             simulation.results = parse_mvs_results(simulation, response['results']) if simulation.status == DONE else None
         except:
+            simulation.status = FAILED
             simulation.results = None
 
         simulation.elapsed_seconds = (datetime.now() - simulation.start_date).seconds
@@ -67,7 +68,7 @@ def parse_mvs_results(simulation, response_results):
                         'energy_providers', 'energy_storage']
 
     if not set(asset_key_list).issubset(data.keys()):
-        return "ERROR"
+        raise KeyError('There are missing keys from the received dictionary.')
 
     # Write Scalar KPIs to db
     KPIScalarResults.objects.create(scalar_values=json.dumps(data['kpi']['scalars']), simulation=simulation)
