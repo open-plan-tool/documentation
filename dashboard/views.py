@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from dashboard.helpers import storage_asset_to_list
 from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults
 from django.contrib.auth.decorators import login_required
@@ -94,7 +95,7 @@ def scenario_request_results(request, scen_id):
                 'yAxis':
                     {
                         'values': asset['flow']['value'] if 'flow' in asset else asset['timeseries_soc']['value'],
-                        'label': 'Power'  # or asset['flow']['unit']
+                        'label': asset['flow']['unit']  # 'Power'
                     },
                 'title': asset_name
             }
@@ -112,12 +113,26 @@ def scenario_request_results(request, scen_id):
 @require_http_methods(["GET"])
 def scenario_visualize_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
-
     if scenario.project.user != request.user:
         return HttpResponseForbidden()
+    
+    try:
+        kpi_scalar_results_obj = KPIScalarResults.objects.get(simulation=scenario.simulation)
+        kpi_scalar_values_dict = json.loads(kpi_scalar_results_obj.scalar_values)
 
-    return render(request, 'scenario/scenario_visualize_results.html',
-                  {'scenario_id': scen_id})
+        scalar_kpis_json = [
+            {
+                'kpi': key.replace('_',' '),
+                'value': round(val, 3),
+                'unit': 'currency' if 'cost' in key else ('energy' if 'electricity' or 'energy' in key else None) 
+            }
+            for key, val in kpi_scalar_values_dict.items()
+        ]
+
+        return render(request, 'scenario/scenario_visualize_results.html',
+        {'scenario_id': scen_id, 'scalar_kpis': scalar_kpis_json})
+    except:
+        raise Http404("Could not retrieve simulation results.")
 
 
 @login_required
@@ -146,9 +161,9 @@ def scenario_economic_results(request, scen_id):
         results_json = [
             {
                 'values': list(new_dict[category].values()),
-                'labels': list(new_dict[category].keys()),
+                'labels': [asset.replace('_',' ').upper() for asset in new_dict[category].keys()],
                 'type': 'pie',
-                'title': category.replace('_',' ')
+                'title': category.replace('_',' ').upper()
             }
             for category in new_dict.keys()
             if sum(new_dict[category].values()) > 0.0  # there is at least one non zero value
@@ -158,48 +173,4 @@ def scenario_economic_results(request, scen_id):
         return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
     except:
         return JsonResponse({"error":"Could not retrieve kpi cost data."}, status=404, content_type='application/json', safe=False)
-    """
-    # dummy data
-    """
-    # dummy_title_list = ["Annuity Costs", "Upfront Investment Costs", "Operation and Maintenance Costs"]
-    # dummy_asset_list = ["PV Plant", "Transformer Station", "Wind Plant", "Electricity Grid Consumption"]
-    # results_json = [
-    #     {
-    #         'values': [randint(30, 70) for j in range(4)],
-    #         'labels': random.choices(dummy_asset_list, k=3),
-    #         'type': 'pie',
-    #         'title': dummy_title_list[i]
-    #     }
-    #     for i in range(3)
-    # ]
 
-
-@login_required
-@json_view
-@require_http_methods(["GET"])
-def scenario_scalar_kpi_results(request, scen_id):
-    """
-    This view gather scalar KPI Results from the database and sends them
-    in JSON format to the front end for representation.
-    # TODO: Integrate to scenario_visualize_results view and render data in for loop template
-    """
-    scenario = get_object_or_404(Scenario, pk=scen_id)
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
-
-    try:
-        kpi_scalar_results_obj = KPIScalarResults.objects.get(simulation=scenario.simulation)
-        kpi_scalar_values_dict = json.loads(kpi_scalar_results_obj.scalar_values)
-
-        results_json = [
-            {
-                'kpi': key.replace('_',' '),
-                'value': val,
-                'unit': 'currency' if 'cost' in key else ('energy' if 'electricity' or 'energy' in key else None) 
-            }
-            for key, val in kpi_scalar_values_dict.items()
-        ]
-
-        return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
-    except:
-        return JsonResponse({'error'}, status=404, content_type='application/json', safe=False)

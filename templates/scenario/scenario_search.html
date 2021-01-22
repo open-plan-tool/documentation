@@ -95,11 +95,15 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
     }
 </style>
 <br>
-<button onclick="window.history.back();" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+<button onclick="window.history.back();" id="backbutton">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    Back
+</button>
 
 <br>
 <br>
     <h1 style="text-align: center" class="panel-heading">Project Overview</h1>
+    <h3 style="text-align: center" class="panel-default">{{ project_name }}</h3>
 <!-- region Project Scenarios List -->
 <a class="open-modal" data-modal="CreateScenarioModal" style="visibility: hidden">Add Scenario</a>
 <br>
