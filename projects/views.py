@@ -247,7 +247,8 @@ def scenario_search(request, proj_id):
     # TODO: In case of MVS DONE with errors handle accordingly
     return render(request, 'scenario/scenario_search.html',
                   {'comment_list': comment_list,
-                   'scenarios_list': scenarios_list
+                   'scenarios_list': scenarios_list,
+                   'project_name': project.name
                    })
 
 
