@@ -450,7 +450,7 @@
         function closeModalSteps(modal) {
             modal.style.display = "none"; // hide the modal
             modal.closest(".drawflow-node").style.zIndex =
-                (modal.closest(".drawflow-node").classList.contains("storage")) ? "1" : "2"; // bring node to default z-index
+                (modal.closest(".drawflow-node").classList.contains("ess")) ? "1" : "2"; // bring node to default z-index
             editor.precanvas.style.transform = transform;
             editor.precanvas.style.left = '0px';
             editor.precanvas.style.top = '0px';
