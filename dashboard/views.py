@@ -95,7 +95,7 @@ def scenario_request_results(request, scen_id):
                 'yAxis':
                     {
                         'values': asset['flow']['value'] if 'flow' in asset else asset['timeseries_soc']['value'],
-                        'label': asset['flow']['unit']  # 'Power'
+                        'label': asset['flow']['unit'] if 'flow' in asset else asset['timeseries_soc']['unit'],  # 'Power'
                     },
                 'title': asset_name
             }
