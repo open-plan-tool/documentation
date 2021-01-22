@@ -45,25 +45,29 @@ class EconomicDataUpdateForm(ModelForm):
 
 
 class ProjectCreateForm(forms.Form):
-    name = forms.CharField(label='Project Name', widget=forms.TextInput(attrs={'placeholder': 'Name...'}))
+    name = forms.CharField(label='Project Name', widget=forms.TextInput(attrs={'placeholder': 'Name...', 'data-toggle': 'tooltip', 'title': 'A self explanatory name for the project.'}))
     description = forms.CharField(label='Project Description',
-                                  widget=forms.Textarea(attrs={'placeholder': 'More detailed description here...'}))
-
-    country = forms.ChoiceField(label='Country', choices=COUNTRY)
+                                  widget=forms.Textarea(attrs={'placeholder': 'More detailed description here...', 'data-toggle': 'tooltip', 'title': 'A description of what this project objectives or test cases.'}))
+    country = forms.ChoiceField(label='Country', choices=COUNTRY,
+        widget=forms.Select(attrs={'data-toggle': 'tooltip', 'title': 'Name of the country where the project is being deployed'}))
     longitude = forms.FloatField(label='Location, longitude',
-                                 widget=forms.NumberInput(attrs={'placeholder': 'eg. -77.0364', 'readonly': ''}))
+                                 widget=forms.NumberInput(attrs={'placeholder': 'click on the map', 'readonly': '', 
+                                 'data-toggle': 'tooltip', 'title': " Longitude coordinate of the project's geographical location."}))
     latitude = forms.FloatField(label='Location, latitude',
-                                widget=forms.NumberInput(attrs={'placeholder': 'eg. 38.8951', 'readonly': ''}))
+                                widget=forms.NumberInput(attrs={'placeholder': 'click on the map', 'readonly': '',
+                                'data-toggle': 'tooltip', 'title': "Latitude coordinate of the project's geographical location."}))
     duration = forms.IntegerField(label='Project Duration (years)',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 ', 'min':'0', 'max':'100', 'step':'1'}))
-    currency = forms.ChoiceField(label='Currency', choices=CURRENCY)
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 1 ', 'min':'0', 'max':'100', 'step':'1', 'data-toggle': 'tooltip', 
+                                  'title': "The number of years the project is intended to be operational. The project duration also sets the installation time of the assets used in the simulation. After the project ends these assets are 'sold' and the refund is charged against the initial investment costs."}))
+    currency = forms.ChoiceField(label='Currency', choices=CURRENCY,
+        widget=forms.Select(attrs={'data-toggle': 'tooltip', 'title': 'The currency of the country where the project is implemented.'}))
     discount = forms.FloatField(label='Discount Factor',
-                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.1', 'min':'0.0', 'max':'1.0', 'step':'0.0001'}))
+                                  widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.1', 'min':'0.0', 'max':'1.0', 'step':'0.0001',
+                                  'data-toggle': 'tooltip', 'title': 'Discount factor is the factor which accounts for the depreciation in the value of money in the future, compared to the current value of the same money. The common method is to calculate the weighted average cost of capital (WACC) and use it as the discount rate.'}))
     tax = forms.FloatField(label='Tax',
-                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3', 'min':'0.0', 'max':'1.0', 'step':'0.0001'}))
-    #annuity_factor = forms.FloatField(label='Annuity Factor', widget=forms.NumberInput(attrs={'placeholder': 'Annuity Factor...'}))
-    #crf = forms.FloatField(label='CRF', widget=forms.NumberInput(attrs={'placeholder': 'CRF...'}))
-
+                             widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3', 'min':'0.0', 'max':'1.0', 'step':'0.0001',
+                             'data-toggle': 'tooltip', 'title': 'Tax factor.'}))
+    
     electricity = forms.BooleanField(label='Electricity', initial=False, required=False)
     heat = forms.BooleanField(label='Heat', initial=False, required=False)
     gas = forms.BooleanField(label='Gas', initial=False, required=False)
