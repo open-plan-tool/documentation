@@ -53,7 +53,7 @@ class TimeseriesDataDto:
 class AssetDto:
     def __init__(self, asset_type: str, label: str, unique_id: str, type_oemof: str, energy_vector: str,
                  input_bus_name: str, output_bus_name: str, dispatchable: bool, age_installed: ValueTypeDto,
-                 c_rate: ValueTypeDto, soc_initial: ValueTypeDto,
+                 c_rate: ValueTypeDto, 
                  soc_max: ValueTypeDto, soc_min: ValueTypeDto, development_costs: ValueTypeDto,
                  dispatch_price: ValueTypeDto, efficiency: ValueTypeDto,
                  installed_capacity: ValueTypeDto, lifetime: ValueTypeDto, maximum_capacity: ValueTypeDto,
@@ -71,7 +71,6 @@ class AssetDto:
         self.dispatchable = dispatchable
         self.age_installed = age_installed
         self.c_rate = c_rate
-        self.soc_initial = soc_initial
         self.soc_max = soc_max
         self.soc_min = soc_min
         self.development_costs = development_costs
@@ -196,7 +195,6 @@ def convert_to_dto(scenario: Scenario):
                                  asset.dispatchable,
                                  to_value_type(asset, 'age_installed'),
                                  to_value_type(asset, 'crate'),
-                                 to_value_type(asset, 'soc_initial'),
                                  to_value_type(asset, 'soc_max'),
                                  to_value_type(asset, 'soc_min'),
                                  to_value_type(asset, 'capex_fix'),
@@ -251,7 +249,6 @@ def convert_to_dto(scenario: Scenario):
                              asset.dispatchable,
                              to_value_type(asset, 'age_installed'),
                              to_value_type(asset, 'crate'),
-                             to_value_type(asset, 'soc_initial'),
                              to_value_type(asset, 'soc_max'),
                              to_value_type(asset, 'soc_min'),
                              to_value_type(asset, 'capex_fix'),

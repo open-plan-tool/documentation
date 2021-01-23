@@ -139,7 +139,7 @@
     "asset_category": "energy_storage",
     "energy_vector": "Electricity",
     "mvs_type": "storage",
-    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_initial,soc_max,soc_min]",
+    "asset_fields": "[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_max,soc_min]",
     "unit": null
   }
 },
@@ -209,14 +209,6 @@
   "fields": {
     "type": "age_installed",
     "unit": "year"
-  }
-},
-{
-  "model": "projects.valuetype",
-  "pk": 8,
-  "fields": {
-    "type": "soc_initial",
-    "unit": "None or factor"
   }
 },
 {

@@ -27,7 +27,7 @@ insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_ty
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields, unit) values
 ('discharging_power','Electricity', 'energy_storage', 'storage', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,crate,efficiency]', 'kW' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields, unit) values
-('capacity','Electricity', 'energy_storage', 'storage', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_initial,soc_max,soc_min]', 'kWh' );
+('capacity','Electricity', 'energy_storage', 'storage', '[name,age_installed,installed_capacity,capex_fix,capex_var,opex_fix,opex_var,lifetime,optimize_cap,efficiency,soc_max,soc_min]', 'kWh' );
 insert into projects_assettype(asset_type, energy_vector, asset_category, mvs_type, asset_fields, unit) values
 ('ess','Electricity', 'energy_storage', 'storage', '[name]', "'kW' );
 
@@ -38,7 +38,6 @@ insert into projects_valuetype( unit, type) values ('factor', 'tax' );
 insert into projects_valuetype( unit, type) values ('', 'crf' );
 insert into projects_valuetype( unit, type) values ('factor of total capacity (kWh)', 'crate' );
 insert into projects_valuetype( unit, type) values ('year', 'age_installed' );
-insert into projects_valuetype( unit, type) values ('None or factor', 'soc_initial' );
 insert into projects_valuetype( unit, type) values ('factor', 'soc_max' );
 insert into projects_valuetype( unit, type) values ('factor', 'soc_min' );
 insert into projects_valuetype( unit, type) values ('currency', 'capex_fix' );
