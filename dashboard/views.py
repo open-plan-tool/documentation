@@ -1,6 +1,6 @@
 from django.http.response import Http404
 from dashboard.helpers import storage_asset_to_list
-from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults
+from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults, KPI_SCALAR_UNITS
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
@@ -124,7 +124,7 @@ def scenario_visualize_results(request, scen_id):
             {
                 'kpi': key.replace('_',' '),
                 'value': round(val, 3),
-                'unit': 'currency' if 'cost' in key else ('energy' if 'electricity' or 'energy' in key else None) 
+                'unit': KPI_SCALAR_UNITS[key]
             }
             for key, val in kpi_scalar_values_dict.items()
         ]
