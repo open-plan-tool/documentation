@@ -10,12 +10,12 @@ urlpatterns = [
     path('project/detail/<int:proj_id>', project_detail, name='project_detail'),
     path('project/delete/<int:proj_id>', project_delete, name='project_delete'),
     # Comment
-    path('comment/search/', comment_search, name='comment_search'),
     path('comment/create/', comment_create, name='comment_create'),
     path('comment/update/<int:com_id>', comment_update, name='comment_update'),
     path('comment/delete/<int:com_id>', comment_delete, name='comment_delete'),
     # Scenario
     path('scenario/search/<int:proj_id>', scenario_search, name='scenario_search'),
+    path('scenario/search/<int:proj_id>/<int:show_comments>', scenario_search, name='scenario_search'),
     path('scenario/create/', scenario_create, name='scenario_create'),
     path('scenario/create_post/', scenario_create_post, name='scenario_create_post'),
     path('scenario/update/<int:scen_id>', scenario_update, name='scenario_update'),

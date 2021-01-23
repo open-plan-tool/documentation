@@ -145,16 +145,6 @@ def project_search(request):
 # region Comment
 
 @login_required
-@require_http_methods(["GET"])
-def comment_search(request):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
-
-    comment_list = Comment.objects.filter(project=project)
-
-    return render(request, 'comment/comment_search.html', {'comment_list': comment_list})
-
-
-@login_required
 @require_http_methods(["GET", "POST"])
 def comment_create(request):
     project = get_object_or_404(Project, pk=request.session['project_id'])
@@ -171,9 +161,11 @@ def comment_create(request):
             comment.body = form.cleaned_data['body']
             comment.project = project
             comment.save()
-
+            
+            #  return JsonResponse({"success":True}, status=201)
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
+            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id'], 1]))
+        # return JsonResponse({"success":False, "forms_errors":form.errors}, status=400)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -203,7 +195,7 @@ def comment_update(request, com_id):
             comment.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id]))
+            return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id, 1]))
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -223,7 +215,7 @@ def comment_delete(request, com_id):
     if request.POST:
         comment.delete()
         messages.success(request, 'Comment successfully deleted!')
-        return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id]))
+        return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id, 1]))
 
 
 # endregion Comment
@@ -233,7 +225,18 @@ def comment_delete(request, com_id):
 
 @login_required
 @require_http_methods(["GET"])
-def scenario_search(request, proj_id):
+def scenario_search(request, proj_id, show_comments=0):
+    """
+    This view renders the scenarios and comments search html template.
+
+    args: proj_id, show_comments
+    proj_id: The Project id the user requests to observe associated scenarios and comments.
+    show_comments: An integer flag to indicate wether the page will open on scenarios tab or comments tab.
+    If show_comments==1 the html page will load and following a click event will change the active tab to comments.
+    Otherwise the default scenarios tab will be presented to the user.
+
+    Returns: A rendered html template.
+    """
     project = get_object_or_404(Project, pk=proj_id)
     request.session['project_id'] = proj_id  # set the session according to current project
     comment_list = Comment.objects.filter(project=project)
@@ -248,7 +251,8 @@ def scenario_search(request, proj_id):
     return render(request, 'scenario/scenario_search.html',
                   {'comment_list': comment_list,
                    'scenarios_list': scenarios_list,
-                   'project_name': project.name
+                   'project_name': project.name,
+                   'show_comments':show_comments
                    })
 
 
