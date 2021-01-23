@@ -446,8 +446,11 @@
 
     // region close Modal on: 1. click 'x', 2. press 'esc' and 3. click outside the modal.
     function closeModalSteps(modal) {
-        debugger
-        //modal.closest(".box").textContent = modal.querySelector('#id_name').value;
+        // // Change the name of the node based on input
+        const nodeNameElem = modal.closest('.drawflow_content_node').querySelector('.nodeName');
+        nodeNameElem.textContent = `${modal.querySelector('input[df-name]').value}`;
+        // End name change
+
         modal.style.display = "none"; // hide the modal
         modal.closest(".drawflow-node").style.zIndex =
             (modal.closest(".drawflow-node").classList.contains("ess")) ? "1" : "2"; // bring node to default z-index
@@ -524,7 +527,7 @@
     async function createNodeObject(nodeName, connectionInputs = 1, connectionOutputs = 1, nodeData = {}, pos_x, pos_y) {
         if (nodeName === "bus") {
             const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-            let html = `<div class="box"><span>${shownName}</span>
+            let html = `<div class="box">
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -558,7 +561,8 @@
                             font-size: medium; font-family: century gothic" onclick="closemodal(event)">Ok</button>
                   </div>
                 </div>
-            </div>`;
+            </div>
+            <div class="nodeName" style="color: black;">${shownName}</div>`;
             return {
                 "editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html),
                 "specificNodeType": nodeName
@@ -583,7 +587,7 @@
         const formData = data.substring(data.indexOf("<form "), data.indexOf("</form>") + 7);
 
         const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-        const source_html = `<div class="box">${shownName}
+        const source_html = `<div class="box">
                 <div class="modal" style="display:none">
                   <div class="modal-content">
                     <span class="close" onclick="closemodal(event)">&times;</span>
@@ -600,7 +604,8 @@
                             font-size: medium; font-family: century gothic" onclick="closemodal(event)">Ok</button>
                   </div>
                 </div>
-            </div>`;
+            </div>
+            <div class="nodeName" style="color: black;">${shownName}</div>`;
 
         return {
             "editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html),
