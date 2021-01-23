@@ -1,6 +1,6 @@
 from django.http.response import Http404
 from dashboard.helpers import storage_asset_to_list
-from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults, KPI_SCALAR_UNITS
+from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults, KPI_COSTS_TOOLTIPS, KPI_SCALAR_UNITS
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
@@ -140,8 +140,8 @@ def scenario_visualize_results(request, scen_id):
 @require_http_methods(["GET"])
 def scenario_economic_results(request, scen_id):
     """
-    This view gather all simulation specific cost matrix KPI results
-    and send them to the clent for representation.
+    This view gathers all simulation specific cost matrix KPI results
+    and sends them to the client for representation.
     """
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
@@ -163,7 +163,8 @@ def scenario_economic_results(request, scen_id):
                 'values': list(new_dict[category].values()),
                 'labels': [asset.replace('_',' ').upper() for asset in new_dict[category].keys()],
                 'type': 'pie',
-                'title': category.replace('_',' ').upper()
+                'title': category.replace('_',' ').upper(),
+                'titleTooltip': KPI_COSTS_TOOLTIPS[category]
             }
             for category in new_dict.keys()
             if sum(new_dict[category].values()) > 0.0  # there is at least one non zero value

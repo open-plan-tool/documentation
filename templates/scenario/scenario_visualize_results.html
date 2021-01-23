@@ -5,6 +5,12 @@
 {% block head_block %}
 <link rel="stylesheet" href="{% static 'css/selectize.default.css' %}" type="text/css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
+
+<style>
+    .allowEvents {
+        pointer-events: all !important;
+    }
+</style>
 {% endblock head_block %}
 
 {% block start_body_scripts %}
@@ -12,6 +18,8 @@
 <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="{% static 'js/selectize.min.js' %}"></script>
+
+<script src="https://unpkg.com/tippy.js@2.5.2/dist/tippy.all.min.js"></script>
 {% endblock start_body_scripts %}
 
 {% block content %}
@@ -127,8 +135,8 @@
 
     function drawPieChart(dataList) {
         const data = [{
-            values: dataList.values, //[19, 26, 55]
-            labels: dataList.labels, //['Residential', 'Non-Residential', 'Utility']
+            values: dataList.values,
+            labels: dataList.labels,
             type: 'pie',
             textinfo: "label+percent",
             textposition: "inside",
@@ -155,10 +163,21 @@
         // Create a new Pie under the economic data div
         const parentDiv = document.getElementById("economicDataDiv");
         const newGraph = document.createElement('div');
-        newGraph.id = "pie" + layout.title.text.replace(' ', '');
+        newGraph.id = "pie" + layout.title.text.replaceAll(' ', '');
         newGraph.classList.add("col-md-4");
         parentDiv.appendChild(newGraph);
         Plotly.newPlot(newGraph.id, data, layout);
+
+        // Add title tooltip on hover
+        $(`div#${newGraph.id} g.g-gtitle > text.gtitle`).attr('title', `${dataList.titleTooltip}`);
+        $(`div#${newGraph.id} g.g-gtitle > text.gtitle`).addClass('allowEvents');
+        tippy('text.gtitle', {
+            position: 'top',
+            animation: 'scale',
+            arrow: 'true',
+            maxWidth: '50rem',
+            themes: 'material'
+        });
     }
 </script> <!-- Economic Data -->
 
