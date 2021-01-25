@@ -548,6 +548,17 @@ header a {
     left:-5rem;
     top:2rem;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .drawflow-node.dso .nodeName, .drawflow-node.pv_plant .nodeName, .drawflow-node.wind_plant .nodeName {
+        top: -5rem;
+    }
+}
+
+@-moz-document url-prefix(){
+    .drawflow-node.dso .nodeName, .drawflow-node.pv_plant .nodeName, .drawflow-node.wind_plant .nodeName {
+        top: 1rem;
+    }
+}
 
 .drawflow-node.discharging_power .nodeName{
     left:-6rem;
