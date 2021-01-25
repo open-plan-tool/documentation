@@ -381,7 +381,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
 }
 
 .mapback {
-    height: 109%;
+    height: 50%;
     width: 138%;
     position: absolute;
     z-index: 0 !important;
@@ -389,6 +389,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     background-repeat: no-repeat;
     filter: grayscale(40%);
     left:-19%;
+    box-shadow: 3px 3px 10px #3e3f40;
 }
 
 #mapid {
@@ -479,6 +480,8 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     border: 1px solid transparent;
     box-shadow: none;
 }
+
+
 
 #titlecoms, #titleproj, .panel-heading, .panel-title, .modal-title {
     text-transform: uppercase;
