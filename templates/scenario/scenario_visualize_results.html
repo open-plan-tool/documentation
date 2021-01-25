@@ -56,7 +56,7 @@
             {% for scalar_kpi in scalar_kpis %}
             <tr>
                 <td></td>
-                <td>{{ scalar_kpi.kpi }}</td>
+                <td data-toggle="tooltip" title="{{ scalar_kpi.tooltip }}">{{ scalar_kpi.kpi }}</td>
                 <td>{{ scalar_kpi.value }}</td>
                 <td>{{ scalar_kpi.unit }}</td>
             </tr>
@@ -113,6 +113,15 @@
 <script>
     $(document).ready(function () {
         $('#scalarTable').DataTable();
+
+        // $(`td#kpi`).attr('title', `test`);
+        // tippy('td#kpi', {
+        //     position: 'top',
+        //     animation: 'scale',
+        //     arrow: 'true',
+        //     maxWidth: '50rem',
+        //     themes: 'material'
+        // });
     });
 
     $('#economicDataDiv').ready(function () {
