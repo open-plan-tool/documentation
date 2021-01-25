@@ -177,7 +177,7 @@ class NodeObject:
         except (KeyError, ValidationError) as error:
             return {"success": False,
                     "specific_obj_type": self.name,
-                    "obj_name": self.data['name'],
+                    "obj_name": self.data['name'] if 'name' in self.data else 'Unnamed',
                     "full_error": str(error)
                     }
         else:
@@ -202,7 +202,7 @@ class NodeObject:
         except (KeyError, ValidationError) as error:
             return {"success": False,
                     "specific_obj_type": self.name,
-                    "obj_name": self.data['name'],
+                    "obj_name": self.data['name'] if 'name' in self.data else 'Unnamed',
                     "full_error": str(error)
                     }
         else:
