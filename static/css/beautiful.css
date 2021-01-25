@@ -34,6 +34,29 @@ header a {
     display: flex;
 }
 
+.modalbutton{
+    background-color: #171a1d !important;
+    border: none !important;
+    outline: none;
+    cursor: pointer;
+    padding: 16px 30px;
+    transition: 0.3s;
+    width: 100%;
+    text-transform: uppercase;
+    font-family: "Century Gothic";
+    font-size: 16px;
+    color: #F4D9A4 !important;
+    font-weight: 600;
+    text-align: center;
+}
+
+.modalbutton:hover{
+    padding-right: 24px;
+    padding-left: 18px;
+    box-shadow: 5px 5px 5px #171a1d !important;
+    text-decoration: none !important;
+}
+
 .col {
     overflow: auto;
     width: 300px;
@@ -548,6 +571,7 @@ header a {
     left:-5rem;
     top:2rem;
 }
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     .drawflow-node.dso .nodeName, .drawflow-node.pv_plant .nodeName, .drawflow-node.wind_plant .nodeName {
         top: -5rem;
