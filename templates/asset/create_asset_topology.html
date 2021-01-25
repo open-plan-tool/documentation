@@ -561,7 +561,7 @@
                   </div>
                 </div>
             </div>
-            <div class="nodeName" style="color: black;">${shownName}</div>`;
+            <div class="nodeName" id="busname">${shownName}</div>`;
             return {
                 "editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, html),
                 "specificNodeType": nodeName
@@ -604,7 +604,7 @@
                   </div>
                 </div>
             </div>
-            <div class="nodeName" style="color: black;">${shownName}</div>`;
+            <div class="nodeName" >${shownName}</div>`;
 
         return {
             "editorNodeId": editor.addNode(nodeName, connectionInputs, connectionOutputs, pos_x, pos_y, nodeName, nodeData, source_html),
