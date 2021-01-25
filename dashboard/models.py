@@ -14,6 +14,19 @@ KPI_COSTS_TOOLTIPS = {
     "levelized_cost_of_energy_of_asset": "Cost per kWh thoughput though an asset, based on the assets costs during the project lifetime as well as the total thoughput though the asset in the project lifetime. For generation assets, equivalent to the levelized cost of generation."
 }
 
+KPI_COSTS_UNITS = {
+    "Replacement_costs_during_project_lifetime": "€",
+    "annuity_om": "€/annum",
+    "annuity_total": "€/annum",
+    "costs_cost_om": "€",
+    "costs_dispatch": "€",
+    "costs_investment_over_lifetime": "€",
+    "costs_om_total": "€/annum",
+    "costs_total": "€",
+    "costs_upfront_in_year_zero": "€",
+    "levelized_cost_of_energy_of_asset": "€/kWh", 
+}
+
 KPI_SCALAR_UNITS = {
     "Attributed costsElectricity": "€",
     "Degree of autonomy": "fraction",
