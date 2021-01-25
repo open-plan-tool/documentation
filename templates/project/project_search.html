@@ -18,6 +18,10 @@
 {% block content %}
     <!-- <div class="container5"> -->
     <style>
+        .container {
+            max-width: 73% !important;
+        }
+
         td#colname {
             max-width: 100px;
         }
@@ -53,15 +57,15 @@
 
         }
 
-        @media screen and (max-width: 991px){
-            td#colname, td#colname2, td#colname3 {
-                max-width: 130px !important;
-                overflow: hidden;
-                white-space:nowrap;
-                text-overflow: ellipsis;
-                font-size: 90%;
-            }
-        }
+        /* @media screen and (max-width: 991px) {
+               td#colname, td#colname2, td#colname3 {
+                   max-width: 130px !important;
+                   overflow: hidden;
+                   white-space: nowrap;
+                   text-overflow: ellipsis;
+                   font-size: 90%;
+               }
+           }*/
 
         @media screen and (max-width: 1199px) and (min-width: 768px) {
             #list6 {
@@ -72,14 +76,19 @@
                 left: -5%;
             }
 
-            #box2 {
-                min-width: 50% !important;
+            #box2, #box1 {
+                min-width: 95% !important;
+                right: -4%;
             }
         }
 
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: 904px) {
             #box2 {
                 min-width: 100% !important;
+            }
+
+            #listtitle {
+                font-size: 85% !important;
             }
 
             .mapp {
@@ -87,17 +96,21 @@
                 border-right: none;
                 border-bottom: 6px solid #967b65;;
             }
-             td#colname, td#colname2, td#colname3, td#colname4{
+
+            td#colname, td#colname2, td#colname3, td#colname4 {
                 font-size: 80%;
+                max-width: 130px !important;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
 
     </style>
     <div class="backg">
-
+        <div id="project_map" class="mapback"></div>
         <br>
         <div class="row">
-
             <div class="col-sm-10" id="createproj">
                 <div class="input-panel">
                     <a href="{% url 'project_create' %}" class="btn btn-primary btn-lg" id="button55"
@@ -106,12 +119,9 @@
                 </div>
             </div>
 
-
             <div class="col-sm-1"></div>
         </div>
-        <br>
-
-        <br>
+        <br><br>
         <div class="container5">
 
             <!--   <div class="col-sm-7"> -->
@@ -120,11 +130,14 @@
 
             <!--   </div> -->
             <!--  </div> -->
+
+
             <div class="row">
-                <div class="col-sm-5">
-                    <div id="project_map" class="mapp"></div>
-                </div>
-                <div class="col-sm-7" id="box1">
+                <!-- <div class="col-sm-5">
+                     <div id="project_map" class="mapp"></div>
+                 </div> -->
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10" id="box1">
                     <div class="panel panel-default" id="box2">
                         <br>
                         <div class="panel-heading"><h3 class="panel-title" id="listtitle"><strong>Project List </strong>
@@ -241,27 +254,56 @@
 
     <script>
 
-        var mymap = L.map('project_map').setView([51.505, -0.09], 8);
-        var markerList = [];
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 8,
-            minZoom: 2,
+
+        const streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: '<a href="http://www.intracom-telecom.com/">Intracom Telecom S.A.</a>',
+            maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoidmFsa2FsYWlzIiwiYSI6ImNrZGhpZ29peTFnMjIycG5ybWR3aG4yeHIifQ.L4y4PQjkIdO1c7pvzOr2kw'
-        }).addTo(mymap);
+            accessToken: 'pk.eyJ1IjoidmFsa2FsYWlzIiwiYSI6ImNrZGhpZ29peTFnMjIycG5ybWR3aG4yeHIifQ.L4y4PQjkIdO1c7pvzOr2kw',
+        });
 
+        const satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: '<a href="http://www.intracom-telecom.com/">Intracom Telecom S.A.</a>',
+            maxZoom: 18,
+            id: 'mapbox/satellite-streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoidmFsa2FsYWlzIiwiYSI6ImNrZGhpZ29peTFnMjIycG5ybWR3aG4yeHIifQ.L4y4PQjkIdO1c7pvzOr2kw',
+        });
+
+        const baseMaps = {
+            "<span style='font-family:Century Gothic; font-size:12px;'>Street View</span>": streets,
+            "<span style='font-family:Century Gothic; font-size:12px;'>Sattelite View</span>": satellite
+        };
+
+        gridMap = L.map('project_map', {layers: [streets, satellite]}).setView([38, 23.5], 6);
+        L.control.layers(baseMaps).addTo(gridMap);
+        markerGroup = new L.featureGroup().addTo(gridMap);
+
+        var markerList = [];
         {% for project in project_list %}
-            var marker = L.marker([{{project.latitude}}, {{project.longitude}}]).addTo(mymap);
-            marker.bindPopup("<b>Name: {{project.name}}</b><br>Country: {{project.country}}<br>Latitude: {{project.latitude}}<br>Longitude: {{project.longitude}}"); //.openPopup();
+
+            var marker = L.marker([{{project.latitude}}, {{project.longitude}}]).addTo(gridMap);
+            marker.bindPopup("<b>Name: {{project.name}}</b><br>Country: {{project.country}}<br>Latitude: {{project.latitude}}<br>Longitude: {{project.longitude}}").openPopup();
             markerList.push(marker);
         {% endfor %}
 
         var group = new L.featureGroup(markerList);
-        mymap.fitBounds(group.getBounds().pad(0.5)); //.setMaxZoom(5);
+        gridMap.fitBounds(group.getBounds().pad(0.5));
+
+        map.on('click', function () {
+            if (map.scrollWheelZoom.enabled()) {
+                map.scrollWheelZoom.disable();
+            } else {
+                map.scrollWheelZoom.enable();
+            }
+        });
     </script>
 
 {% endblock content %}
+
+
+

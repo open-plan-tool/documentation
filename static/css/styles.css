@@ -380,6 +380,16 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     border-right: 6px solid #967b65;
 }
 
+.mapback {
+    height: 109%;
+    width: 138%;
+    position: absolute;
+    z-index: 0 !important;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    filter: grayscale(60%);
+    left:-19%;
+}
 
 #mapid {
     height: 1100px !important;
