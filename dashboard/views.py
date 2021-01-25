@@ -1,6 +1,6 @@
 from django.http.response import Http404
 from dashboard.helpers import storage_asset_to_list
-from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults, KPI_COSTS_TOOLTIPS, KPI_SCALAR_UNITS
+from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults, KPI_COSTS_TOOLTIPS, KPI_COSTS_UNITS, KPI_SCALAR_TOOLTIPS, KPI_SCALAR_UNITS
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
@@ -124,7 +124,8 @@ def scenario_visualize_results(request, scen_id):
             {
                 'kpi': key.replace('_',' '),
                 'value': round(val, 3) if '€/kWh' in KPI_SCALAR_UNITS[key] else round(val,2),
-                'unit': KPI_SCALAR_UNITS[key]
+                'unit': KPI_SCALAR_UNITS[key],
+                'tooltip': KPI_SCALAR_TOOLTIPS[key]
             }
             for key, val in kpi_scalar_values_dict.items()
         ]
@@ -160,11 +161,12 @@ def scenario_economic_results(request, scen_id):
         # non-dummy data
         results_json = [
             {
-                'values': [(round(value,3) if '€/kWh' in KPI_SCALAR_UNITS[category] else round(value,2)) for value in new_dict[category].values()],
+                'values': [(round(value,3) if '€/kWh' in KPI_COSTS_UNITS[category] else round(value,2)) for value in new_dict[category].values()],
                 'labels': [asset.replace('_',' ').upper() for asset in new_dict[category].keys()],
                 'type': 'pie',
                 'title': category.replace('_',' ').upper(),
-                'titleTooltip': KPI_COSTS_TOOLTIPS[category]
+                'titleTooltip': KPI_COSTS_TOOLTIPS[category],
+                'units': [KPI_COSTS_UNITS[category] for _ in new_dict[category].keys()]
             }
             for category in new_dict.keys()
             if sum(new_dict[category].values()) > 0.0  # there is at least one non zero value
