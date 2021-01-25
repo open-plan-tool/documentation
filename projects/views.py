@@ -322,7 +322,12 @@ def scenario_view(request, scen_id):
         return HttpResponseForbidden()
 
     scenario_form = ScenarioUpdateForm(None, instance=scenario)
-    return render(request, 'scenario/scenario_info.html', {'scenario_form': scenario_form, 'scenario_id': scen_id})
+    return render(request, 'scenario/scenario_info.html', 
+        {
+            'scenario_form': scenario_form, 
+            'scenario_id': scen_id,
+            'project_id': scenario.project.id
+        })
 
 
 @login_required

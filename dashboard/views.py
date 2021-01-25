@@ -130,7 +130,7 @@ def scenario_visualize_results(request, scen_id):
         ]
 
         return render(request, 'scenario/scenario_visualize_results.html',
-        {'scenario_id': scen_id, 'scalar_kpis': scalar_kpis_json})
+        {'scenario_id': scen_id, 'scalar_kpis': scalar_kpis_json, 'project_id': scenario.project.id})
     except:
         raise Http404("Could not retrieve simulation results.")
 

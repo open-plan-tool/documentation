@@ -68,13 +68,8 @@
          }
     </style>
     <br>
-    <button onclick="goBack()" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="window.open(`{% url 'project_search' %}`, `_self`)" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
     <br>
     <br>
     <div class="row">

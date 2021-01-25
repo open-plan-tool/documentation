@@ -11,7 +11,7 @@
 
 {% block topology %}
 
-<button onclick="window.history.back();" id="backbutton2">
+<button onclick="window.open(`{% url 'scenario_search' project_id %}`, `_self`)" id="backbutton2">
     <span class="glyphicon glyphicon-chevron-left"></span> Back
 </button>
 
