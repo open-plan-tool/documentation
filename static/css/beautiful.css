@@ -291,8 +291,8 @@ header a {
 
 .drawflow-node.bus {
     background: transparent;
-    height: 10px;
-    width: 50px;
+    height: 0px;
+    width: 70px;
     border: transparent;
     text-align: left;
     color: white;
@@ -458,10 +458,6 @@ header a {
     margin-top:-100%;
 }
 
-#busname{
-    margin-top:-160%;
-    width: 250%;
-}
 
 .drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
     background: green;
@@ -571,7 +567,11 @@ header a {
     left:-5rem;
     top:2rem;
 }
+.drawflow-node.bus .nodeName {
+    margin-top: -140%;
+    width: 250%;
 
+}
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     .drawflow-node.dso .nodeName, .drawflow-node.pv_plant .nodeName, .drawflow-node.wind_plant .nodeName {
         top: -5rem;
