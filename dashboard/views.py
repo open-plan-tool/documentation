@@ -123,7 +123,7 @@ def scenario_visualize_results(request, scen_id):
         scalar_kpis_json = [
             {
                 'kpi': key.replace('_',' '),
-                'value': round(val, 3),
+                'value': round(val, 3) if '€/kWh' in KPI_SCALAR_UNITS[key] else round(val,2),
                 'unit': KPI_SCALAR_UNITS[key]
             }
             for key, val in kpi_scalar_values_dict.items()
@@ -160,7 +160,7 @@ def scenario_economic_results(request, scen_id):
         # non-dummy data
         results_json = [
             {
-                'values': list(new_dict[category].values()),
+                'values': [(round(value,3) if '€/kWh' in KPI_SCALAR_UNITS[category] else round(value,2)) for value in new_dict[category].values()],
                 'labels': [asset.replace('_',' ').upper() for asset in new_dict[category].keys()],
                 'type': 'pie',
                 'title': category.replace('_',' ').upper(),
