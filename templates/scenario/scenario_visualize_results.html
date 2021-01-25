@@ -18,21 +18,22 @@
 <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="{% static 'js/selectize.min.js' %}"></script>
-
 <script src="https://unpkg.com/tippy.js@2.5.2/dist/tippy.all.min.js"></script>
 {% endblock start_body_scripts %}
 
 {% block content %}
 <br>
-<button onclick="window.open(`{% url 'scenario_search' project_id %}`, `_self`)" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+<button onclick="window.open(`{% url 'scenario_search' project_id %}`, `_self`)" id="backbutton"><span
+        class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
 <br>
 <br>
+
 <div class="row">
     <div class="panel panel-info">
         <h2 class="panel-heading" style="text-align: center;">Economic Data Summary</h2>
         <hr class="mt-2">
-        <div class="panel-body" id="economicDataDiv"></div>
+        <div class="panel-body t1" id="economicDataDiv"></div>
     </div>
 </div>
 
@@ -118,7 +119,7 @@
         $.ajax({
             url: "{% url 'scenario_economic_results' scenario_id %}",
             type: "GET",
-            success: data => data.map(dataObj => drawPieChart(dataObj)),
+            success: data => data.map(dataObj => drawPieChart(dataObj)).then(addPagination()),
             error: function (xhr, errmsg) {
                 console.log("backend_error!")
                 //Show the error message
@@ -137,6 +138,7 @@
             textposition: "inside",
             automargin: true
         }];
+        console.log(`vals: ${dataList.values}`)
 
         const layout = {
             title: {
@@ -158,7 +160,7 @@
         // Create a new Pie under the economic data div
         const parentDiv = document.getElementById("economicDataDiv");
         const newGraph = document.createElement('div');
-        newGraph.id = "pie" + layout.title.text.replaceAll(' ', '');
+        newGraph.id = "pie" + dataList.title.replaceAll(' ', '');
         newGraph.classList.add("col-md-4");
         parentDiv.appendChild(newGraph);
         Plotly.newPlot(newGraph.id, data, layout);
@@ -174,6 +176,34 @@
             themes: 'material'
         });
     }
+
+    function addPagination() {
+        $('.t1').after('<div id="nav" class="text-center"></div>');
+        var rowsShown = 3;
+        var rowsTotal = $('.t1 .col-md-4').length;
+
+        var numPages = rowsTotal / rowsShown;
+        for (i = 0; i < numPages; i++) {
+            var pageNum = i + 1;
+            $('#nav').append('<a href="#" class="btn-outline-info" rel="' + i + '">&emsp;' + pageNum + '&emsp;</a> ');
+        }
+        $('.t1 .col-md-4').hide();
+        $('.t1 .col-md-4').slice(0, rowsShown).show();
+        $('#nav a:first').addClass('active');
+        $('#nav a').bind('click', function (e) {
+            e.preventDefault();
+            $('#nav a').removeClass('active');
+            $(this).addClass('active');
+            var currPage = $(this).attr('rel');
+            var startItem = currPage * rowsShown;
+            var endItem = startItem + rowsShown;
+            $('.t1 .col-md-4').css('opacity', '0').hide().slice(startItem, endItem).
+                css('display', 'flex').animate({
+                    opacity: 1
+                }, 300);
+        });
+    }
+
 </script> <!-- Economic Data -->
 
 
