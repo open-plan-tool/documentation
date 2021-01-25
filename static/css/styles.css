@@ -387,7 +387,7 @@ label[for="id_last_name"], label[for="id_first_name"], label[for="id_email"] {
     z-index: 0 !important;
     object-fit: cover;
     background-repeat: no-repeat;
-    filter: grayscale(60%);
+    filter: grayscale(40%);
     left:-19%;
 }
 

@@ -254,7 +254,14 @@
 
     <script>
 
-
+        const satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: '<a href="http://www.intracom-telecom.com/">Intracom Telecom S.A.</a>',
+            maxZoom: 18,
+            id: 'mapbox/satellite-streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoidmFsa2FsYWlzIiwiYSI6ImNrZGhpZ29peTFnMjIycG5ybWR3aG4yeHIifQ.L4y4PQjkIdO1c7pvzOr2kw',
+        });
 
         const streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: '<a href="http://www.intracom-telecom.com/">Intracom Telecom S.A.</a>',
@@ -265,18 +272,9 @@
             accessToken: 'pk.eyJ1IjoidmFsa2FsYWlzIiwiYSI6ImNrZGhpZ29peTFnMjIycG5ybWR3aG4yeHIifQ.L4y4PQjkIdO1c7pvzOr2kw',
         });
 
-        const satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: '<a href="http://www.intracom-telecom.com/">Intracom Telecom S.A.</a>',
-            maxZoom: 18,
-            id: 'mapbox/satellite-streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoidmFsa2FsYWlzIiwiYSI6ImNrZGhpZ29peTFnMjIycG5ybWR3aG4yeHIifQ.L4y4PQjkIdO1c7pvzOr2kw',
-        });
-
         const baseMaps = {
-            "<span style='font-family:Century Gothic; font-size:12px;'>Street View</span>": streets,
-            "<span style='font-family:Century Gothic; font-size:12px;'>Sattelite View</span>": satellite
+             "<span style='font-family:Century Gothic; font-size:12px;'>Sattelite View</span>": satellite,
+            "<span style='font-family:Century Gothic; font-size:12px;'>Street View</span>": streets
         };
 
         gridMap = L.map('project_map', {layers: [streets, satellite]}).setView([38, 23.5], 6);
