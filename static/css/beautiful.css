@@ -456,6 +456,7 @@ header a {
     font-size: 13px;
     color: black;
     margin-top:-100%;
+    white-space: nowrap;
 }
 
 
