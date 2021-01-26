@@ -113,15 +113,6 @@
 <script>
     $(document).ready(function () {
         $('#scalarTable').DataTable();
-
-        // $(`td#kpi`).attr('title', `test`);
-        // tippy('td#kpi', {
-        //     position: 'top',
-        //     animation: 'scale',
-        //     arrow: 'true',
-        //     maxWidth: '50rem',
-        //     themes: 'material'
-        // });
     });
 
     $('#economicDataDiv').ready(function () {
@@ -156,7 +147,8 @@
             textposition: "inside",
             automargin: true
         }];
-        console.log(`vals: ${dataList.values}`)
+        
+        //data.map(dat => console.log(`${dataList.title} \n ${dat.values} \n ${dat.labels}`));
 
         const layout = {
             title: {
@@ -196,14 +188,14 @@
     }
 
     function addPagination() {
-        $('.t1').after('<div id="nav" class="text-center"></div>');
+        $('.t1').after('<div class="text-right"><ul id="nav" class="pagination pagination-sm"></ul></div>');
         var rowsShown = 3;
         var rowsTotal = $('.t1 .col-md-4').length;
 
         var numPages = rowsTotal / rowsShown;
         for (i = 0; i < numPages; i++) {
             var pageNum = i + 1;
-            $('#nav').append('<a href="#" class="btn-outline-info" rel="' + i + '">&emsp;' + pageNum + '&emsp;</a> ');
+            $('#nav').append('<li class="page-item"><a href="#" class="btn-outline-info page-link" rel="' + i + '">&emsp;' + pageNum + '&emsp;</a></li> ');
         }
         $('.t1 .col-md-4').hide();
         $('.t1 .col-md-4').slice(0, rowsShown).show();
