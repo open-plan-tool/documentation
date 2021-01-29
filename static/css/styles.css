@@ -901,11 +901,6 @@ label[for="id_email"] {
   }
 }
 
-#panel2 {
-  padding: 4rem;
-  font-size: 80%;
-}
-
 text.gtitle.allowEvents {
   font-family: "Century Gothic" !important;
   font-weight: 600 !important;
@@ -914,13 +909,14 @@ text.gtitle.allowEvents {
 }
 
 path.surface {
-  filter: hue-rotate(-0.35turn) brightness(130%) drop-shadow(5px 5px 10px gray);
-margin:3rem;
+  /* filter: hue-rotate(-0.35turn) brightness(130%) drop-shadow(5px 5px 10px gray);*/
+  filter: drop-shadow(1px 1px 2px gray);
+  margin: 3rem;
 }
 
 .slicetext {
   font-family: "Century Gothic" !important;
   font-size: 85% !important;
-  stroke:white!important;
+  stroke: #1c1c1c !important;
   opacity: 0.8;
 }

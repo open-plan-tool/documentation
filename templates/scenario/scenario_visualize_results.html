@@ -10,7 +10,31 @@
     .allowEvents {
         pointer-events: all !important;
     }
-
+    .hovertext text{
+        font-family: 'Century Gothic' !important;
+        font-size:70% !important;
+        opacity: 0.8;
+    }
+    .hovertext{
+        filter: drop-shadow(1px 1px 4px #1c1c1c);
+    }
+    .panel{
+        border:2px solid #eee;
+        padding: 4rem;
+        filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.295));
+    }
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > 
+    .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover{
+        background-color: burlywood;
+        border-color: burlywood;
+    }
+    .pagination > li > a, .pagination > li > span{
+        color:burlywood;
+    }
+    .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover{
+        color:rgb(199, 165, 121);
+        font-weight: 600;
+    }
 </style>
 {% endblock head_block %}
 
@@ -39,7 +63,7 @@
 </div>
 
 <!-- Scalar Results -->
-<div class="row panel panel-info" id="panel2">
+<div class="row panel panel-info" style="font-size: 80%;">
     <br>
 
     <h2 class="panel-heading" style="text-align: center;">Economic and Technical Analysis</h2>
@@ -137,6 +161,21 @@
         const data = [{
             values: dataList.values,
             labels: dataList.labels,
+            
+            marker: {
+                colors: [
+    ('0.0', 'rgb(165,0,38)'),
+    ('0.111111111111', 'rgb(215,48,39)'),
+    ('0.222222222222', 'rgb(244,109,67)'),
+    ('0.333333333333', 'rgb(253,174,97)'),
+    ('0.444444444444', 'rgb(254,224,144)'),
+    ('0.555555555556', 'rgb(224,243,248)'),
+    ('0.666666666667', 'rgb(171,217,233)'),
+    ('0.777777777778', 'rgb(116,173,209)'),
+    ('0.888888888889', 'rgb(69,117,180)'),
+    ('1.0', 'rgb(49,54,149)')
+  ]
+             },
             type: 'pie',
             text: dataList.units,
             name: '',
@@ -146,7 +185,7 @@
             // hoverinfo: 'label+percent+unit',
             textinfo: "label+percent",
             textposition: "inside",
-            automargin: true
+            automargin: true,
         }];
         
         //data.map(dat => console.log(`${dataList.title} \n ${dat.values} \n ${dat.labels}`));
@@ -157,13 +196,13 @@
                     : dataList.title.substr(0, Math.ceil(dataList.title.length / 2))
                     + '<br>' + dataList.title.substr(Math.ceil(dataList.title.length / 2)),
                 font: {
-                    family: 'Courier New, monospace',
+                    family: 'Century Gothic',
                     size: 16
                 },
             }, // 'Economic Data'
-            height: 300,
+            height: 315,
             width: 350,
-            margin: { "b": 0, "l": 0, "r": 0 },
+            margin: { "b": 7, "l": 0, "r": 0 },
             showlegend: false,
             paper_bgcolor: "transparent"
         }
