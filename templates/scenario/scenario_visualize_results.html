@@ -5,12 +5,8 @@
 {% block head_block %}
 <link rel="stylesheet" href="{% static 'css/selectize.default.css' %}" type="text/css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/visresults.css' %}" type="text/css">
 
-<style>
-    .allowEvents {
-        pointer-events: all !important;
-    }
-</style>
 {% endblock head_block %}
 
 {% block start_body_scripts %}
@@ -38,7 +34,7 @@
 </div>
 
 <!-- Scalar Results -->
-<div class="row panel panel-info">
+<div class="row panel panel-info" style="font-size: 80%;">
     <br>
 
     <h2 class="panel-heading" style="text-align: center;">Economic and Technical Analysis</h2>
@@ -136,6 +132,21 @@
         const data = [{
             values: dataList.values,
             labels: dataList.labels,
+            
+            marker: {
+                colors: [('0.444444444444', '#ffeab0'),
+                        ('0.555555555556', 'rgb(224,243,248)'),
+                        ('0.777777777778', 'rgb(116,173,209)'),
+                        ('0.666666666667', 'rgb(171,217,233)'),
+
+                        ('0.0', '#ba1239'),
+                        ('0.111111111111', '#e26d5c'),
+                        ('0.222222222222', '#f28f3b'),
+                        ('0.333333333333', 'rgb(253,174,97)'),
+                        ('0.888888888889', 'rgb(69,117,180)'),
+                        ('1.0', 'rgb(49,54,149)')
+                        ]
+             },
             type: 'pie',
             text: dataList.units,
             name: '',
@@ -145,7 +156,7 @@
             // hoverinfo: 'label+percent+unit',
             textinfo: "label+percent",
             textposition: "inside",
-            automargin: true
+            automargin: true,
         }];
         
         //data.map(dat => console.log(`${dataList.title} \n ${dat.values} \n ${dat.labels}`));
@@ -156,13 +167,13 @@
                     : dataList.title.substr(0, Math.ceil(dataList.title.length / 2))
                     + '<br>' + dataList.title.substr(Math.ceil(dataList.title.length / 2)),
                 font: {
-                    family: 'Courier New, monospace',
+                    family: 'Century Gothic',
                     size: 16
                 },
             }, // 'Economic Data'
-            height: 300,
+            height: 315,
             width: 350,
-            margin: { "b": 0, "l": 0, "r": 0 },
+            margin: { "b": 7, "l": 0, "r": 0 },
             showlegend: false,
             paper_bgcolor: "transparent"
         }
@@ -254,7 +265,8 @@
             optgroups: optgroups,
             optgroupField: 'assetCategory', // refers to the group field in "options"
             optgroupLabelField: 'assetCategory', // refers to the label field in "optgroups"
-            optgroupValueField: 'assetCategory', // refers to the value field in "optgroups"
+            optgroupValueField: 'assetCategory' // refers to the value field in "optgroups"
+         
 
         });
     }
@@ -286,7 +298,8 @@
                 name: data.title,
                 x: data.xAxis.values.map(timestamp => new Date(timestamp * 1000)),
                 y: data.yAxis.values,
-                type: 'scatter'
+                type: 'scatter',
+                
             };
             traceList.push(trace)
         });
@@ -302,6 +315,10 @@
             yaxis: {
                 title: dataList[0].yAxis.label,
                 showline: true
+            },
+            font: {
+                    family: 'Century Gothic',
+                    size: 12
             },
             autosize: true,
         };
