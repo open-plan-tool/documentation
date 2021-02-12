@@ -232,21 +232,21 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
                         <a class="glyphicon glyphicon-plus open-comments-modal" style="color: transparent;"
                            data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' %}">
                            <span id="createnewscen">Create New Scenario</span>
                         </a>
                     </div>
 
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-4">
+                    {% comment %}<div class="col-sm-2"></div>
+                     <div class="col-sm-4">
                         <a class="glyphicon glyphicon-upload" style="color: transparent;" id="upload-scenario">
                             <span id="uploadscen">Upload Scenario From File</span>
                         </a>
-                    </div>
-                    <div class="col-sm-1"></div>
+                    </div> {% endcomment %}
+                    <div class="col-sm-4"></div>
                 </div>
             </div>
 
