@@ -64,7 +64,7 @@
 
     function create_scenario() {
         $.ajax({
-            url: "{% url 'scenario_create_post' %}",
+            url: "{% url 'scenario_create_post' proj_id %}",
             type: "POST",
             data: form_id.serialize(),
             success: function (data) {

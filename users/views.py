@@ -4,8 +4,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.urls.base import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.http import require_http_methods
@@ -44,7 +46,8 @@ def signup(request):
                 mail_subject, message, to=[to_email]
             )
             # email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            # return HttpResponse('Please confirm your email address to complete the registration')
+            return HttpResponseRedirect(reverse('login'))
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})

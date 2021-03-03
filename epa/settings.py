@@ -166,10 +166,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 MAILER_EMAIL_BACKEND = EMAIL_BACKEND
 
 DEFAULT_FROM_EMAIL = 'noreply@elandh2020.eu'
-EMAIL_HOST = '146.124.225.146'
+EMAIL_HOST = os.getenv('EMAIL_HOST_IP', '146.124.225.146')
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
-
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -180,8 +179,8 @@ MESSAGE_TAGS = {
 }
 
 PROXY_CONFIG = {
-    "http": "http://icache.intracomtel.com:80",
-    "https": "https://icache.intracomtel.com:80",
+    "http": os.getenv('HTTP_PROXY', 'http://icache.intracomtel.com:80'),
+    "https": os.getenv('HTTPS_PROXY', 'https://icache.intracomtel.com:80'),
 }
 
 MVS_POST_URL = "https://mvs-eland.rl-institut.de/sendjson/"
@@ -190,8 +189,39 @@ MVS_GET_URL = "https://mvs-eland.rl-institut.de/check/"
 # Allow iframes to show in page
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-
-GRAPH_MODELS = {
-  'all_applications': False,
-  'group_models': True,
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'dtlnm': {
+            'format': '%(asctime)s - %(levelname)8s - %(name)s - %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        }
+    },
+    'handlers': {
+        'info_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'django_epa_info.log',
+            'formatter': 'dtlnm'
+        },
+        'warnings_file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'django_epa_warning.log',
+            'formatter': 'dtlnm'
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['info_file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['warnings_file'],
+            'level': 'WARNING',
+            'propagate': True,
+        }
+    },
 }

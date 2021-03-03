@@ -235,7 +235,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4">
                         <a class="glyphicon glyphicon-plus open-comments-modal" style="color: transparent;"
-                           data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' %}">
+                           data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' proj_id %}">
                            <span id="createnewscen">Create New Scenario</span>
                         </a>
                     </div>
@@ -310,7 +310,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                     <div class="col-sm-4">
                         <a class="glyphicon glyphicon-plus open-comments-modal"
                            style="color: transparent; text-shadow: 1px 1px 1px #222;"
-                           data-modal="CreateCommentForm" data-url="{% url 'comment_create' %}"
+                           data-modal="CreateCommentForm" data-url="{% url 'comment_create' proj_id %}"
                                id="addcom"><span id="lo">Add Comment</span></a>
 
 
@@ -339,7 +339,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
     $(document).ready(function () {
         // Load Scenario from file bootstrap modal form.
         $("#upload-scenario").modalForm({
-            formURL: "{% url 'scenario_upload' %}"
+            formURL: "{% url 'scenario_upload' proj_id %}"
         });
         
         // Change active tab to comments based on flag
@@ -374,7 +374,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 
     $(".open-modal").on("click", function () {
         $.ajax({
-            url: "{% url 'scenario_create' %}",
+            url: "{% url 'scenario_create' proj_id %}",
             success: function (data) {
                 modalDiv.html(data);
                 console.log(modalDiv);

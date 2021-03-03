@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from epa.startup import load_data_from_sql
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +24,3 @@ urlpatterns = [
     path('', include('projects.urls')),
     path('dashboard/', include('dashboard.urls')),
 ] + staticfiles_urlpatterns()
-
-# SQL constaint issues
-# load_data_from_sql('import.sql')

@@ -10,19 +10,19 @@ urlpatterns = [
     path('project/detail/<int:proj_id>', project_detail, name='project_detail'),
     path('project/delete/<int:proj_id>', project_delete, name='project_delete'),
     # Comment
-    path('comment/create/', comment_create, name='comment_create'),
+    path('comment/create/<int:proj_id>', comment_create, name='comment_create'),
     path('comment/update/<int:com_id>', comment_update, name='comment_update'),
     path('comment/delete/<int:com_id>', comment_delete, name='comment_delete'),
     # Scenario
     path('scenario/search/<int:proj_id>', scenario_search, name='scenario_search'),
     path('scenario/search/<int:proj_id>/<int:show_comments>', scenario_search, name='scenario_search'),
-    path('scenario/create/', scenario_create, name='scenario_create'),
-    path('scenario/create_post/', scenario_create_post, name='scenario_create_post'),
+    path('scenario/create/<int:proj_id>', scenario_create, name='scenario_create'),
+    path('scenario/create_post/<int:proj_id>', scenario_create_post, name='scenario_create_post'),
     path('scenario/update/<int:scen_id>', scenario_update, name='scenario_update'),
     path('scenario/delete/<int:scen_id>', scenario_delete, name='scenario_delete'),
     path('scenario/view/<int:scen_id>', scenario_view, name='scenario_view'),
     path('scenario/duplicate/<int:scen_id>', scenario_duplicate, name='scenario_duplicate'),
-    path('scenario/upload/', LoadScenarioFromFileView.as_view(), name='scenario_upload'),
+    path('scenario/upload/<int:proj_id>', LoadScenarioFromFileView.as_view(), name='scenario_upload'),
     # Grid Model (Assets Creation)
     path('asset/assets_topology/<int:scen_id>', scenario_topology_view, name='new_assets_topology'),
     path('asset/create/<str:asset_type_name>', get_asset_create_form, name='get_asset_create_form'),

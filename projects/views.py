@@ -1,29 +1,24 @@
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.contrib.auth.decorators import login_required
 import json
-
-from django.core.serializers.json import DjangoJSONEncoder
+import logging
 from django.http import HttpResponseForbidden, JsonResponse
 from django.http.response import Http404
 from django.shortcuts import *
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.http import require_http_methods
-from django.views.generic import TemplateView
 from django.contrib import messages
 from jsonview.decorators import json_view
 from crispy_forms.templatetags import crispy_forms_filters
 from datetime import datetime
 
 from .forms import *
-from .requests import mvs_simulation_request, mvs_simulation_check, check_mvs_simulation
+from .requests import mvs_simulation_request, check_mvs_simulation
 from .models import *
 from .scenario_topology_helpers import create_node_interconnection_links, load_scenario_topology_from_db, NodeObject, \
     update_deleted_objects_from_database, duplicate_scenario_objects, duplicate_scenario_connections, get_topology_json
 
-
-class HomeView(TemplateView):
-    template_name = 'home.html'
-
+logger = logging.getLogger(__name__)
 
 # region Project
 
@@ -31,13 +26,13 @@ class HomeView(TemplateView):
 @require_http_methods(["GET"])
 def project_detail(request, proj_id):
     project = get_object_or_404(Project, pk=proj_id)
-    economic_data = EconomicData.objects.get(project=project)
 
     if project.user != request.user:
         return HttpResponseForbidden()
 
+    logger.info(f"Populating project and economic details in forms.")
     project_form = ProjectDetailForm(None, instance=project)
-    economic_data_form = EconomicDataDetailForm(None, instance=economic_data)
+    economic_data_form = EconomicDataDetailForm(None, instance=project.economic_data)
 
     return render(request, 'project/project_detail.html',
                   {'project_form': project_form, 'economic_data_form': economic_data_form})
@@ -46,46 +41,29 @@ def project_detail(request, proj_id):
 @login_required
 @require_http_methods(["GET", "POST"])
 def project_create(request):
-    # if this is a POST request we need to process the form data
     if request.POST:
-        # create a form instance and populate it with data from the request:
         form = ProjectCreateForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            project = Project()
-            economic_data = EconomicData()
+            logger.info(f"Creating new project with economic data.")
+            economic_data = EconomicData.objects.create(
+                duration = form.cleaned_data['duration'],
+                currency = form.cleaned_data['currency'],
+                discount = form.cleaned_data['discount'],
+                tax = form.cleaned_data['tax']
+            )
 
-            project.name = form.cleaned_data['name']
-            project.description = form.cleaned_data['description']
-            project.country = form.cleaned_data['country']
-            project.longitude = form.cleaned_data['longitude']
-            project.latitude = form.cleaned_data['latitude']
-
-            project.user = request.user
-
-            economic_data.duration = form.cleaned_data['duration']
-            economic_data.currency = form.cleaned_data['currency']
-            economic_data.discount = form.cleaned_data['discount']
-            economic_data.tax = form.cleaned_data['tax']
-            # economic_data.annuity_factor = form.cleaned_data['annuity_factor']
-            # economic_data.crf = form.cleaned_data['crf']
-
-            economic_data.save()
-
-            project.economic_data = economic_data
-
-            project.save()
-
-            request.session['project_id'] = project.id
-
-            # redirect to a new URL:
+            project = Project.objects.create(
+                name = form.cleaned_data['name'],
+                description = form.cleaned_data['description'],
+                country = form.cleaned_data['country'],
+                longitude = form.cleaned_data['longitude'],
+                latitude = form.cleaned_data['latitude'],
+                user = request.user,
+                economic_data = economic_data
+            )
             return HttpResponseRedirect(reverse('scenario_search', args=[project.id]))
-
-    # if a GET (or any other method) we'll create a blank form
     else:
         form = ProjectCreateForm()
-
     return render(request, 'project/project_create.html', {'form': form})
 
 
@@ -93,15 +71,15 @@ def project_create(request):
 @require_http_methods(["GET", "POST"])
 def project_update(request, proj_id):
     project = get_object_or_404(Project, pk=proj_id)
-    economic_data = EconomicData.objects.get(project=project)
 
     if project.user != request.user:
         return HttpResponseForbidden()
 
     project_form = ProjectUpdateForm(request.POST or None, instance=project)
-    economic_data_form = EconomicDataUpdateForm(request.POST or None, instance=economic_data)
+    economic_data_form = EconomicDataUpdateForm(request.POST or None, instance=project.economic_data)
 
     if request.method == "POST" and project_form.is_valid() and economic_data_form.is_valid():
+        logger.info(f"Updating project with economic data...")
         project_form.save()
         economic_data_form.save()
         # Save was successful, so send message
@@ -132,8 +110,6 @@ def project_delete(request, proj_id):
 @require_http_methods(["GET"])
 def project_search(request):
     project_list = Project.objects.filter(user=request.user)
-    # project_list_json = json.dumps(list(project_list.values_list('name', 'longitude', 'latitude')),
-    #                                cls=DjangoJSONEncoder)
 
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
@@ -146,29 +122,20 @@ def project_search(request):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def comment_create(request):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
+def comment_create(request, proj_id):
+    project = get_object_or_404(Project, pk=proj_id)
 
-    # if this is a POST request we need to process the form data
     if request.POST:
-        # create a form instance and populate it with data from the request:
         form = CommentForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            comment = Comment()
-            comment.name = form.cleaned_data['name']
-            comment.body = form.cleaned_data['body']
-            comment.project = project
-            comment.save()
-            
-            #  return JsonResponse({"success":True}, status=201)
-            # redirect to a new URL:
-            return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id'], 1]))
-        # return JsonResponse({"success":False, "forms_errors":form.errors}, status=400)
+            Comment.objects.create(
+                name = form.cleaned_data['name'],
+                body = form.cleaned_data['body'],
+                project = project
+            )
+            return HttpResponseRedirect(reverse('scenario_search', args=[proj_id, 1]))
 
-    # if a GET (or any other method) we'll create a blank form
-    else:
+    else: # GET
         form = CommentForm()
 
     return render(request, 'comment/comment_create.html', {'form': form})
@@ -181,24 +148,15 @@ def comment_update(request, com_id):
 
     if comment.project.user != request.user:
         return HttpResponseForbidden()
-
-        # if this is a POST request we need to process the form data
+    
     if request.POST:
-        # create a form instance and populate it with data from the request:
         form = CommentForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
             comment.name = form.cleaned_data['name']
             comment.body = form.cleaned_data['body']
-
             comment.save()
-
-            # redirect to a new URL:
             return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id, 1]))
-
-        # if a GET (or any other method) we'll create a blank form
-    else:
+    else: # GET
         form = CommentForm(instance=comment)
 
     return render(request, 'comment/comment_update.html', {'form': form})
@@ -216,7 +174,6 @@ def comment_delete(request, com_id):
         comment.delete()
         messages.success(request, 'Comment successfully deleted!')
         return HttpResponseRedirect(reverse('scenario_search', args=[comment.project.id, 1]))
-
 
 # endregion Comment
 
@@ -238,84 +195,49 @@ def scenario_search(request, proj_id, show_comments=0):
     Returns: A rendered html template.
     """
     project = get_object_or_404(Project, pk=proj_id)
-    request.session['project_id'] = proj_id  # set the session according to current project
-    comment_list = Comment.objects.filter(project=project)
-
     simulations_list = Simulation.objects.filter(scenario__project=project)
     # update the simulation status from MVS
     [check_mvs_simulation(simulation) for simulation in simulations_list]
 
-    scenarios_list = Scenario.objects.filter(project=project)
-
     # TODO: In case of MVS DONE with errors handle accordingly
     return render(request, 'scenario/scenario_search.html',
-                  {'comment_list': comment_list,
-                   'scenarios_list': scenarios_list,
+                  {'comment_list': project.comment_set.all(),
+                   'scenarios_list': project.scenario_set.all(),
                    'project_name': project.name,
+                   'proj_id': proj_id,
                    'show_comments':show_comments
                    })
 
 
 @login_required
 @require_http_methods(["GET"])
-def scenario_create(request):
+def scenario_create(request, proj_id):
     form = ScenarioCreateForm()
-
-    return render(request, 'scenario/scenario_create.html', {'form': form})
+    return render(request, 'scenario/scenario_create.html', {'form': form, 'proj_id':proj_id})
 
 
 @json_view
 @login_required
 @require_http_methods(["POST"])
-def scenario_create_post(request):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
+def scenario_create_post(request, proj_id):
+    project = get_object_or_404(Project, pk=proj_id)
     form = ScenarioCreateForm(request.POST)
 
-    # check whether it's valid:
     if form.is_valid():
-        # process the data in form.cleaned_data as required
         scenario = Scenario()
-
-        for name, value in form.cleaned_data.items():
-            setattr(scenario, name, value)
-
+        [setattr(scenario, name, value) for name, value in form.cleaned_data.items()]
         scenario.project = project
         scenario.save()
-
-        request.session['scenario_id'] = scenario.id
-
-        # redirect to a new URL:
-        return {'success': True}
-
+        return JsonResponse({'success': True}, status=200)
+    logger.warning(f"The submitted scenarion has erroneous field values.")
     form_html = crispy_forms_filters.as_crispy_form(form)
-
-    return {'success': False, 'form_html': form_html}
-
-
-@login_required
-@require_http_methods(["POST"])
-def scenario_update(request, scen_id):
-    scenario = get_object_or_404(Scenario, pk=scen_id)
-
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
-
-    if request.POST:
-        form = ScenarioUpdateForm(request.POST)
-
-        if form.is_valid():
-            [setattr(scenario, name, value) for name, value in form.cleaned_data.items()]
-
-            scenario.save(update_fields=form.cleaned_data.keys())
-            return HttpResponseRedirect(reverse('scenario_search', args=[scenario.project.id]))
-
-    else:
-        raise Http404("An error occurred while updating the Scenario.")
+    return JsonResponse({'success': False, 'form_html': form_html}, status=422)
 
 
 @login_required
 @require_http_methods(["GET"])
 def scenario_view(request, scen_id):
+    """ Scenario Update View. GET request only. """
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
     if scenario.project.user != request.user:
@@ -328,6 +250,23 @@ def scenario_view(request, scen_id):
             'scenario_id': scen_id,
             'project_id': scenario.project.id
         })
+
+
+@login_required
+@require_http_methods(["POST"])
+def scenario_update(request, scen_id):
+    """Scenario Update View. POST request only. """
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+    if scenario.project.user != request.user:
+        return HttpResponseForbidden()
+    if request.POST:
+        form = ScenarioUpdateForm(request.POST)
+        if form.is_valid():
+            [setattr(scenario, name, value) for name, value in form.cleaned_data.items()]
+            scenario.save(update_fields=form.cleaned_data.keys())
+            return HttpResponseRedirect(reverse('scenario_search', args=[scenario.project.id]))
+    else:
+        raise Http404("An error occurred while updating the Scenario.")
 
 
 @login_required
@@ -355,22 +294,20 @@ def scenario_duplicate(request, scen_id):
     duplicate_scenario_connections(connections_list, scenario, old2new_asset_ids_map, old2new_bus_ids_map)
     # duplicate_scenario_objects(simulation_list, scenario)
 
-    return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
+    return HttpResponseRedirect(reverse('scenario_search', args=[scenario.project.id]))
 
 
 @login_required
 @require_http_methods(["POST"])
 def scenario_delete(request, scen_id):
-    project = get_object_or_404(Project, pk=request.session['project_id'])
     scenario = get_object_or_404(Scenario, pk=scen_id)
-
-    if scenario.project != project:
+    if scenario.project.user != request.user:
+        logger.warning(f"Unauthorized user tried to delete project scenario with db id = {scen_id}.")
         return HttpResponseForbidden()
-
     if request.POST:
         scenario.delete()
         messages.success(request, 'scenario successfully deleted!')
-        return HttpResponseRedirect(reverse('scenario_search', args=[request.session['project_id']]))
+        return HttpResponseRedirect(reverse('scenario_search', args=[scenario.project.id]))
 
 
 class LoadScenarioFromFileView(BSModalCreateView):
@@ -379,7 +316,7 @@ class LoadScenarioFromFileView(BSModalCreateView):
     success_message = 'Success: Scenario Uploaded.'
 
     def get_success_url(self):
-        proj_id = self.request.session['project_id']
+        proj_id = self.kwargs['proj_id']
         return reverse_lazy('scenario_search', args=[proj_id])
 
 # endregion Scenario
@@ -396,13 +333,9 @@ def get_asset_create_form(request, asset_type_name):
     form data from the backend.
     """
     form = AssetCreateForm()
-    # Retrieve asset type
-    asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)
-    request.session['asset_type_name'] = asset_type_name
-
-    form_fields = list(form.fields)
+    asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)    
     # Remove form fields that do not correspond to the model
-    [form.fields.pop(field) for field in form_fields if field not in asset_type.asset_fields]
+    [form.fields.pop(field) for field in list(form.fields) if field not in asset_type.asset_fields]
     
     return render(request, 'asset/asset_create_form.html', {'form': form})
 
@@ -416,9 +349,9 @@ def scenario_topology_view(request, scen_id):
         return JsonResponse(topology_data_list, status=200)
 
     if request.method == "GET":
-        request.session['scenario_id'] = scen_id  # we need to set the session since asset creation relies on it.
+        scenario = get_object_or_404(Scenario, pk=scen_id)
         return render(request, 'asset/create_asset_topology.html',
-                      {'scenario_id': scen_id, 'project_id': request.session['project_id']})
+                      {'scenario_id': scen_id, 'project_id': scenario.project.id})
 
     elif request.method == "POST" and request.is_ajax():
         topology = json.loads(request.body)['drawflow']['Home']['data']
