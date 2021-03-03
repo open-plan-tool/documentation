@@ -9,7 +9,9 @@ from jsonview.decorators import json_view
 from projects.models import Scenario
 import json
 import datetime
+import logging
 
+logger = logging.getLogger(__name__)
 
 @login_required
 @json_view
@@ -44,7 +46,8 @@ def scenario_available_results(request, scen_id):
         ]
         response_json = {'options': assets_names_json, 'optgroups': asset_category_json}
         return JsonResponse(response_json, status=200, content_type='application/json')
-    except:
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: MVS Req Id: {scenario.simulation.mvs_token}. Thrown Exception: {e}")
         return JsonResponse({"error": "Could not retrieve asset names and categories."},
                             status=404, content_type='application/json')
 
@@ -105,7 +108,8 @@ def scenario_request_results(request, scen_id):
         ]
 
         return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
-    except:
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: MVS Req Id: {scenario.simulation.mvs_token}. Thrown Exception: {e}")
         return JsonResponse({"Error":"Could not retrieve timeseries data."}, status=404, content_type='application/json', safe=False)
 
 
@@ -127,12 +131,21 @@ def scenario_visualize_results(request, scen_id):
                 'unit': KPI_SCALAR_UNITS[key],
                 'tooltip': KPI_SCALAR_TOOLTIPS[key]
             }
+            if key in KPI_SCALAR_UNITS.keys()
+            else 
+            {
+                'kpi': key.replace('_',' '),
+                'value': round(val, 3),
+                'unit': 'N/A',
+                'tooltip': ''
+            }
             for key, val in kpi_scalar_values_dict.items()
         ]
 
         return render(request, 'scenario/scenario_visualize_results.html',
         {'scenario_id': scen_id, 'scalar_kpis': scalar_kpis_json, 'project_id': scenario.project.id})
-    except:
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: MVS Req Id: {scenario.simulation.mvs_token}. Thrown Exception: {e}")
         raise Http404("Could not retrieve simulation results.")
 
 
@@ -169,11 +182,12 @@ def scenario_economic_results(request, scen_id):
                 'units': [KPI_COSTS_UNITS[category] for _ in new_dict[category].keys()]
             }
             for category in new_dict.keys()
-            if sum(new_dict[category].values()) > 0.0  # there is at least one non zero value
+            if category in KPI_COSTS_UNITS.keys() and sum(new_dict[category].values()) > 0.0  # there is at least one non zero value
             and len(list(filter(lambda asset_name: new_dict[category][asset_name] > 0.0 ,new_dict[category]))) > 1.0
             # there are more than one assets with value > 0
         ]
         return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
-    except:
-        return JsonResponse({"error":"Could not retrieve kpi cost data."}, status=404, content_type='application/json', safe=False)
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: MVS Req Id: {scenario.simulation.mvs_token}. Thrown Exception: {e}")
+        return JsonResponse({"error":f"Could not retrieve kpi cost data. Exception raised: {e}"}, status=404, content_type='application/json', safe=False)
 
