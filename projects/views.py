@@ -110,7 +110,6 @@ def project_delete(request, proj_id):
 @require_http_methods(["GET"])
 def project_search(request):
     project_list = Project.objects.filter(user=request.user)
-
     return render(request, 'project/project_search.html',
                   {'project_list': project_list})
 

@@ -1,123 +1,11 @@
 import uuid
+import json
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
-COUNTRY = (
-    ('', 'Choose...'),
-    ('Norway', 'Norway'),
-    ('Finland', 'Finland'),
-    ('Germany', 'Germany'),
-    ('Italy', 'Italy'),
-)
-
-CURRENCY = (
-    ('', 'Choose...'),
-    ('EUR', 'EUR'),
-    ('NOK', 'NOK'),
-    ('USD', 'USD'),
-    ('GBP', 'GBP'),
-)
-
-TRUE_FALSE_CHOICES = (
-    (None, 'Choose'),
-    (True, 'Yes'),
-    (False, 'No')
-)
-
-FLOW_DIRECTION = (
-    ('B2A', 'Bus_to_Asset'),
-    ('A2B', 'Asset_to_Bus'),
-)
-
-ENERGY_VECTOR = (
-    ('', 'Choose...'),
-    ('Electricity', 'Electricity'),
-    ('Heat', 'Heat'),
-    ('Gas', 'Gas'),
-    ('H2', 'H2'),
-    ('Diesel', 'Diesel'),
-)
-
-MVS_TYPE = (
-    ('', 'Choose...'),
-    ('source', 'source'),
-    ('sink', 'sink'),
-    ('transformer', 'transformer'),
-    ('storage', 'storage'),
-)
-
-ASSET_CATEGORY = [
-    ('', 'Choose...'),
-    ('energy_provider', 'energy_provider'),
-    ('energy_production', 'energy_production'),
-    ('energy_conversion', 'energy_conversion'),
-    ('energy_storage', 'energy_storage'),
-    ('energy_consumption', 'energy_consumption'),
-]
-
-VALUE_TYPE = (
-    ('', 'Choose...'),
-    ('name', 'name'),
-    ('age_installed', 'age_installed'),
-    ('installed_capacity', 'installed_capacity'),
-    ('capex_fix', 'capex_fix'),
-    ('capex_var', 'capex_var'),
-    ('opex_fix', 'opex_fix'),
-    ('opex_var', 'opex_var'),
-    ('lifetime', 'lifetime'),
-    ('optimize_cap', 'optimize_cap'),
-    ('input_timeseries', 'input_timeseries'),
-    ('crate', 'crate'),
-    ('efficiency', 'efficiency'),
-    ('soc_max', 'soc_max'),
-    ('soc_min', 'soc_min'),
-    ('dispatchable', 'dispatchable'),
-    ('maximum_capacity', 'maximum_capacity'),
-    ('energy_price', 'energy_price'),
-    ('feedin_tariff', 'feedin_tariff'),
-    ('peak_demand', 'peak_demand'),
-    ('peak_demand_pricing_period', 'peak_demand_pricing_period'),
-    ('renewable_share', 'renewable_share'),
-    ('renewable_asset', 'renewable_asset'),
-)
-
-ASSET_TYPE = (
-    ('', 'Choose...'),
-    ('dso', 'dso'),
-    ('demand', 'demand'),
-    ('transformer_station_in', 'transformer_station_in'),
-    ('transformer_station_out', 'transformer_station_out'),
-    ('storage_charge_controller_in', 'storage_charge_controller_in'),
-    ('storage_charge_controller_out', 'storage_charge_controller_out'),
-    ('solar_inverter', 'solar_inverter'),
-    ('pv_plant', 'pv_plant'),
-    ('wind_plant', 'wind_plant'),
-    ('charging_power', 'charging_power'),
-    ('discharging_power', 'discharging_power'),
-    ('capacity', 'capacity'),
-)
-
-BUS_TYPE = (
-    ('bus_electricity', 'bus_electricity'),
-    ('bus_heat', 'bus_heat'),
-    ('bus_gas', 'bus_gas'),
-)
-
-SIMULATION_STATUS = (
-    ('FAILED', 'FAILED'),
-    ('DONE', 'DONE'),
-    ('PENDING', 'PENDING'),
-)
-
-USER_RATING = (
-    (1, '1'),
-    (2, '2'),
-    (3, '3'),
-    (4, '4'),
-    (5, '5'),
-)
+from django.core.exceptions import ValidationError
+from .constants import ASSET_CATEGORY, ASSET_TYPE, COUNTRY, CURRENCY, ENERGY_VECTOR, FLOW_DIRECTION, MVS_TYPE, SIMULATION_STATUS, TRUE_FALSE_CHOICES, USER_RATING
 
 
 class EconomicData(models.Model):
@@ -132,7 +20,7 @@ class Project(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=120)
     description = models.TextField()
-    country = models.CharField(max_length=20, choices=COUNTRY)
+    country = models.CharField(max_length=50, choices=COUNTRY)
     latitude = models.FloatField()
     longitude = models.FloatField()
     economic_data = models.OneToOneField(EconomicData, on_delete=models.SET_NULL, null=True)
@@ -155,12 +43,12 @@ class Scenario(models.Model):
     name = models.CharField(max_length=60)
 
     start_date = models.DateTimeField()
-    time_step = models.IntegerField()
-    capex_fix = models.FloatField()
-    capex_var = models.FloatField()
-    opex_fix = models.FloatField()
-    opex_var = models.FloatField()
-    evaluated_period = models.IntegerField()
+    time_step = models.IntegerField(validators=[MinValueValidator(0)])
+    capex_fix = models.FloatField(validators=[MinValueValidator(0.0)])
+    capex_var = models.FloatField(validators=[MinValueValidator(0.0)])
+    opex_fix = models.FloatField(validators=[MinValueValidator(0.0)])
+    opex_var = models.FloatField(validators=[MinValueValidator(0.0)])
+    evaluated_period = models.IntegerField(validators=[MinValueValidator(0)])
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -197,29 +85,35 @@ class Asset(TopologyNode):
             self.optimize_cap = True
         super().save(*args, **kwargs)
     
+    def validate_timeseries(timeseries_data: str):
+        try:
+            json.loads(timeseries_data)
+        except:
+            raise ValidationError(f"The provided timeseries is not well formatted. Expected format: [0.1,2,3.0,1]")
+    
     unique_id = models.CharField(max_length=120, default=uuid.uuid4, unique=True, editable=False)
-    capex_fix = models.FloatField(null=True, blank=False)  # development_costs
-    capex_var = models.FloatField(null=True, blank=False)  # specific_costs
-    opex_fix = models.FloatField(null=True, blank=False)  # specific_costs_om
-    opex_var = models.FloatField(null=True, blank=False)  # dispatch_price
-    lifetime = models.IntegerField(null=True, blank=False)
-    input_timeseries = models.TextField(null=True, blank=False)
-    crate = models.FloatField(null=True, blank=False)
+    capex_fix = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # development_costs
+    capex_var = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # specific_costs
+    opex_fix = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # specific_costs_om
+    opex_var = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # dispatch_price
+    lifetime = models.IntegerField(null=True, blank=False, validators=[MinValueValidator(0)])
+    input_timeseries = models.TextField(null=True, blank=False, validators=[validate_timeseries])
+    crate = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
     efficiency = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    soc_max = models.FloatField(null=True, blank=False)
-    soc_min = models.FloatField(null=True, blank=False)
+    soc_max = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
+    soc_min = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
     dispatchable = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)
-    maximum_capacity = models.FloatField(null=True, blank=False)
-    energy_price = models.FloatField(null=True, blank=False)
-    feedin_tariff = models.FloatField(null=True, blank=False)
-    peak_demand_pricing = models.FloatField(null=True, blank=False)
-    peak_demand_pricing_period = models.SmallIntegerField(null=True, blank=False)
-    renewable_share = models.FloatField(null=True, blank=False)
+    maximum_capacity = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
+    energy_price = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
+    feedin_tariff = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
+    peak_demand_pricing = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
+    peak_demand_pricing_period = models.SmallIntegerField(null=True, blank=False, validators=[MinValueValidator(0)])
+    renewable_share = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
     renewable_asset = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE, null=False, blank=True)
     optimize_cap = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES)
-    installed_capacity = models.FloatField(null=True, blank=False)
-    age_installed = models.FloatField(null=True, blank=False)
+    installed_capacity = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
+    age_installed = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
     
     @property
     def fields(self):

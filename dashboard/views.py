@@ -189,5 +189,5 @@ def scenario_economic_results(request, scen_id):
         return JsonResponse(results_json, status=200, content_type='application/json', safe=False)
     except Exception as e:
         logger.error(f"Dashboard ERROR: MVS Req Id: {scenario.simulation.mvs_token}. Thrown Exception: {e}")
-        return JsonResponse({"error":f"Could not retrieve kpi cost data. Exception raised: {e}"}, status=404, content_type='application/json', safe=False)
+        return JsonResponse({"error":f"Could not retrieve kpi cost data."}, status=404, content_type='application/json', safe=False)
 

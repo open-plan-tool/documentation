@@ -176,7 +176,8 @@
 
                     function onMapClick(e) {
                         popup.setLatLng(e.latlng)
-                            .setContent("Location " + e.latlng.toString()).openOn(mymap);
+                            .setContent(`Location Coordinates: <br> (${e.latlng.lat.toFixed(4)}. ${e.latlng.lng.toFixed(4)})`)
+                            .openOn(mymap);
                         $('#id_latitude').val(e.latlng.lat.toFixed(4));
                         $('#id_longitude').val(e.latlng.lng.toFixed(4));
                     }

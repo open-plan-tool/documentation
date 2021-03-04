@@ -186,9 +186,29 @@
 
             function onMapClick(e) {
                 popup.setLatLng(e.latlng)
-                    .setContent("Location " + e.latlng.toString()).openOn(mymap);
+                    .setContent(`Location Coordinates: <br> (${e.latlng.lat.toFixed(4)}. ${e.latlng.lng.toFixed(4)})`).openOn(mymap);
                 $('#id_latitude').val(e.latlng.lat.toFixed(6));
                 $('#id_longitude').val(e.latlng.lng.toFixed(6));
+                /*
+                $.ajax({
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    type: "GET",
+                    url: `https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat.toFixed(6)}&lon=${e.latlng.lng.toFixed(6)}`,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (resp) {
+                        console.log(resp.address.country);
+                        popup.setLatLng(e.latlng)
+                        .setContent("Location " + resp.address.country + "<br> Coordinates:" + e.latlng.toString()).openOn(mymap);
+                        //$('#id_country').val(resp.address.country);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        const jsonData = XMLHttpRequest.responseJSON;
+                        //Swal.fire('Country Error', `Could not retrieve country name.`, 'error');
+                    }
+                });
+                */
+                
             }
 
             mymap.on('click', onMapClick);

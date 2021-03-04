@@ -334,7 +334,8 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 {% endblock %}
 
 {% block end_body_scripts %}
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
 <script type="text/javascript">
     $(document).ready(function () {
         // Load Scenario from file bootstrap modal form.
@@ -438,6 +439,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
             success: function (data) {
                 // log EPA to MVS JSON data
                 console.log(data['mvs_request_json']);
+                Swal.fire('Success', 'Simulation Started Successfully.', 'success');
                 // ------------------------
                 const itemState = elem.closest('tr').querySelector('.State');
                 const itemProgress = elem.closest('tr').querySelector('.Progress');
@@ -451,7 +453,10 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                 itemProgress.textContent = `${floor(86400, 1)}d ${floor(3600, 24)}h ${floor(60, 60)}m ${floor(1,60)}s`;
                 itemState.textContent = data['status'];
             },
-            error: (errors) => console.log(errors),
+            error: (errors) => {
+                console.log(errors);
+                Swal.fire('Error', 'An error occurred while trying to start the simulation.', 'error');
+            },
         });
 
     }
