@@ -32,7 +32,7 @@
 
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'home' %}">EPA</a>
+                <a href="{% url 'home' %}" >EPA</a>
             </li>
         </ul>
         <ul class="nav navbar-nav">
@@ -46,13 +46,13 @@
         {% if user.is_authenticated %}
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="{% url 'logout' %}">Logout <span class="glyphicon glyphicon-log-out"></span></a>
+                    <a href="{% url 'logout' %}">Logout <span class="glyphicon glyphicon-log-out" style="font-size:13px;"></span></a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
+            <ul class="nav navbar-nav navbar-right" style="line-height:0.99;">
+                <li class="dropdown" >
                     <a data-toggle="dropdown" href="#" id="userr">
-                        <span class="glyphicon glyphicon-user dropdown-toggle"></span>
+                        <span class="glyphicon glyphicon-user dropdown-toggle" style="font-size:13px;"></span>
                         {{ user.username }}
                         <span class="caret"></span>
                     </a>
@@ -68,7 +68,7 @@
         {% else %}
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in" style="font-size:13px;"></span> Login</a>
                 </li>
             </ul>
 

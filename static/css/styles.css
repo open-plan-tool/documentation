@@ -37,6 +37,7 @@ body {
 #userr {
   color: #5a6268 !important;
   opacity: 0.7;
+  
 }
 
 .navbar-brand p {
@@ -64,6 +65,7 @@ body {
 
 #nav-list a:hover {
   background: #e7e7e7;
+
 }
 
 .navbar-toggler {
@@ -143,6 +145,7 @@ input[type="checkbox"] {
   background-color: transparent !important;
   font-weight: 700;
   opacity: 1 !important;
+  line-height: 0.85;
 }
 
 .navbar-inverse .navbar-nav > .open > a,
@@ -150,6 +153,7 @@ input[type="checkbox"] {
 .navbar-inverse .navbar-nav > .open > a:hover {
   background-color: transparent !important;
   color: #5a6268 !important;
+ 
 }
 
 .logoo {
