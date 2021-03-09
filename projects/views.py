@@ -23,6 +23,11 @@ logger = logging.getLogger(__name__)
 # region Project
 
 @login_required
+@require_http_methods(["GET", "POST"])
+def user_feedback(request):
+    return render(request, 'feedback.html',{})
+
+@login_required
 @require_http_methods(["GET"])
 def project_detail(request, proj_id):
     project = get_object_or_404(Project, pk=proj_id)

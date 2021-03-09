@@ -924,3 +924,26 @@ path.surface {
   stroke: #1c1c1c !important;
   opacity: 0.8;
 }
+
+.container1{
+  padding:5rem;
+  background: #ffffff;
+  background-image: linear-gradient(173deg, #e6ccb228 25%, rgba(0,0,0,0) 1%);
+  border-radius: 5px;
+}
+
+.feedbackimg{
+  width:110px;
+  height: auto;
+  object-fit: cover;
+ margin-left:-5%;
+ filter: grayscale(10%);
+}
+
+.textt{
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+
+

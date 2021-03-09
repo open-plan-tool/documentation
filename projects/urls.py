@@ -29,4 +29,7 @@ urlpatterns = [
     # MVS Simulation
     path('topology/mvs_simulation/<int:scenario_id>', request_mvs_simulation, name='request_mvs_simulation'),
     path('topology/update_simulation_rating/', update_simulation_rating, name='update_simulation_rating'),
+    # User Feedback
+    path('user_feedback', user_feedback, name='user_feedback'),
+   
 ]
