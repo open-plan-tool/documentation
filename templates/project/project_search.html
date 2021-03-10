@@ -263,11 +263,11 @@
         var group = new L.featureGroup(markerList);
         gridMap.panInsideBounds(group.getBounds().pad(0.5));
 
-        map.on('click', function () {
-            if (map.scrollWheelZoom.enabled()) {
-                map.scrollWheelZoom.disable();
+        gridMap.on('click', function () {
+            if (gridMap.scrollWheelZoom.enabled()) {
+                gridMap.scrollWheelZoom.disable();
             } else {
-                map.scrollWheelZoom.enable();
+                gridMap.scrollWheelZoom.enable();
             }
         });
     </script>

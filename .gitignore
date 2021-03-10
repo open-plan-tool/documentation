@@ -9,3 +9,4 @@ migrations/
 PersonalTODOs
 /app/cdn_static_root/
 .vscode/settings.json
+*.log
