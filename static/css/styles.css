@@ -18,7 +18,11 @@ body {
   border-radius: 0;
   border: 0;
 }
-
+.navbar-nav li, .navbar-nav li a, .container-fluid li {
+  line-height: 0.9999;
+  padding-right: 10px;
+  padding-left: 10px;
+}
 .navbar-brand h1 {
   font-size: 1.5em;
   text-transform: uppercase;
@@ -127,6 +131,7 @@ input[type="checkbox"] {
   color: white !important;
   background-color: #ffffff !important;
   font-family: "Century Gothic";
+  line-height: 0.99;
 }
 
 .navbar-inverse .navbar-nav > .active > a,
