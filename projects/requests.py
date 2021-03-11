@@ -52,6 +52,7 @@ def check_mvs_simulation(simulation):
         
         try:
             simulation.status = response['status']
+            simulation.errors = json.dumps(response['results']['ERROR']) if simulation.status != DONE else None
             simulation.results = parse_mvs_results(simulation, response['results']) if simulation.status == DONE else None
         except:
             simulation.status = FAILED

@@ -159,3 +159,4 @@ class Simulation(models.Model):
     scenario = models.OneToOneField(Scenario, on_delete=models.CASCADE, null=False)
     user_rating = models.PositiveSmallIntegerField(null=True, choices=USER_RATING, default=None)
     results = models.TextField(null=True, max_length=30e6)
+    errors = models.TextField(null=True)

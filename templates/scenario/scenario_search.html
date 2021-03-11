@@ -209,7 +209,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                             <td class="text"><span><b>{{ scenario.name }}</b></span></td>
                             <td class="text"><span>{{ scenario.start_date }}</span></td>
 
-                            <td class="text"><span class="State">{% if scenario.simulation.status %} {{ scenario.simulation.status }} {% else %} Not Started {% endif %}</span></td>
+                            <td class="text"><span class="State" data-toggle="tooltip" title="An error occurred during the simulation. Make sure you have defined all the required assets.">{% if scenario.simulation.status %} {{ scenario.simulation.status }} {% else %} Not Started {% endif %}</span></td>
                             <td class="text">
                                 <div id="sdf{{ scenario.pk }}" class="rate" style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %};" onchange="updateSimulationRating(this, {{ scenario.pk }})">
                                     <input type="radio" id="star5{{ scenario.pk }}" name="rate" value="5" {% if scenario.simulation.user_rating == 5 %}checked{% endif %}/>
@@ -335,9 +335,10 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 
 {% block end_body_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    
+
 <script type="text/javascript">
     $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
         // Load Scenario from file bootstrap modal form.
         $("#upload-scenario").modalForm({
             formURL: "{% url 'scenario_upload' proj_id %}"
@@ -347,6 +348,12 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
         {% if show_comments == 1 %}
             document.getElementById('commentsTabBtn').click();
         {% endif %}
+
+        {% for scenario in scenarios_list %}
+            {% if scenario.simulation.errors %}
+                console.log(`{{ scenario.simulation.errors|escapejs }}`);
+            {% endif %}
+        {% endfor %}
     });
 </script>
 
