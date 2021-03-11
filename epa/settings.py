@@ -214,14 +214,9 @@ LOGGING = {
     },
     'loggers': {
         '': {
-            'handlers': ['info_file'],
+            'handlers': ['info_file', 'warnings_file'],
             'level': 'INFO',
             'propagate': True,
         },
-        '': {
-            'handlers': ['warnings_file'],
-            'level': 'WARNING',
-            'propagate': True,
-        }
     },
 }

@@ -9,6 +9,13 @@ from django.forms import ModelForm
 from projects.models import *
 
 
+class FeedbackForm(ModelForm):
+    class Meta:
+        model = Feedback
+        exclude=['id', 'rating']
+
+
+
 class ProjectDetailForm(ModelForm):
     class Meta:
         model = Project

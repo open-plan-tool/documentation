@@ -67,6 +67,9 @@ input:focus,  textarea:focus{
                 </div> 
                 <br>
                 <br>
+                <form method="POST">
+                    {% csrf_token %}
+                
                 <div class="row justify-content-center text-center py-4 px-0">
                     <div class="col-10">
                       <p class="mx-auto">
@@ -74,19 +77,17 @@ input:focus,  textarea:focus{
                       </p>
                     </div>
                     <div class="col-10">
-                      
-                        
                             <div class="feedback">
                               <div class="rating">
-                                <input type="radio" name="rating" id="rating-5">
+                                <input type="radio" name="rating-5" id="rating-5">
                                 <label for="rating-5"></label>
-                                <input type="radio" name="rating" id="rating-4">
+                                <input type="radio" name="rating-4" id="rating-4">
                                 <label for="rating-4"></label>
-                                <input type="radio" name="rating" id="rating-3">
+                                <input type="radio" name="rating-3" id="rating-3">
                                 <label for="rating-3"></label>
-                                <input type="radio" name="rating" id="rating-2">
+                                <input type="radio" name="rating-2" id="rating-2">
                                 <label for="rating-2"></label>
-                                <input type="radio" name="rating" id="rating-1">
+                                <input type="radio" name="rating-1" id="rating-1">
                                 <label for="rating-1"></label>
                                 <div class="emoji-wrapper">
                                   <div class="emoji">
@@ -177,8 +178,15 @@ input:focus,  textarea:focus{
                          
                     </div>
                   </div>
-                <form>
-                    <label class="col-form-label col-lg-8 requiredField" for="name">Name</label>
+                
+                    <div id="FormGroup" class="form-group">
+                        {% for field in form %}
+                        <div class="form-row" style="margin-left: -15px;">
+                            {{ field|as_crispy_field }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% comment %} <label class="col-form-label col-lg-8 requiredField" for="name">Name</label>
                     <input type="text"  placeholder="Name...">
                     <label class="col-form-label col-lg-8 requiredField" for="email">Email</label>
                     <input type="text"  placeholder="Email...">
@@ -188,7 +196,7 @@ input:focus,  textarea:focus{
                 
                 
                     <label class="col-form-label col-lg-8 requiredField" for="feedback">Feedback</label>
-                    <textarea placeholder="Share your thoughts..." style="height:200px"></textarea>
+                    <textarea placeholder="Share your thoughts..." style="height:200px"></textarea> {% endcomment %}
                     <div class="row">
                         <div class="col-sm-5"></div>
                         <div class="col-sm-5">

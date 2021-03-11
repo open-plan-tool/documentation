@@ -8,6 +8,17 @@ from django.core.exceptions import ValidationError
 from .constants import ASSET_CATEGORY, ASSET_TYPE, COUNTRY, CURRENCY, ENERGY_VECTOR, FLOW_DIRECTION, MVS_TYPE, SIMULATION_STATUS, TRUE_FALSE_CHOICES, USER_RATING
 
 
+
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=200)
+    subject = models.CharField(max_length=200)
+    feedback = models.TextField()
+    rating = models.PositiveSmallIntegerField(choices=USER_RATING, null=True)
+
+
+
 class EconomicData(models.Model):
     duration = models.PositiveSmallIntegerField()
     currency = models.CharField(max_length=3, choices=CURRENCY)

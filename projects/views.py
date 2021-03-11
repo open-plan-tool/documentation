@@ -25,7 +25,19 @@ logger = logging.getLogger(__name__)
 @login_required
 @require_http_methods(["GET", "POST"])
 def user_feedback(request):
-    return render(request, 'feedback.html',{})
+    form = FeedbackForm(request.POST or None)
+    if request.POST:
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            try:
+                feedback.rating = [key.split('-')[-1] for key in request.POST.keys() if key.startswith('rating')][0]
+            except:
+                feedback.rating = None
+            feedback.save()
+            messages.success(request, f"Thank you for your feedback.")
+            return HttpResponseRedirect(reverse('project_search'))
+    return render(request, 'feedback.html',{'form':form})
+
 
 @login_required
 @require_http_methods(["GET"])
