@@ -164,7 +164,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-NEEDS_PROXY=os.getenv('USE_PROXY', True)
+NEEDS_PROXY=ast.literal_eval(os.getenv('USE_PROXY', True))
 PROXY_ADDRESS_LINK=os.getenv('PROXY_ADDRESS', 'http://icache.intracomtel.com:80')
 
 PROXY_CONFIG = ({
