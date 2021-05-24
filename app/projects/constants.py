@@ -263,7 +263,7 @@ ENERGY_VECTOR = (
     ('Heat', 'Heat'),
     ('Gas', 'Gas'),
     ('H2', 'H2'),
-    ('Diesel', 'Diesel'),
+    #('Diesel', 'Diesel'),
 )
 
 MVS_TYPE = (
@@ -312,17 +312,35 @@ VALUE_TYPE = (
 ASSET_TYPE = (
     ('', 'Choose...'),
     ('dso', 'dso'),
+    ('gas_dso', 'gas_dso'),
+    ('h2_dso', 'h2_dso'),
+    ('heat_dso', 'heat_dso'),
     ('demand', 'demand'),
+    ('gas_demand', 'gas_demand'),
+    ('h2_demand', 'h2_demand'),
+    ('heat_demand', 'heat_demand'),
     ('transformer_station_in', 'transformer_station_in'),
     ('transformer_station_out', 'transformer_station_out'),
     ('storage_charge_controller_in', 'storage_charge_controller_in'),
     ('storage_charge_controller_out', 'storage_charge_controller_out'),
     ('solar_inverter', 'solar_inverter'),
+    ('diesel_generator', 'diesel_generator'),
+    ('fuel_cell', 'fuel_cell'),
+    ('gas_boiler', 'gas_boiler'),
+    ('electrolyzer', 'electrolyzer'),
+    ('heat_pump', 'heat_pump'),
     ('pv_plant', 'pv_plant'),
     ('wind_plant', 'wind_plant'),
+    ('biogas_plant', 'biogas_plant'),
+    ('geothermal_conversion', 'geothermal_conversion'),
+    ('solar_thermal_plant', 'solar_thermal_plant'),
     ('charging_power', 'charging_power'),
     ('discharging_power', 'discharging_power'),
     ('capacity', 'capacity'),
+    ('bess', 'bess'),
+    ('gess', 'gess'),
+    ('h2ess', 'h2ess'),
+    ('hess', 'hess'),
 )
 
 BUS_TYPE = (
@@ -331,10 +349,14 @@ BUS_TYPE = (
     ('bus_gas', 'bus_gas'),
 )
 
+DONE="DONE"
+PENDING="PENDING"
+ERROR="ERROR"
+
 SIMULATION_STATUS = (
-    ('FAILED', 'FAILED'),
-    ('DONE', 'DONE'),
-    ('PENDING', 'PENDING'),
+    (ERROR, ERROR),
+    (DONE, DONE),
+    (PENDING, PENDING),
 )
 
 USER_RATING = (

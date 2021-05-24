@@ -35,7 +35,8 @@ class Project(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     economic_data = models.OneToOneField(EconomicData, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    viewers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='viewer_projects')
 
     def __str__(self):
         return self.name
@@ -92,15 +93,15 @@ class ValueType(models.Model):
 
 class Asset(TopologyNode):
     def save(self, *args, **kwargs):
-        if self.asset_type.asset_type == 'dso':
+        if self.asset_type.asset_type in ['dso', 'gas_dso', 'h2_dso', 'heat_dso']:
             self.optimize_cap = True
         super().save(*args, **kwargs)
     
-    def validate_timeseries(timeseries_data: str):
-        try:
-            json.loads(timeseries_data)
-        except:
-            raise ValidationError(f"The provided timeseries is not well formatted. Expected format: [0.1,2,3.0,1]")
+    # def validate_timeseries(timeseries_data: str):
+    #     try:
+    #         json.loads(timeseries_data)
+    #     except:
+    #         raise ValidationError(f"The provided timeseries is not well formatted. Expected format: [0.1,2,3.0,1]")
     
     unique_id = models.CharField(max_length=120, default=uuid.uuid4, unique=True, editable=False)
     capex_fix = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # development_costs
@@ -108,9 +109,9 @@ class Asset(TopologyNode):
     opex_fix = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # specific_costs_om
     opex_var = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # dispatch_price
     lifetime = models.IntegerField(null=True, blank=False, validators=[MinValueValidator(0)])
-    input_timeseries = models.TextField(null=True, blank=False, validators=[validate_timeseries])
+    input_timeseries = models.TextField(null=True, blank=False)#, validators=[validate_timeseries])
     crate = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    efficiency = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
+    efficiency = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
     soc_max = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
     soc_min = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])
     dispatchable = models.BooleanField(null=True, blank=False, choices=TRUE_FALSE_CHOICES, default=None)

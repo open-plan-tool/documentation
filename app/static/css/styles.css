@@ -951,4 +951,158 @@ path.surface {
 }
 
 
+.box1{
+  background-color: #1c1c1c;
+  width: 100%;
+  padding:1.5rem;
+  box-shadow: 3px 3px 8px #212e41;
+}
 
+.errorheading{
+  text-align: center;
+  font-weight: 800;
+  font-size:150px;
+  color:#15a4fa;
+
+}
+
+.errorparag{
+  font-size: 20px;
+  text-align: center;
+  color:rgb(184, 184, 184);
+  margin-top:-27%;
+}
+
+.errorredirect{
+  padding: 1rem;
+  background-color: #15a4fa;
+  color:#1c1c1c;
+  font-size:13px;
+  box-shadow: 1px 1px 3px #212e41;
+  margin-left:38%;
+}
+
+.errorredirect:hover{
+  padding: 1.1rem;
+  background-color: #15a4fa;
+  color:#1c1c1c;
+  box-shadow: 3px 3px 8px #15a2fabb;
+ 
+}
+.anim500{
+  
+  width: 220px;
+  height: 220px;
+  top:-200px;
+}
+@media (max-width: 1200px) {
+  .anim500{
+     left:-3% !important;
+     width: 180px;
+     height: 180px;
+     top:-210px;
+  }
+  .errorparag{
+      margin-top:-40%!important;
+  }
+  .errorredirect{
+      margin-left:33%;
+  }
+}
+
+@media (max-width: 992px) {
+  
+  .errorheading{
+      text-align: center;
+      font-weight: 800;
+      font-size:150px;
+      color:#15a4fa;
+  }
+  
+  .anim{
+      top: -130px !important;
+  }
+  .anim500{
+      left:-3% !important;
+      width: 100px;
+      height: 100px;
+      top: -150px;
+   }
+
+  .errorparag{
+      font-size: 18px;
+      margin-top:-45%;
+  }
+  
+  .errorredirect{
+      margin-left:30%;
+  }
+  
+  .errorredirect:hover{
+      padding: 1.1rem;
+      background-color: #15a4fa;
+      color:#1c1c1c;
+      box-shadow: 3px 3px 8px #15a2fabb;
+     
+  }
+}
+@media (max-width: 768px) {
+  .anim {
+      top: -130px !important;
+  }
+  .anim500{
+      top: -150px;
+  }
+  .errorparag{
+      margin-top:-35%!important;
+  }
+  .errorredirect{
+      margin-left:33%;
+  }
+}
+@media (max-width: 576px) {
+  .errorparag{
+      margin-top:-35%!important;
+  }
+  .errorredirect{
+      margin-left:33%;
+  }
+  .anim500{
+      top: -280px;
+      left: 40% !important;
+  }
+}
+@media (max-width: 410px) {
+  .errorparag{
+      margin-top:-35%!important;
+  }
+  .errorredirect{
+      margin-left:27%;
+  }
+  
+}
+
+@media (max-width: 350px) {
+  .errorredirect{
+      margin-left:20%;
+  }
+  .anim500{
+      top: -280px;
+      width: 100px;
+      height: 100px;
+      left: 30% !important;
+  }
+}
+
+@media (max-width: 315px) {
+  .errorheading{
+      font-size:100px;
+  }
+  .anim{
+      top: -100px !important;
+  }
+  .anim500{
+      top: -220px;
+      
+  }
+}

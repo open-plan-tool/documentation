@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
 integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'css/user-ranking-stars.css' %}" type="text/css"/>
+<link rel="stylesheet" href="{% static 'css/scenariolist.css' %}" type="text/css"/>
 {% endblock head_block %}
 
 {% block start_body_scripts %}
@@ -15,85 +16,6 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 {% endblock %}
 
 {% block content %}
-<style>
-
-
-    @media screen and (max-width: 990px) {
-        .btn-danger {
-
-            width: 90% !important;
-            font-size: 80%;
-
-
-        }
-
-        .btn-default {
-
-
-            font-size: 80%;
-
-
-        }
-
-
-
-        .rate:not(:checked) > label {
-            font-size: 18px;
-        }
-
-        tr {
-            font-size: 80%;
-        }
-
-        #titleproj, #titlecoms {
-            font-size: 23px !important;
-        }
-
-        .submit-btn.btn.btn-primary, .btn.btn-primary.btn-lg, #createnewscen, #uploadscen, #addcom {
-            width: 70%;
-            font-size: 70% !important;
-            padding: 1em;
-        }
-
-        #lo {
-
-            font-size: 12px !important;
-
-        }
-
-        .tab button, .tab button.active {
-            font-size: 70%;
-        }
-        .dropdown-menu > li > a{
-            font-size: 80%;
-        }
-    }
-
-    @media screen and (max-width: 690px) {
-        .rate:not(:checked) > label {
-            font-size: 14px;
-        }
-    }
-    @media screen and (max-width: 768px) {
-        .modal-content{
-            width: 350px!important;
-
-
-        }
-        .requiredField{
-            font-size: 12px !important;
-        }
-        .form-control{
-            font-size:10px !important;
-        }
-        .modal-title{
-            font-size: 25px !important;
-        }
-        #div_id_file{
-            font-size: 13px !important;
-        }
-    }
-</style>
 <br>
 <button onclick="window.open(`{% url 'project_search' %}`, `_self`)" id="backbutton">
     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -103,7 +25,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 <br>
 <br>
     <h1 style="text-align: center" class="panel-heading">Project Overview</h1>
-    <h3 style="text-align: center" class="panel-default">{{ project_name }}</h3>
+    <h3 style="text-align: center" class="panel-default">{{ project.name }}</h3>
 <!-- region Project Scenarios List -->
 <a class="open-modal" data-modal="CreateScenarioModal" style="visibility: hidden">Add Scenario</a>
 <br>
@@ -117,7 +39,6 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
     </div>
 
     <div id="Project Scenarios" class="tabcontent">
-
 
         <div class="panel panel-default " id="scen">
             <br>
@@ -153,28 +74,29 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-search"
                                                href="{% url 'scenario_view' scenario.pk %}" name="View">
-                                                Info</a>
+                                                <span class="labeel">Info</span></a>
                                         </li>
                                         <li role="presentation"
                                             style="opacity: 0.8; font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" tabindex="1" class="glyphicon glyphicon-eye-open"
                                                style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %}" name="visualizeResults"
                                                href="{% url 'scenario_visualize_results' scenario.pk %}" name="visualizeResults">
-                                                Visualize-Results</a>
+                                               <span class="labeel">Visualize-Results</span></a>
                                         </li>
                                         <li role="presentation"
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" class="glyphicon glyphicon-picture"
                                                href="{% url 'new_assets_topology' scenario.pk %}"
                                                name="GridView">
-                                                Grid-Model</a>
+                                               <span class="labeel">Grid-Model</span></a>
                                         </li>
+                                        {% if scenario.project.user == request.user %}
                                         <li role="presentation"
                                             style=" opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
                                             <a role="menuitem" class="glyphicon glyphicon-random"
                                                name="Simulation"
-                                               onclick="request_mvs_simulation(this, `{% url 'request_mvs_simulation' scenario.pk %}`)">
-                                                Simulate</a>
+                                               onclick="request_mvs_simulation(this, `{% url 'request_mvs_simulation' scenario.pk %}`, {{scenario.pk}})">
+                                               <span class="labeel">Simulate</span></a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation"
@@ -183,17 +105,18 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                                                class="glyphicon glyphicon-duplicate"
                                                href="{% url 'scenario_duplicate' scenario.pk %}"
                                                name="Duplicate">
-                                                Create-a-Copy</a>
+                                               <span class="labeel">Create-a-Copy</span></a>
                                         </li>
                                         <li role="presentation"
                                             style="opacity: 0.8;  font-family: Century Gothic; font-size: 18px;">
-                                            <a role="menuitem" tabindex="-1" href="#">
+                                            <a role="menuitem" tabindex="-1" href="#" id="remoove">
                                                 <form style="float: left;" class="form"
                                                       action="{% url 'scenario_delete' scenario.pk %}"
                                                       method="POST">
                                                     {% csrf_token %}
-                                                    <label style="float: left;  margin: 5px;">
-                                                        <span class="glyphicon glyphicon-trash"> Remove</span>
+                                                    <label style="float: left;  margin: 5px;">&nbsp;&nbsp;
+                                                        <span class="glyphicon glyphicon-trash">
+                                                             <span class="labeel">&nbsp;Remove</span></span>
                                                         <input style="display: none"
                                                                class="btn btn-sm btn-danger"
                                                                type="submit" value="Delete"
@@ -202,25 +125,29 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                                                 </form>
                                             </a>
                                         </li>
+                                        {% endif %}
 
                                     </ul>
                                 </div>
                             </td>
                             <td class="text"><span><b>{{ scenario.name }}</b></span></td>
-                            <td class="text"><span>{{ scenario.start_date }}</span></td>
-
-                            <td class="text"><span class="State" data-toggle="tooltip" title="An error occurred during the simulation. Make sure you have defined all the required assets.">{% if scenario.simulation.status %} {{ scenario.simulation.status }} {% else %} Not Started {% endif %}</span></td>
+                            <td class="text"><span>{{ scenario.start_date|date:'d F Y' }}</span></td>
                             <td class="text">
-                                <div id="sdf{{ scenario.pk }}" class="rate" style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %};" onchange="updateSimulationRating(this, {{ scenario.pk }})">
-                                    <input type="radio" id="star5{{ scenario.pk }}" name="rate" value="5" {% if scenario.simulation.user_rating == 5 %}checked{% endif %}/>
+                                <span class="State" data-toggle="tooltip" title="{% if scenario.simulation.status == 'ERROR' %}An error occurred during the simulation. Make sure you have defined all the required assets.{% endif %}">
+                                    {% if scenario.simulation.status %} {{ scenario.simulation.status }} {% else %} Not Started {% endif %}
+                                </span>
+                            </td>
+                            <td class="text">
+                                <div id="userRating{{ scenario.pk }}" class="rate" style="display: {% if scenario.simulation.status == 'DONE' %}block{% else %}none{% endif %};" onchange="updateSimulationRating(event, this, {{ scenario.pk }})">
+                                    <input type="radio" id="star5{{ scenario.pk }}" name="rate{{ scenario.pk }}" value="5" {% if scenario.simulation.user_rating == 5 %}checked{% endif %}/>
                                     <label for="star5{{ scenario.pk }}" title="5stars">5 stars</label>
-                                    <input type="radio" id="star4{{ scenario.pk }}" name="rate" value="4" {% if scenario.simulation.user_rating == 4 %}checked{% endif %}/>
+                                    <input type="radio" id="star4{{ scenario.pk }}" name="rate{{ scenario.pk }}" value="4" {% if scenario.simulation.user_rating == 4 %}checked{% endif %}/>
                                     <label for="star4{{ scenario.pk }}" title="4stars">4 stars</label>
-                                    <input type="radio" id="star3{{ scenario.pk }}" name="rate" value="3" {% if scenario.simulation.user_rating == 3 %}checked{% endif %}/>
+                                    <input type="radio" id="star3{{ scenario.pk }}" name="rate{{ scenario.pk }}" value="3" {% if scenario.simulation.user_rating == 3 %}checked{% endif %}/>
                                     <label for="star3{{ scenario.pk }}" title="3stars">3 stars</label>
-                                    <input type="radio" id="star2{{ scenario.pk }}" name="rate" value="2"{% if scenario.simulation.user_rating == 2 %}checked{% endif %}/>
+                                    <input type="radio" id="star2{{ scenario.pk }}" name="rate{{ scenario.pk }}" value="2"{% if scenario.simulation.user_rating == 2 %}checked{% endif %}/>
                                     <label for="star2{{ scenario.pk }}" title="2stars">2 stars</label>
-                                    <input type="radio" id="star1{{ scenario.pk }}" name="rate" value="1"{% if scenario.simulation.user_rating == 1 %}checked{% endif %}/>
+                                    <input type="radio" id="star1{{ scenario.pk }}" name="rate{{ scenario.pk }}" value="1"{% if scenario.simulation.user_rating == 1 %}checked{% endif %}/>
                                     <label for="star1{{ scenario.pk }}" title="1star">1 star</label>
                                 </div>
                             </td>
@@ -234,10 +161,12 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                 <div class="row">
                     <div class="col-sm-4"></div>
                     <div class="col-sm-4">
+                        {% if project.user == request.user %}
                         <a class="glyphicon glyphicon-plus open-comments-modal" style="color: transparent;"
-                           data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' proj_id %}">
+                           data-modal="CreateScenarioModal" data-url="{% url 'scenario_create' project.id %}">
                            <span id="createnewscen">Create New Scenario</span>
                         </a>
+                        {% endif %}
                     </div>
 
                     {% comment %}<div class="col-sm-2"></div>
@@ -252,7 +181,6 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 
         </div>
     </div>
-    <!-- </div> -->
 
     <!-- endregion -->
 
@@ -310,7 +238,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                     <div class="col-sm-4">
                         <a class="glyphicon glyphicon-plus open-comments-modal"
                            style="color: transparent; text-shadow: 1px 1px 1px #222;"
-                           data-modal="CreateCommentForm" data-url="{% url 'comment_create' proj_id %}"
+                           data-modal="CreateCommentForm" data-url="{% url 'comment_create' project.id %}"
                                id="addcom"><span id="lo">Add Comment</span></a>
 
 
@@ -340,9 +268,9 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
         // Load Scenario from file bootstrap modal form.
-        $("#upload-scenario").modalForm({
-            formURL: "{% url 'scenario_upload' proj_id %}"
-        });
+        // $("#upload-scenario").modalForm({
+        // {% comment %}    formURL: "{% url 'scenario_upload' proj_id %}" {% endcomment %}
+        // }); 
         
         // Change active tab to comments based on flag
         {% if show_comments == 1 %}
@@ -351,7 +279,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 
         {% for scenario in scenarios_list %}
             {% if scenario.simulation.errors %}
-                console.log(`{{ scenario.simulation.errors|escapejs }}`);
+                console.log(`MVS Token: {{scenario.simulation.mvs_token}} \nError message: {{ scenario.simulation.errors|escapejs }}\n`);
             {% endif %}
         {% endfor %}
     });
@@ -382,7 +310,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 
     $(".open-modal").on("click", function () {
         $.ajax({
-            url: "{% url 'scenario_create' proj_id %}",
+            url: "{% url 'scenario_create' project.id %}",
             success: function (data) {
                 modalDiv.html(data);
                 console.log(modalDiv);
@@ -439,14 +367,32 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
     document.getElementById("defaultOpen").click();
 </script>
 
+
 <script>
-    function request_mvs_simulation(elem, requestUrl) {
+    async function updateSimulationRating(e, elem, scen_id) {
+        const selectedRating = elem.querySelector(`input[name="rate${scen_id}"]:checked`).value;
+        $.ajax({
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            url: "{% url 'update_simulation_rating' %}",
+            type: "POST",
+            data: {"scen_id": scen_id, "user_rating": selectedRating},
+            success: (data) => {},
+            error: (errors) => console.log(errors),
+        });
+    }
+</script>
+
+<script>
+    const timeoutThreshold = 30000; // 30sec
+
+    function request_mvs_simulation(elem, requestUrl, scen_id) {
         $.ajax({
             url: requestUrl,
             success: function (data) {
                 // log EPA to MVS JSON data
-                console.log(data['mvs_request_json']);
+                console.log(data);
                 Swal.fire('Success', 'Simulation Started Successfully.', 'success');
+                // .then(()=>location.reload());
                 // ------------------------
                 const itemState = elem.closest('tr').querySelector('.State');
                 const itemProgress = elem.closest('tr').querySelector('.Progress');
@@ -459,6 +405,9 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                 const floor = (divisor, mod) => Math.floor(data['secondsElapsed'] / divisor % mod);
                 itemProgress.textContent = `${floor(86400, 1)}d ${floor(3600, 24)}h ${floor(60, 60)}m ${floor(1,60)}s`;
                 itemState.textContent = data['status'];
+                if (data['status'] === "PENDING") {
+                    setTimeout(checkSimulationStatus, timeoutThreshold, `{% url 'check_simulation_status' %}${scen_id}`, `{{ csrf_token }}`);
+                }
             },
             error: (errors) => {
                 console.log(errors);
@@ -467,18 +416,31 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
         });
 
     }
+</script>
 
-    function updateSimulationRating(elem, scen_id) {
-        const selectedRating = elem.querySelector('input[name="rate"]:checked').value;
-        debugger
-        $.ajax({
-            headers: {'X-CSRFToken': '{{ csrf_token }}'},
-            url: "{% url 'update_simulation_rating' %}",
-            type: "POST",
-            data: {"scen_id": scen_id, "user_rating": selectedRating},
-            success: (data) => {},
-            error: (errors) => console.log(errors),
-        });
-    }
+<script>
+  async function checkSimulationStatus(checkUrl, csrfToken) {
+  fetch(checkUrl, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": csrfToken,
+    },
+  })
+    .then((response) => response.text())
+    .then((result) => JSON.parse(result))
+    .then((result) => {
+      console.log(result.status);
+      if (result.status === "PENDING")
+        setTimeout(checkSimulationStatus, timeoutThreshold, checkUrl, csrfToken);
+      else if (result.status === "DONE")
+        Swal.fire("Success", "Simulation Completed Successfully.", "success")
+          .then(() => location.reload());
+      else if (result.status === "ERROR")
+        Swal.fire("Failed", "Simulation Failed.", "error")
+          .then(() => location.reload());
+    })
+    .catch((error) => console.log("error", error));
+};
+
 </script>
 {% endblock end_body_scripts %}

@@ -30,6 +30,8 @@
         <h2 class="panel-heading" style="text-align: center;">Economic Data Summary</h2>
         <hr class="mt-2">
         <div class="panel-body t1" id="economicDataDiv"></div>
+        <br>
+        <a type="button" class="btn btn-info" href="{% url 'download_cost_results' scenario_id %}">Download Cost Results</a>    
     </div>
 </div>
 
@@ -59,6 +61,8 @@
             {% endfor %}
         </tbody>
     </table>
+    <br>
+    <a type="button" class="btn btn-info" href="{% url 'download_scalar_results' scenario_id %}">Download Scalar Results</a>
 </div>
 
 
@@ -99,6 +103,9 @@
             <div class="mb-4 panel-body" id="GasGraphDiv"></div>
         </div>
     </div>
+
+    <br>
+    <a type="button" class="btn btn-info" href="{% url 'download_timeseries_results' scenario_id %}">Download Timeseries</a>
 
 </div>
 

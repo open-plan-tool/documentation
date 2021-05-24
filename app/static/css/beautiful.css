@@ -386,7 +386,8 @@ header a {
     width: 200% !important;
 }
 
-.drawflow-node.dso .box, .drawflow-node.dso_consumption .box, .drawflow-node.pv_plant .box, .drawflow-node.wind_plant .box {
+.drawflow-node.dso .box, .drawflow-node.dso_consumption .box, .drawflow-node.pv_plant .box, .drawflow-node.wind_plant .box,
+.drawflow-node.gas_dso .box, .drawflow-node.h2_dso .box, .drawflow-node.heat_dso .box {
     margin-top: -9vh !important;
     right: -1em !important;
     width: 100% !important;
@@ -397,7 +398,8 @@ header a {
     right: 1em;
 }
 
-.drawflow-node.dso .box, .drawflow-node.dso_consumption .box, .drawflow-node.pv_plant .box, .drawflow-node.wind_plant .box {
+.drawflow-node.dso .box, .drawflow-node.dso_consumption .box, .drawflow-node.pv_plant .box, .drawflow-node.wind_plant .box,
+.drawflow-node.gas_dso .box, .drawflow-node.h2_dso .box, .drawflow-node.heat_dso .box {
     margin-top: -9vh !important;
     right: -1em !important;
     width: 100% !important;
@@ -409,7 +411,8 @@ header a {
     width: 100% !important;
 }
 
-.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant {
+.drawflow-node.dso, .drawflow-node.dso_consumption, .drawflow-node.pv_plant, .drawflow-node.wind_plant,
+.drawflow-node.gas_dso , .drawflow-node.h2_dso, .drawflow-node.heat_dso  {
     border-top: 50px solid transparent;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
@@ -428,6 +431,17 @@ header a {
     background: url("/static/images/dso.png") no-repeat;
 }
 
+.drawflow-node.gas_dso:before {
+    background: url("/static/images/dso.png") no-repeat;
+} 
+.drawflow-node.h2_dso:before{
+    background: url("/static/images/dso.png") no-repeat;
+} 
+.drawflow-node.heat_dso:before  {
+    background: url("/static/images/dso.png") no-repeat;
+}
+
+
 .drawflow-node.pv_plant:before {
     background: url("/static/images/solar-energy.png") no-repeat;
 }
@@ -436,7 +450,8 @@ header a {
     background: url("/static/images/weather.png") no-repeat;
 }
 
-.drawflow-node.dso:before, .drawflow-node.pv_plant:before, .drawflow-node.wind_plant:before, .drawflow-node.dso_consumption:before {
+.drawflow-node.dso:before, .drawflow-node.pv_plant:before, .drawflow-node.wind_plant:before, .drawflow-node.dso_consumption:before,
+.drawflow-node.gas_dso:before, .drawflow-node.h2_dso:before, .drawflow-node.heat_dso:before {
     display: inline-block;
     width: 100px;
     height: 100px;
@@ -460,12 +475,14 @@ header a {
 }
 
 
-.drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input {
+.drawflow-node.dso .input, .drawflow-node.dso_consumption .input, .drawflow-node.pv_plant .input, .drawflow-node.wind_plant .input,
+.drawflow-node.gas_dso .input, .drawflow-node.h2_dso .input, .drawflow-node.heat_dso .input{
     background: green;
     display: none;
 }
 
-.drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
+.drawflow-node.dso .output, .drawflow-node.dso_consumption .output, .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output 
+.drawflow-node.gas_dso .output, .drawflow-node.h2_dso .output, .drawflow-node.heat_dso .output{
     background: #9e2a2b;
     position: absolute;
     top: -80px;
@@ -476,7 +493,8 @@ header a {
     top: -80px;
 }
 
-.drawflow-node.dso.selected, .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected {
+.drawflow-node.dso.selected, .drawflow-node.dso_consumption.selected, .drawflow-node.pv_plant.selected, .drawflow-node.wind_plant.selected
+.drawflow-node.gas_dso.selected, .drawflow-node.h2_dso.selected, .drawflow-node.heat_dso.selected{
     border-top: 50px solid transparent;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
@@ -574,7 +592,8 @@ header a {
 
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .drawflow-node.dso .nodeName, .drawflow-node.pv_plant .nodeName, .drawflow-node.wind_plant .nodeName {
+    .drawflow-node.dso .nodeName, .drawflow-node.pv_plant .nodeName, .drawflow-node.wind_plant .nodeName,
+    .drawflow-node.gas_dso .nodeName, .drawflow-node.h2_dso .nodeName, .drawflow-node.heat_dso .nodeName{
         top: -5rem;
     }
 }

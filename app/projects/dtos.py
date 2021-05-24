@@ -134,12 +134,12 @@ def convert_to_dto(scenario: Scenario):
     # Retrieve models
     project = Project.objects.get(scenario=scenario)
     economic_data = EconomicData.objects.get(project=project)
-    ess_list = Asset.objects.filter(Q(scenario=scenario), Q(asset_type__asset_type='ess'))
+    ess_list = Asset.objects.filter(Q(scenario=scenario), Q(asset_type__asset_type__contains='ess'))
     # Exclude ESS related assets
     asset_list = Asset.objects.filter(Q(scenario=scenario)).exclude(
-        Q(asset_type__asset_type='ess') | Q(parent_asset__asset_type__asset_type='ess'))
+        Q(asset_type__asset_type__contains='ess') | Q(parent_asset__asset_type__asset_type__contains='ess'))
     bus_list = Bus.objects.filter(scenario=scenario).exclude(
-        Q(connectionlink__asset__parent_asset__asset_type__asset_type='ess'))
+        Q(connectionlink__asset__parent_asset__asset_type__asset_type__contains='ess'))
 
     # Create  dto objects
     project_data_dto = ProjectDataDto(project.id,

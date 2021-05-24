@@ -32,7 +32,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
     </style>
     <br>
 
-    <button onclick="window.open(`{% url 'scenario_search' project_id %}`, `_self`)" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+    <button onclick="window.open(`{% url 'scenario_search' scenario.project.id %}`, `_self`)" id="backbutton"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
 
     <br>
     <br>
@@ -50,15 +50,17 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                         </div>
                         <br>
                         <div class="panel-body">
-                            <form action="{% url 'scenario_update' scenario_id %}" class="uniForm"
+                            <form action="{% url 'scenario_update' scenario.id %}" class="uniForm"
                                   method="post">
                                 {% crispy scenario_form %}
                                 <div class="row">
                                     <div class="col-sm-4"></div>
                                     <div class="col-sm-4">
+                                        {% if scenario.project.user == request.user %}
                                         <button class="btn btn-primary btn-lg" type="submit" style="margin-left:30px;" type="submit">
                                             Submit
                                         </button>
+                                        {% endif %}
                                     </div>
                                     <div class="col-sm-4"></div>
                                 </div>
@@ -70,7 +72,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
         </div>
     </div>
 
-    <iframe id="topoFrame" src="{% url 'new_assets_topology' scenario_id %}"
+    <iframe id="topoFrame" src="{% url 'new_assets_topology' scenario.id %}"
             style="width: 100%; height: 100vh; display: none"></iframe>
     <div id="destFrame"></div>
 

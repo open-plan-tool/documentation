@@ -1,4 +1,5 @@
-from django.http.response import Http404
+from django.core.exceptions import PermissionDenied
+from django.http.response import Http404, HttpResponse
 from dashboard.helpers import storage_asset_to_list
 from dashboard.models import AssetsResults, KPICostsMatrixResults, KPIScalarResults, KPI_COSTS_TOOLTIPS, KPI_COSTS_UNITS, KPI_SCALAR_TOOLTIPS, KPI_SCALAR_UNITS
 from django.contrib.auth.decorators import login_required
@@ -7,19 +8,25 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from jsonview.decorators import json_view
 from projects.models import Scenario
+from dashboard.helpers import kpi_scalars_list
+from io import BytesIO
+import xlsxwriter
 import json
 import datetime
 import logging
 
 logger = logging.getLogger(__name__)
 
+
 @login_required
 @json_view
 @require_http_methods(["GET"])
 def scenario_available_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
+    # if scenario.project.user != request.user:
+    #     return HttpResponseForbidden()
     
     try:
         assets_results_obj = AssetsResults.objects.get(simulation=scenario.simulation)
@@ -58,8 +65,10 @@ def scenario_available_results(request, scen_id):
 def scenario_request_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
+    # if scenario.project.user != request.user:
+    #     return HttpResponseForbidden()
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
     
     # real data
     try:
@@ -113,34 +122,21 @@ def scenario_request_results(request, scen_id):
         return JsonResponse({"Error":"Could not retrieve timeseries data."}, status=404, content_type='application/json', safe=False)
 
 
+
 @login_required
 @require_http_methods(["GET"])
 def scenario_visualize_results(request, scen_id):
     scenario = get_object_or_404(Scenario, pk=scen_id)
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
+    # if scenario.project.user != request.user:
+    #     return HttpResponseForbidden()
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
     
     try:
         kpi_scalar_results_obj = KPIScalarResults.objects.get(simulation=scenario.simulation)
         kpi_scalar_values_dict = json.loads(kpi_scalar_results_obj.scalar_values)
 
-        scalar_kpis_json = [
-            {
-                'kpi': key.replace('_',' '),
-                'value': round(val, 3) if '€/kWh' in KPI_SCALAR_UNITS[key] else round(val,2),
-                'unit': KPI_SCALAR_UNITS[key],
-                'tooltip': KPI_SCALAR_TOOLTIPS[key]
-            }
-            if key in KPI_SCALAR_UNITS.keys()
-            else 
-            {
-                'kpi': key.replace('_',' '),
-                'value': round(val, 3),
-                'unit': 'N/A',
-                'tooltip': ''
-            }
-            for key, val in kpi_scalar_values_dict.items()
-        ]
+        scalar_kpis_json = kpi_scalars_list(kpi_scalar_values_dict, KPI_SCALAR_UNITS, KPI_SCALAR_TOOLTIPS)
 
         return render(request, 'scenario/scenario_visualize_results.html',
         {'scenario_id': scen_id, 'scalar_kpis': scalar_kpis_json, 'project_id': scenario.project.id})
@@ -159,8 +155,10 @@ def scenario_economic_results(request, scen_id):
     """
     scenario = get_object_or_404(Scenario, pk=scen_id)
 
-    if scenario.project.user != request.user:
-        return HttpResponseForbidden()
+    # if scenario.project.user != request.user:
+    #     return HttpResponseForbidden()
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
     
     try:
         kpi_cost_results_obj = KPICostsMatrixResults.objects.get(simulation=scenario.simulation)
@@ -190,4 +188,165 @@ def scenario_economic_results(request, scen_id):
     except Exception as e:
         logger.error(f"Dashboard ERROR: MVS Req Id: {scenario.simulation.mvs_token}. Thrown Exception: {e}")
         return JsonResponse({"error":f"Could not retrieve kpi cost data."}, status=404, content_type='application/json', safe=False)
+
+
+
+@login_required
+@require_http_methods(["GET"])
+def download_scalar_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
+    
+    try:
+        kpi_scalar_results_obj = KPIScalarResults.objects.get(simulation=scenario.simulation)
+        kpi_scalar_values_dict = json.loads(kpi_scalar_results_obj.scalar_values)
+        scalar_kpis_json = kpi_scalars_list(kpi_scalar_values_dict, KPI_SCALAR_UNITS, KPI_SCALAR_TOOLTIPS)
+        
+        output = BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet('Scalars')
+
+        for idx, kpi_obj in enumerate(scalar_kpis_json):
+            if idx==0:
+                worksheet.write_row(0, 0, kpi_obj.keys())
+            worksheet.write_row(idx+1, 0, kpi_obj.values())
+        
+        workbook.close()
+        output.seek(0)
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: Could not generate KPI Scalars download file with Scenario Id: {scen_id}. Thrown Exception: {e}")
+        raise Http404()
+
+    
+
+    filename = 'kpi_scalar_results.xlsx'
+    response = HttpResponse(
+        output,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+
+    return response
+
+
+@login_required
+@require_http_methods(["GET"])
+def download_cost_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
+    
+    try:
+        kpi_cost_results_obj = KPICostsMatrixResults.objects.get(simulation=scenario.simulation)
+        kpi_cost_values_dict = json.loads(kpi_cost_results_obj.cost_values)
+        
+        output = BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet('Costs')
+
+        for col, asset in enumerate(kpi_cost_values_dict.items()):
+            asset_name, asset_dict = asset
+            if col == 0:
+                worksheet.write_column(1, 0, asset_dict.keys())
+                worksheet.write_row(0, 1, kpi_cost_values_dict.keys())
+            worksheet.write_column(1, col+1, asset_dict.values())
+        
+        workbook.close()
+        output.seek(0)
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: Could not generate KPI Costs download file with Scenario Id: {scen_id}. Thrown Exception: {e}")
+        raise Http404()
+
+    
+
+    filename = 'kpi_individual_costs.xlsx'
+    response = HttpResponse(
+        output,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+
+    return response
+
+
+@login_required
+@require_http_methods(["GET"])
+def download_timeseries_results(request, scen_id):
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+
+    if (scenario.project.user != request.user) and (request.user not in scenario.project.viewers.all()):
+        raise PermissionDenied
+    
+    try:
+        assets_results_obj = AssetsResults.objects.get(simulation=scenario.simulation)
+        assets_results_json = json.loads(assets_results_obj.assets_list)
+        # Create the datetimes index. Constrains: step in minutes and evaluated_period in days
+        base_date = scenario.start_date
+        datetime_list = [
+            datetime.datetime.timestamp(base_date + datetime.timedelta(minutes=step)) 
+            for step in range(0, 24*scenario.evaluated_period*scenario.time_step, scenario.time_step)
+        ]
+
+        output = BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        merge_format = workbook.add_format({
+            'bold':     True,
+            'align':    'center',
+            'valign':   'vcenter',
+        })
+
+        KEY1, KEY2, KEY3, KEY4 = ('timeseries_soc', 'input power', 'output power' ,'storage capacity')
+
+        for key in assets_results_json.keys():
+            worksheet = workbook.add_worksheet(key)
+            worksheet.write(0, 0, 'Timestamp')
+            if key != 'energy_storage':
+                worksheet.write_column(2, 0, datetime_list)
+                for col, asset in enumerate(assets_results_json[key]):
+                    if all(key in asset.keys() for key in ['label','flow']):
+                        worksheet.write(0, col+1, asset['label'])
+                        worksheet.write(1, col+1, asset['flow']['unit'])
+                        worksheet.write_column(2, col+1, asset['flow']['value'])
+            else:
+                worksheet.write_column(3, 0, datetime_list)
+                col = 0
+                for idx, storage_asset in enumerate(assets_results_json[key]):
+                    if all(key in storage_asset.keys() for key in ['label', KEY1, KEY2, KEY3, KEY4]):
+                        worksheet.merge_range(0, col+1, 0, col+4, storage_asset['label'], merge_format)
+                        
+                        worksheet.write(1, col+1, KEY1)
+                        worksheet.write(2, col+1, storage_asset[KEY1]['unit'])
+                        worksheet.write_column(3, col+1, storage_asset[KEY1]['value'])
+
+                        worksheet.write(1, col+2, KEY2)
+                        worksheet.write(2, col+2, storage_asset[KEY2]['flow']['unit'])
+                        worksheet.write_column(3, col+2, storage_asset[KEY2]['flow']['value'])
+
+                        worksheet.write(1, col+3, KEY3)
+                        worksheet.write(2, col+3, storage_asset[KEY3]['flow']['unit'])
+                        worksheet.write_column(3, col+3, storage_asset[KEY3]['flow']['value'])
+
+                        worksheet.write(1, col+4, KEY4)
+                        worksheet.write(2, col+4, storage_asset[KEY4]['flow']['unit'])
+                        worksheet.write_column(3, col+4, storage_asset[KEY3]['flow']['value'])
+
+                        col+=5
+
+        workbook.close()
+        output.seek(0)
+
+        filename = 'timeseries_results.xlsx'
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename={filename}'
+
+        return response
+    except Exception as e:
+        logger.error(f"Dashboard ERROR: Could not generate Timeseries Results file for the Scenario with Id: {scen_id}. Thrown Exception: {e}")
+        raise Http404()
 

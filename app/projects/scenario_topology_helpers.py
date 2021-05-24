@@ -1,13 +1,128 @@
 import uuid
-
 from django.shortcuts import get_object_or_404
 from projects.models import Bus, AssetType, Scenario, ConnectionLink, Asset
 import json
 from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
-
-
+from projects.forms import AssetCreateForm, BusForm, StorageForm
 # region sent db nodes to js
 from projects.dtos import convert_to_dto
+from crispy_forms.templatetags import crispy_forms_filters
+from django.http import JsonResponse
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def handle_bus_form_post(request, scen_id=0, asset_type_name="", asset_uuid=None):
+    if asset_uuid:
+        existing_bus = get_object_or_404(Bus, pk=asset_uuid)
+        form = BusForm(request.POST, asset_type=asset_type_name, instance=existing_bus)
+    else:
+        form = BusForm(request.POST, asset_type=asset_type_name)
+    
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+    if form.is_valid():
+        bus = form.save(commit=False)
+        bus.scenario = scenario
+        try:
+            bus.pos_x = float(form.data['pos_x'])
+            bus.pos_y = float(form.data['pos_y'])
+            bus.input_ports = int(float(form.data['input_ports']))
+            bus.output_ports = int(float(form.data['output_ports']))
+        except Exception as ex:
+            logger.warning(f"Failed to set positioning for bus {bus.name} in scenario: {scen_id}.")
+        bus.save()
+        return JsonResponse({'success': True, "asset_id": bus.id}, status=200)
+    logger.warning(f"The submitted bus has erroneous field values.")
+    form_html = crispy_forms_filters.as_crispy_form(form)
+    return JsonResponse({'success': False, 'form_html': form_html}, status=422)
+
+
+def handle_storage_unit_form_post(request, scen_id=0, asset_type_name="", asset_uuid=None):
+    form = StorageForm(request.POST, request.FILES, asset_type=asset_type_name)
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+    if form.is_valid():
+        try:
+            # First delete all existing associated storage assets from the db
+            if asset_uuid:
+                existing_asset = get_object_or_404(Asset, unique_id=asset_uuid)
+                existing_asset.delete()  # deletes also automatically all chidren using models.CASCADE
+
+            # Create the ESS Parent Asset
+            ess_asset = Asset.objects.create(
+                name=form.cleaned_data['name'],
+                asset_type=get_object_or_404(AssetType, asset_type=f"{asset_type_name}"),
+                pos_x=float(form.data['pos_x']),
+                pos_y=float(form.data['pos_y']),
+                unique_id=asset_uuid or str(uuid.uuid4()), # if exising asset create an asset with the exact same unique_id else generate a new one
+                scenario=scenario
+            )
+
+            # Create the ess chanrging power
+            ess_charging_power_asset = Asset(
+                name=f"{ess_asset.name} input power",
+                asset_type=get_object_or_404(AssetType, asset_type="charging_power"),
+                scenario=scenario,
+                parent_asset=ess_asset
+            )
+            # Create the ess dischanrging power
+            ess_discharging_power_asset = Asset(
+                name=f"{ess_asset.name} output power",
+                asset_type=get_object_or_404(AssetType, asset_type="discharging_power"),
+                scenario=scenario,
+                parent_asset=ess_asset
+            )
+            # Create the ess capacity
+            ess_capacity_asset = Asset(
+                name=f"{ess_asset.name} capacity",
+                asset_type=get_object_or_404(AssetType, asset_type="capacity"),
+                scenario=scenario,
+                parent_asset=ess_asset
+            )
+            # Populate all subassets
+            for key, value in form.cleaned_data.items():
+                if key.startswith('cp_'):
+                    setattr(ess_capacity_asset, key[3:], value)
+                elif key.startswith('chp_'):
+                    setattr(ess_charging_power_asset, key[4:], value)
+                elif key.startswith('dchp_'):
+                    setattr(ess_discharging_power_asset, key[5:], value)
+            
+            ess_capacity_asset.save()
+            ess_charging_power_asset.save()
+            ess_discharging_power_asset.save()
+            return JsonResponse({'success': True, "asset_id": ess_asset.unique_id}, status=200)
+        except Exception as ex:
+            logger.warning(f"Failed to create storage asset {ess_asset.name} in scenario: {scen_id}.")
+            return JsonResponse({'success': False, 'exception': ex}, status=422)
+    logger.warning(f"The submitted asset has erroneous field values.")
+    form_html = crispy_forms_filters.as_crispy_form(form)
+    return JsonResponse({'success': False, 'form_html': form_html}, status=422)
+
+
+def handle_asset_form_post(request, scen_id=0, asset_type_name="", asset_uuid=None):
+    if asset_uuid:
+        existing_asset = get_object_or_404(Asset, unique_id=asset_uuid)
+        form = AssetCreateForm(request.POST, request.FILES, asset_type=asset_type_name, instance=existing_asset)
+    else:
+        form = AssetCreateForm(request.POST, request.FILES, asset_type=asset_type_name)
+
+    asset_type = get_object_or_404(AssetType, asset_type=asset_type_name)
+    scenario = get_object_or_404(Scenario, pk=scen_id)
+    if form.is_valid():
+        asset = form.save(commit=False)
+        asset.scenario = scenario
+        asset.asset_type = asset_type
+        try:
+            asset.pos_x = float(form.data['pos_x'])
+            asset.pos_y = float(form.data['pos_y'])
+        except Exception as ex:
+            logger.warning(f"Failed to set positioning for asset {asset.name} in scenario: {scen_id}.")
+        asset.save()
+        return JsonResponse({'success': True, "asset_id": asset.unique_id}, status=200)
+    logger.warning(f"The submitted asset has erroneous field values.")
+    form_html = crispy_forms_filters.as_crispy_form(form)
+    return JsonResponse({'success': False, 'form_html': form_html}, status=422)
 
 
 def load_scenario_topology_from_db(scen_id):
@@ -21,32 +136,40 @@ def db_bus_nodes_to_list(scen_id):
     all_db_busses = Bus.objects.filter(scenario_id=scen_id)
     bus_nodes_list = list()
     for db_bus in all_db_busses:
-        db_bus_dict = {"name": "bus", "data": {"name": db_bus.name, "bustype": db_bus.type, "databaseId": db_bus.id,
-                                               "parent_asset_id": db_bus.parent_asset_id if db_bus.parent_asset_id else ""},
-                       "pos_x": db_bus.pos_x, "pos_y": db_bus.pos_y, "input_ports": db_bus.input_ports,
-                       "output_ports": db_bus.output_ports}
-        # "input_ports": db_bus.input_ports, "output_ports": db_bus.output_ports}
+        db_bus_dict = {
+            "name": "bus", 
+            "pos_x": db_bus.pos_x, 
+            "pos_y": db_bus.pos_y, 
+            "input_ports": db_bus.input_ports,
+            "output_ports": db_bus.output_ports,
+            "data": {
+                "name": db_bus.name, 
+                "bustype": db_bus.type, 
+                "databaseId": db_bus.id, 
+                "parent_asset_id": db_bus.parent_asset_id if db_bus.parent_asset_id else ""
+            }
+        }
         bus_nodes_list.append(db_bus_dict)
     return bus_nodes_list
 
 
 def db_asset_nodes_to_list(scen_id):
     all_db_assets = Asset.objects.filter(scenario_id=scen_id)
+    # dont return children assets
+    no_storage_children_assets = all_db_assets.filter(parent_asset_id=None)
     asset_nodes_list = list()
-    for db_asset in all_db_assets:
-        data = dict()
-        db_asset_to_dict = json.loads(json.dumps(db_asset.__dict__, default=lambda o: o.__dict__))
-        ignored_keys = ["scenario_id", "pos_x", "pos_y", "asset_type_id"]
-        for key, val in db_asset_to_dict.items():
-            if not (key.startswith('_') or (key in ignored_keys) or val is None):
-                if key == "id":
-                    data["databaseId"] = val
-                else:
-                    data[key] = val
-
+    for db_asset in no_storage_children_assets:
         asset_type_obj = get_object_or_404(AssetType, pk=db_asset.asset_type_id)
-        db_asset_dict = {"name": asset_type_obj.asset_type, "pos_x": db_asset.pos_x, "pos_y": db_asset.pos_y,
-                         "data": data}
+        db_asset_dict = {
+            "name": asset_type_obj.asset_type, 
+            "pos_x": db_asset.pos_x, 
+            "pos_y": db_asset.pos_y,
+            "data": {
+                'name': db_asset.name,
+                'unique_id': db_asset.unique_id,
+                "parent_asset_id": db_asset.parent_asset_id if db_asset.parent_asset_id else ""
+            }
+        }
         asset_nodes_list.append(db_asset_dict)
     return asset_nodes_list
 
@@ -55,7 +178,7 @@ def db_connection_links_to_list(scen_id):
     all_db_connection_links = ConnectionLink.objects.filter(scenario_id=scen_id)
     connections_list = list()
     for db_connection in all_db_connection_links:
-        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset_id,
+        db_connection_dict = {"bus_id": db_connection.bus_id, "asset_id": db_connection.asset.unique_id,
                               "flow_direction": db_connection.flow_direction,
                               "bus_connection_port": db_connection.bus_connection_port}
         connections_list.append(db_connection_dict)
@@ -67,7 +190,9 @@ def db_connection_links_to_list(scen_id):
 
 def update_deleted_objects_from_database(scenario_id, topo_node_list):
     # Delete Database Scenario Related Objects which are not in the topology before inserting or updating data.
-    all_scenario_asset_ids = Asset.objects.filter(scenario_id=scenario_id).values_list('id', flat=True)
+    all_scenario_assets = Asset.objects.filter(scenario_id=scenario_id)
+    # dont include storage unit children assets
+    scenario_assets_ids_excluding_storage_children = all_scenario_assets.filter(parent_asset=None).values_list('id', flat=True)
     all_scenario_busses_ids = Bus.objects.filter(scenario_id=scenario_id).values_list('id', flat=True)
     topology_asset_ids = list()
     topology_busses_ids = list()
@@ -77,14 +202,14 @@ def update_deleted_objects_from_database(scenario_id, topo_node_list):
         elif node.name == 'bus' and node.db_obj_id:
             topology_busses_ids.append(node.db_obj_id)
 
-    for asset_id in all_scenario_asset_ids:
+    for asset_id in scenario_assets_ids_excluding_storage_children:
         if asset_id not in topology_asset_ids:
-            # print("Asset {} not in topology. Gonna delete!!".format(asset_id))
+            logger.debug(f"Asset {asset_id} not in topology of scenario {scenario_id}. Deleting!!")
             Asset.objects.filter(id=asset_id).delete()
 
     for bus_id in all_scenario_busses_ids:
         if bus_id not in topology_busses_ids:
-            # print("Bus {} not in topology. Gonna delete!!".format(bus_id))
+            logger.debug(f"Asset {bus_id} not in topology of scenario {scenario_id}. Deleting!!")
             Bus.objects.filter(id=bus_id).delete()
 
 
@@ -137,79 +262,27 @@ def duplicate_scenario_connections(connections_list, scenario, asset_map, bus_ma
 
 class NodeObject:
     def __init__(self, node_data=None):
-        self.obj_id = node_data['id']
-        self.name = node_data['name']
-        self.data = node_data['data']
-        self.pos_x = node_data['pos_x']
-        self.pos_y = node_data['pos_y']
-        self.db_obj_id = (node_data['data']['databaseId'] if 'databaseId' in node_data['data'] else None)
+        self.name = node_data['name']  # asset type name : e.g. bus, pv_plant, etc
+        self.data = node_data['data']  # name: eg. demand_01, parent_asset_id, unique_id
+        self.db_obj_id = NodeObject.uuid_2_db_id(node_data)
         self.group_id = (node_data['data']['parent_asset_id'] if 'parent_asset_id' in node_data['data'] else None)
-        self.node_obj_type = ('bus' if self.name == 'bus' else 'asset')
-        self.inputs = NodeObject.refactor_connections(node_data['inputs'])
-        self.outputs = NodeObject.refactor_connections(node_data['outputs'])
+        self.node_obj_type = 'bus' if self.name == 'bus' else 'asset'
+        self.inputs = node_data['inputs']
+        self.outputs = node_data['outputs']
 
     @staticmethod
-    def refactor_connections(input_or_output_data):
-        connection_dict = dict()
-        for key in input_or_output_data.keys():
-            temp = [connected_node['node'] for connected_node in input_or_output_data[key]['connections']]
-            connection_dict[key] = temp
-        return connection_dict
-
-    def create_or_update_asset(self, scen_id):
-        asset = get_object_or_404(Asset, pk=self.db_obj_id) if self.db_obj_id else Asset()
-
-        try:
-            for name, value in self.data.items():
-                if name != "parent_asset_id":
-                    setattr(asset, name, value)
-
-            setattr(asset, 'pos_x', self.pos_x)
-            setattr(asset, 'pos_y', self.pos_y)
-            asset.scenario = get_object_or_404(Scenario, pk=scen_id)
-            asset.asset_type = get_object_or_404(AssetType, asset_type=self.name)
-
-            # List of fields that are not required included for the particular asset type
-            excluded_fields = [prop for prop in asset.fields if prop not in asset.asset_type.asset_fields]
-
-            asset.full_clean(exclude=excluded_fields)
-
-        except (KeyError, ValidationError) as error:
-            return {"success": False,
-                    "specific_obj_type": self.name,
-                    "obj_name": self.data['name'] if 'name' in self.data else 'Unnamed',
-                    "full_error": str(error)
-                    }
+    def uuid_2_db_id(data):
+        if 'db_id' in data and data['db_id']:
+            if type(data['db_id'])==int:
+                return data['db_id']
+            elif type(data['db_id'])==str:
+                asset = Asset.objects.filter(unique_id=data['db_id']).first()
+                return asset.id if asset else None
+            else:
+                return None
         else:
-            asset.save()
-            if self.db_obj_id is None:
-                self.db_obj_id = asset.id
-            return {"success": True, "obj_type": "asset"}
-
-    def create_or_update_bus(self, scen_id):
-        bus = get_object_or_404(Bus, pk=self.db_obj_id) if self.db_obj_id else Bus()
-
-        try:
-            setattr(bus, 'name', self.data['name'])
-            setattr(bus, 'type', self.data['bustype'])
-            setattr(bus, 'pos_x', self.pos_x)
-            setattr(bus, 'pos_y', self.pos_y)
-            setattr(bus, 'input_ports', len(self.inputs))
-            setattr(bus, 'output_ports', len(self.outputs))
-            bus.scenario = get_object_or_404(Scenario, pk=scen_id)
-
-            bus.full_clean()
-        except (KeyError, ValidationError) as error:
-            return {"success": False,
-                    "specific_obj_type": self.name,
-                    "obj_name": self.data['name'] if 'name' in self.data else 'Unnamed',
-                    "full_error": str(error)
-                    }
-        else:
-            bus.save()
-            if self.db_obj_id is None:
-                self.db_obj_id = bus.id
-            return {"success": True, "obj_type": "bus"}
+            return None
+        
 
     def assign_asset_to_proper_group(self, node_to_db_mapping):
         try:
@@ -229,36 +302,26 @@ class NodeObject:
             return {"success": True, "obj_type": self.node_obj_type}
 
 
-def create_node_interconnection_links(node_obj, map_dict, scen_id):
+def create_node_interconnection_links(node_obj, scen_id):
     for port_key, connections_list in node_obj.outputs.items():
         for output_connection in connections_list:
-            connection = ConnectionLink()
-            output_node = map_dict[int(output_connection)]
-
-            if node_obj.name == 'bus' and output_node['node_type'] != 'bus':
-                setattr(connection, 'bus', get_object_or_404(Bus, pk=node_obj.db_obj_id))
-                setattr(connection, 'asset', get_object_or_404(Asset, pk=output_node['db_obj_id']))
-                setattr(connection, 'flow_direction', 'B2A')
-                setattr(connection, 'bus_connection_port', port_key)
-                setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
-            elif node_obj.name != 'bus' and output_node['node_type'] == 'bus':
-                setattr(connection, 'asset', get_object_or_404(Asset, pk=node_obj.db_obj_id))
-                setattr(connection, 'bus', get_object_or_404(Bus, pk=output_node['db_obj_id']))
-                setattr(connection, 'flow_direction', 'A2B')
-
-                for node_port_key, con_links_list in output_node['input_connections'].items():
-                    for index, input_connection in enumerate(con_links_list):
-                        if node_obj.obj_id == int(input_connection):
-                            print(output_node['input_connections'][node_port_key][index])
-                            setattr(connection, 'bus_connection_port', node_port_key)
-                            map_dict[int(output_connection)]['input_connections'][node_port_key][
-                                index] = '0'  # hacky solution
-                            break
-                    else:
-                        continue
-                    break
-                setattr(connection, 'scenario', get_object_or_404(Scenario, pk=scen_id))
-            connection.save()
+            if node_obj.name == 'bus' and type(output_connection['node']) == str: # i.e. unique_id
+                ConnectionLink.objects.create(
+                    bus=get_object_or_404(Bus, pk=node_obj.db_obj_id),
+                    asset=get_object_or_404(Asset, unique_id=output_connection['node']),
+                    flow_direction='B2A',
+                    bus_connection_port=port_key,
+                    scenario=get_object_or_404(Scenario, pk=scen_id)
+                )
+            elif node_obj.name != 'bus' and type(output_connection['node']) == int:
+                ConnectionLink.objects.create(
+                    bus=get_object_or_404(Bus, pk=output_connection['node']),
+                    asset=get_object_or_404(Asset, pk=node_obj.db_obj_id),
+                    flow_direction='A2B',
+                    bus_connection_port=output_connection['output'],
+                    scenario=get_object_or_404(Scenario, pk=scen_id)
+                )
+    logger.debug(f"Nodes interconnection links were created successfully in scenario: {scen_id}.")
 
 
 def create_ESS_objects(all_ess_assets_node_list, scen_id):
