@@ -12,3 +12,4 @@ RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 
 ADD . ${APP_ROOT}
+# RUN sh setup.sh

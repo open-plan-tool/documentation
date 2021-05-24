@@ -50,9 +50,7 @@ INSTALLED_APPS = [
 
     # 3rd Party
     'crispy_forms',
-    'bootstrap_modal_forms',
-    'django_extensions',
-
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -92,18 +90,6 @@ WSGI_APPLICATION = 'epa.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # ICOM internal server with mysql
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': '146.124.106.175',
-    #     'PORT': '3306',
-    #     'DATABASE': 'elanddb',
-    #     'NAME': 'elanddb',
-    #     'USER': 'elandusr',
-    #     'PASSWORD': 'elandusr123!@#',
-    #     'DEFAULT-CHARACTER-SET': 'utf8',
-    #
-    # }
     # local with sqlite
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -179,8 +165,8 @@ MESSAGE_TAGS = {
 }
 
 PROXY_CONFIG = {
-    "http": os.getenv('HTTP_PROXY', 'http://icache.intracomtel.com:80'),
-    "https": os.getenv('HTTPS_PROXY', 'https://icache.intracomtel.com:80'),
+    "http://": 'http://icache.intracomtel.com:80',
+    "https://": 'http://icache.intracomtel.com:80',
 }
 
 MVS_POST_URL = "https://mvs-eland.rl-institut.de/sendjson/"
@@ -219,4 +205,15 @@ LOGGING = {
             'propagate': True,
         },
     },
+}
+
+# DJANGO-Q CONFIGURATION
+# source: https://django-q.readthedocs.io/en/latest/configure.html
+Q_CLUSTER = {
+    'name': 'django_q_orm',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'orm': 'default'
 }
