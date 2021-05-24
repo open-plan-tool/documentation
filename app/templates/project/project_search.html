@@ -265,7 +265,7 @@
                                                 
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="{% url 'project_detail' project.pk %}">&nbsp;&nbsp;Show</a>
-                                                    {% if scenario.project.user == request.user %}
+                                                    {% if project.user == request.user %}
                                                     <a class="dropdown-item" href="{% url 'project_update' project.pk %}">&nbsp;&nbsp;Edit</a>
                                                     
                                                     <a class="dropdown-item">

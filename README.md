@@ -15,7 +15,7 @@ utilized in a simulation environment.
 2. cd inside the created folder
 3. Modify the proxy in app/Dockerfile to fit your needs.
 3. `docker-compose up -d --build`
-4. `docker-compose exec app bash ./setup.sh`
+4. `docker-compose exec app sh setup.sh`
 5. Open browser and navigate to localhost.
 
 That should get everything up and running.

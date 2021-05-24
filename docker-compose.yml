@@ -29,6 +29,8 @@ services:
       - db:db
   djangoq:
     build: ./app
+    container_name: django-q-cluster
+    restart: always
     command: python manage.py qcluster
     volumes:
       - .:/code

@@ -164,10 +164,13 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-PROXY_CONFIG = {
-    "http://": 'http://icache.intracomtel.com:80',
-    "https://": 'http://icache.intracomtel.com:80',
-}
+NEEDS_PROXY=os.getenv('USE_PROXY', True)
+PROXY_ADDRESS_LINK=os.getenv('PROXY_ADDRESS', 'http://icache.intracomtel.com:80')
+
+PROXY_CONFIG = ({
+    "http://": PROXY_ADDRESS_LINK,
+    "https://": PROXY_ADDRESS_LINK,
+}) if NEEDS_PROXY else ({})
 
 MVS_POST_URL = "https://mvs-eland.rl-institut.de/sendjson/"
 MVS_GET_URL = "https://mvs-eland.rl-institut.de/check/"
