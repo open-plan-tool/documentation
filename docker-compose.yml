@@ -27,6 +27,18 @@ services:
       - db
     links:
       - db:db
+  djangoq:
+    build: ./app
+    command: python manage.py qcluster
+    volumes:
+      - .:/code
+    expose:
+      - 8000
+    depends_on:
+      - db
+      - app
+    links:
+      - db:db
   nginx:
     image: nginx:1.17
     container_name: ngx
