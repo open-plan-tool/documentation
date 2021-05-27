@@ -1,3 +1,6 @@
-*.pyc
-*~
-*.swp
+__pycache__/
+*.py[cod]
+*.log
+*.pot
+*.sqlite3
+**/.idea/*
