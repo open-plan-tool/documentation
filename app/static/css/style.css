@@ -9,6 +9,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  overflow-x: hidden;
 }
 
 /** HEADER **/
@@ -625,6 +626,7 @@ label[for="id_email"] {
   padding-bottom: 0vh;
   bottom: 0vh !important;
   margin-bottom: 0em;
+  overflow: hidden;
 }
 
 #signupimg {
@@ -1107,6 +1109,14 @@ path.surface {
   }
 }
 
-.terms{
-  text-align: left;
-}
+a.terms{
+  color:white;
+  cursor: pointer;
+  font-size: 11px;
+ }
+ .dropdown-menu > .active > a{
+  background-color: transparent;
+  color:#333;
+  font-weight: 600;
+  border-top: 5px solid #efb03d !important;
+ }

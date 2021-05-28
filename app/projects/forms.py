@@ -90,7 +90,7 @@ class ProjectCreateForm(forms.Form):
 class ProjectUpdateForm(ModelForm):
     class Meta:
         model = Project
-        exclude = ['date_created', 'date_updated', 'economic_data', 'user']
+        exclude = ['date_created', 'date_updated', 'economic_data', 'user', 'viewers']
 
 
 class CommentForm(ModelForm):

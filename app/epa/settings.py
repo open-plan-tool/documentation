@@ -89,12 +89,8 @@ WSGI_APPLICATION = 'epa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+USE_MYSQL_CONTAINER = ast.literal_eval(os.getenv('MYSQL_DB_CONTAINER', 'False'))
 DATABASES = {
-    # local with sqlite
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
     # ELAND dockerized mysql container
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -104,6 +100,13 @@ DATABASES = {
         'HOST': 'db',
         'PORT': 3306,
     }
+    if USE_MYSQL_CONTAINER else (
+        # local with sqlite
+        {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    )
 }
 
 # Password validation
@@ -152,7 +155,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 MAILER_EMAIL_BACKEND = EMAIL_BACKEND
 
 DEFAULT_FROM_EMAIL = 'noreply@elandh2020.eu'
-EMAIL_HOST = os.getenv('EMAIL_HOST_IP', '146.124.225.146')
+EMAIL_HOST = os.getenv('EMAIL_HOST_IP', '127.0.0.1')
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 
@@ -164,16 +167,16 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-NEEDS_PROXY=ast.literal_eval(os.getenv('USE_PROXY', 'True'))
+USE_PROXY=ast.literal_eval(os.getenv('USE_PROXY', 'True'))
 PROXY_ADDRESS_LINK=os.getenv('PROXY_ADDRESS', 'http://icache.intracomtel.com:80')
-
 PROXY_CONFIG = ({
     "http://": PROXY_ADDRESS_LINK,
     "https://": PROXY_ADDRESS_LINK,
-}) if NEEDS_PROXY else ({})
+}) if USE_PROXY else ({})
 
-MVS_POST_URL = "https://mvs-eland.rl-institut.de/sendjson/"
-MVS_GET_URL = "https://mvs-eland.rl-institut.de/check/"
+MVS_API_HOST=os.getenv('MVS_API_HOST', 'https://mvs-eland.rl-institut.de')
+MVS_POST_URL = f"{MVS_API_HOST}/sendjson/"
+MVS_GET_URL = f"{MVS_API_HOST}/check/"
 
 # Allow iframes to show in page
 X_FRAME_OPTIONS = 'SAMEORIGIN'

@@ -35,8 +35,34 @@
                 width: 120%;
 
             }
-
         }
+        label[for="id_username"], label[for="id_password1"],label[for="id_password2"] {
+            color: #555555;
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-family: "Century Gothic";
+            opacity: 0.8;
+            font-size:16px!important;
+        }
+        .form-check-label {
+            color: #555555;
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-family: "Century Gothic";
+            opacity: 0.8;
+            font-size:11px!important;
+        }
+        .form-check-label a{
+            color:#555555;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        input[type="checkbox"]{
+            width:15px;
+            height:15px;
+        }
+
+       
     </style>
     <br>
     <br>
@@ -59,7 +85,7 @@
                             <br> <br>
                             <br> <br>-->
                             <img src="{% static 'images/ELA3.jpg' %}"
-                                 style="width: auto; height: 700px; opacity: 0.5; object-fit: cover; " id="signupimg"/>
+                                 style="width: auto; height: 760px; opacity: 0.5; object-fit: cover; " id="signupimg"/>
 
                             <div class="centered"> Welcome to <br> E-LAND <br> <br>Create your Account <br> Here</div>
 
@@ -92,7 +118,11 @@
                                         <form method="post">
                                             {% csrf_token %}
                                             {{ form|crispy }}
-                                            <div class="row"></div>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <label class="form-check-label" for="exampleCheck1">I accept the <b><a>Terms and Conditions</a></b></label>
+                                            </div>
+                                            <div class="row"></div><br>
                                             <div class="col-sm-2"></div>
                                             <button class="btn btn-success" type="submit" id="submitbutton" style="width: 55%;">
                                                 Sign Up

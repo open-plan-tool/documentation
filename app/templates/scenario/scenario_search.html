@@ -16,6 +16,16 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
 {% endblock %}
 
 {% block content %}
+<style>
+     .btn{
+            background-color: rgb(255, 255, 255);
+            color:#414141;
+            font-size: 10px;
+        }
+      .btn:hover{
+        box-shadow:3px 3px 5px #1c1c1c2d
+      }
+</style>
 <br>
 <button onclick="window.open(`{% url 'project_search' %}`, `_self`)" id="backbutton">
     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -65,9 +75,10 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                             <td>
                                 <!-- Create the configuration glyphicon and the dropdown menu choices. -->
                                 <div class="dropdown" style="float: left; width:50px; margin: 13px 0px;">
-                                    <a href="#" data-toggle="dropdown">
-                                                <span class="glyphicon glyphicon-cog"
-                                                      style="font-size: 120%;  color:#E3AC37; text-shadow: 1px 1px 1px #222;"></span>
+                                    <a href="#" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle">
+                                             <!--  <span class="glyphicon glyphicon-cog"
+                                                      style="font-size: 120%;  color:#E3AC37; text-shadow: 1px 1px 1px #222;"></span>-->
+                                                      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                     </a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuButton">
                                         <li role="presentation"
@@ -130,7 +141,7 @@ integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="ano
                                     </ul>
                                 </div>
                             </td>
-                            <td class="text"><span><b>{{ scenario.name }}</b></span></td>
+                            <td class="text"><span><b><a href="{% url 'scenario_view' scenario.pk %}">{{ scenario.name }}</a></b></span></td>
                             <td class="text"><span>{{ scenario.start_date|date:'d F Y' }}</span></td>
                             <td class="text">
                                 <span class="State" data-toggle="tooltip" title="{% if scenario.simulation.status == 'ERROR' %}An error occurred during the simulation. Make sure you have defined all the required assets.{% endif %}">

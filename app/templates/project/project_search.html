@@ -149,9 +149,14 @@
         }
 
         .container5{
-            overflow: auto !important;
+            overflow: auto;
         }
 
+        @media screen and (min-width:886px){
+            .container5{
+            overflow: hidden;
+            }
+        }
         #buttonn input{
             padding:8px 16px;
             background-color: #1c1c1c;
@@ -229,7 +234,7 @@
                                     {% for project in project_list %}
                                         <tr id="list6">
                                             <th scope="row">{{ forloop.counter }}</th>
-                                            <td id="colname">{{ project.name }}</td>
+                                            <td id="colname"><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></td>
                                             <td id="colname2">{{ project.date_created }}</td>
                                             <td id="colname3">{% if project.viewers.count == 0 %}
                                                 Only You

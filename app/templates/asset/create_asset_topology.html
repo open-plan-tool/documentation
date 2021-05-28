@@ -149,7 +149,7 @@
                 {% if scenario.project.user == request.user %}
                     <div class="btn-export">Save</div>
                 {% endif %}
-                <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
+                <div class="btn-clear" onclick="clearGridModel()">Clear</div>
             </div>
         </div>
 
@@ -210,6 +210,17 @@
     </script>
 
     <script defer>
+        function clearGridModel() {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This will clear the whole grid model! This will not actually delete any asset from the scenario. You will need to save after clearing for the changes to actually take effect.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, clear everything!",
+                cancelButtonText: "Cancel",
+            }).then((result) => result.value && editor.clearModuleSelected());
+        }
+        
         /* Export Topology to JSON and send to back-end. */
         $(".btn-export").click(function () {
             // Data Pre-check

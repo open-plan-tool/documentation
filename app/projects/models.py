@@ -94,14 +94,8 @@ class ValueType(models.Model):
 class Asset(TopologyNode):
     def save(self, *args, **kwargs):
         if self.asset_type.asset_type in ['dso', 'gas_dso', 'h2_dso', 'heat_dso']:
-            self.optimize_cap = True
+            self.optimize_cap = False
         super().save(*args, **kwargs)
-    
-    # def validate_timeseries(timeseries_data: str):
-    #     try:
-    #         json.loads(timeseries_data)
-    #     except:
-    #         raise ValidationError(f"The provided timeseries is not well formatted. Expected format: [0.1,2,3.0,1]")
     
     unique_id = models.CharField(max_length=120, default=uuid.uuid4, unique=True, editable=False)
     capex_fix = models.FloatField(null=True, blank=False, validators=[MinValueValidator(0.0)])  # development_costs

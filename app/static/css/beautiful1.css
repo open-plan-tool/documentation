@@ -300,16 +300,16 @@ header a {
 
 .bus:before {
     display: inline-block;
-    width: 200px;
-    height: 220px;
+    width: 100px;
+    height: 100px;
     min-height: 100%;
     margin-right: -90px;
     margin-bottom: 0em;
     content: "lalala";
     color: transparent;
-    background: url("/static/images/busss.png") no-repeat;
+    background: url("/static/images/buus.png") no-repeat;
     background-size: 100%;
-    transform: scale(0.6);
+   
 }
 
 .drawflow-node.bus .input {
@@ -457,13 +457,13 @@ header a {
 }
 
 .drawflow-node.gas_dso:before {
-    background: url("/static/images/gasprov.png") no-repeat;
+    background: url("/static/images/gasprovv.png") no-repeat;
 } 
 .drawflow-node.h2_dso:before{
     background: url("/static/images/h2dso.png") no-repeat;
 } 
 .drawflow-node.heat_dso:before  {
-    background: url("/static/images/heatprovv.png") no-repeat;
+    background: url("/static/images/heatprovvv.png") no-repeat;
 }
 
 .drawflow-node.bess:before  {
@@ -486,22 +486,22 @@ header a {
     background: url("/static/images/geothermalprodd.png") no-repeat;
 } 
 .drawflow-node.solar_thermal_plant:before{
-    background: url("/static/images/solarprod.png") no-repeat;
+    background: url("/static/images/solarprodd.png") no-repeat;
 }
 .drawflow-node.diesel_generator:before{
     background: url("/static/images/dieselconv.png") no-repeat;
 } 
 .drawflow-node.fuel_cell:before{
-    background: url("/static/images/fuelconv1.png") no-repeat;
+    background: url("/static/images/fuelconv2.png") no-repeat;
 } 
 .drawflow-node.gas_boiler:before{
-    background: url("/static/images/gasconv.png") no-repeat;
+    background: url("/static/images/gasconvv.png") no-repeat;
 }
 .drawflow-node.electrolyzer:before{
     background: url("/static/images/electrolyzerconv.png") no-repeat;
 } 
 .drawflow-node.heat_pump:before{
-    background: url("/static/images/heatconv.png") no-repeat;
+    background: url("/static/images/heatconvv.png") no-repeat;
 } 
 .drawflow-node.gas_demand:before{
     background: url("/static/images/gascons.png") no-repeat;
@@ -520,7 +520,7 @@ header a {
 }
 
 .drawflow-node.wind_plant:before {
-    background: url("/static/images/weather.png") no-repeat;
+    background: url("/static/images/weatherr.png") no-repeat;
 }
 
 .drawflow-node.dso:before, .drawflow-node.pv_plant:before, .drawflow-node.wind_plant:before, .drawflow-node.dso_consumption:before,
@@ -547,13 +547,17 @@ header a {
     height:120px;
 }
 
-.drawflow-node.geothermal_conversion:before, .drawflow-node.dso:before, .drawflow-node.fuel_cell:before, .drawflow-node.heat_pump:before,
-.drawflow-node.gas_dso:before, .drawflow-node.h2_dso:before, .drawflow-node.heat_dso:before,
-.drawflow-node.gess:before, .drawflow-node.bess:before, .drawflow-node.h2ess:before {
+.drawflow-node.geothermal_conversion:before, .drawflow-node.dso:before, .drawflow-node.fuel_cell:before, 
+ .drawflow-node.h2_dso:before, .drawflow-node.heat_dso:before,
+.drawflow-node.gess:before, .drawflow-node.bess:before, .drawflow-node.solar_thermal_plant:before {
 transform: scale(1.6);
 top:0px;
 }
 
+.drawflow-node.gas_boiler:before{
+    transform: scale(0.8);
+    height:150px;
+}
 
 .nodeName {
     position: relative;
@@ -585,7 +589,9 @@ top:0px;
     top: -80px;
     left: 120px;
 }
-
+.drawflow-node.bess .output{
+    left:-50px;
+}
 .drawflow-node.pv_plant .output, .drawflow-node.wind_plant .output {
     top: -80px;
 }
@@ -653,7 +659,7 @@ top:0px;
     margin-bottom: 0em;
     content: "lalala";
     color: transparent;
-    background: url("/static/images/solar-panel.png") no-repeat;
+    background: url("/static/images/solar-panell.png") no-repeat;
     background-size: 100%;
 }
 
@@ -664,7 +670,9 @@ top:0px;
     background: #4f772d;
     left: -50px;
 }
-
+.drawflow-node.bess .input{
+    left:120px;
+}
 .drawflow-node.diesel_generator .input, .drawflow-node.fuel_cell .input, .drawflow-node.gas_boiler .input,
 .drawflow-node.electrolyzer .input, .drawflow-node.heat_pump .input,
 .drawflow-node.gess .input, .drawflow-node.bess .input, .drawflow-node.hess .input, .drawflow-node.h2ess .input {
