@@ -1,6 +1,11 @@
+/.idea/
 __pycache__/
 *.py[cod]
-*.log
-*.pot
 *.sqlite3
-**/.idea/*
+migrations/
+!migrations/__init__.py
+/src/
+/cdn_static_root/
+/app/cdn_static_root/
+.vscode/settings.json
+*.log
