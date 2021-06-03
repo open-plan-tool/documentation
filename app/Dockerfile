@@ -14,3 +14,7 @@ RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 
 ADD . ${APP_ROOT}
+
+RUN adduser appUser -D -h ${APP_ROOT} -s /bin/sh \
+    && chown -R appUser ${APP_ROOT}
+USER appUser
