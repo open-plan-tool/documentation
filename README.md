@@ -51,3 +51,14 @@ Or `docker-compose -f docker-compose_with_mvs.yml down --volumes --rmi 'local'` 
  This is because of the underlying OS and the way it handles EOL.
  Windows (CRLF), Unix (LF) and Mac (CR). 
  Try to execute the commands in the file sequentially instead.
+    
+### Manage translations
+to generate the translations .po files
+```bash
+ python manage.py makemessages -l de --ignore="src" --ignore="static" --ignore="cdn_static_root" --ignore="requirements.txt"
+```
+These will be located in the folder `app/locale`, perform the translations (or send the .po file for translation) and then compile the translations:
+
+```bash
+python manage.py compilemessages
+```
