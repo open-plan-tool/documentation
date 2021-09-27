@@ -19,7 +19,11 @@ for (let i = 0; i < elements.length; i++) {
     elements[i].addEventListener('touchend', drop, false);
     elements[i].addEventListener('touchstart', drag, false);
 }
-
+var elements = document.getElementsByClassName('section__component');
+for (let i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('touchend', drop, false);
+    elements[i].addEventListener('touchstart', drag, false);
+}
 function allowDrop(ev) {
     ev.preventDefault();
 }
