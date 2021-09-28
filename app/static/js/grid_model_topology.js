@@ -236,7 +236,8 @@ window.onclick = function (e) {
 
 async function createNodeObject(nodeName, connectionInputs = 1, connectionOutputs = 1, nodeData = {}, pos_x, pos_y) {
     const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
-    const source_html = `<div class="box" ${ASSET_TYPE_NAME}="${nodeName}">
+
+    /*const source_html = `<div class="box" ${ASSET_TYPE_NAME}="${nodeName}">
         <div class="modal" style="display:none">
           <div class="modal-content">
             <span class="close" onclick="closemodal(event)">&times;</span>
@@ -258,6 +259,25 @@ async function createNodeObject(nodeName, connectionInputs = 1, connectionOutput
             </div>
           </div>
         </div>
+    </div>
+    <div class="nodeName" >${shownName}</div>`;*/
+
+
+    const source_html = `<div class="box" ${ASSET_TYPE_NAME}="${nodeName}">
+        <div class="modal modal--gui"  style="display:none">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">${nodeName.replaceAll("_", " ")} Plant Properties</h4>
+                <button type="button" class="btn-close" onclick="closemodal(event)"></button>
+              </div>
+              <div class="modal-body">
+                <form></form>
+              </div>
+              <div class="modal-footer">
+                ${scenarioBelongsToUser ? '<button class="btn btn--medium" data-bs-dismiss="modal" onclick="submitForm(event)">Ok</button>': ''}
+              </div>
+            </div>
+          </div>
     </div>
     <div class="nodeName" >${shownName}</div>`;
 
