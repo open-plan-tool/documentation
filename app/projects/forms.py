@@ -162,6 +162,36 @@ class ScenarioUpdateForm(ModelForm):
 # endregion Scenario
 
 
+
+class ConstraintForm(ModelForm):
+    class Meta:
+        model = Constraint
+        exclude = ['id', 'scenario']
+
+class MinRenewableConstraintForm(ModelForm):
+    class Meta:
+        model = MinRenewableConstraint
+        exclude = ['id', 'scenario']
+
+class MaxEmissionConstraintForm(ModelForm):
+    class Meta:
+        model = MaxEmissionConstraint
+        exclude = ['id', 'scenario']
+
+
+class MinDOAConstraintForm(ModelForm):
+    class Meta:
+        model = MinDOAConstraint
+        exclude = ['id', 'scenario']
+
+class NZEConstraintForm(ModelForm):
+    class Meta:
+        model = NZEConstraint
+        exclude = ['id', 'scenario']
+
+
+
+
 class BusForm(ModelForm):
     def __init__(self, *args, **kwargs):
         bus_type_name = kwargs.pop('asset_type', None) # always = bus
@@ -584,3 +614,7 @@ class StorageForm(forms.Form):
         # self.helper.form_class = 'form-horizontal'
         # self.helper.label_class = 'col-lg-8'
         # self.helper.field_class = 'col-lg-10'
+
+
+
+
