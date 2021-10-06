@@ -166,28 +166,28 @@ class ScenarioUpdateForm(ModelForm):
 class ConstraintForm(ModelForm):
     class Meta:
         model = Constraint
-        exclude = ['id', 'scenario']
+        exclude = ['scenario']
 
 class MinRenewableConstraintForm(ModelForm):
     class Meta:
         model = MinRenewableConstraint
-        exclude = ['id', 'scenario']
+        exclude = ['scenario']
 
 class MaxEmissionConstraintForm(ModelForm):
     class Meta:
         model = MaxEmissionConstraint
-        exclude = ['id', 'scenario']
+        exclude = ['scenario']
 
 
 class MinDOAConstraintForm(ModelForm):
     class Meta:
         model = MinDOAConstraint
-        exclude = ['id', 'scenario']
+        exclude = ['scenario']
 
 class NZEConstraintForm(ModelForm):
     class Meta:
         model = NZEConstraint
-        exclude = ['id', 'scenario']
+        exclude = ['scenario']
 
 
 
