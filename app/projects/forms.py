@@ -104,8 +104,8 @@ class CommentForm(ModelForm):
 # TODO build this from the documentation with a for loop over the keys
 scenario_widgets = {
     'name': forms.TextInput(attrs={'placeholder': 'Scenario name'}),
-    'start_date': forms.DateInput(format='%m/%d/%Y',
-                                  attrs={'class': 'TestDateClass', 'placeholder': 'Select a start date'}),
+    'start_date': forms.DateInput(format='%Y-%m-%d',
+                                  attrs={'class': 'TestDateClass', 'placeholder': 'Select a start date', 'type': 'date'}),
     'time_step': forms.NumberInput(attrs={'placeholder': 'eg. 120 minutes', 'min':'1', 'max':'600', 'step':'1', 'data-toggle': 'tooltip',
                                           'title': 'Length of the time-steps.'}),
     'evaluated_period': forms.NumberInput(attrs={'placeholder': 'eg. 10 days', 'min':'1', 'step':'1', 'data-toggle': 'tooltip',
@@ -121,7 +121,8 @@ scenario_widgets = {
 }
 
 scenario_labels = {
-    "name": "Name",
+    "project": "Project",
+    "name": "Scenario name",
     'evaluated_period': "Evaluated Period (days)",
     "time_step": "Time Step (minutes)",
     "start_date": "Start Date",
@@ -131,22 +132,28 @@ scenario_labels = {
     "opex_var": "Dispatch price (currency/kWh)",
 }
 
+scenario_field_order = ["project", "name", "evaluated_period", "time_step", "start_date", "capex_fix", "capex_var", "opex_fix", "opex_var"]
 
 class ScenarioCreateForm(ModelForm):
-    # minimal_renewable_share = forms.FloatField(label='Minimum Renewable Share',
-    #                          widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3', 'min':'0.0', 'max':'1.0', 'step':'0.0001',
-    #                          'data-toggle': 'tooltip', 'title': 'Provide a factor of 1.0 for the minimum renewable share constrain.'}))
-    # minimal_autonomy_degree = forms.FloatField(label='Minimum Degree of Autonomy',
-    #                          widget=forms.NumberInput(attrs={'placeholder': 'eg. 0.3', 'min':'0.0', 'max':'1.0', 'step':'0.0001',
-    #                          'data-toggle': 'tooltip', 'title': 'Provide a factor of 1.0 for the minimum degree of autonomy.'}))
+    field_order = scenario_field_order
     class Meta:
         model = Scenario
         exclude = ['id']
         widgets = scenario_widgets
         labels = scenario_labels
 
+    def __init__(self, *args, **kwargs):
+        super(ScenarioCreateForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            # attempt to get the title as help text
+            visible.help_text = visible.field.widget.attrs.get('title',"")
+
+
+
 
 class ScenarioUpdateForm(ModelForm):
+    field_order = scenario_field_order
     class Meta:
         model = Scenario
         exclude = ['id']
@@ -155,6 +162,10 @@ class ScenarioUpdateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            # attempt to get the title as help text
+            visible.help_text = visible.field.widget.attrs.get('title',"")
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.form_tag = False  # don't include <form> tag
