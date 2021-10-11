@@ -143,7 +143,12 @@ class ScenarioCreateForm(ModelForm):
         labels = scenario_labels
 
     def __init__(self, *args, **kwargs):
-        super(ScenarioCreateForm, self).__init__(*args, **kwargs)
+        project_queryset = kwargs.pop("project_queryset", None)
+        super().__init__(*args, **kwargs)
+        if project_queryset is not None:
+            self.fields["project"].queryset = project_queryset
+        else:
+            self.fields["project"] = forms.ChoiceField(label="Project", choices=())
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             # attempt to get the title as help text
@@ -161,7 +166,13 @@ class ScenarioUpdateForm(ModelForm):
         labels = scenario_labels
 
     def __init__(self, *args, **kwargs):
+        project_queryset = kwargs.pop("project_queryset", None)
         super().__init__(*args, **kwargs)
+        if project_queryset is not None:
+            self.fields["project"].queryset = project_queryset
+        else:
+            self.fields["project"] = forms.ChoiceField(label="Project", choices=())
+
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             # attempt to get the title as help text
