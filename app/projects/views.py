@@ -452,6 +452,7 @@ def scenario_create_topology(request, proj_id, scen_id, step_id=2):
                           'scenario': scenario,
                           'scen_id': scen_id,
                           'proj_id': scenario.project.id,
+                          'proj_name': scenario.project.name,
                           'topology_data_list': json.dumps(topology_data_list),
                           'step_id': step_id,
                           "step_list": STEP_LIST,
@@ -499,6 +500,7 @@ def scenario_create_constraints(request, proj_id, scen_id, step_id=3):
                           'scenario': scenario,
                           'scen_id': scen_id,
                           'proj_id': scenario.project.id,
+                          'proj_name': scenario.project.name,
                           'step_id': step_id,
                           "step_list": STEP_LIST,
                           "forms": unbound_forms,
@@ -531,6 +533,7 @@ def scenario_create_constraints(request, proj_id, scen_id, step_id=3):
                   'scenario': scenario,
                   'scen_id': scen_id,
                   'proj_id': scenario.project.id,
+                  'proj_name': scenario.project.name,
                   'step_id': step_id,
                   "step_list": STEP_LIST,
 
