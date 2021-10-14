@@ -1,6 +1,6 @@
 from django_q.models import Schedule
 from projects.models import Simulation
-from projects.requests import check_mvs_simulation
+from projects.requests import fetch_mvs_simulation_status
 from projects.constants import PENDING
 from concurrent.futures import ThreadPoolExecutor
 import logging
@@ -19,9 +19,9 @@ def check_simulation_objects(**kwargs):
     if pending_simulations.count() == 0:
         logger.debug(f"No pending simulation found. Deleting Scheduler.")
         Schedule.objects.all().delete()
-    # check_mvs_simulation mostly waits for MVS API to respond, so no ProcessPool is required.
+    # fetch_mvs_simulation_status mostly waits for MVS API to respond, so no ProcessPool is required.
     with ThreadPoolExecutor() as pool:
-        pool.map(check_mvs_simulation, pending_simulations)
+        pool.map(fetch_mvs_simulation_status, pending_simulations)
     logger.debug(f"Finished round for checking Simulation objects status.")
 
 
