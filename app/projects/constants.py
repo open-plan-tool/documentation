@@ -402,4 +402,5 @@ MAP_EPA_MVS = {
     "opex_fix": "specific_costs_om",
     "opex_var": "dispatch_price",
     "discount": "discount_factor",
+    "duration": "project_duration"
 }

@@ -330,7 +330,7 @@ STEP_LIST = [
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def scenario_create_parameters(request, proj_id, scen_id=None, step_id=1):
+def scenario_create_parameters(request, proj_id, scen_id=None, step_id=1, max_step=2):
 
     project = get_object_or_404(Project, pk=proj_id)
 
@@ -350,10 +350,20 @@ def scenario_create_parameters(request, proj_id, scen_id=None, step_id=1):
 
             form = ScenarioUpdateForm(None, instance=scenario, project_queryset=user_projects)
 
+            # if a simulation object linked to this scenario exists, all steps have been already fullfilled
+            qs_sim = Simulation.objects.filter(scenario=scenario)
+            if qs_sim.exists():
+                max_step = 5
+            else:
+                # if a connexion object linked to this scenario exists, topology has already been saved once
+                qs_topo = ConnectionLink.objects.filter(scenario_id=scen_id)
+                if qs_topo.exists():
+                    max_step = 3
+
         answer = render(
             request,
             f'scenario/scenario_step{step_id}.html',
-            {'form': form, 'proj_id': proj_id, 'proj_name': project.name, 'scen_id': scen_id, 'step_id': step_id, "step_list": STEP_LIST}
+            {'form': form, 'proj_id': proj_id, 'proj_name': project.name, 'scen_id': scen_id, 'step_id': step_id, "step_list": STEP_LIST, "max_step": max_step}
         )
 
     elif request.method == "POST":
@@ -376,7 +386,7 @@ def scenario_create_parameters(request, proj_id, scen_id=None, step_id=1):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def scenario_create_topology(request, proj_id, scen_id, step_id=2):
+def scenario_create_topology(request, proj_id, scen_id, step_id=2, max_step=3):
 
     components = {
         "providers": {
@@ -445,6 +455,12 @@ def scenario_create_topology(request, proj_id, scen_id, step_id=2):
     else:
 
         scenario = get_object_or_404(Scenario, pk=scen_id)
+
+        # if a simulation object linked to this scenario exists, all steps have been already fullfilled
+        qs_sim = Simulation.objects.filter(scenario=scenario)
+        if qs_sim.exists():
+            max_step = 5
+
         # this is a dict with keys "busses", "assets" and "links"
         topology_data_list = load_scenario_topology_from_db(scen_id)
         return render(request, f'scenario/scenario_step{step_id}.html',
@@ -456,6 +472,7 @@ def scenario_create_topology(request, proj_id, scen_id, step_id=2):
                           'topology_data_list': json.dumps(topology_data_list),
                           'step_id': step_id,
                           "step_list": STEP_LIST,
+                          "max_step": max_step,
                           "components": components,
                           "group_names": group_names,
                       })
@@ -464,7 +481,7 @@ def scenario_create_topology(request, proj_id, scen_id, step_id=2):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def scenario_create_constraints(request, proj_id, scen_id, step_id=3):
+def scenario_create_constraints(request, proj_id, scen_id, step_id=3, max_step=4):
 
     constraints_labels = {
         "minimal_degree_of_autonomy": _("Minimal degree of autonomy"),
@@ -493,6 +510,10 @@ def scenario_create_constraints(request, proj_id, scen_id, step_id=3):
 
     if request.method == "GET":
 
+        # if a simulation object linked to this scenario exists, all steps have been already fullfilled
+        qs_sim = Simulation.objects.filter(scenario=scenario)
+        if qs_sim.exists():
+            max_step = 5
 
         unbound_forms = {k: v(prefix=k) for k,v in constraints_forms.items()}
         return render(request, f'scenario/scenario_step{step_id}.html',
@@ -503,6 +524,7 @@ def scenario_create_constraints(request, proj_id, scen_id, step_id=3):
                           'proj_name': scenario.project.name,
                           'step_id': step_id,
                           "step_list": STEP_LIST,
+                          "max_step": max_step,
                           "forms": unbound_forms,
                           "forms_labels": constraints_labels
                       })
@@ -523,14 +545,11 @@ def scenario_create_constraints(request, proj_id, scen_id, step_id=3):
 
                 constraint_instance.save()
 
-
-                messages.success(request, f'constraint {constraint_type} successfully added!')
-
         return HttpResponseRedirect(reverse('scenario_review', args=[proj_id, scen_id]))
 
 @login_required
 @require_http_methods(["GET", "POST"])
-def scenario_review(request, proj_id, scen_id, step_id=4):
+def scenario_review(request, proj_id, scen_id, step_id=4, max_step=5):
 
 
     scenario = get_object_or_404(Scenario, pk=scen_id)
@@ -548,7 +567,7 @@ def scenario_review(request, proj_id, scen_id, step_id=4):
                   'proj_name': scenario.project.name,
                   'step_id': step_id,
                   "step_list": STEP_LIST,
-
+                  "max_step": max_step
               })
 
 
