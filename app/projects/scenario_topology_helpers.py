@@ -247,6 +247,8 @@ class NodeObject:
         self.node_obj_type = 'bus' if self.name == 'bus' else 'asset'
         self.inputs = node_data['inputs']
         self.outputs = node_data['outputs']
+        self.pos_x = node_data['pos_x']
+        self.pos_y = node_data['pos_y']
 
     def __str__(self):
         return "\n".join(["name: " + self.name, "db_id: "+ str(self.db_obj_id), "group_id: " + str(self.group_id), "node type: " + str(self.node_obj_type)])
@@ -318,22 +320,35 @@ def update_deleted_objects_from_database(scenario_id, topo_node_list):
     # lists the DB ids of the assets and busses coming from the topology
     topology_asset_ids = list()
     topology_busses_ids = list()
+    # TODO fix this complicated logic with duplicate od DB with NodeObject ...
+    asset_node_positions = {}
+    bus_node_positions = {}
     for node in topo_node_list:
         if node.name != 'bus' and node.db_obj_id:
             topology_asset_ids.append(node.db_obj_id)
+            asset_node_positions[node.db_obj_id] = dict(pos_x=node.pos_x, pos_y=node.pos_y)
         elif node.name == 'bus' and node.db_obj_id:
             topology_busses_ids.append(node.db_obj_id)
+            bus_node_positions[node.db_obj_id] = dict(pos_x=node.pos_x, pos_y=node.pos_y)
 
     # deletes asset or bus which DB id is not in the topology anymore (was removed by user)
     for asset_id in scenario_assets_ids_excluding_storage_children:
+
+        qs = Asset.objects.filter(id=asset_id)
         if asset_id not in topology_asset_ids:
             logger.debug(f"Deleting asset {asset_id} of scenario {scenario_id} which was removed from the topology by the user.")
-            Asset.objects.filter(id=asset_id).delete()
+            qs.delete()
+        else:
+            qs.update(**asset_node_positions[asset_id])
 
     for bus_id in all_scenario_busses_ids:
+
+        qs = Bus.objects.filter(id=bus_id)
         if bus_id not in topology_busses_ids:
             logger.debug(f"Deleting bus {bus_id} of scenario {scenario_id} which was removed from the topology by the user.")
-            Bus.objects.filter(id=bus_id).delete()
+            qs.delete()
+        else:
+            qs.update(**bus_node_positions[bus_id])
 
 
 def create_ESS_objects(all_ess_assets_node_list, scen_id):
