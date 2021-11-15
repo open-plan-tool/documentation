@@ -4,6 +4,9 @@ const BUS = "bus";
 // UUID to Drawflow Id Mapping
 // const nodeToDbId = { 'bus': [], 'asset': [] };
 const nodesToDB = new Map();
+var guiModalDOM = document.getElementById("guiModal");
+var guiModal = new bootstrap.Modal(guiModalDOM);
+
 
 
 // Initialize Drawflow
@@ -113,80 +116,67 @@ async function addNodeToDrawFlow(name, pos_x, pos_y, nodeInputs = 1, nodeOutputs
         return false;
     pos_x = pos_x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
     pos_y = pos_y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-    return createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y);
+    return createNodeObject(name, nodeInputs, nodeOutputs, nodeData, pos_x, pos_y);
+    // return createNodeObject(name, nodeInputs, nodeOutputs, {}, pos_x, pos_y); was like that
 }
 
-// region Show Modal either by double clicking the box or the drawflow node.
-var transform = '';
-
 document.addEventListener("dblclick", function (e) {
-    const openModal = function (box) {
-        box.closest(".drawflow-node").style.zIndex = "9999";
-        box.querySelector('.modal').style.display = "block";
-        transform = editor.precanvas.style.transform;
-        editor.precanvas.style.transform = '';
-        editor.precanvas.style.left = editor.canvas_x + 'px';
-        editor.precanvas.style.top = editor.canvas_y + 'px';
-        editor.editor_mode = "fixed";
-    }
 
     const closestNode = e.target.closest('.drawflow-node');
     const nodeType = closestNode.querySelector('.box').getAttribute(ASSET_TYPE_NAME);
-    if (closestNode && closestNode.querySelector('.modal').style.display !== "block") {
+
+    if (closestNode) {
         const topologyNodeId = closestNode.id;
+        // formGetUrl is defined in scenario_step2.html
         const getUrl = formGetUrl + nodeType +
             (nodesToDB.has(topologyNodeId) ? "/" + nodesToDB.get(topologyNodeId).uid : "");
+
+        // get the form of the asset of the type "nodeType" (projects/views.py::get_asset_create_form)
         fetch(getUrl)
-        .then(res=>res.text())
-        .then(res=> {
-            const formParentDiv = closestNode.querySelector('form').parentNode;
-            // console.log(formParentDiv);
-            formParentDiv.innerHTML = res;
-            const box = formParentDiv.closest('.box');
-            openModal(box);
+        .then(formContent=>formContent.text())
+        .then(formContent=> {
+
+            // assign the content of the form to the form tag of the modal
+            guiModalDOM.querySelector('.modal-body form').innerHTML = formContent;
+
+            // set parameters which uniquely identify the asset
+            guiModalDOM.setAttribute("data-node-type", nodeType);
+            guiModalDOM.setAttribute("data-node-topo-id", topologyNodeId);
+            guiModalDOM.setAttribute("data-node-df-id", topologyNodeId.split("-").pop());
+
+            editor.editor_mode = "fixed";
+            guiModal.show()
         })
-        .catch(err => console.log("Modal get form JS Error: " + err));
+        .catch(err => console.alert("Modal get form JS Error: " + err));
+
     }
 });
 // endregion
 
 
-// region close Modal on: 1. click 'x', 2. press 'esc' and 3. click outside the modal.
-function closeModalSteps(modal) {
-    // // Change the name of the node based on input
-    const nodeNameElem = modal.closest('.drawflow_content_node').querySelector('.nodeName');
-    nodeNameElem.textContent = `${modal.querySelector('input[df-name]').value}`;
-    // End name change
-
-    modal.style.display = "none"; // hide the modal
-    modal.closest(".drawflow-node").style.zIndex =
-        (modal.closest(".drawflow-node").classList.contains("ess")) ? "1" : "2"; // bring node to default z-index
-    editor.precanvas.style.transform = transform;
-    editor.precanvas.style.left = '0px';
-    editor.precanvas.style.top = '0px';
-    editor.editor_mode = "edit";
-
-    // delete modal form
-    modal.querySelector('form').parentNode.innerHTML = "<form></form>";
-}
-
-const closemodal = (e) => closeModalSteps(e.target.closest(".modal"));
-
-/* onclick method associated to each Node created by the createNodeObject() function */
+/* onclick method associated to the save button of the modal */
 const submitForm = (e) => {
+
+    // get the parameters which uniquely identify the asset
+    const assetTypeName = guiModalDOM.getAttribute("data-node-type");
+    const topologyNodeId = guiModalDOM.getAttribute("data-node-topo-id"); // e.g. 'node-2'
+    const drawflowNodeId = guiModalDOM.getAttribute("data-node-df-id");
+
+    // rename the node on the fly (to avoid the need of refreshing the page)
+    const nodeName = document.getElementById(topologyNodeId).querySelector(".nodeName");
+    nodeName.textContent = guiModalDOM.querySelector('input[df-name]').value;
+
+    // get the data of the form
     const assetForm = e.target.closest('.modal-content').querySelector('form');
-    const assetTypeName = assetForm.closest('.box').getAttribute(ASSET_TYPE_NAME);
-    const topologyNodeId = assetForm.closest('.drawflow-node').id; // e.g. 'node-2'
-    const drawflowNodeId = topologyNodeId.split("-").pop();
-    const postUrl = formPostUrl + assetTypeName
-        + (nodesToDB.has(topologyNodeId) ? "/" + nodesToDB.get(topologyNodeId).uid : "");
-    
     const formData = new FormData(assetForm);
-    
+
+    // add the XY position of the node to the form data
     const nodePosX = editor.drawflow.drawflow.Home.data[drawflowNodeId].pos_x
     const nodePosY = editor.drawflow.drawflow.Home.data[drawflowNodeId].pos_y
     formData.set('pos_x', nodePosX);
     formData.set('pos_y', nodePosY);
+
+    // if the asset is a bus, add the input and output ports to the form data
     if (assetTypeName === BUS) {
         const nodeInputs = Object.keys(editor.drawflow.drawflow.Home.data[drawflowNodeId].inputs).length
         const nodeOutputs = Object.keys(editor.drawflow.drawflow.Home.data[drawflowNodeId].outputs).length
@@ -194,93 +184,56 @@ const submitForm = (e) => {
         formData.set('output_ports', nodeOutputs);
     }
 
-    fetch(postUrl, {
-        method: "POST",
-        headers: {
-            // 'Content-Type': 'multipart/form-data', //'application/json', // if enabled then read json.loads(request.body) in the backend
-            "X-CSRFToken": csrfToken 
-        },
-        body: formData,
-    })
-    .then(res=>res.json())
-    .then(jsonRes=>{
-        if (jsonRes.success) {
-            if (nodesToDB.has(topologyNodeId) === false)
-                nodesToDB.set(topologyNodeId, {uid:jsonRes.asset_id, assetTypeName: assetTypeName });
-            closeModalSteps(e.target.closest(".modal"));
-        } else {
-            assetForm.innerHTML = jsonRes.form_html;
-        }
-    })
-    .catch(err => console.log("Modal form JS Error: " + err));
-} 
+    // formPostUrl is defined in scenario_step2.html
+    const postUrl = formPostUrl + assetTypeName
+        + (nodesToDB.has(topologyNodeId) ? "/" + nodesToDB.get(topologyNodeId).uid : "");
 
-// On Esc button press, close modal
-document.addEventListener('keydown', function (e) {
-    const modalList = document.getElementsByClassName("modal");
-    if (e.keyCode === 27) {
-        for (let modalDiv of modalList) {
-            if (modalDiv.style.display === "block")
-                closeModalSteps(modalDiv);
-        }
-    }
+    // send the form of the asset to be saved in database (projects/views.py::asset_create_or_update)
+    $.ajax({
+        headers: {'X-CSRFToken': csrfToken },
+        type: "POST",
+        url: postUrl,
+        data: formData,
+        processData: false,  // tells jQuery not to treat the data
+        contentType: false,   // tells jQuery not to define contentType
+        success: function (jsonRes) {
+            if (jsonRes.success) {
+                // add the node id to the nodesToDB mapping
+                if (nodesToDB.has(topologyNodeId) === false)
+                    nodesToDB.set(topologyNodeId, {uid:jsonRes.asset_id, assetTypeName: assetTypeName });
+                guiModal.hide()
+            } else {
+                assetForm.innerHTML = jsonRes.form_html;
+            }
+
+        },
+        error: err => console.alert("Modal form JS Error: " + err),
+    })
+}
+
+
+/* Triggered before the modal opens */
+$("#guiModal").on('show.bs.modal', function (event) {
+  var modal = $(event.target)
+  // rename the node on the fly (to avoid the need of refreshing the page)
+  const nodeName = guiModalDOM.querySelector('input[df-name]').value;
+  modal.find('.modal-title').text(nodeName.replaceAll("_", " "));
 })
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (e) {
-    const modalList = document.getElementsByClassName("modal");
-    for (const modalDiv of modalList) {
-        if (e.target === modalDiv && modalDiv.style.display === "block")
-            closeModalSteps(modalDiv);
-    }
-}
-// endregion set
+/* Triggered before the modal hides */
+$("#guiModal").on('hide.bs.modal', function (event) {
+  // reset the modal form to empty
+  guiModalDOM.querySelector('.modal-body form').innerHTML = "<form></form>";
+  editor.editor_mode = "edit";
+})
+
 
 /* Create node on the gui */
 async function createNodeObject(nodeName, connectionInputs = 1, connectionOutputs = 1, nodeData = {}, pos_x, pos_y) {
     const shownName = (typeof nodeData.name === 'undefined') ? nodeName : nodeData.name;
 
-    /*const source_html = `<div class="box" ${ASSET_TYPE_NAME}="${nodeName}">
-        <div class="modal" style="display:none">
-          <div class="modal-content">
-            <span class="close" onclick="closemodal(event)">&times;</span>
-            <br>
-            <h2 class="panel-heading" text-align: left">${nodeName.replaceAll("_", " ")} Properties</h2>
-            <br>
-            <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <form></form>
-            </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                ${scenarioBelongsToUser ? '<button class="modalbutton" style="font-size: medium; font-family: century gothic" onclick="submitForm(event)">Ok</button>': ''}
-                </div>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="nodeName" >${shownName}</div>`;*/
-
 
     const source_html = `<div class="box" ${ASSET_TYPE_NAME}="${nodeName}">
-        <div class="modal modal--gui"  style="display:none">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">${nodeName.replaceAll("_", " ")} Plant Properties</h4>
-                <button type="button" class="btn-close" onclick="closemodal(event)"></button>
-              </div>
-              <div class="modal-body">
-                <form></form>
-              </div>
-              <div class="modal-footer">
-                ${scenarioBelongsToUser ? '<button class="btn btn--medium" data-bs-dismiss="modal" onclick="submitForm(event)">Ok</button>': ''}
-              </div>
-            </div>
-          </div>
     </div>
 
     <div class="drawflow-node__name nodeName">
