@@ -4,6 +4,6 @@ Here will the code of the gui be available after we clear licensing and proof se
 
 The open_plan team
 
-![open_plan_logo](https://user-images.githubusercontent.com/70587431/144256702-13255437-09ad-4dd4-9693-76d9e234127b.png)
+![open_plan_logo (10X1)](https://user-images.githubusercontent.com/70587431/144256918-974fcefd-29f5-4b2f-b68b-6468327ef50b.png)
 
 Learn more about the open_plan project on our [website](https://open-plan-tool.org/)
