@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../views/view_template.rst:17
+msgid "<View template>"
+msgstr ""
+
+#: ../../views/view_template.rst:20
+msgid "Attributes"
+msgstr ""
+
+#: ../../views/view_template.rst:32
+msgid "**Attribute A**"
+msgstr ""
+
+#: ../../views/view_template.rst:24
+msgid "Description"
+msgstr ""
+
+#: ../../views/view_template.rst:29
+msgid "Properties:"
+msgstr ""
+
+#: ../../views/view_template.rst:27
+msgid "Property 1"
+msgstr ""
+
+#: ../../views/view_template.rst:28
+msgid "..."
+msgstr ""
+
+#: ../../views/view_template.rst:29
+msgid "Property n"
+msgstr ""
+
+#: ../../views/view_template.rst:31
+msgid "Actions index:"
+msgstr ""
+
+#: ../../views/view_template.rst:33
+msgid "Requirements index:"
+msgstr ""
+
+#: ../../views/view_template.rst:37
+msgid "Actions"
+msgstr ""
+
+#: ../../views/view_template.rst:41
+msgid "Action 1"
+msgstr ""
+
+#: ../../views/view_template.rst:42
+msgid "Action 2"
+msgstr ""
+
+#: ../../views/view_template.rst:45
+msgid "Requirement"
+msgstr ""
+
+#: ../../views/view_template.rst:52
+msgid "Requirement 1"
+msgstr ""
+
+#: ../../views/view_template.rst:53
+msgid "Requirement 2"
+msgstr ""
+
+#: ../../views/view_template.rst:56
+msgid "Active view-components"
+msgstr ""
+
+#: ../../views/view_template.rst:60
+msgid ":ref:`<view_component1>-label`"
+msgstr ""
+
+#: ../../views/view_template.rst:61
+msgid ":ref:`<view_component2>-label`"
+msgstr ""
+
+#: ../../views/view_template.rst:64
+msgid "Link with views"
+msgstr ""
+
+#: ../../views/view_template.rst:68
+msgid ":ref:`<view1>-label`"
+msgstr ""
+
+#: ../../views/view_template.rst:68 ../../views/view_template.rst:71
+msgid "Description of the link"
+msgstr ""
+
+#: ../../views/view_template.rst:72
+msgid ":ref:`<view2>-label`"
+msgstr ""
+
+#: ../../views/view_template.rst:75
+msgid "Rendering of the view"
+msgstr ""
+

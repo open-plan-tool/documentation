@@ -1,0 +1,138 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../views/scenario_comparison.rst:2
+msgid "Scenario Comparison"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:4
+msgid ""
+"*The output comparable on the \"scenario comparison view\" will be "
+"determine with oemof and the input/output excel file*"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:7
+msgid "Attributes"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:8 ../../views/scenario_comparison.rst:23
+msgid "**List of scenarios**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:10
+#: ../../views/scenario_comparison.rst:27
+msgid "**Different comparison points**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:12
+msgid "Technical"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:13
+msgid "Financial"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:14
+msgid "Ecological"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:17
+msgid "Active view-components"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:19
+msgid ":ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:22
+msgid "Actions"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:25
+msgid "The user can select which scenario he would like to compare."
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:29
+msgid "Technical: Based on the technical output of the simulation"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:30
+msgid "Financial: Based on the financial output of the simulation"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:31
+msgid "Ecological: Based on the ecological output of the simulation"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:33
+msgid "**Save comparison**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:35
+msgid "Allows the user to save their comparison in the tool."
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:36
+msgid ""
+"Makes a pop up appear where the user has to select a name for his "
+"comparison."
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:38
+msgid "**Export comparison**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:40
+msgid ""
+"Allows the user to save his comparison in different format (PDF, csv, "
+"...?)"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:42
+msgid "**Import scenario**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:44
+msgid "Allows the user to import one or more scenario"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:47
+msgid "Requirement"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:51
+msgid "Link with other views"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:54
+msgid "Rendering of the view"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:56
+msgid "**Two possible views**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:58
+msgid "As a table"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:59
+msgid "As a plot"
+msgstr ""
+

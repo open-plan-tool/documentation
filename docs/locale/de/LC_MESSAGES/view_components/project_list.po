@@ -1,0 +1,140 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/project_list.rst:4
+msgid "List of Projects"
+msgstr ""
+
+#: ../../view_components/project_list.rst:6
+msgid ""
+"This view-component displays a list of open_plan project (or project "
+"files in accepted formats) objects one of which can can be loaded as the "
+"current project."
+msgstr ""
+
+#: ../../view_components/project_list.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/project_list.rst:14
+msgid "**Select**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:14
+msgid ""
+"Allows the user to select the project object to be loaded as the current "
+"project"
+msgstr ""
+
+#: ../../view_components/project_list.rst:17
+msgid "**Delete**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:17
+msgid "Allows the user to delete the saved project object from the disk"
+msgstr ""
+
+#: ../../view_components/project_list.rst:20
+msgid "**Show**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:20
+msgid "Allows the user to quickly preview the project object selected"
+msgstr ""
+
+#: ../../view_components/project_list.rst:23
+msgid "**Edit**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:23
+msgid "Allows the user to quickly edit the main project parameters"
+msgstr ""
+
+#: ../../view_components/project_list.rst:26
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/project_list.rst:31
+msgid "Action 1"
+msgstr ""
+
+#: ../../view_components/project_list.rst:32
+msgid "Action 2"
+msgstr ""
+
+#: ../../view_components/project_list.rst:35
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/project_list.rst:43
+msgid "Requirement 1"
+msgstr ""
+
+#: ../../view_components/project_list.rst:44
+msgid "Requirement 2"
+msgstr ""
+
+#: ../../view_components/project_list.rst:47
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/project_list.rst:51
+msgid ":ref:`landing-label`"
+msgstr ""
+
+#: ../../view_components/project_list.rst:51
+msgid "Landing page view of which this view-component is a part of"
+msgstr ""
+
+#: ../../view_components/project_list.rst:54
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/project_list.rst:57
+msgid ":ref:`project-label`"
+msgstr ""
+
+#: ../../view_components/project_list.rst:57
+msgid "The abstract component describing the project object"
+msgstr ""
+
+#: ../../view_components/project_list.rst:61
+msgid ":ref:`read_write_files-label`"
+msgstr ""
+
+#: ../../view_components/project_list.rst:60
+msgid ""
+"VIew-component through which the project objects could be loaded from the"
+" disk or written to the disk"
+msgstr ""
+
+#: ../../view_components/project_list.rst:64
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/project_list.rst:66
+msgid ""
+"Rendered as a list which displays all the project objects already saved "
+"in the system or currently created"
+msgstr ""
+
+#: ../../view_components/project_list.rst:68
+msgid "Currently selected project is highlighted separately"
+msgstr ""
+

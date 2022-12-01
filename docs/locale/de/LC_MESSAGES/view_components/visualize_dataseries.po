@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/visualize_dataseries.rst:4
+msgid "Visualize data-series"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:6
+msgid ""
+"This view-component helps the user visualize the dataset they load into "
+"the tool in order to cross-check for any issues with the provided "
+"dataset."
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:11
+msgid "**Head of the data-series**"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:14
+#: ../../view_components/visualize_dataseries.rst:20
+msgid "Properties:"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:14
+msgid ""
+"First few rows and columns of the data-series are displayed in a tabular "
+"form"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:16
+msgid "**Plot of the data-series**"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:19
+msgid ""
+"Rendered as an image alongside the table showing the first few columns "
+"and rows of the data-series"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:23
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:27
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:29
+msgid ""
+"User should be able to close the pop-up window and re-open it by clicking"
+" on \"Visualize Data\" button in view-component :ref"
+":`load_input_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:32
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:35
+msgid ":ref:`<view1>-label`"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:35
+#: ../../view_components/visualize_dataseries.rst:38
+msgid "Description of the link"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:38
+msgid ":ref:`<view2>-label`"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:41
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:45
+msgid ":ref:`load_input_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:44
+msgid ""
+"Current view-component is only accessible through attributes of the "
+"linked view-component"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:48
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:50
+msgid "Rendered as a pop-up window"
+msgstr ""
+

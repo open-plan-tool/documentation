@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/scenario_list.rst:4
+msgid "List of Scenarios"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:6
+msgid ""
+"This view-component shows the list of scenario objects, both created "
+"through the tool within the current project or loaded from file, "
+"available for further steps in the simulation."
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:12
+msgid "**Select**"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:12
+msgid ""
+"Allows the user to select the scenario object to be loaded as the current"
+" project"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:15
+msgid "**Delete**"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:15
+msgid "Allows the user to delete the saved scenario object from the disk"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:18
+msgid "**Show**"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:18
+msgid "Allows the user to quickly preview the scenario object selected"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:21
+msgid "**Edit**"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:21
+msgid "Allows the user to quickly edit the main scenario parameters"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:24
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:26
+msgid "Select the current scenario object"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:27
+msgid ""
+"Show the main parameters of any scenario object that the user selects in "
+"the list of scenarios"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:28
+msgid ""
+"View the list of scenarios objects created in the present project or "
+"available on the disk"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:29
+msgid "Delete a scenario object, both saved and unsaved ones"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:32
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:40
+msgid "Requirement 1"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:41
+msgid "Requirement 2"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:44
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:48
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:51
+msgid ":ref:`scenario-label`"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:51
+msgid ""
+"The abstract component describing the scenario objects part of this view-"
+"component"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:54
+msgid ":ref:`read_write_files-label`"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:54
+msgid ""
+"VIew-component through which the project objects could be loaded from the"
+" disk or written to the disk"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:57
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:59
+msgid ""
+"Rendered as a list which displays all the scenario objects loaded and/or "
+"created in the current project"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:61
+msgid "Currently selected scenario is highlighted separately"
+msgstr ""
+

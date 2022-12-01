@@ -1,0 +1,281 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/menu_bar.rst:4
+msgid "Menu Bar"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:6
+msgid "Menu bar is a set of options linked to actions, or submenus."
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:14
+msgid "**The following are the menus available in the menu bar:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:12 ../../view_components/menu_bar.rst:51
+msgid "File"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:13 ../../view_components/menu_bar.rst:57
+msgid "Scenarios"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:14 ../../view_components/menu_bar.rst:61
+msgid "Preferences"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:15 ../../view_components/menu_bar.rst:70
+msgid "Help"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:21
+msgid "***File* has the following submenus or options:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:17 ../../view_components/menu_bar.rst:47
+msgid "Load project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:18 ../../view_components/menu_bar.rst:48
+msgid "New project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:19 ../../view_components/menu_bar.rst:49
+msgid "Save project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:20 ../../view_components/menu_bar.rst:50
+msgid "Save project as"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:21
+msgid "Export project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:22 ../../view_components/menu_bar.rst:52
+msgid "Exit open_plan"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:27
+msgid "***Scenarios* has the following submenus:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:24
+msgid "New scenario"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:25
+msgid "Load scenario"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:26
+msgid "Compare scenarios"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:27 ../../view_components/menu_bar.rst:57
+msgid "---- (separating horizontal line)"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:28 ../../view_components/menu_bar.rst:58
+msgid "List of scenarios in the system"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:31
+msgid "***Preferences* has the following submenus:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:30
+msgid "Language"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:31 ../../view_components/menu_bar.rst:61
+msgid "Display"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:32
+msgid "Display welcome view"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:39
+msgid "***Help* has the following submenus:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:34
+msgid "Read documentation"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:35
+msgid "Examples and use cases"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:36
+msgid "Contact developers"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:37
+msgid "Feedback"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:38
+msgid "License information"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:39
+msgid "About open_plan..."
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:42
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:44
+msgid ""
+"Clicking on any of the menus' option results in a drop-down list of sub-"
+"menu's options if applicable, otherwise trigger an action"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:51
+msgid "Export project: display :ref:`export_project-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:54
+msgid "New scenario: display :ref:`create_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:55
+msgid "Load scenario: display :ref:`load_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:56
+msgid "Compare scenarios: display view :ref:`scenario_comparison-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:60
+msgid "Language: not sure whether this will be implemented"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:62
+msgid "Display welcome view: display :ref:`welcome-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:64
+msgid ""
+"Read documentation: redirect to `ReadTheDocs documentation <https://open-"
+"plan.readthedocs.io/en/latest/>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:65
+msgid "Examples and use cases: redirect to ReadTheDocs usecases TODO: add link"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:66
+msgid ""
+"Contact developers: redirect to `Github issues <https://github.com/rl-"
+"institut/open_plan/issues/new/choose>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:67
+msgid ""
+"Feedback redirect to `Github issues <https://github.com/rl-"
+"institut/open_plan/issues/new/choose>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:68
+msgid ""
+"License information: redirect to `Github license <https://github.com/rl-"
+"institut/open_plan/blob/dev/LICENSE>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:69
+msgid "About open_plan...: redirect to open_plan website TODO: add link"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:73
+msgid "Requirement"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:75
+msgid ""
+"The menu/submenu's options that are not applicable are greyed out or "
+"inactive and thus, nothing happens when clicked upon"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:78
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:80
+msgid ":ref:`scenario_comparison-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:84
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:87
+msgid ":ref:`welcome-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:87
+msgid ""
+"The welcome view-component can be re-enabled if it was disabled by the "
+"user from appearing everytime the tool is launched."
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:89
+msgid ":ref:`progression_bar-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:91
+msgid ":ref:`export_project-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:93
+msgid ":ref:`create_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:95
+msgid ":ref:`load_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:99
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:101
+msgid ""
+"Rectangular drop-down menu buttons present on a horizontal bar on top of "
+"the :ref:`main-window-def`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:102
+msgid "Rendered on every view of the tool UI"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:103
+msgid ""
+"The current scenario is highlighted in the drop-down list which results "
+"when the *Scenarios* menu is clicked"
+msgstr ""
+

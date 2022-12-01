@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../index.rst:7
+msgid "open_plan Documentation"
+msgstr "open_plan Doku"
+
+#: ../../index.rst:14
+msgid ""
+"open_plan is a Python-based, open-source energy system modeling tool "
+"targeted at simulating energy cells e.g. energy systems for industry "
+"parks and districts, or mini-grids."
+msgstr "Das ist Lustig"
+
+#: ../../index.rst:16
+msgid ""
+"It uses the `oemof <https://oemof.org/>`_ framework to describe and "
+"optimize the energy system and will provide a user-friendly web-based "
+"interface to intereact with python. This will enable users **without "
+"python or programming knowledge** to use the tool and simulate energy "
+"systems."
+msgstr ""
+
+#: ../../index.rst:29
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../index.rst:31
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:32
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:33
+msgid ":ref:`search`"
+msgstr ""
+
+#: ../../index.rst:38
+msgid "open_plan Resources"
+msgstr ""
+
+#: ../../index.rst:44
+msgid "open_plan development is hosted at GitHub:"
+msgstr ""
+
+#: ../../index.rst:46
+msgid "https://github.com/rl-institut/open_plan/"
+msgstr ""
+

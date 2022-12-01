@@ -1,0 +1,155 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/project_parameters.rst:4
+msgid "Project parameters"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:6
+msgid "Inputs parameters to set the context of the project."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:10
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:12
+msgid "**List of input parameters**"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:14
+msgid ""
+"Each input parameter will be available to the user via :ref"
+":`input_parameter_field-label`"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:22
+msgid "Properties of each input:"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:17
+msgid "Input type"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:18
+msgid "Input default value"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:19
+msgid "Help text"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:20
+msgid "If it is mandatory or optional"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:21
+msgid "Link in documentation"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:24
+msgid ""
+"As the parameters in this list should also be accessible in a more "
+"general parameter documentation in ReadTheDocs, they will be "
+"automatically listed here from either a .yml or csv file."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:26
+msgid "The following inputs stay here for the moment and will be reformated then"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:29
+msgid "Localisation"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst
+msgid "The geographical localisation of the project."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst
+msgid "This can allow to download appropriate dataset."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:31
+msgid "Project lifetime"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:32
+#: ../../view_components/project_parameters.rst:34
+msgid "This can be used for calculations?"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:33
+msgid "Weighted Average Cost of Capital"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:35
+msgid "Project name"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:36
+msgid "Give a name to that project."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:38
+msgid "Project description (optional)"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:38
+msgid "Give a short description of the project"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:41
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:42
+msgid "User can edit the value of the input parameters manually."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:43
+msgid ""
+"User can edit the value of the input parameters by loading a project from"
+" :ref:`load_project-label`"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:47
+msgid "Requirement"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:48
+msgid ""
+"The requirements of :ref:`input_parameter_field-label` apply for each "
+"input parameter"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:51
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:54
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:55
+msgid ""
+"The rendering of :ref:`input_parameter_field-label` apply for each input "
+"parameter"
+msgstr ""
+
