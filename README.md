@@ -1,6 +1,6 @@
-Welcome to the open_plan gui repository,
+Welcome to the open_plan documentation repository,
 
-Here the code of the gui will be available after we clear licensing and proof setting files before publishing. If you want to get notified when the code gets uploaded you can send an email to open_plan@rl-institut.de.
+Here the code of the documentation will be available. If you want to get notified when the code gets uploaded you can send an email to open_plan@rl-institut.de.
 
 The open_plan team
 
