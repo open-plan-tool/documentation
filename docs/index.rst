@@ -133,6 +133,8 @@ API Reference
    :hidden:
    :maxdepth: 1
    :caption: References
+   
+   references/code
 
 
 Indices and tables
