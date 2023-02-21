@@ -135,7 +135,14 @@ API Reference
    :caption: References
    
    references/code
-
+   references/contributing
+   references/publications
+   references/license
+   references/citations
+   references/troubleshooting
+   references/bug_report
+   
+   
 
 Indices and tables
 ==================
