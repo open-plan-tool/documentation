@@ -13,6 +13,7 @@
 import os
 import sys
 import pandas as pd
+import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -326,8 +327,8 @@ generate_kpi_categories(
 # -- Project information -----------------------------------------------------
 
 project = "open_plan"
-copyright = "2019, Reiner Lemoine Institut and Martha M. Hoffmann"
-author = "Reiner Lemoine Institut and Martha M. Hoffmann"
+copyright = "2023, Reiner Lemoine Institut and Open Plan team"
+author = "Reiner Lemoine Institut and Open Plan team"
 
 # from multi_vector_simulator.version import version_num
 
