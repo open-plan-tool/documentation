@@ -1,5 +1,5 @@
 ..
-  SPDX-FileCopyrightText: MVS Authors
+  SPDX-FileCopyrightText: Open Plan Authors
 
   SPDX-License-Identifier: CC-BY-4.0
 
@@ -86,16 +86,16 @@ Getting Started
    :caption: Getting Started
 
    getting_started/quick_start_guide.rst
-   getting_started/mathematics_simply_explained
-   
+   .. getting_started/mathematics_simply_explained
+   getting_started/contact_us.rst
    
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Examples
+   :caption: Example Use Cases
 
    examples/simple_energy_system.rst
-   examples/simple_energy_system_2.rst
+   
    
 Model Reference
 ===============
@@ -134,6 +134,11 @@ API Reference
    :maxdepth: 1
    :caption: References
 
+    references/code
+    references/contributing
+    references/publications
+    references/citations
+    references/bug_report
 
 Indices and tables
 ==================
