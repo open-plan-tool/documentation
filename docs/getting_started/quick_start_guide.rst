@@ -1,14 +1,20 @@
-QUICK START
+======================
+Quick start
 ======================
 
-**CREATE AN ACCOUNT**
+First steps
+------------
 
-The first step to start using open_plan is to create an account. To do this, you must click on the "Sign up" button at the top right corner and fill in the following information: your name, email address, username and password. Finally, do not forget to read and accept the privacy statement. You should receive an email with a link to confirm the account creation.   
+CREATE AN ACCOUNT
+^^^^^^^^^^
+The first step to start using open_plan is to create an account. To do this, you must click on the "Sign up" button at the top right corner and fill in the following information: your name, email address, username and password. Finally, do not forget to read and accept the privacy statement. You should receive an email with a link to confirm the account creation. 
+
 
 .. image:: ../images/IMG1_Sign_up.png
  :width: 100%
 
-**EXPLORE THE DASHBOARD**
+EXPLORE THE DASHBOARD
+^^^^^^^^^^
 
 When you log in, the following dashboard is displayed. In the following image the points described below are labeled with numbers and letters.
 
@@ -37,7 +43,8 @@ When you log in, the following dashboard is displayed. In the following image th
 
 
 
-**CREATE A PROJECT**
+CREATE A PROJECT
+^^^^^^^^^^
 
 To create a project in open_plan, the user has three options:
 
@@ -46,6 +53,7 @@ To create a project in open_plan, the user has three options:
 
 :Empty project:
 Here a project is created from scratch. When you select this option you must configure your project and for that you must include the following information: 
+
 - Name
 
 - Description
@@ -69,15 +77,16 @@ It is also possible to load a project from a file. In this case you must include
 If you want to start from one of the configured use cases, you can do so in this option. You will see a pop-up window with a link to the use cases, and a drop-down list where you can choose the use case to use. Once selected, it will appear in the "My projects" section.
 
 
-**CREATE A SCENARIO**
+CREATE A SCENARIO
+^^^^^^^^^^
 
-Once the project is created, it is possible to create various scenarios within the project. To do this, we have two options: we can create a new scenario by defining all its parameters or we can load a previously created scenario from a file (.json?).
+Once the project is created, it is possible to create various scenarios within the project. To do this, we have two options: we can create a new scenario by defining all its parameters or we can load a previously created scenario from a json file.
 
 .. image:: ../images/IMG_4_New_scenario.png
  :width: 50%
 
 When creating a scenario from scratch, there are four steps to go through; 
-1) Scenario setup, 2) Energy system design, 3) Constraints and 4) Simulation.  At the top you will see the name of the project in bold type, the name of the scenario, the four steps for scenario creation and identify which step you are in (see IMG 5 – Scenario_Steps).
+1) Scenario setup, 2) Energy system design, 3) Constraints and 4) Simulation.  At the top you will see the name of the project in bold type, the name of the scenario, the four steps for scenario creation and identify which step you are in.
 
 Maybe show the 4 steps (the top line with the 4 scenario steps) in a figure
 
@@ -90,34 +99,22 @@ Below is a brief description of what should be done at each step.
 1) Scenario setup
 
 
-The setup consists of assigning a name to the scenario, its corresponding description, the evaluated period or the number of days the simulation will run, the length of the time steps of the
-
-  simulation in minutes, the start date (keep in mind that this date is important for getting the data from the time series and for plotting the data) and the fixed project costs, where the planning and development costs are included.
+The setup consists of assigning a name to the scenario, its corresponding description, the evaluated period or the number of days the simulation will run, the length of the time steps of the simulation in minutes, the start date (keep in mind that this date is important for getting the data from the time series and for plotting the data) and the fixed project costs, where the planning and development costs are included.
 
 
 2) Energy system design
 
-
-I would suggest to add a few figures:
-	- show the connection to the busses which is always necessary
-	- show the parameter setup screen for the main component types (e.g. bus, PV, heat demand as a first draft and then let’s see if we need more)
-	- show how to connect the storage
-
 In this section the energy system will be designed using different components, which are located on the left panel: Providers, Production, Conversion, Storage, Demand and Bus. 
 In the graphic panel drag the components you need to design your energy system, do not forget to include the buses. Note that assets must be connected to each other using a bus, and that interconnecting buses is not allowed. Connect the components together using the green and red terminals. The green terminals represent inputs, while the red terminals represent outputs, see the following example:
-
 
 .. image:: ../images/IMG_example_connections.png
  :width: 100%
 
 
-The components representing battery energy storage systems (BESS) have been defined with one input and one output. The BESS can be connected directly to the electrical bus or via a charge controller. For the first option, please note that the bus is supplied and feeds the battery at the same time (see :ref:image:: ../images/IMG_example_storage.png). When choosing the second option (see IMG XX- example_storage_2), the capacity of the charge controller can be individually optimized, which takes into account its specific costs and lifetime.
-
+The components representing battery energy storage systems (BESS) have been defined with one input and one output. The BESS can be connected directly to the electrical bus; please note that the bus is supplied and feeds the battery at the same time.
 .. image:: ../images/IMG_example_storage.png
  :width: 100%
 
-
-IMG XX – (example_storage_2)
 
 When you click on the components, a screen appears where you can configure the different parameters. Each component is different, however, you will typically find three ways to complete the information: spaces to enter values, drop-down lists with default information or buttons to load time series (in this case, a graph will be displayed where the loaded data series can be previewed). Below we show you as an example some of the component setup screens, where you will have to include the parameters.
 
@@ -142,12 +139,10 @@ Before proceeding to the next section, be sure to complete the information requi
 Now we must decide whether or not to activate the constraints. To do this, there is a drop-down menu in each case. The two constraints that can be defined are: 
 
 
-	- Minimal degree of autonomy. It refers to the definition of a lower boundary on the degree of autonomy of the energy system. This factor can take values between 0 and 1, with the value close to zero showing a degree of autonomy with high dependence on the energy supplier (energy coming from the grid), while a degree of autonomy of 1 represents an autonomous energy system.
+	- **Minimal degree of autonomy**. It refers to the definition of a lower boundary on the degree of autonomy of the energy system. This factor can take values between 0 and 1, with the value close to zero showing a degree of autonomy with high dependence on the energy supplier (energy coming from the grid), while a degree of autonomy of 1 represents an autonomous energy system.
 
 
-
-	- Minimal share of renewables. This constraint defines a lower boundary for the renewable share of the system, where both local generation as well as the renewable share of energy providers are taken into account. 
-
+	- **Minimal share of renewables**. This constraint defines a lower boundary for the renewable share of the system, where both local generation as well as the renewable share of energy providers are taken into account. 
 	
 The above constraints apply to the entire system, but not to specific sectors individually.
 
@@ -160,11 +155,10 @@ Once the scenario parameters are set, we proceed to the simulation panel. At the
  :width: 100%
 
 
-**SIMULATION RESULTS**
+SIMULATION RESULTS
+^^^^^^^^^^
 
-add a section with a general overview about simulation results
-
-In this screen you will find the results of your scenarios. Here it is possible to select the project [1], download the series, Key Performance Indicators (KPIs) and component costs [2], and return to the scenario setup [3]. You will then see a header with three main actions [4]: single scenarios, compare scenarios and sensitivity analysis.
+n this screen you will find the results of your scenarios. Here it is possible to select the project [1], download the series, Key Performance Indicators (KPIs) and component costs [2], and return to the scenario setup [3]. You will then see a header with three main actions [4]: single scenarios, compare scenarios and sensitivity analysis.
 
 .. image:: ../images/IMG_Simulation_Results_1.png
  :width: 100%
@@ -197,3 +191,15 @@ As for the previous option, the charts are interactive, can be adjusted accordin
 **Sensitivity analysis**
 
 This functionality is not yet available, but you will be able to find it in a future update.
+
+
+Feedback or Question
+------------
+
+We are happy to hear about your experience with open_plan, so feel free to share your questions, comments and suggestions `here. <https://open-plan.rl-institut.de/en/user_feedback>`_ We will get back to you as soon as possible.
+We also have a FAQ section, your question may already be answered there.
+Remember that on the project's GitHub page you can keep track of the developments that are in progress or those that have been completed.
+
+FAQ
+------------
+**To be completed**

@@ -1,14 +1,53 @@
-..
-  SPDX-FileCopyrightText: Open Plan Authors
+.. ..
+..   SPDX-FileCopyrightText: Open Plan Authors
 
-  SPDX-License-Identifier: CC-BY-4.0
+..   SPDX-License-Identifier: CC-BY-4.0
 
-.. _Flowchart:
-
+.. .. _Flowchart:
+======================
 open_plan
 ======================
-Welcome to Open Plan documentation page. See our quick start secion on the left side.
-This page is under construction.
+**This documentation is under construction!!!**
+
+The open_plan is an open-source tool for designing and optimizing multi-energy carriers energy systems and operational strategies for the supply of neighborhoods, industrial parks and industries. 
+
+Its versatility allows you to create different projects and scenarios. You will be able to evaluate different cases and compare results between scenarios with just a few clicks. We also provide you with some use cases that can serve as a reference for your own projects.
+
+Modeling your energy systems has never been so easy before, the tool was developed with a strong focus on easy use without requiring programming language expertise. Using modular components, you can configure your energy system.
+
+.. image:: images/IMG_tool.png
+ :width: 100%
+
+
+You will be asked to provide the required data via individual data, a collection of csv files or a unique JSON file with particular format. The input data is split into the following categories:
+Project description, which entails the general information regarding the project (country, coordinates, etc.), as well as the economic data such as the discount factor, project duration, or tax;
+System configuration, in which the user specifies the technical and financial data of each asset;
+Constrains, are a fundamental part of the definition of the linear problem and describe the degree of autonomy and the share of renewable energies.
+This set of input data is then translated to a linear programming problem, also known as a constrained optimization problem. The open_plan tool is based on the multi-vector simulator (MVS), which in turn is based on the oemof-solph python library, with which a problem is described by specifying an objective function to minimize annual energy supply costs, decision variables and limits and constraints.
+
+The simulation outputs are also separated into categories: KPI indicators, economic results and technical results (that include the optimized capacities and dispatch of each asset). 
+
+Explore what open_plan has to offer:
+
+Online tool: `Open Plan Tool <https://open-plan.rl-institut.de/>`_
+
+Publications: `List of publications <https://open-plan-tool.org/publications_en.html>`_
+
+GitHub: `Online Repository <https://github.com/open-plan-tool/>`_
+
+Youtube: `Watch Our Videos <https://www.youtube.com/channel/UCg8NUlNM4m9iT94K3Zf8S2A>`_
+
+
+
+The open_plan project consortium is composed of the `Reiner Lemoine Institute (RLI) <https://reiner-lemoine-institut.de/>`_, `German Solar Energy Society [Deutsche Gesellschaft für Sonnenenergie (DGS)] <https://www.dgs-berlin.de/>`_ and the `Potsdam Institute for Climate Impact Research <https://www.pik-potsdam.de/>`_. It is funded within the framework of the "Technology-oriented systems analysis" funding area of the BMWi's 7th Energy Research Programme "Innovation for the energy transition".
+
+The open_plan project complements other previous open-science research projects of RLI, such as open_eGO (OpenEnergyPlatfrom), open_FRED (feed-in time series on OpenEnergyPlatform) and enables the comparison, validation and improvement of energy system modelling.
+
+
+
+Maintainers
+------------
+The open_plan tool is currently maintained by staff from the `Reiner Lemoine Institute <https://reiner-lemoine-institut.de/>`__ the `Potsdam Institute for Climate Impact Research <https://www.pik-potsdam.de/>`__ and the `German Solar Energy Society <https://www.dgs-berlin.de/>`__.
 
 
 .. .. only:: html
@@ -75,32 +114,50 @@ This page is under construction.
 
 .. Additionally, different vizualizations of the results can be provided, eg. as pie charts, plots of asset dispatch and an automatic summary report.
 
-.. Getting Started
-.. ===============
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+   :caption: Getting Started
 
-.. .. only:: html
-
-..     Follow the Quick start guide [Link ergänzen]
-
-.. .. Documentation
-.. .. =============
-.. .. toctree::
-..    :hidden:
-..    :maxdepth: 1
-..    :caption: Getting Started
-
-..    getting_started/quick_start_guide.rst
-..    .. getting_started/mathematics_simply_explained
-..    getting_started/contact_us.rst
+   getting_started/quick_start_guide.rst
+   .. getting_started/mathematics_simply_explained
+   getting_started/installation.rst
+   .. getting_started/contact_us.rst
    
-.. .. toctree::
-..    :hidden:
-..    :maxdepth: 1
-..    :caption: Example Use Cases
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+   :caption: Use Cases
 
-..    examples/simple_energy_system.rst
+   examples/Industrial_site_Max_Boegl.rst
+   examples/Electricity_supply_to_community.rst
+   examples/Heat_supply_to_community.rst
+   examples/Sector_coupling_for_office_building.rst
+   examples/Hydrogen_production_for_a_technology_park.rst
+   examples/Sector_coupling_for_single_household.rst
+   examples/Sector_coupling_for_apartment_building.rst
    
    
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+   :caption: Mathematical Description
+
+   math/math_intro.rst 
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+   :caption: Model Reference
+
+   model/assumptions.rst
+..    model/components.rst
+..    model/constraints.rst
+..    model/limitations.rst
+..    model/input_parameters.rst
+..    model/simulation_outputs.rst
+
 .. Model Reference
 .. ===============
 
@@ -109,18 +166,6 @@ This page is under construction.
 .. * **Validation of the model**: :doc:`Validation methodology <model/validation>`
 
 ..     .. maybe add Pilot projects here as well?
-.. .. toctree::
-..    :hidden:
-..    :maxdepth: 1
-..    :caption: Model Reference
-
-..    model/assumptions
-..    model/components
-..    model/constraints
-..    model/limitations
-..    model/input_parameters
-..    model/simulation_outputs
-
 .. ..
 ..     release_notes (for website, remove for report, not implemented yet, nice to have)
 ..     contributing (here paste content of contributing.md --> convert to RST and include it as we did for readme, the mention to contributing in getting started will link to this chapter)
@@ -133,16 +178,7 @@ This page is under construction.
 .. * **Using or modifying MVS**: :doc:`License <references/license>` | :doc:`How to cite MVS <references/citations>`
 .. * **Getting help**: :doc:`Know issues and workaround <references/troubleshooting>` | :doc:`Report a bug or issue <references/bug_report>`
 
-.. .. toctree::
-..    :hidden:
-..    :maxdepth: 1
-..    :caption: References
 
-..     references/code
-..     references/contributing
-..     references/publications
-..     references/citations
-..     references/bug_report
 
 .. Indices and tables
 .. ==================
@@ -151,11 +187,6 @@ This page is under construction.
 .. * :ref:`modindex`
 .. * :ref:`search`
 
-
-Maintainers
-===========
-
-The open_plan tool is currently maintained by staff from the `Reiner Lemoine Institute <https://reiner-lemoine-institut.de/>`__ the `Potsdam Institute for Climate Impact Research <https://www.pik-potsdam.de/>`__ and the `German Solar Energy Society <https://www.dgs-berlin.de/>`__.
 
 
 
