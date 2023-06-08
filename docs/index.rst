@@ -9,7 +9,7 @@ open_plan
 ======================
 **This documentation is under construction!!!**
 
-The open_plan is an open-source tool for designing and optimizing multi-energy carriers energy systems and operational strategies for the supply of neighborhoods, industrial parks and industries. 
+The open-plan-tool is an open-source tool for designing and optimizing multi-energy carriers energy systems and operational strategies for the supply of neighborhoods, industrial parks and industries.
 
 Its versatility allows you to create different projects and scenarios. You will be able to evaluate different cases and compare results between scenarios with just a few clicks. We also provide you with some use cases that can serve as a reference for your own projects.
 
@@ -29,7 +29,7 @@ The simulation outputs are also separated into categories: KPI indicators, econo
 
 Explore what open_plan has to offer:
 
-Online tool: `Open Plan Tool <https://open-plan.rl-institut.de/>`_
+Online tool: `open-plan-tool <https://open-plan.rl-institut.de/>`_
 
 Publications: `List of publications <https://open-plan-tool.org/publications_en.html>`_
 
@@ -47,7 +47,7 @@ The open_plan project complements other previous open-science research projects 
 
 Maintainers
 ------------
-The open_plan tool is currently maintained by staff from the `Reiner Lemoine Institute <https://reiner-lemoine-institut.de/>`__ the `Potsdam Institute for Climate Impact Research <https://www.pik-potsdam.de/>`__ and the `German Solar Energy Society <https://www.dgs-berlin.de/>`__.
+The open-plan-tool is currently maintained by staff from the `Reiner Lemoine Institute <https://reiner-lemoine-institut.de/>`__ the `Potsdam Institute for Climate Impact Research <https://www.pik-potsdam.de/>`__ and the `German Solar Energy Society <https://www.dgs-berlin.de/>`__.
 
 
 .. .. only:: html
