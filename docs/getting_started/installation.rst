@@ -1,4 +1,4 @@
 Installation
 ======================
 
-To be completed.
+To be completed with relevant information on installation.
