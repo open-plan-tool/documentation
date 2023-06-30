@@ -112,6 +112,7 @@ In the graphic panel drag the components you need to design your energy system, 
 
 
 The components representing battery energy storage systems (BESS) have been defined with one input and one output. The BESS can be connected directly to the electrical bus; please note that the bus is supplied and feeds the battery at the same time.
+
 .. image:: ../images/IMG_example_storage.png
  :width: 100%
 
