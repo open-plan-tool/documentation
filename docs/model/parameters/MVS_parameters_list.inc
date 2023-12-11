@@ -3,14 +3,15 @@
 age_installed
 ^^^^^^^^^^^^^
 
-:Definition: The number of years the asset has already been in operation.
+:Definition_Short: Number of years the asset has already been in operation
+:Definition_Long: If the project lasts longer than its remaining lifetime, the replacement costs of the asset will be taken into account.
 :Type: numeric
-:Unit: Year
+:Unit: a
 :Example: 10
 :Restrictions: Natural number
-:Default: None
+:Default: 0
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`
+This parameter is used within the following categories: :ref:`conversion:production`
 
 
 .. _crate-label:
@@ -18,12 +19,13 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 c-rate
 ^^^^^^
 
-:Definition: C-rate is the rate at which the storage can charge or discharge relative to the nominal capacity of the storage. A c-rate of 1 implies that the battery can discharge or charge completely in a single timestep.
+:Definition_Short: Maximum permissable power at which the storage can be charged or discharged relative to the nominal capacity of the storage
+:Definition_Long: The C rate indicates the reciprocal of the time for which a battery of the specified capacity can be charged or discharged with the maximum charge or discharge current. A C-rate of 1 implies that the battery can be fully charged or discharged completely in a single timestep. A C-rate of 0.5 implies that the battery needs at least 2 timesteps to be fully charged or discharged.
 :Type: numeric
 :Unit: Factor
-:Example: *storage capacity*: NaN, *input power*: 1, *output power*: 1
-:Restrictions: Real number between 0 and 1. Only the columns "input power" and "output power" require a value, in column "storage capacity" c_rate should be set to NaN.
-:Default: None
+:Example: 1
+:Restrictions: Real number between 0 and 1
+:Default: 1
 
 This parameter is used within the following categories: :ref:`storage_csv`
 
@@ -33,7 +35,7 @@ This parameter is used within the following categories: :ref:`storage_csv`
 country
 ^^^^^^^
 
-:Definition: Name of the country where the project is being deployed
+:Definition_Short: Name of the country where the project is being deployed
 :Type: str
 :Unit: None
 :Example: Norway
@@ -48,7 +50,7 @@ This parameter is used within the following categories: :ref:`project_data`
 currency
 ^^^^^^^^
 
-:Definition: The currency of the country where the project is implemented.
+:Definition_Short: The currency of the country where the project is implemented
 :Type: str
 :Unit: None
 :Example: EUR
@@ -63,14 +65,18 @@ This parameter is used within the following categories: :ref:`economic_data`
 development_costs
 ^^^^^^^^^^^^^^^^^
 
-:Definition: A fixed cost to implement the asset, eg. planning costs which do not depend on the (optimized) asset capacity.
+:Definition_Short: Planning and development costs
+:Definition_Long: This could be planning and development costs which do not depend on the (optimized) capacities of the assets.
 :Type: numeric
-:Unit: currency
+:Unit: €
 :Example: 10000
 :Restrictions: Positive real number
-:Default: None
+:Default: 0
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`storage_csv`, :ref:`production`, :ref:`fixcost`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
 
 
 .. _discountfactor-label:
@@ -78,12 +84,13 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 discount_factor
 ^^^^^^^^^^^^^^^
 
-:Definition: Discount factor is the factor which accounts for the depreciation in the value of money in the future, compared to the current value of the same money. The common method is to calculate the weighted average cost of capital (WACC) and use it as the discount rate.
+:Definition_Short: The factor which accounts for the depreciation in the value of money in the future compared to the current value of the same money
+:Definition_Long: The common method is to calculate the weighted average cost of capital (WACC) and use it as the discount rate.
 :Type: numeric
 :Unit: Factor
 :Example: 0.06
-:Restrictions: Between 0 and 1
-:Default: None
+:Restrictions: Real number
+:Default: 0.05
 
 This parameter is used within the following categories: :ref:`economic_data`
 
@@ -93,14 +100,18 @@ This parameter is used within the following categories: :ref:`economic_data`
 dispatch_price
 ^^^^^^^^^^^^^^
 
-:Definition: Variable cost associated with a flow through/from the asset (eg. Euro/kWh).
+:Definition_Short: Costs associated with a flow through/from the asset (OPEX_var or fuel costs)
+:Definition_Long: This could be fuel costs for fuel sources like biogas or oil or operational costs for thermal power plants which only occur when operating the plant.
 :Type: numeric
-:Unit: currency/kWh
-:Example: 0.64
-:Restrictions: In "storage_xx.csv" only the columns "input power" and "output power" require a value, in column "storage capacity" dispatch_price should be set to NaN.
-:Default: None
+:Unit: €/kWh
+:Example: 0.01
+:Restrictions: None
+:Default: 0.01
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`, :ref:`storage_csv`, :ref:`fixcost`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
 
 
 .. _efficiency-label:
@@ -108,14 +119,18 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 efficiency
 ^^^^^^^^^^
 
-:Definition: Ratio of energy output/energy input. The battery efficiency is the ratio of the energy taken out from the battery, to the energy put into the battery. It means that it is not possible to retrieve as much energy as provided to the battery due to the discharge losses. The efficiency of the "input power" and "ouput power" columns should be set equal to the charge and dischage efficiencies respectively, while the "storage capacity" efficiency should be equal to the storage's efficiency/ability to hold charge over time (`= 1 - self-discharge/decay`), which is usually in the range of 0.95 to 1 for electrical storages.
+:Definition_Short: Ratio of energy output to energy input
+:Definition_Long: The battery efficiency is the ratio of the energy taken out from the battery to the energy put into the battery.
 :Type: numeric
 :Unit: Factor
 :Example: 0.95
-:Restrictions: Between 0 and 1
-:Default: None
+:Restrictions: Positive real number
+:Default: 0.8
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`storage_csv`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
 
 
 .. _emissionfactor-label:
@@ -123,14 +138,17 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 emission_factor
 ^^^^^^^^^^^^^^^
 
-:Definition: Emissions per unit dispatch of an asset.
+:Definition_Short: Emissions per unit dispatch of an asset
 :Type: numeric
 :Unit: kgCO2eq/asset unit
 :Example: 14.4
 :Restrictions: Positive real number
-:Default: None
+:Default: 0.4
 
-This parameter is used within the following categories: :ref:`providers`, :ref:`production`
+This parameter is used within the following categories: :ref:`providers`
+
+
+See also: :ref:`production`
 
 
 .. _energyprice-label:
@@ -138,12 +156,13 @@ This parameter is used within the following categories: :ref:`providers`, :ref:`
 energy_price
 ^^^^^^^^^^^^
 
-:Definition: Price of energy carrier sourced from the utility grid.
+:Definition_Short: Price of the energy carrier sourced from the utility grid
+:Definition_Long: Can be also a timeseries
 :Type: numeric
-:Unit: currency/energy carrier unit
-:Example: 0.1
+:Unit: €/kWh
+:Example: 0.3
 :Restrictions: None
-:Default: None
+:Default: 0.3
 
 This parameter is used within the following categories: :ref:`providers`
 
@@ -153,14 +172,18 @@ This parameter is used within the following categories: :ref:`providers`
 energyVector
 ^^^^^^^^^^^^
 
-:Definition: Energy vector/commodity. Convention: For an energy conversion asset define energyVector of the output. For a sink define based on inflow. For a source define based on output flow. For a storage, define based on stored energy carrier.
+:Definition_Short: Energy commodity
+:Definition_Long: Convention: For an energy conversion asset define the commodity of the output. For a sink define the commodity based on the input flow. For a source define the commodity based on the output flow. For a storage, define the commodity based on the stored energy carrier.
 :Type: str
 :Unit: None
 :Example: Electricity
 :Restrictions: One of “Electricity”, “Gas”, “Bio-Gas”, “Diesel”, “Heat”, “H2”
-:Default: None
+:Default: Electricity
 
-This parameter is used within the following categories: :ref:`busses`, :ref:`consumption`, :ref:`production`, :ref:`storage`, :ref:`providers`, :ref:`conversion`
+This parameter is used within the following categories: :ref:`busses`
+
+
+See also: :ref:`consumption`
 
 
 .. _evaluatedperiod-label:
@@ -168,14 +191,29 @@ This parameter is used within the following categories: :ref:`busses`, :ref:`con
 evaluated_period
 ^^^^^^^^^^^^^^^^
 
-:Definition: The number of days simulated with the energy system model.
+:Definition_Short: The number of days for which the simulation is to be run
 :Type: numeric
-:Unit: Day
+:Unit: None
 :Example: 365
 :Restrictions: Natural number
-:Default: None
+:Default: 365
 
 This parameter is used within the following categories: :ref:`simulation_settings`
+
+
+.. _feedincap-label:
+
+feedin_cap
+^^^^^^^^^^
+
+:Definition_Short: Maximum capacity for feeding electricity into the grid
+:Type: numeric
+:Unit: :unit:
+:Example: 1000
+:Restrictions: Acceptable values are either a positive real number or None
+:Default: None
+
+This parameter is used within the following categories: :ref:`providers`
 
 
 .. _feedintariff-label:
@@ -183,12 +221,13 @@ This parameter is used within the following categories: :ref:`simulation_setting
 feedin_tariff
 ^^^^^^^^^^^^^
 
-:Definition: Price received for feeding electricity into the grid.
+:Definition_Short: Price received for feeding electricity into the grid
+:Definition_Long: Can be also a timeseries
 :Type: numeric
-:Unit: currency/kWh
-:Example: 0.7
-:Restrictions: Real number between 0 and 1
-:Default: None
+:Unit: €/kWh
+:Example: 0.1
+:Restrictions: None
+:Default: 0.1
 
 This parameter is used within the following categories: :ref:`providers`
 
@@ -198,14 +237,17 @@ This parameter is used within the following categories: :ref:`providers`
 file_name
 ^^^^^^^^^
 
-:Definition: Name of a csv file containing the input generation or demand timeseries.
+:Definition_Short: Name of the csv file containing the input generation or demand timeseries
 :Type: str
 :Unit: None
 :Example: demand_harbor.csv
 :Restrictions: This file must be placed in a folder named “time_series” inside your input folder.
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`, :ref:`production`, :ref:`storage`
+This parameter is used within the following categories: :ref:`consumption`
+
+
+See also: :ref:`production`
 
 
 .. _fixed_thermal_losses_absolute-label:
@@ -213,7 +255,7 @@ This parameter is used within the following categories: :ref:`consumption`, :ref
 fixed_thermal_losses_absolute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Definition: Thermal losses of storage independent of state of charge and independent of nominal storage capacity between two consecutive timesteps.
+:Definition_Short: Thermal losses of the storage independent of the state of charge and independent of nominal storage capacity between two consecutive timesteps
 :Type: numeric
 :Unit: factor
 :Example: 0.0003
@@ -228,7 +270,7 @@ This parameter is used within the following categories: :ref:`storage_csv`
 fixed_thermal_losses_relative
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Definition: Thermal losses of storage independent of state of charge between two consecutive timesteps relative to nominal storage capacity.
+:Definition_Short: Thermal losses of storage independent of state of charge between two consecutive timesteps relative to nominal storage capacity
 :Type: numeric
 :Unit: factor
 :Example: 0.0016
@@ -243,14 +285,17 @@ This parameter is used within the following categories: :ref:`storage_csv`
 inflow_direction
 ^^^^^^^^^^^^^^^^
 
-:Definition: The label of the bus/component from which the energyVector is arriving into the asset.
+:Definition_Short: Label of the bus/component from which the energyVector is arriving into the asset
 :Type: str
 :Unit: None
 :Example: Electricity
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`, :ref:`conversion`, :ref:`providers`, :ref:`storage`
+This parameter is used within the following categories: :ref:`consumption`
+
+
+See also: :ref:`conversion`
 
 
 .. _installedcap-label:
@@ -258,14 +303,18 @@ This parameter is used within the following categories: :ref:`consumption`, :ref
 installedCap
 ^^^^^^^^^^^^
 
-:Definition: The already existing installed capacity in-place. If the project lasts longer than its remaining lifetime, its replacement costs will be taken into account.
+:Definition_Short: Already existing installed capacity
+:Definition_Long: If the project lasts longer than its remaining lifetime, the replacement costs of the asset will be taken into account.
 :Type: numeric
-:Unit: kWp
+:Unit: :unit:
 :Example: 50
-:Restrictions: Each component in the “energy production” category must have a value.
-:Default: None
+:Restrictions: None
+:Default: 0
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`, :ref:`storage_csv`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`production`
 
 
 .. _labl-label:
@@ -273,7 +322,7 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 label
 ^^^^^
 
-:Definition: Name of the asset for display purposes
+:Definition_Short: Name of the asset
 :Type: str
 :Unit: None
 :Example: pv_plant_01
@@ -288,7 +337,7 @@ This parameter is used within the following categories: :ref:`fixcost`
 latitude
 ^^^^^^^^
 
-:Definition: Latitude coordinate of the project's geographical location.
+:Definition_Short: Latitude coordinate of the project's geographical location
 :Type: numeric
 :Unit: None
 :Example: 45.641603
@@ -303,14 +352,17 @@ This parameter is used within the following categories: :ref:`project_data`
 lifetime
 ^^^^^^^^
 
-:Definition: Number of operational years of the asset until it has to be replaced.
+:Definition_Short: Number of operational years of the asset until it has to be replaced
 :Type: numeric
-:Unit: Year
-:Example: 30
+:Unit: a
+:Example: 20
 :Restrictions: Natural number
-:Default: None
+:Default: 20
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`, :ref:`storage_csv`, :ref:`fixcost`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
 
 
 .. _longitude-label:
@@ -318,7 +370,7 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 longitude
 ^^^^^^^^^
 
-:Definition: Longitude coordinate of the project's geographical location.
+:Definition_Short: Longitude coordinate of the project's geographical location
 :Type: numeric
 :Unit: None
 :Example: 10.95787
@@ -333,11 +385,11 @@ This parameter is used within the following categories: :ref:`project_data`
 maximum_emissions
 ^^^^^^^^^^^^^^^^^
 
-:Definition: The maximum amount of total emissions in the optimized energy system.
+:Definition_Short: Maximum amount of total emissions which are allowed in the optimized energy system
 :Type: numeric
 :Unit: kgCO2eq/a
 :Example: 100000
-:Restrictions: Acceptable values are either a positive real number or None
+:Restrictions: Acceptable values are either a positive real number or None.
 :Default: None
 
 This parameter is used within the following categories: :ref:`constraints`
@@ -348,14 +400,15 @@ This parameter is used within the following categories: :ref:`constraints`
 maximumCap
 ^^^^^^^^^^
 
-:Definition: The maximum total capacity of an asset that can be installed at the project site. This includes the installed and the also the maximum additional capacity possible. An example would be that a roof can only carry 50 kWp PV (maximumCap), whereas the installed capacity is already 10 kWp. The optimization would only be allowed to add 40 kWp PV at maximum.
+:Definition_Short: Maximum total capacity of an asset that can be installed at the project site
+:Definition_Long: This includes the already existing installed and additional capacity possible. An example would be that a roof can only carry 50 kW PV (maximum capacity), whereas the installed capacity is already 10 kW. The optimization would only be allowed to add 40 kW PV at maximum.
 :Type: numeric
-:Unit: kWp
-:Example: 1050
-:Restrictions: Acceptable values are either a positive real number or None
+:Unit: :unit:
+:Example: 1000
+:Restrictions: Acceptable values are either a positive real number or None.
 :Default: None
 
-This parameter is used within the following categories: :ref:`production`
+This parameter is used within the following categories: :ref:`production`, :ref:`storage`
 
 
 .. _minda-label:
@@ -363,12 +416,13 @@ This parameter is used within the following categories: :ref:`production`
 minimal_degree_of_autonomy
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Definition: The minimal degree of autonomy that needs to be met by the optimization.
+:Definition_Short: Minimum degree of autonomy that needs to be met by the optimization
+:Definition_Long: This constraint defines a lower bound on the <a href='https://open-plan-documentation.readthedocs.io/en/latest/model/simulation_outputs.html#degree-of-autonomy'>degree of autonomy</a> of the energy system. Note that constraint is applied to the the whole, sector-coupled energy system, but not to specific sectors individually.
 :Type: numeric
 :Unit: factor
-:Example: 0.3
-:Restrictions: Between 0 and 1
-:Default: None
+:Example: 0.6
+:Restrictions: Real number between 0 and 1
+:Default: 0.6
 
 This parameter is used within the following categories: :ref:`constraints`
 
@@ -378,12 +432,13 @@ This parameter is used within the following categories: :ref:`constraints`
 minimal_renewable_factor
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Definition: The minimum share of energy supplied by renewable generation in the optimized energy system. Insert the value 0 to deactivate this constraint.
+:Definition_Short: Minimum share of energy supplied by renewable generation that needs to be met by the optimization
+:Definition_Long: This constraint defines a lower bound on the <a href='https://open-plan-documentation.readthedocs.io/en/latest/model/simulation_outputs.html#renewable-factor'>renewable share</a> of the system, which takes into account both local generation as well as the renewable share of energy providers. Note that constraint is applied to the renewable share of the whole, sector-coupled energy system, but not to specific sectors individually.
 :Type: numeric
 :Unit: factor
-:Example: 0.7
-:Restrictions: Between 0 and 1
-:Default: None
+:Example: 0.8
+:Restrictions: Real number between 0 and 1
+:Default: 0.8
 
 This parameter is used within the following categories: :ref:`constraints`
 
@@ -393,11 +448,11 @@ This parameter is used within the following categories: :ref:`constraints`
 net_zero_energy
 ^^^^^^^^^^^^^^^
 
-:Definition: Specifies whether optimization needs to result into a net zero energy system (True) or not (False).
+:Definition_Short: Specifies whether optimization needs to result into a net zero energy system (True) or not (False)
 :Type: boolean
 :Unit: None
 :Example: True
-:Restrictions: Acceptable values are either True or False.
+:Restrictions: Acceptable values are either Yes or No.
 :Default: False
 
 This parameter is used within the following categories: :ref:`constraints`
@@ -408,14 +463,17 @@ This parameter is used within the following categories: :ref:`constraints`
 optimizeCap
 ^^^^^^^^^^^
 
-:Definition: Allow the user to perform capacity optimization for an asset.
+:Definition_Short: Choose if capacity optimization should be performed for this asset.
 :Type: boolean
 :Unit: None
 :Example: True
-:Restrictions: Permissible values are either True or False
-:Default: None
+:Restrictions: Acceptable values are either Yes or No.
+:Default: False
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`, :ref:`providers`, :ref:`storage`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage`
 
 
 .. _outflowdirec-label:
@@ -423,14 +481,17 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 outflow_direction
 ^^^^^^^^^^^^^^^^^
 
-:Definition: The label of bus/component towards which the energyVector is leaving from the asset.
+:Definition_Short: Label of bus/component towards which the energyVector is leaving from the asset
 :Type: str
 :Unit: None
 :Example: PV plant (mono)
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`, :ref:`conversion`, :ref:`providers`, :ref:`storage`
+This parameter is used within the following categories: :ref:`consumption`
+
+
+See also: :ref:`conversion`
 
 
 .. _outputlpfile-label:
@@ -438,12 +499,13 @@ This parameter is used within the following categories: :ref:`consumption`, :ref
 output_lp_file
 ^^^^^^^^^^^^^^
 
-:Definition: Enable the generation of a file with the linear equation system describing the simulation, ie., with the objective function and all the constraints. This lp file enables the user look at the underlying equations of the optimization.
+:Definition_Short: Enables the output of the linear programming (lp) file with the linear equation system describing the optimization problem
+:Definition_Long: The lp file contains the objective function and all constraints. It enables the user to look at the underlying equations of the optimization.
 :Type: boolean
 :Unit: None
 :Example: False
 :Restrictions: Acceptable values are either True or False
-:Default: None
+:Default: False
 
 This parameter is used within the following categories: :ref:`simulation_settings`
 
@@ -453,12 +515,12 @@ This parameter is used within the following categories: :ref:`simulation_setting
 peak_demand_pricing
 ^^^^^^^^^^^^^^^^^^^
 
-:Definition: Price to be paid additionally for energy-consumption based on the peak demand of a given period.
+:Definition_Short: Grid fee to be paid based on the peak demand of a given period
 :Type: numeric
-:Unit: currency/kW
+:Unit: €/kW
 :Example: 60
 :Restrictions: None
-:Default: None
+:Default: 0
 
 This parameter is used within the following categories: :ref:`providers`
 
@@ -471,12 +533,12 @@ See also: :ref:`peakdemandperiod-label`
 peak_demand_pricing_period
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Definition: Number of reference periods in one year for the peak demand pricing.
+:Definition_Short: Number of reference periods in one year for the peak demand pricing
 :Type: numeric
-:Unit: times per year (1,2,3,4,6,12)
+:Unit: times per year
 :Example: 2
 :Restrictions: Only one of the following are acceptable values: 1 (yearly), 2, 3 ,4, 6, 12 (monthly)
-:Default: None
+:Default: 1
 
 This parameter is used within the following categories: :ref:`providers`
 
@@ -489,12 +551,13 @@ See also: :ref:`peakdemand-label`
 project_duration
 ^^^^^^^^^^^^^^^^
 
-:Definition: The number of years the project is intended to be operational. The project duration also sets the installation time of the assets used in the simulation. After the project ends these assets are 'sold' and the refund is charged against the initial investment costs.
+:Definition_Short: The number of years the project is intended to be operational
+:Definition_Long: The project duration also sets the installation time of the assets used in the simulation. After the project ends these assets are 'sold' and the refund is charged against the initial investment costs.
 :Type: numeric
-:Unit: Years
+:Unit: a
 :Example: 30
 :Restrictions: Natural number
-:Default: None
+:Default: 20
 
 This parameter is used within the following categories: :ref:`economic_data`
 
@@ -504,11 +567,11 @@ This parameter is used within the following categories: :ref:`economic_data`
 project_id
 ^^^^^^^^^^
 
-:Definition: Users can assign a project ID as per their preference.
+:Definition_Short: Assign a project ID as per your preference.
 :Type: str
 :Unit: None
 :Example: 1
-:Restrictions: Cannot be the same as an already existing project
+:Restrictions: Cannot be the same as an already existing project ID
 :Default: None
 
 This parameter is used within the following categories: :ref:`project_data`
@@ -519,7 +582,7 @@ This parameter is used within the following categories: :ref:`project_data`
 project_name
 ^^^^^^^^^^^^
 
-:Definition: Users can assign a project name as per their preference.
+:Definition_Short: Assign a project name as per your preference.
 :Type: str
 :Unit: None
 :Example: Borg Havn
@@ -534,12 +597,12 @@ This parameter is used within the following categories: :ref:`project_data`
 renewable_share
 ^^^^^^^^^^^^^^^
 
-:Definition: The share of renewables in the generation mix of the energy supplied by the DSO (utility).
+:Definition_Short: Share of renewables in the generation mix of the energy supplied by the DSO utility
 :Type: numeric
 :Unit: Factor
-:Example: 0.1
+:Example: 0.5
 :Restrictions: Real number between 0 and 1
-:Default: None
+:Default: 0.44
 
 This parameter is used within the following categories: :ref:`providers`
 
@@ -549,12 +612,13 @@ This parameter is used within the following categories: :ref:`providers`
 renewableAsset
 ^^^^^^^^^^^^^^
 
-:Definition: Allow the user to tag as asset as renewable.
+:Definition_Short: Choose if this asset should be considered as renewable.
+:Definition_Long: This parameter is necessary to consider the renewable share constraint correctly.
 :Type: boolean
 :Unit: None
 :Example: True
-:Restrictions: Acceptable values are either True or False
-:Default: None
+:Restrictions: Acceptable values are either Yes or No.
+:Default: True
 
 This parameter is used within the following categories: :ref:`production`
 
@@ -564,7 +628,7 @@ This parameter is used within the following categories: :ref:`production`
 scenario_description
 ^^^^^^^^^^^^^^^^^^^^
 
-:Definition: Brief description of the scenario being simulated.
+:Definition_Short: Brief description of the scenario being simulated
 :Type: str
 :Unit: None
 :Example: This scenario simulates a sector-coupled energy system
@@ -579,11 +643,11 @@ This parameter is used within the following categories: :ref:`project_data`
 scenario_id
 ^^^^^^^^^^^
 
-:Definition: Users can assign a scenario id as per their preference.
+:Definition_Short: Assign a scenario ID as per your preference.
 :Type: str
 :Unit: None
 :Example: 1
-:Restrictions: Cannot be the same as an already existing scenario within the project
+:Restrictions: Cannot be the same as an already existing scenario ID within the project
 :Default: None
 
 This parameter is used within the following categories: :ref:`project_data`
@@ -594,7 +658,7 @@ This parameter is used within the following categories: :ref:`project_data`
 scenario_name
 ^^^^^^^^^^^^^
 
-:Definition: Users can assign a scenario name as per their preference.
+:Definition_Short: Assign a scenario name as per your preference.
 :Type: str
 :Unit: None
 :Example: Warehouse 14
@@ -609,11 +673,12 @@ This parameter is used within the following categories: :ref:`project_data`
 soc_initial
 ^^^^^^^^^^^
 
-:Definition: The level of charge (as a factor of the actual capacity) in the storage in the zeroth time-step.
+:Definition_Short: State of charge of the storage in the zeroth time step
+:Definition_Long: The state of charge is specified as a factor of the nominal capacity.
 :Type: numeric
 :Unit: None or factor
-:Example: :code:`storage capacity`: None, :code:`input power`: NaN, :code:`output power`: NaN
-:Restrictions: Acceptable values are either None or the factor. Only the column :code:`storage capacity` requires a value, in column :code:`input power` and :code:`output power` :code:`soc_initial` should be set to NaN. The :code:`soc_initial` has to be within the [0,1] interval.
+:Example: nan
+:Restrictions: nan
 :Default: None
 
 This parameter is used within the following categories: :ref:`storage_csv`
@@ -624,12 +689,13 @@ This parameter is used within the following categories: :ref:`storage_csv`
 soc_max
 ^^^^^^^
 
-:Definition: The maximum permissible level of charge in the battery (generally, it is when the battery is filled to its nominal capacity), represented by the value 1.0. Users can  also specify a certain value as a factor of the actual capacity.
+:Definition_Short: The maximum permissible level of charge of the storage as a factor of the nominal capacity
+:Definition_Long: When the battery is filled to its nominal capacity the state of charge is represented by the value 1.
 :Type: numeric
 :Unit: Factor
-:Example: :code:`storage capacity`: 1, :code:`input power`: NaN, :code:`output power`: NaN
-:Restrictions: Only the column :code:`storage capacity` requires a value, in column :code:`input power` and :code:`output power` :code:`soc_max` should be set to NaN. The :code:`soc_max` has to be in the [0,1] interval.
-:Default: None
+:Example: nan
+:Restrictions: Real number between 0 and 1
+:Default: 1
 
 This parameter is used within the following categories: :ref:`storage_csv`
 
@@ -639,12 +705,13 @@ This parameter is used within the following categories: :ref:`storage_csv`
 soc_min
 ^^^^^^^
 
-:Definition: The minimum permissible level of charge in the battery as a factor of the nominal capacity of the battery.
+:Definition_Short: The minimum permissible level of charge of the storage as a factor of the nominal capacity
+:Definition_Long: When the battery is fully discharged the state of charge is represented by the value 0.
 :Type: numeric
 :Unit: Factor
-:Example: :code:`storage capacity`:0.2, :code:`input power`: NaN, :code:`output power`: NaN
-:Restrictions: Only the column :code:`storage capacity` requires a value, in column :code:`input power` and :code:`output power` :code:`soc_min` should be set to NaN. The soc_min has to be in the [0,1] interval.
-:Default: None
+:Example: nan
+:Restrictions: Real number between 0 and 1
+:Default: 0
 
 This parameter is used within the following categories: :ref:`storage_csv`
 
@@ -654,14 +721,17 @@ This parameter is used within the following categories: :ref:`storage_csv`
 specific_costs
 ^^^^^^^^^^^^^^
 
-:Definition: Actual CAPEX of an asset, i.e., specific investment costs
+:Definition_Short: Specific investment costs of the asset related to the installed capacity (CAPEX)
 :Type: numeric
-:Unit: currency/unit
-:Example: 4000
+:Unit: €/:unit:
+:Example: 1000
 :Restrictions: None
-:Default: None
+:Default: 1000
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`, :ref:`storage_csv`, :ref:`fixcost`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
 
 
 .. _specificomcosts-label:
@@ -669,14 +739,17 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 specific_costs_om
 ^^^^^^^^^^^^^^^^^
 
-:Definition: Actual OPEX of an asset, i.e., specific operational and maintenance costs.
+:Definition_Short: Specific operational and maintenance costs of the asset related to the installed capacity (OPEX_fix)
 :Type: numeric
-:Unit: currency/unit/year
-:Example: 120
+:Unit: €/(:unit:*a)
+:Example: 10
 :Restrictions: None
-:Default: None
+:Default: 10
 
-This parameter is used within the following categories: :ref:`conversion`, :ref:`production`, :ref:`storage_csv`, :ref:`fixcost`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
 
 
 .. _startdate-label:
@@ -684,7 +757,8 @@ This parameter is used within the following categories: :ref:`conversion`, :ref:
 start_date
 ^^^^^^^^^^
 
-:Definition: The data and time on which the simulation starts at the first step.
+:Definition_Short: Date and time when the simulation starts with the first step
+:Definition_Long: This date will be used for the results graphs as well as the timeseries upload.
 :Type: str
 :Unit: None
 :Example: 2018-01-01 00:00:00
@@ -699,7 +773,7 @@ This parameter is used within the following categories: :ref:`simulation_setting
 storage_filename
 ^^^^^^^^^^^^^^^^
 
-:Definition: Name of a csv file containing the properties of a storage component
+:Definition_Short: Name of a csv file containing the properties of a storage component
 :Type: str
 :Unit: None
 :Example: storage_01.csv
@@ -714,12 +788,12 @@ This parameter is used within the following categories: :ref:`storage`
 tax
 ^^^
 
-:Definition: Tax factor.
+:Definition_Short: Tax factor
 :Type: numeric
 :Unit: Factor
 :Example: 0
 :Restrictions: Between 0 and 1
-:Default: None
+:Default: 0
 
 This parameter is used within the following categories: :ref:`economic_data`
 
@@ -729,12 +803,12 @@ This parameter is used within the following categories: :ref:`economic_data`
 timestep
 ^^^^^^^^
 
-:Definition: Length of the time-steps.
+:Definition_Short: Length of the time steps
 :Type: numeric
-:Unit: Minutes
+:Unit: None
 :Example: 60
-:Restrictions: Can only be 60 at the moment
-:Default: None
+:Restrictions: Can only be 60 minutes at the moment
+:Default: 60
 
 This parameter is used within the following categories: :ref:`simulation_settings`
 
@@ -744,14 +818,18 @@ This parameter is used within the following categories: :ref:`simulation_setting
 type_oemof
 ^^^^^^^^^^
 
-:Definition: Input the type of OEMOF component. For example, a PV plant would be a source, a solar inverter would be a transformer, etc.  The `type_oemof` will later on be determined through the EPA.
+:Definition_Short: Input the type of OEMOF component
+:Definition_Long: A photovoltaic plant would be a source, a solar inverter would be a transformer, etc. The `type_oemof` will later on be determined through the EPA.
 :Type: str
 :Unit: None
 :Example: sink
 :Restrictions: *sink* or *source* or one of the other component classes of OEMOF.
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`, :ref:`conversion`, :ref:`production`, :ref:`providers`, :ref:`storage`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage`
 
 
 .. _unit-label:
@@ -759,12 +837,31 @@ This parameter is used within the following categories: :ref:`consumption`, :ref
 unit
 ^^^^
 
-:Definition: Unit associated with the capacity of the component.
+:Definition_Short: Unit associated with the capacity of the component
 :Type: str
 :Unit: nan
 :Example: Storage could have units like kW or kWh, transformer station could have kVA, and so on.
 :Restrictions: Appropriate scientific unit
-:Default: None
+:Default: kW
 
-This parameter is used within the following categories: :ref:`consumption`, :ref:`conversion`, :ref:`production`, :ref:`providers`, :ref:`storage_csv`
+This parameter is used within the following categories: :ref:`conversion`
+
+
+See also: :ref:`storage_csv`
+
+
+.. _Beta-label:
+
+beta
+^^^^
+
+:Definition_Short: Power loss index for CHPs, usually known as beta coefficient
+:Definition_Long: 0.6
+:Type: factor
+:Unit: beta
+:Example: Between 0 and 1
+:Restrictions: numeric
+:Default: 0
+
+This parameter is used within the following categories: :ref:`conversion`
 
