@@ -37,6 +37,7 @@ To use solar energy we need PV modules, and to use the fossil fuel, we need a fo
 fuel power station. For both technologies we are trying to find out how much
 capacity we should build to get the cost minimum solution.
 We also have a battery and we have the consumer for which we know the exact demand.
+
 ..
     Additionally, the optimization leads to the answer of the question if installing a battery would be an option to
     further reduce costs. Further our energy system contains the electricity demand.
@@ -138,47 +139,35 @@ demonstrate how the solution space is solved, but the principle is exactly the
 same in a two dimensional problem or a 50 dimensional problem, it just takes
 longer for the solver to do its work.
 
+..
+    - Presentation of the benefits of individual technologies
 
 ..
-- Presentation of the benefits of individual technologies
+    Solving energy management problems with the help of linear optimization
 
 ..
-Solving energy management problems with the help of linear optimization
+    General information on modeling
 
 ..
-General information on modeling
-
-..
-Reduction of the considered system to subcomponents with a certain level of detail
+    Reduction of the considered system to subcomponents with a certain level of detail
 
 ..
   real system
   Simplifications are necessary
   Results can be complex
-
   Energy systems based on renewable energies can become very complex.
-
   The components with which an energy supply system can be modeled in open_plan are classified as follows:
-
   - Sources
   - Sinks
   - Transformer
   - Storage
-
-.. TODO: link to oemof-solph
-
   .. image:: images/energy_system_model.png
   :width: 200
-
-Sub header 1
-############
-
-text
-
-Sub header 2
-############
-
-text
-
-Header 2
---------
+    Sub header 1
+    ############
+    text
+    Sub header 2
+    ############
+    text
+    Header 2
+    --------

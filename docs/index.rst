@@ -120,9 +120,10 @@ The open-plan-tool is currently maintained by staff from the `Reiner Lemoine Ins
    :caption: Getting Started
 
    getting_started/quick_start_guide.rst
-   .. getting_started/mathematics_simply_explained
    getting_started/installation.rst
-   .. getting_started/contact_us.rst
+
+..
+   getting_started/contact_us.rst
    
 .. toctree::
    :hidden:
@@ -143,7 +144,10 @@ The open-plan-tool is currently maintained by staff from the `Reiner Lemoine Ins
    :maxdepth: 2
    :caption: Mathematical Description
 
-   math/math_intro.rst 
+   getting_started/mathematics_simply_explained.rst
+
+..
+    math/math_intro.rst
 
 
 .. toctree::
