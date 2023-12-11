@@ -105,7 +105,7 @@ Like other conversion assets, devices for heating, ventilation and air condition
 Different types of HVAC can be modelled. Except for an air source device with ambient temperature as heat reservoir, the device could be modelled with two inputs (electricity and heat) in case the user is interested in the heat reservoir. This has not been tested yet. Also note that currently efficiencies are assigned to the output flows the see `issue #799 <https://github.com/rl-institut/multi-vector-simulator/issues/799>`_.
 Theoretically, a HVAC device can be modelled with multiple outputs (heat, cooling, ...); this has not been tested yet.
 
-The efficiency of HVAC systems is defined by the coefficient of performance (COP), which is strongly dependent on the temperature. In order to take account of this, the efficiency can be defined as time series, see section :ref:`time_series_params_example`.
+The efficiency of HVAC systems is defined by the coefficient of performance (COP), which is strongly dependent on the temperature. In order to take account of this, the efficiency can be defined as time series.
 If you do not provide your own COP time series you can calculate them with `oemof.thermal <https://github.com/oemof/oemof-thermal>`_, see  `documentation on compression heat pumps and chillers <https://oemof-thermal.readthedocs.io/en/stable/compression_heat_pumps_and_chillers.html>`_ and  `documentation on absorption chillers <https://oemof-thermal.readthedocs.io/en/stable/absorption_chillers.html>`_.
 
 .. _energyconversion_electrolyzers:
@@ -160,7 +160,7 @@ With all these components, the energy provider can be visualized as follows:
 Variable energy consumption prices (time-series)
 ================================================
 
-Energy consumption prices can be added as values that vary over time. See section :ref:`time_series_folder` or more information.
+Energy consumption prices can be added as values that vary over time.
 
 .. _energy_providers_peak_demand_pricing:
 
@@ -201,7 +201,6 @@ Battery energy storage system (BESS)
 
 BESS are modelled as :code:`GenericStorage` like described above. The BESS can either be connected directly to the electricity bus of the LES or via a charge controller that manages the BESS.
 When choosing the second option, the capacity of the charge controller can be optimized individually, which takes its specific costs and lifetime into consideration.
-If you do not want to optimize the charge controller's capacity you can take its costs and efficiency into account when defining the storage's input and output power, see :ref:`storage_csv`.
 A charge controller is defined by two transformers, see section :ref:`energy_conversion` above.
 
 Note that capacity reduction over the lifetime of a BESS that may occur due to different effects during aging cannot be taken into consideration in the open-plan-tool. A possible workaround for this could be to manipulate the lifetime.

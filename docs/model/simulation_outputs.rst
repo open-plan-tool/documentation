@@ -5,6 +5,7 @@ Outputs of a simulation
 =======================
 
 After optimization of an energy system, the open-plan-tool evaluates the simulation output. It evaluates the flows, costs and performance of the system. As a result, it can calculate a number of :ref:`key performance indicators (KPI) <key_performance_indicators_overview>`, namely :ref:`economic <kpi_economic>`, :ref:`technical <kpi_technical>` and :ref:`environmental <kpi_environmental>` KPI. Not all of them are displayed in the graphical current user interface, they are nevertheless listed here for information.
+
 .. _key_performance_indicators_overview:
 
 Overview of Key Performance Indicators

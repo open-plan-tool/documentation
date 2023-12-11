@@ -30,6 +30,7 @@ When you log in, the following dashboard is displayed. In the following image th
     c) We are happy to hear about your experience with open_plan, so feel free to share your questions, comments and suggestions here.
     d) Change the language. English (en) and German (de) are supported.
     e) Profile drop-down options.
+
 **3. Dashboard. Here is the link to create a new project or the list of current projects when they already exist.**
 
 **4. Bottom navigation menu. Located at the bottom right of the screen. Here you will find:**
@@ -49,6 +50,7 @@ To create a project in open-plan-tool, the user has three options:
  :width: 30%
 
 :Empty project:
+
 Here a project is created from scratch. When you select this option you must configure your project and for that you must include the following information: 
 
 - Name
@@ -67,9 +69,11 @@ Here a project is created from scratch. When you select this option you must con
 
 
 :From file:
+
 It is also possible to load a project from a file. In this case you must include the name of the project and upload the file in json format. This option makes it possible to share projects among each other.
 
 :From use case:
+
 If you want to start from one of the configured use cases, you can do so in this option. You will see a pop-up window with a link to the use cases, and a drop-down list where you can choose the use case to use. Once selected, it will appear in the "My projects" section.
 
 
@@ -105,7 +109,7 @@ The setup consists of assigning a name to the scenario, its corresponding descri
 
 **2) Energy system design**
 
-In this section the energy system will be designed using different components, which are located on the left panel and classified in different categories: **Providers, Production, Conversion, Storage, Demand and Bus.** ```
+In this section the energy system will be designed using different components, which are located on the left panel and classified in different categories: **Providers, Production, Conversion, Storage, Demand and Bus.**
 In the graphic panel drag the components you need to design your energy system and do not forget to include the buses. Note that assets are connected to each other using a bus which is the identifier for the energy carrier (e.g. electricity or heat). Interconnecting two buses or two assets directly is not allowed. Connect the components together using the green and red terminals. The green terminals represent inputs, while the red terminals represent outputs, see the following example:
 
 .. image:: ../images/IMG_example_connections.png
