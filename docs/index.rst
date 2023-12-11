@@ -121,6 +121,7 @@ The open-plan-tool is currently maintained by staff from the `Reiner Lemoine Ins
 
    getting_started/quick_start_guide.rst
    getting_started/installation.rst
+   getting_started/basic_structure.rst
 
 ..
    getting_started/contact_us.rst

@@ -78,7 +78,7 @@ If you want to start from one of the configured use cases, you can do so in this
 
 
 CREATE A SCENARIO
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 Once the project is created, it is possible to create various scenarios within the project. To do this, we have two options: we can create a new scenario by defining all its parameters or we can load a previously created scenario from a json file.
 
