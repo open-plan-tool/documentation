@@ -43,18 +43,3 @@ Environmental KPI are calculated to assess the impact of a simulated energy syst
 * :ref:`Specific GHG per electricity equivalent <specific_emissions_per_electricity_equivalent>`
 * :ref:`Total GHG emissions <total_emissions>`
 
-
-Additionally to the KPI, the MVS can also generate a number of output files, which can be shared with other partners and used to vizualize the system's behaviour and performance. These are the calculated files KPI:
-
-* :ref:`Simulation report <automatic_report>`
-* :ref:`Bar chart of optimal capacities <bar_chart_optimizedAddCap>`
-* :ref:`Excel file with all KPI <excel_scalar_kpi>`
-* :ref:`Excel file with dispatch timeseries <excel_timeseries>`
-* :ref:`Simulation data after pre-processing (JSON) <json_input_processed>`
-* :ref:`Simulation data and results (JSON) <json_with_results>`
-* :ref:`MVS logfile <logfile>`
-* :ref:`Energy system model visualization <network_graph>`
-* :ref:`Pie charts of cost parameters <pie_chart_costs>`
-* :ref:`Dispatch of all assets on a bus <plot_dispatch>`
-* :ref:`Input timeseries <plot_input_timeseries>`
-

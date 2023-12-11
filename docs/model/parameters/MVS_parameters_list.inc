@@ -11,7 +11,6 @@ age_installed
 :Restrictions: Natural number
 :Default: 0
 
-This parameter is used within the following categories: :ref:`conversion:production`
 
 
 .. _crate-label:
@@ -27,7 +26,6 @@ c-rate
 :Restrictions: Real number between 0 and 1
 :Default: 1
 
-This parameter is used within the following categories: :ref:`storage_csv`
 
 
 .. _country-label:
@@ -42,7 +40,6 @@ country
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _currency-label:
@@ -57,7 +54,6 @@ currency
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`economic_data`
 
 
 .. _developmentcosts-label:
@@ -73,10 +69,6 @@ development_costs
 :Restrictions: Positive real number
 :Default: 0
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _discountfactor-label:
@@ -92,7 +84,6 @@ discount_factor
 :Restrictions: Real number
 :Default: 0.05
 
-This parameter is used within the following categories: :ref:`economic_data`
 
 
 .. _dispatchprice-label:
@@ -108,10 +99,6 @@ dispatch_price
 :Restrictions: None
 :Default: 0.01
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _efficiency-label:
@@ -127,10 +114,6 @@ efficiency
 :Restrictions: Positive real number
 :Default: 0.8
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _emissionfactor-label:
@@ -145,10 +128,6 @@ emission_factor
 :Restrictions: Positive real number
 :Default: 0.4
 
-This parameter is used within the following categories: :ref:`providers`
-
-
-See also: :ref:`production`
 
 
 .. _energyprice-label:
@@ -164,7 +143,6 @@ energy_price
 :Restrictions: None
 :Default: 0.3
 
-This parameter is used within the following categories: :ref:`providers`
 
 
 .. _energyvector-label:
@@ -180,10 +158,6 @@ energyVector
 :Restrictions: One of “Electricity”, “Gas”, “Bio-Gas”, “Diesel”, “Heat”, “H2”
 :Default: Electricity
 
-This parameter is used within the following categories: :ref:`busses`
-
-
-See also: :ref:`consumption`
 
 
 .. _evaluatedperiod-label:
@@ -198,7 +172,6 @@ evaluated_period
 :Restrictions: Natural number
 :Default: 365
 
-This parameter is used within the following categories: :ref:`simulation_settings`
 
 
 .. _feedincap-label:
@@ -213,7 +186,6 @@ feedin_cap
 :Restrictions: Acceptable values are either a positive real number or None
 :Default: None
 
-This parameter is used within the following categories: :ref:`providers`
 
 
 .. _feedintariff-label:
@@ -229,7 +201,6 @@ feedin_tariff
 :Restrictions: None
 :Default: 0.1
 
-This parameter is used within the following categories: :ref:`providers`
 
 
 .. _filename-label:
@@ -244,10 +215,6 @@ file_name
 :Restrictions: This file must be placed in a folder named “time_series” inside your input folder.
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`
-
-
-See also: :ref:`production`
 
 
 .. _fixed_thermal_losses_absolute-label:
@@ -262,7 +229,6 @@ fixed_thermal_losses_absolute
 :Restrictions: Between 0 and 1
 :Default: 0
 
-This parameter is used within the following categories: :ref:`storage_csv`
 
 
 .. _fixed_thermal_losses_relative-label:
@@ -277,7 +243,6 @@ fixed_thermal_losses_relative
 :Restrictions: Between 0 and 1
 :Default: 0
 
-This parameter is used within the following categories: :ref:`storage_csv`
 
 
 .. _inflowdirection-label:
@@ -292,10 +257,6 @@ inflow_direction
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`
-
-
-See also: :ref:`conversion`
 
 
 .. _installedcap-label:
@@ -311,10 +272,6 @@ installedCap
 :Restrictions: None
 :Default: 0
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`production`
 
 
 .. _labl-label:
@@ -329,7 +286,6 @@ label
 :Restrictions: Input the names in a computer friendly format, preferably with underscores instead of spaces, and avoiding special characters
 :Default: None
 
-This parameter is used within the following categories: :ref:`fixcost`
 
 
 .. _latitude-label:
@@ -344,7 +300,6 @@ latitude
 :Restrictions: Should follow geographical convention
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _lifetime-label:
@@ -359,10 +314,6 @@ lifetime
 :Restrictions: Natural number
 :Default: 20
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _longitude-label:
@@ -377,7 +328,6 @@ longitude
 :Restrictions: Should follow geographical convention
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _maxemissions-label:
@@ -392,7 +342,6 @@ maximum_emissions
 :Restrictions: Acceptable values are either a positive real number or None.
 :Default: None
 
-This parameter is used within the following categories: :ref:`constraints`
 
 
 .. _maxcap-label:
@@ -408,7 +357,6 @@ maximumCap
 :Restrictions: Acceptable values are either a positive real number or None.
 :Default: None
 
-This parameter is used within the following categories: :ref:`production`, :ref:`storage`
 
 
 .. _minda-label:
@@ -424,7 +372,6 @@ minimal_degree_of_autonomy
 :Restrictions: Real number between 0 and 1
 :Default: 0.6
 
-This parameter is used within the following categories: :ref:`constraints`
 
 
 .. _minrenshare-label:
@@ -440,7 +387,6 @@ minimal_renewable_factor
 :Restrictions: Real number between 0 and 1
 :Default: 0.8
 
-This parameter is used within the following categories: :ref:`constraints`
 
 
 .. _nzeconstraint-label:
@@ -455,7 +401,6 @@ net_zero_energy
 :Restrictions: Acceptable values are either Yes or No.
 :Default: False
 
-This parameter is used within the following categories: :ref:`constraints`
 
 
 .. _optimizecap-label:
@@ -470,10 +415,6 @@ optimizeCap
 :Restrictions: Acceptable values are either Yes or No.
 :Default: False
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage`
 
 
 .. _outflowdirec-label:
@@ -488,10 +429,6 @@ outflow_direction
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`consumption`
-
-
-See also: :ref:`conversion`
 
 
 .. _outputlpfile-label:
@@ -507,7 +444,6 @@ output_lp_file
 :Restrictions: Acceptable values are either True or False
 :Default: False
 
-This parameter is used within the following categories: :ref:`simulation_settings`
 
 
 .. _peakdemand-label:
@@ -522,10 +458,6 @@ peak_demand_pricing
 :Restrictions: None
 :Default: 0
 
-This parameter is used within the following categories: :ref:`providers`
-
-
-See also: :ref:`peakdemandperiod-label`
 
 
 .. _peakdemandperiod-label:
@@ -540,10 +472,6 @@ peak_demand_pricing_period
 :Restrictions: Only one of the following are acceptable values: 1 (yearly), 2, 3 ,4, 6, 12 (monthly)
 :Default: 1
 
-This parameter is used within the following categories: :ref:`providers`
-
-
-See also: :ref:`peakdemand-label`
 
 
 .. _projectduration-label:
@@ -559,7 +487,6 @@ project_duration
 :Restrictions: Natural number
 :Default: 20
 
-This parameter is used within the following categories: :ref:`economic_data`
 
 
 .. _projectid-label:
@@ -574,7 +501,6 @@ project_id
 :Restrictions: Cannot be the same as an already existing project ID
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _projectname-label:
@@ -589,7 +515,6 @@ project_name
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _renshare-label:
@@ -604,7 +529,6 @@ renewable_share
 :Restrictions: Real number between 0 and 1
 :Default: 0.44
 
-This parameter is used within the following categories: :ref:`providers`
 
 
 .. _renewableasset-label:
@@ -620,7 +544,6 @@ renewableAsset
 :Restrictions: Acceptable values are either Yes or No.
 :Default: True
 
-This parameter is used within the following categories: :ref:`production`
 
 
 .. _scenariodescription-label:
@@ -635,7 +558,6 @@ scenario_description
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _scenarioid-label:
@@ -650,7 +572,6 @@ scenario_id
 :Restrictions: Cannot be the same as an already existing scenario ID within the project
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _scenarioname-label:
@@ -665,7 +586,6 @@ scenario_name
 :Restrictions: None
 :Default: None
 
-This parameter is used within the following categories: :ref:`project_data`
 
 
 .. _socin-label:
@@ -681,7 +601,6 @@ soc_initial
 :Restrictions: nan
 :Default: None
 
-This parameter is used within the following categories: :ref:`storage_csv`
 
 
 .. _socmax-label:
@@ -697,7 +616,6 @@ soc_max
 :Restrictions: Real number between 0 and 1
 :Default: 1
 
-This parameter is used within the following categories: :ref:`storage_csv`
 
 
 .. _socmin-label:
@@ -713,7 +631,6 @@ soc_min
 :Restrictions: Real number between 0 and 1
 :Default: 0
 
-This parameter is used within the following categories: :ref:`storage_csv`
 
 
 .. _specificcosts-label:
@@ -728,10 +645,6 @@ specific_costs
 :Restrictions: None
 :Default: 1000
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _specificomcosts-label:
@@ -741,15 +654,11 @@ specific_costs_om
 
 :Definition_Short: Specific operational and maintenance costs of the asset related to the installed capacity (OPEX_fix)
 :Type: numeric
-:Unit: €/(:unit:*a)
+:Unit: €/(:unit:\*a)
 :Example: 10
 :Restrictions: None
 :Default: 10
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _startdate-label:
@@ -765,7 +674,6 @@ start_date
 :Restrictions: Acceptable format is YYYY-MM-DD HH:MM:SS
 :Default: None
 
-This parameter is used within the following categories: :ref:`simulation_settings`
 
 
 .. _storagefilename-label:
@@ -780,7 +688,6 @@ storage_filename
 :Restrictions: Follows the convention of 'storage_xx.csv' where 'xx' is a number. This file must be placed in a folder named “csv_elements” inside your input folder.
 :Default: None
 
-This parameter is used within the following categories: :ref:`storage`
 
 
 .. _tax-label:
@@ -795,7 +702,6 @@ tax
 :Restrictions: Between 0 and 1
 :Default: 0
 
-This parameter is used within the following categories: :ref:`economic_data`
 
 
 .. _timestep-label:
@@ -810,7 +716,6 @@ timestep
 :Restrictions: Can only be 60 minutes at the moment
 :Default: 60
 
-This parameter is used within the following categories: :ref:`simulation_settings`
 
 
 .. _typeoemof-label:
@@ -826,10 +731,6 @@ type_oemof
 :Restrictions: *sink* or *source* or one of the other component classes of OEMOF.
 :Default: None
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage`
 
 
 .. _unit-label:
@@ -844,10 +745,6 @@ unit
 :Restrictions: Appropriate scientific unit
 :Default: kW
 
-This parameter is used within the following categories: :ref:`conversion`
-
-
-See also: :ref:`storage_csv`
 
 
 .. _Beta-label:
@@ -863,5 +760,4 @@ beta
 :Restrictions: numeric
 :Default: 0
 
-This parameter is used within the following categories: :ref:`conversion`
 

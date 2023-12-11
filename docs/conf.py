@@ -82,11 +82,11 @@ def generate_parameter_description(input_csv_file, output_rst_file):
             + [f".. _{props.ref}:", "", props.label, "^" * len(props.label), "",]
             + [f"{p} {props[p]}" for p in parameter_properties if props[p] != ""]
             + [""]
-            + [
-                "This parameter is used within the following categories: "
-                + ", ".join([f":ref:`{cat}`" for cat in props.category.split(";")])
-            ]
-            + see_also
+            # + [
+            #     "This parameter is used within the following categories: "
+            #     + ", ".join([f":ref:`{cat}`" for cat in props.category.split(";")])
+            # ]
+            # + see_also
             + ["", "",]
         )
 

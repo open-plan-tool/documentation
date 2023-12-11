@@ -44,7 +44,7 @@ Parameter,Type,Unit,Default
 :ref:`socmax-label`,numeric,Factor,1
 :ref:`socmin-label`,numeric,Factor,0
 :ref:`specificcosts-label`,numeric,€/:unit:,1000
-:ref:`specificomcosts-label`,numeric,€/(:unit:*a),10
+:ref:`specificomcosts-label`,numeric,€/(:unit:\*a),10
 :ref:`startdate-label`,str,None,None
 :ref:`storagefilename-label`,str,None,None
 :ref:`tax-label`,numeric,Factor,0
