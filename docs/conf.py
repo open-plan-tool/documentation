@@ -353,7 +353,6 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
     "sphinx.ext.extlinks",
-    "sphinx_design",
     # "sphinxcontrib.rsvgconverter",
     "numpydoc",
 ]
