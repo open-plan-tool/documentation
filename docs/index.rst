@@ -163,6 +163,14 @@ The open-plan-tool is currently maintained by staff from the `Reiner Lemoine Ins
    model/input_parameters.rst
    model/simulation_outputs.rst
 
+
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+   :caption: References
+
+   references/references.rst
+
 .. Model Reference
 .. ===============
 
