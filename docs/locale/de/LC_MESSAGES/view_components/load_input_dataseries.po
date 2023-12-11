@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/load_input_dataseries.rst:4
+msgid "Load input data-series"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:6
+msgid ""
+"User loads a file containing a data-series as input for a relevant "
+"parameter and is able to quickly visualize the data."
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:13
+msgid "**Label**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:12
+msgid "Name of the parameter which would be displayed close to the input field"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:18
+msgid "**Input field**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:16
+#: ../../view_components/load_input_dataseries.rst:23
+msgid "Actions index: 1"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:18
+#: ../../view_components/load_input_dataseries.rst:30
+#: ../../view_components/load_input_dataseries.rst:35
+msgid "Requirements index:"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:25
+msgid "**Input Unit**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:21
+msgid "Unit of the input parameter"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:25
+msgid "Requirements index: 2"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:30
+msgid "**Load File button**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:28
+msgid "Actions index: 2"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:35
+msgid "**Visualize Data button**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:33
+msgid "Actions index: 3"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:40
+msgid "**Boolean Mandatory Input**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:38
+msgid "If true, the parameter must be defined by the user"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:40
+msgid "Requirements index: 3, 4"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:43
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:45
+msgid ""
+"User can directly provide the path of the file to be loaded as text in "
+"the text field"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:46
+msgid ""
+"Clicking on Load File button will open a pop-up window **(link the vc "
+"(TBD) link here)**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:47
+msgid ""
+"Clicking on the Visualize Data button will open a pop-up window with a "
+"table and plot of the data-series :ref:`visualize_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:48
+msgid ""
+"User can choose unit amongst a list of generic units, or input it by "
+"typing it in. (this is known as an editable combo box)"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:51
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:53
+msgid ""
+"All parameters that require a data-series must be given input through "
+"this view-component"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:54
+msgid ""
+"The physical units which are commonly used for energy and power should be"
+" available there (then converted internally to Joule and Watt)"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:55
+msgid ""
+"For mandatory input fields, the fields must be denoted by an asterisk "
+"adjacent to the field"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:56
+msgid ""
+"If the user does not provide input for a mandatory field and tries to "
+"proceed further, the field should be highlighted so as to alert the user"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:57
+msgid ""
+"The Load File and Visualize Data buttons should be present adjacent to "
+"the Input Field"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:60
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:63
+msgid ":ref:`<view1>-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:63
+#: ../../view_components/load_input_dataseries.rst:66
+msgid "Description of the link"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:66
+msgid ":ref:`<view2>-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:69
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:73
+msgid ":ref:`input_parameter_field-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:73
+msgid "Both the view-components share some attributes"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:76
+msgid ":ref:`<view_component2>-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:79
+msgid ":ref:`visualize_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:79
+msgid ""
+"A pop-up window displaying a sample of the input data-series file with a "
+"plot of the data alongside"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:82
+msgid "Rendering of the view-component"
+msgstr ""
+

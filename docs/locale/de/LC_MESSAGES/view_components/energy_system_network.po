@@ -1,0 +1,278 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/energy_system_network.rst:4
+msgid "Energy System network"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:6
+msgid "This view-component will help the user to define their energy system model"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:10
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:22
+msgid "**list of energy busses**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:13
+msgid "A list of energy busses"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:18
+#: ../../view_components/energy_system_network.rst:29
+#: ../../view_components/energy_system_network.rst:40
+#: ../../view_components/energy_system_network.rst:50
+#: ../../view_components/energy_system_network.rst:59
+#: ../../view_components/energy_system_network.rst:69
+#: ../../view_components/energy_system_network.rst:80
+#: ../../view_components/energy_system_network.rst:92
+msgid "Properties:"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:16
+msgid "id: `es_bus_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:17
+msgid "each bus has a unique id"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:18
+msgid "each bus has an associated :ref:`energy-type-def`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:20
+#: ../../view_components/energy_system_network.rst:52
+msgid "Actions index: 1, 2, 4"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:22
+#: ../../view_components/energy_system_network.rst:33
+#: ../../view_components/energy_system_network.rst:44
+#: ../../view_components/energy_system_network.rst:63
+#: ../../view_components/energy_system_network.rst:73
+#: ../../view_components/energy_system_network.rst:84
+msgid "Requirements index:"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:24
+msgid "**button** :guilabel:`&Add bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:26
+msgid "Linked to the action of adding a bus to the `es_bus_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:29
+msgid "id `add_es_bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:31
+#: ../../view_components/energy_system_network.rst:61
+msgid "Actions index: 1, 5, 6"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:35
+msgid "**button** :guilabel:`&Remove bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:37
+msgid "Linked to the action of removing a bus from the `es_bus_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:40
+msgid "id `remove_es_bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:42
+#: ../../view_components/energy_system_network.rst:71
+msgid "Actions index: 2, 3"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:53
+msgid "**list of energy system component**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:47
+msgid "A list of *energy system components*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:50
+msgid "id: `es_component_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:63
+msgid "**button** :guilabel:`&Add component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:56
+msgid ""
+"Linked to the action of adding an energy system component to the "
+"`es_component_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:59
+msgid "id `add_es_component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:73
+msgid "**button** :guilabel:`&Remove component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:66
+msgid ""
+"Linked to the action of removing an energy system component from the "
+"`es_component_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:69
+msgid "id `remove_es_component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:85
+msgid "**Draw area**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:76
+msgid ""
+"Area where the user could drag and drop components and connect them, or "
+"simply see a rendering of the energy system graph withtout being able to "
+"interact with it"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:80
+msgid "id `network_schema`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:82
+msgid "Actions index: 4."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:92
+msgid "**Text area**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:88
+msgid ""
+"Displays potential error messages arising from wrong configuration of "
+"*energy system network* or single *energy system component*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:91
+msgid "id `error_log`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:95
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:97
+msgid ""
+"Clicking on the `add es_bus`/`add es_component` button adds a *Bus* or an"
+" *energy system component* to the `es_bus_list`/`es_component_list`, "
+"respectively."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:98
+msgid ""
+"Clicking on the `remove_es_bus`/`remove_es_component` button removes the "
+"currently selected *Bus* or *energy system component* from the "
+"`es_bus_list`/`es_component_list`, respectively."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:99
+msgid ""
+"Clicking on the `remove_es_bus`/`remove_es_component` button when no "
+"*Bus* or *energy system component* is currently selected sends a log "
+"message to the `error_log`."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:100
+msgid ""
+"Selecting a bus or an energy system component in `es_bus_list`, "
+"`es_component_list` or in `network_schema` allows the user to visualise "
+"and/or edit its properties in another view-component."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:101
+msgid ""
+"When a the user add a *Bus* or *energy system component* by clicking on "
+"the `add_es_bus`/`add_es_component`, they can visualise and/or edit its "
+"properties in another view-component."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:102
+msgid ""
+"When a the user add a *Bus* or *energy system component* by clicking on "
+"the `add_es_bus`/`add_es_component`, they can to see it in the "
+"`network_schema`."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:105
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:107
+msgid ""
+"If not defined by the user, an additional Sink component to dump excess "
+"energy flow is defined and connected automatically to one *Bus* in the "
+"*energy system network*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:108
+msgid ""
+"If not defined by the user, an additional Source component to provide "
+"slack energy flow is defined and connected automatically to one *Bus* in "
+"the *energy system network*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:109
+msgid ""
+"notifications informing the user about potential problems with their "
+"energy system model should be displayed in the `error_log` text area. "
+"Problems could be such as a failure to meet any of the other "
+"requirements, an undefined property value of an *energy system "
+"component*, or a *Bus* without connection to another *energy system "
+"component*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:113
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:114
+msgid ":ref:`es_component-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:117
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:119
+msgid ""
+"The buttons need to be visible at all time, as the selection of *energy "
+"system components* or *Busses* can be done either from the lists "
+"`es_bus_list`, `es_component_list` or from `network_schema`, they do not "
+"necessarily need to be seen at the same time (they could be side by side "
+"or accessible via tabs)"
+msgstr ""
+

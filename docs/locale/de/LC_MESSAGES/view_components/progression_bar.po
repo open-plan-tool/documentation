@@ -1,0 +1,206 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/progression_bar.rst:4
+msgid "Progression Bar"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:6
+msgid ""
+"The Progression Bar displays the sequential steps the user should go "
+"through, in order to provide the input parameters required to describe an"
+" energy system and a :ref:`scenario-label` to simulate with this energy "
+"system model"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:8
+msgid "This view-component allows the user to:"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:10
+msgid ""
+"Sequentially progress through the modeling and definition of their :ref"
+":`scenario-label`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:11
+msgid "Jump directly to previous steps to edit input parameters"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:14
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:31
+msgid "**List of steps**"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:17
+msgid "For example the following steps:"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:19
+msgid "Project Setup"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:20
+msgid "Inputs"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:21
+msgid "System Inputs"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:22
+msgid "Visualization"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:23
+msgid "Constraints"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:24
+msgid "Simulations"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:25
+msgid "Results"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:29
+msgid "Properties:"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:28
+msgid ""
+"Each step has an associated index (starting from 1), corresponding to its"
+" position in the list of steps"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:29
+msgid "Each step in the progression bar is a link to a :ref:`view <views-label>`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:31
+msgid "Actions index: 1, 2"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:37
+msgid "**Current step index**"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:34
+msgid "The index of the currently selected step"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:36
+msgid "Requirements index: 1"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:40
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:42
+msgid ""
+"Clicking on a step that has already been fulfilled, allows the user to "
+"make modifications to the inputs within this field"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:43
+msgid ""
+"Clicking on a step which is disabled, make a small text bubble appear "
+"next to the step explaining why the user cannot click on that step"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:46
+msgid "Requirement"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:48
+msgid ""
+"To enable the next step, the user has to fulfill the requirements of the "
+"current step. Each step's requirements are defined in its respective "
+":ref:`view <views-label>`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:51
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:53
+msgid "Here will be a link to the views of each steps"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:56
+msgid ":ref:`landing-label`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:56
+msgid ""
+"It is not sure yet whether this view-component should be visible from "
+"start, join the on-going discussion `here <https://github.com/rl-"
+"institut/open_plan/issues/48>`_"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:59
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:61
+msgid ":ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:65
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:67
+msgid ""
+"Ribbon-like display of the progression bar where each step is delimited "
+"by an individual blob, the structure is identical throughout the "
+"different views. The term blob is employed to signify that the shape is "
+"up to a decision (non-exhaustive list of examples: a rectangle, an "
+"ellipse, a circle, an arrow)"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:68
+msgid ""
+"Indication of the steps order could be with arrow shaped blob, or with "
+"arrow symbols between the blobs"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:69
+msgid ""
+"Color coding of the blobs backgrounds can be used to indicate whether the"
+" step has already be visited, is not fulfilled yet, disabled or enabled"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:70
+msgid ""
+"The progression bar could be horizontal or vertical (it is assumed from "
+"left to right and top to bottom, but this can be debated)"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:72
+msgid ""
+"Here is an example of one possible rendering, please note that this is "
+"not a final design, only an example"
+msgstr ""
+

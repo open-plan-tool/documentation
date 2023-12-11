@@ -1,0 +1,190 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/energy_system_component.rst:4
+msgid "Energy system component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:6
+msgid ""
+"Define the view a user has when creating or editing a component of its "
+"energy system"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:15
+msgid "**Energy type**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:14
+msgid ""
+"ref:`energy-type-def` linked to the different energy sectors (e.g. heat, "
+"electricity, ...)"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:19
+msgid "**Component type**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:18
+msgid "Can be one of [Source, Sink, Transformer, Storage, Bus]"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:23
+msgid "**Unique id**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:22
+msgid ""
+"A positive integer number to identify the component uniquely within the "
+"list of energy system components of the :ref:`es_network-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:33
+msgid "**Icon**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:26
+msgid "An image which can be used for rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:29
+msgid "Properties:"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:29
+msgid "path to the icon file"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:31
+msgid "Actions index:"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:33
+msgid "Requirements index:"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:38
+msgid "**Input energy flow**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:36
+msgid ""
+"A list of other components's ids which are connected to this component "
+"and provide it with energy"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:38
+#: ../../view_components/energy_system_component.rst:43
+msgid "Requirements index: 1, 5, 6"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:43
+msgid "**Output energy flow**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:41
+msgid ""
+"A list of other components's ids which are connected to this component "
+"and drain energy from it"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:46
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:48
+msgid ""
+"Double-clicking on the rendering of the *energy system component* allow "
+"the user to edit its attributes (except id)"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:51
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:53
+msgid ""
+"As long as the *energy system component* is not connected correctly to "
+"another *energy system component* the Icon-frame is displayed in another "
+"colour"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:55
+msgid ""
+"An *energy system component* which is not of *component type* Bus can not"
+" be connected to another *energy system component*, which is not of "
+"*component type* Bus"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:57
+msgid ""
+"An *energy system component* which is not of *component type* Bus, should"
+" have at least one connection to an *energy system component* of "
+"*component type* Bus"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:59
+msgid ""
+"An *energy system component* of *component type* Sink has a connection to"
+" *Input energy flow*, but no connection to *Output energy flow*"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:61
+msgid ""
+"An *energy system component* of *component type* Source has a connection "
+"*Output Energy flow*, but no connection to *Input energy flow*"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:64
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:66
+msgid "It is currently not directly linked to a view"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:69
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:72
+msgid ":ref:`es_network-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:72
+msgid ""
+"The component is inserted within the energy system model described in "
+"this other view-component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:75
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:76
+msgid ""
+"This *energy system component* can be rendered as a list item within :ref"
+":`es_network-label`'s `es_component_list` attribute or via its icon "
+"within :ref:`es_network-label`'s `network_schema` attribute."
+msgstr ""
+

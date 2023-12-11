@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../abstract_components/scenario.rst:2
+msgid "Scenario"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:8
+msgid "Attributes"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:12
+msgid "**Scenario as an object**"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:11
+msgid ""
+"Scenario is an object that exists in the computer's temporary memory "
+"(RAM). It can be considered as the a concept that wraps an instance of "
+"the energy system class plus the inputs. However, it could be saved to "
+"the permanent memory by saving the data the object holds to disk as a "
+"file of an appropriate format."
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:15
+msgid "Actions"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:17
+msgid ""
+"Scenario can be saved to disk through the *load scenario* view component "
+"in the Scenarios view"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:18
+msgid ""
+"Multiple scenario objects can be created during the simulation using the "
+"*create scenario* view component in the Scenarios view"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:19
+msgid ""
+"Multiple scenario objects can be compared in the *scenario comparison* "
+"view"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:23
+msgid "Requirements"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:25
+msgid "The objects must be accessible to other relevant view components"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:26
+msgid ""
+"External scenario objects created in other software that are to be "
+"imported into open_plan should adhere to the data standards"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:27
+msgid ""
+"Should be saved to disk in an appropriate format before exiting the tool "
+"in order to be accessible later"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:30
+msgid "Link with views"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:32
+msgid "*placeholder* *placeholder2*"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:36
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:38
+msgid "*placeholder*"
+msgstr ""
+

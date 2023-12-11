@@ -1,0 +1,1010 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../parameters.rst:5
+msgid "Parameters"
+msgstr ""
+
+#: ../../parameters.rst:8
+msgid "Inputs"
+msgstr ""
+
+#: ../../parameters.rst:10
+msgid "Inputs are necessary values for the optimization."
+msgstr ""
+
+#: ../../parameters.rst:11
+msgid ""
+"All inputs have default values that can be replaced by the user if "
+"desired."
+msgstr ""
+
+#: ../../parameters.rst:13 ../../parameters.rst:37
+msgid ""
+"It could also be a chance to specify for each input if it is a project "
+"input or a scenario input. It could also be a chance to explain the "
+"default value for each input in a short line. It could be nice to add the"
+" name of the view-component they are part of."
+msgstr ""
+
+#: ../../parameters.rst:20 ../../parameters.rst:44
+msgid "Table Title"
+msgstr ""
+
+#: ../../_files/input_parameters_list_short.inc
+#: ../../_files/output_parameters_list_short.inc
+msgid "Name"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc
+#: ../../_files/input_parameters_list_short.inc
+#: ../../_files/output_parameters_list.inc
+#: ../../_files/output_parameters_list_short.inc
+msgid "Unit"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc
+#: ../../_files/input_parameters_list_short.inc
+#: ../../_files/output_parameters_list.inc
+#: ../../_files/output_parameters_list_short.inc
+msgid "Default"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc
+#: ../../_files/input_parameters_list_short.inc
+#: ../../_files/output_parameters_list.inc
+#: ../../_files/output_parameters_list_short.inc
+msgid "Category"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc
+#: ../../_files/input_parameters_list_short.inc
+#: ../../_files/output_parameters_list.inc
+#: ../../_files/output_parameters_list_short.inc
+msgid "Restrictions"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc
+#: ../../_files/input_parameters_list_short.inc
+#: ../../_files/output_parameters_list.inc
+#: ../../_files/output_parameters_list_short.inc
+msgid "Definition"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:4
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Demand profile"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:9
+#: ../../_files/input_parameters_list.inc:22
+#: ../../_files/input_parameters_list.inc:35
+#: ../../_files/input_parameters_list.inc:48
+#: ../../_files/input_parameters_list.inc:74
+#: ../../_files/input_parameters_list.inc:87
+#: ../../_files/input_parameters_list.inc:100
+#: ../../_files/input_parameters_list.inc:113
+#: ../../_files/input_parameters_list.inc:139
+#: ../../_files/input_parameters_list.inc:334
+#: ../../_files/input_parameters_list.inc:347
+#: ../../_files/input_parameters_list.inc:360
+#: ../../_files/input_parameters_list.inc:373
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:126
+#: ../../_files/output_parameters_list.inc:139
+#: ../../_files/output_parameters_list.inc:152
+#: ../../_files/output_parameters_list.inc:165
+#: ../../_files/output_parameters_list.inc:178
+#: ../../_files/output_parameters_list.inc:204
+#: ../../_files/output_parameters_list.inc:217
+#: ../../_files/output_parameters_list.inc:243
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Technical"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:6
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"The energy demand time serie with timestep (if different energy types are"
+" considered different profiles must be given)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:17
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Energy timeseries"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:20
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:176
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "kWh"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:23
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "between 0 and 1 (normalized with maximum)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:19
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Specific timeseries of energy sources from a primary-secondary "
+"transformation (e.g. PV, Wind)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:30
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Source power mix"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:33
+#: ../../_files/input_parameters_list.inc:46
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:46
+#: ../../_files/output_parameters_list.inc:124
+#: ../../_files/output_parameters_list.inc:137
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Percentage"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:32
+#: ../../_files/input_parameters_list_short.inc:1
+#, python-format
+msgid "Percentage of each source of power (inclusive % from Grid)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:43
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Lower bound renewable energy share"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:47
+#: ../../_files/input_parameters_list.inc:60
+#: ../../_files/input_parameters_list.inc:73
+#: ../../_files/input_parameters_list.inc:86
+#: ../../_files/input_parameters_list.inc:99
+#: ../../_files/input_parameters_list.inc:112
+#: ../../_files/input_parameters_list.inc:125
+#: ../../_files/input_parameters_list.inc:138
+#: ../../_files/input_parameters_list.inc:151
+#: ../../_files/input_parameters_list.inc:177
+#: ../../_files/input_parameters_list.inc:190
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:8
+#: ../../_files/output_parameters_list.inc:21
+#: ../../_files/output_parameters_list.inc:34
+#: ../../_files/output_parameters_list.inc:47
+#: ../../_files/output_parameters_list.inc:60
+#: ../../_files/output_parameters_list.inc:73
+#: ../../_files/output_parameters_list.inc:86
+#: ../../_files/output_parameters_list.inc:98
+#: ../../_files/output_parameters_list.inc:111
+#: ../../_files/output_parameters_list.inc:125
+#: ../../_files/output_parameters_list.inc:138
+#: ../../_files/output_parameters_list.inc:151
+#: ../../_files/output_parameters_list.inc:164
+#: ../../_files/output_parameters_list.inc:177
+#: ../../_files/output_parameters_list.inc:189
+#: ../../_files/output_parameters_list.inc:203
+#: ../../_files/output_parameters_list.inc:216
+#: ../../_files/output_parameters_list.inc:228
+#: ../../_files/output_parameters_list.inc:242
+#: ../../_files/output_parameters_list.inc:254
+#: ../../_files/output_parameters_list.inc:268
+#: ../../_files/output_parameters_list.inc:280
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "None"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:45
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"A constraint that specifies the lower bound on the share of renewable "
+"energies in the optimized output energy mix"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:56
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "CO2 upper limit"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:59
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "T of CO2"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:61
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:35
+#: ../../_files/output_parameters_list.inc:48
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Environmental"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:58
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "A constraint that specifies an upper bound on the CO2 emissions"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:69
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Energy sources capacities"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:72
+#: ../../_files/input_parameters_list.inc:85
+#: ../../_files/input_parameters_list.inc:98
+#: ../../_files/input_parameters_list.inc:111
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:150
+#: ../../_files/output_parameters_list.inc:163
+#: ../../_files/output_parameters_list.inc:241
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "kW"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:71
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Energy sources with their capacity open for optimization"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:82
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Storage units"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:84
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Energy storage units with their capacity and technology"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:95
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Existing energy source infrastructure"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:97
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Existing energy infrastructure not up for optimization (with given "
+"capacities)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:108
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Existing energy storage infrastructure"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:110
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Existing storage infrastructure not up for optimization (with given "
+"capacities)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:121
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "GPS coordinates"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:126
+#: ../../_files/input_parameters_list.inc:269
+#: ../../_files/input_parameters_list.inc:282
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "GIS"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:123
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"GPS coordinate of the location, to retrieve the weather conditions in "
+"case of missing timeseries. Could be a point, a set of points, or a "
+"polygon"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:134
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Grid parameters (v2.0 of the tool)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:136
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Grid parameters such as:  power, voltage, frequence, line length, line "
+"impedance, transformers, topology"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:147
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:82
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Degree of Autonomy (DA)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:150
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:72
+#: ../../_files/output_parameters_list.inc:85
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "factor"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:152
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Constraint"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:153
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:75
+#: ../../_files/output_parameters_list.inc:88
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "between 0 and 1"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:149
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Degree of Autonomy or self sufficiency wished (capability of the system "
+"to sustain a certain part of the load)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:160
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Temporal resolution of simulation"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:165
+#: ../../_files/input_parameters_list.inc:397
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:267
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Time"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:162
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Time step of the simulation. The user should be aware that a higher "
+"resolution require more data and can lead to longer simulation times "
+"(might be already in the provided timeseries)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:173
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Optimization goal"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:178
+#: ../../_files/input_parameters_list.inc:399
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Simulation"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:175
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"The quantities which govern the optimization (CO2, costs, renewable "
+"maximization in energy mix, degree of autonomy, multi-objectives)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:186
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Maximum investment budget"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:189
+#: ../../_files/input_parameters_list.inc:202
+#: ../../_files/input_parameters_list.inc:215
+#: ../../_files/input_parameters_list.inc:228
+#: ../../_files/input_parameters_list.inc:241
+#: ../../_files/input_parameters_list.inc:254
+#: ../../_files/input_parameters_list.inc:384
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:7
+#: ../../_files/output_parameters_list.inc:20
+#: ../../_files/output_parameters_list.inc:59
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "EUR"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:191
+#: ../../_files/input_parameters_list.inc:204
+#: ../../_files/input_parameters_list.inc:217
+#: ../../_files/input_parameters_list.inc:230
+#: ../../_files/input_parameters_list.inc:243
+#: ../../_files/input_parameters_list.inc:256
+#: ../../_files/input_parameters_list.inc:386
+#: ../../_files/input_parameters_list_short.inc:1
+#: ../../_files/output_parameters_list.inc:9
+#: ../../_files/output_parameters_list.inc:22
+#: ../../_files/output_parameters_list.inc:61
+#: ../../_files/output_parameters_list.inc:269
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Financial"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:188
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Upper bound on the investment budget"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:199
+#: ../../_files/input_parameters_list.inc:201
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Current price of CO2 emission certificates"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:212
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Future price estimates for CO2 emission certificates"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:214
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Timeseries of future price  for CO2 emission certificates (values from "
+"the EU-ETS and DE-ETS)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:225
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Interest rate"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:229
+#: ../../_files/input_parameters_list.inc:255
+#: ../../_files/input_parameters_list.inc:385
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Value provided"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:227
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"A guess of what the  interest rate will be in during the project "
+"lifetime. Could be provided as constant or timeseries."
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:238
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Costs of replacement"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:242
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Value provided for each accepted asset type"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:240
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Costs of replacement/improvement of the current system components/assets"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:251
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Grid stability fee"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:253
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Fee/payment for contribution to grid stability"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:264
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Spatial resolution"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:266
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Define the wished spatial resolution (it is wished that it can range from"
+" building up to districts)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:277
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "New power plant available space"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:279
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Available space for new power plants (for PV installation for example)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:290
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Consumer requirements"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:295
+#: ../../_files/input_parameters_list.inc:308
+#: ../../_files/input_parameters_list.inc:321
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "GIS/Technical"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:292
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"consumer requirements such as a specific localisation and wished minimal "
+"load profile (e.g. in an industry park)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:303
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Existing grid structure (v2.0 of the tool)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:305
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "GPS coordinates of current grid structure (lines and hubs)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:316
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Future grid structure (v2.0 of the tool)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:318
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "GPS coordinates of future grid structure (lines and hubs)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:329
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Security of supply"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:331
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "e.g. existence of back-up system"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:342
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Balancing ratio for anciliary services"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:344
+#: ../../_files/input_parameters_list_short.inc:1
+msgid ""
+"Balancing ratio for ancilliary services (need a more precise definition "
+"as PF could not re-figure out what this means)"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:355
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Number of future extra users"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:357
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Number of future extra user in energy cell"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:368
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Load types"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:370
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Designation of flexible and non-flexible loads in the load profile"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:381
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Costs of asset use"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:383
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "The price of a liter of diesel or a kWh from the grid"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:394
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "Project lifetime"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:396
+#: ../../_files/input_parameters_list_short.inc:1
+msgid "The lifetime of the project (simulation time)"
+msgstr ""
+
+#: ../../parameters.rst:24 ../../parameters.rst:48
+msgid "Another way to display the Inputs"
+msgstr ""
+
+#: ../../_files/input_parameters_list.inc:7
+#: ../../_files/input_parameters_list.inc:8
+#: ../../_files/input_parameters_list.inc:10
+#: ../../_files/input_parameters_list.inc:21
+#: ../../_files/input_parameters_list.inc:34
+#: ../../_files/input_parameters_list.inc:36
+#: ../../_files/input_parameters_list.inc:49
+#: ../../_files/input_parameters_list.inc:62
+#: ../../_files/input_parameters_list.inc:75
+#: ../../_files/input_parameters_list.inc:88
+#: ../../_files/input_parameters_list.inc:101
+#: ../../_files/input_parameters_list.inc:114
+#: ../../_files/input_parameters_list.inc:124
+#: ../../_files/input_parameters_list.inc:127
+#: ../../_files/input_parameters_list.inc:137
+#: ../../_files/input_parameters_list.inc:140
+#: ../../_files/input_parameters_list.inc:163
+#: ../../_files/input_parameters_list.inc:164
+#: ../../_files/input_parameters_list.inc:166
+#: ../../_files/input_parameters_list.inc:176
+#: ../../_files/input_parameters_list.inc:179
+#: ../../_files/input_parameters_list.inc:192
+#: ../../_files/input_parameters_list.inc:203
+#: ../../_files/input_parameters_list.inc:205
+#: ../../_files/input_parameters_list.inc:216
+#: ../../_files/input_parameters_list.inc:218
+#: ../../_files/input_parameters_list.inc:231
+#: ../../_files/input_parameters_list.inc:244
+#: ../../_files/input_parameters_list.inc:257
+#: ../../_files/input_parameters_list.inc:267
+#: ../../_files/input_parameters_list.inc:268
+#: ../../_files/input_parameters_list.inc:270
+#: ../../_files/input_parameters_list.inc:280
+#: ../../_files/input_parameters_list.inc:281
+#: ../../_files/input_parameters_list.inc:283
+#: ../../_files/input_parameters_list.inc:293
+#: ../../_files/input_parameters_list.inc:294
+#: ../../_files/input_parameters_list.inc:296
+#: ../../_files/input_parameters_list.inc:306
+#: ../../_files/input_parameters_list.inc:307
+#: ../../_files/input_parameters_list.inc:309
+#: ../../_files/input_parameters_list.inc:319
+#: ../../_files/input_parameters_list.inc:320
+#: ../../_files/input_parameters_list.inc:322
+#: ../../_files/input_parameters_list.inc:332
+#: ../../_files/input_parameters_list.inc:333
+#: ../../_files/input_parameters_list.inc:335
+#: ../../_files/input_parameters_list.inc:345
+#: ../../_files/input_parameters_list.inc:346
+#: ../../_files/input_parameters_list.inc:348
+#: ../../_files/input_parameters_list.inc:358
+#: ../../_files/input_parameters_list.inc:359
+#: ../../_files/input_parameters_list.inc:361
+#: ../../_files/input_parameters_list.inc:371
+#: ../../_files/input_parameters_list.inc:372
+#: ../../_files/input_parameters_list.inc:374
+#: ../../_files/input_parameters_list.inc:387
+#: ../../_files/input_parameters_list.inc:398
+#: ../../_files/input_parameters_list.inc:400
+#: ../../_files/output_parameters_list.inc:10
+#: ../../_files/output_parameters_list.inc:99
+#: ../../_files/output_parameters_list.inc:101
+#: ../../_files/output_parameters_list.inc:112
+#: ../../_files/output_parameters_list.inc:114
+#: ../../_files/output_parameters_list.inc:127
+#: ../../_files/output_parameters_list.inc:140
+#: ../../_files/output_parameters_list.inc:153
+#: ../../_files/output_parameters_list.inc:166
+#: ../../_files/output_parameters_list.inc:179
+#: ../../_files/output_parameters_list.inc:190
+#: ../../_files/output_parameters_list.inc:192
+#: ../../_files/output_parameters_list.inc:202
+#: ../../_files/output_parameters_list.inc:205
+#: ../../_files/output_parameters_list.inc:218
+#: ../../_files/output_parameters_list.inc:229
+#: ../../_files/output_parameters_list.inc:231
+#: ../../_files/output_parameters_list.inc:244
+#: ../../_files/output_parameters_list.inc:255
+#: ../../_files/output_parameters_list.inc:257
+#: ../../_files/output_parameters_list.inc:281
+#: ../../_files/output_parameters_list.inc:283
+msgid "nan"
+msgstr ""
+
+#: ../../parameters.rst:32
+msgid "Outputs"
+msgstr ""
+
+#: ../../parameters.rst:34
+msgid "Outputs are necessary values for the optimization."
+msgstr ""
+
+#: ../../parameters.rst:35
+msgid ""
+"All outputs have default values that can be replaced by the user if "
+"desired."
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:4
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Costs for CO2 emission"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:6
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Calculated costs for CO2 emission certificates (current and future) from "
+"inputs"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:17
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "LCOE"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:23
+#: ../../_files/output_parameters_list.inc:36
+#: ../../_files/output_parameters_list.inc:49
+#: ../../_files/output_parameters_list.inc:62
+#: ../../_files/output_parameters_list.inc:270
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "0 or above"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:19
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Levelized costs of energy"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:30
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Emissions CO2eq"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:33
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "T of CO2eq"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:32
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Emissions of CO2eq  (gCO2eq/kWh, TCO2eq emitted)"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:43
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Relative emissions CO2eq"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:45
+#: ../../_files/output_parameters_list_short.inc:1
+#, python-format
+msgid ""
+"Emissions of CO2eq relative to another scenario (% reduced emissions "
+"compared to another scenario. E.g: BAU)"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:56
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Investment needed"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:58
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Total investment needed"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:69
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Degree of sector-coupling"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:74
+#: ../../_files/output_parameters_list.inc:87
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "KPI"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:71
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"A synergy index of the energy system expressed via the DOA defined in a "
+"publication of RLI"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:84
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Degree of Autonomy or self sufficiency obtained, typically a number "
+"between 0 and 1"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:95
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Transformation pathway"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:100
+#: ../../_files/output_parameters_list.inc:113
+#: ../../_files/output_parameters_list.inc:191
+#: ../../_files/output_parameters_list.inc:230
+#: ../../_files/output_parameters_list.inc:256
+#: ../../_files/output_parameters_list.inc:282
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Report"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:97
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Enable the user to carry out this analysis on how to get from current "
+"situation to future situation from the other outputs. The pathway itself "
+"shall not be output by the simulation as it depends on policies and human"
+" political decisions as well"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:108
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Scenarios comparisons"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:110
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Comparison of different energy systems  and energy mixs (like RLI stemp-"
+"mv tool). Could compare energy savings, costs savings, CO2 savings"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:121
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Energy mix"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:123
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Percentage of each asset for each energy type."
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:134
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Renewable energy share"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:136
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "The share of renewable energy produced in the output energy mix"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:147
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Wasted energy"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:149
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Energy which could not be stored, or was lost in Joule effect (heating), "
+"i.e. losses in heat boilers"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:160
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Installed  capacity"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:162
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"The minimal capacity that needs to be installed in order to meet peak "
+"demand"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:173
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Installed power"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:175
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "The aggregated power that needs to be produced in order to meet demand"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:186
+#: ../../_files/output_parameters_list.inc:188
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Calculate network requirements or expansion possibilities"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:199
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Grid equipment requirements"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:201
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Number of new transformers (v2.0 of the tool)"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:212
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Grid cable requirements"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:215
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "km"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:214
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "length and size of new cables required (v2.0 of the tool)"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:225
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Available generation technologies"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:227
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"List of existing technologies which could fulfill the capacity without "
+"exceeding the costs"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:238
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Required storage"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:240
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Required size to sustain peak demands for each storage technology (only "
+"if storage is part of input)"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:251
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Connection points"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:253
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"Transfer interfaces with existing supply structures "
+"(gas/electricity/water/wastewater)"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:264
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "Amortisation period of system improvements"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:266
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"How many months/years should one wait to get back the money invested in "
+"the components/assets"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:277
+#: ../../_files/output_parameters_list_short.inc:1
+msgid "List of support programmes"
+msgstr ""
+
+#: ../../_files/output_parameters_list.inc:279
+#: ../../_files/output_parameters_list_short.inc:1
+msgid ""
+"List of support programmes (government, NGO, World Bank) which criteria "
+"are fulfilled by the output energy system"
+msgstr ""
+

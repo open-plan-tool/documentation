@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../abstract_components/project.rst:2
+msgid "Project"
+msgstr ""
+
+#: ../../abstract_components/project.rst:8
+msgid "Attributes"
+msgstr ""
+
+#: ../../abstract_components/project.rst:13
+msgid "**Project as an object**"
+msgstr ""
+
+#: ../../abstract_components/project.rst:11
+msgid ""
+"Project is an object that exists in the computer's temporary memory "
+"(RAM). It can be considered as the a concept that holds one or more "
+"scenarios of the energy system simulation sharing some common "
+"characteristics."
+msgstr ""
+
+#: ../../abstract_components/project.rst:13
+msgid ""
+"It could be saved to the permanent memory by saving the data the object "
+"holds to disk as a file of an appropriate format."
+msgstr ""
+
+#: ../../abstract_components/project.rst:16
+msgid "Actions"
+msgstr ""
+
+#: ../../abstract_components/project.rst:18
+msgid ""
+"Existing project object can be loaded through the *load_project* view "
+"component in the Landing Page view"
+msgstr ""
+
+#: ../../abstract_components/project.rst:19
+msgid ""
+"New project object can be created through the UI of the tool using the "
+"*create_project* view component in the Landing Page view"
+msgstr ""
+
+#: ../../abstract_components/project.rst:20
+msgid ""
+"Current project object can be saved to the disk by the user through the "
+"*Save Project* button that connects to the *read_write_files* view-"
+"component"
+msgstr ""
+
+#: ../../abstract_components/project.rst:24
+msgid "Requirements"
+msgstr ""
+
+#: ../../abstract_components/project.rst:26
+msgid "The objects must be accessible to other relevant view components"
+msgstr ""
+
+#: ../../abstract_components/project.rst:27
+msgid ""
+"External project objects created in other software that are to be "
+"imported into open_plan should adhere to the data standards"
+msgstr ""
+
+#: ../../abstract_components/project.rst:28
+msgid ""
+"The project object be saved to disk in an appropriate format before "
+"exiting the tool in order to be accessible later"
+msgstr ""
+
+#: ../../abstract_components/project.rst:31
+msgid "Link with views"
+msgstr ""
+
+#: ../../abstract_components/project.rst:33
+#: ../../abstract_components/project.rst:39
+msgid ":ref:`read_write_files-label`"
+msgstr ""
+
+#: ../../abstract_components/project.rst:37
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../abstract_components/project.rst:40
+msgid ""
+"This view-component is required to read and write files from and to the "
+"disk respectively"
+msgstr ""
+

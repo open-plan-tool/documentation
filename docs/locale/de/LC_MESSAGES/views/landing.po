@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../views/landing.rst:2
+msgid "Landing"
+msgstr ""
+
+#: ../../views/landing.rst:5
+msgid "Attributes"
+msgstr ""
+
+#: ../../views/landing.rst:6
+msgid "There are no attributes specific to the landing view."
+msgstr ""
+
+#: ../../views/landing.rst:9
+msgid "Active view-components"
+msgstr ""
+
+#: ../../views/landing.rst:11
+msgid ":ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../views/landing.rst:12
+msgid ":ref:`progression_bar-label`"
+msgstr ""
+
+#: ../../views/landing.rst:13
+msgid ":ref:`welcome-label`"
+msgstr ""
+
+#: ../../views/landing.rst:17
+msgid "Actions"
+msgstr ""
+
+#: ../../views/landing.rst:18
+msgid ""
+"There are no actions specific to the landing view, the possible actions "
+"are already defined in the various view-components"
+msgstr ""
+
+#: ../../views/landing.rst:21
+msgid "Requirement"
+msgstr ""
+
+#: ../../views/landing.rst:22
+msgid ""
+"the very first time the user sees this view, the :ref:`welcome-label` "
+"view-component should be displayed (popup, or integrated to the view)"
+msgstr ""
+
+#: ../../views/landing.rst:25
+msgid "Link with other views"
+msgstr ""
+
+#: ../../views/landing.rst:26
+msgid "TBD"
+msgstr ""
+
+#: ../../views/landing.rst:29
+msgid "Rendering of the view"
+msgstr ""
+
+#: ../../views/landing.rst:30
+msgid "There are currently 2 types of rendering proposed:"
+msgstr ""
+
+#: ../../views/landing.rst:33
+msgid "minimalistic:"
+msgstr ""
+
+#: ../../views/landing.rst:33
+msgid "The user is only prompted to \"build your own energy cell\""
+msgstr ""
+
+#: ../../views/landing.rst:35
+msgid "expert mode:"
+msgstr ""
+
+#: ../../views/landing.rst:36
+msgid "Most of the menu and flow charts are displayed in widget windows"
+msgstr ""
+

@@ -1,0 +1,2950 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../tool_interface.rst:5
+msgid "Tool interface description"
+msgstr ""
+
+#: ../../tool_interface.rst:7
+msgid ""
+"The tool should enable its users to model a local energy system (like an "
+"industry park or a district) with the possibility to include sector-"
+"coupling. This web-based tool is thought for planning purposes and not "
+"operation. It should allow the user to optimize the energy system model "
+"subject to equality constraints."
+msgstr ""
+
+#: ../../tool_interface.rst:9
+msgid ""
+"The optimization is taken care of in the backend with the `oemof "
+"<https://oemof.org/>`_ framework. The role of the interface is thus to "
+"gather the necessary input parameters and to provide a vizualization of "
+"the outputs."
+msgstr ""
+
+#: ../../tool_interface.rst:11
+msgid ""
+"It is wished that this interface helps several actors with different "
+"perspectives and backgrounds to run scenarios or re-run scenarios "
+"changing only a few input parameters, compare their results with other "
+"scenarios and possibly engage in a dialogue."
+msgstr ""
+
+#: ../../tool_interface.rst:13
+msgid ""
+"One way to fullfill this wish, is to design the tool's interface "
+"collaboratively: by inviting different actors in a dialogue about the "
+"interface's functionalities before implementing the interface itself."
+msgstr ""
+
+#: ../../tool_interface.rst:15
+msgid ""
+"We start by defining a few :ref:`concepts<concepts-menu>` which come "
+"handy when describing the interface and what the users will be able to "
+"interact with and see. One of these concepts is the :ref:`view-component-"
+"def`, it is analoguous to a building block we can use to describe (and "
+"then implement) the user interface functionalities in a modular way."
+msgstr ""
+
+#: ../../tool_interface.rst:18
+msgid ""
+"It is possible to deploy an interactive presentation of the :ref:`views"
+"<view-def>` made with the help of the :ref:`view-component-def` by "
+"following `these step <https://github.com/rl-"
+"institut/open_plan/blob/dev/website/README.md>`_"
+msgstr ""
+
+#: ../../tool_interface.rst:20
+msgid "We welcome feedback."
+msgstr ""
+
+#: ../../tool_interface.rst:25
+msgid "Concepts definition"
+msgstr ""
+
+#: ../../tool_interface.rst:27
+msgid ""
+"In order to describe the interface, a few definitions are required at "
+"first."
+msgstr ""
+
+#: ../../tool_interface.rst:33
+msgid "action"
+msgstr ""
+
+#: ../../tool_interface.rst:34
+msgid ""
+"An action describes what the user can do in a certain :ref:`view-def` or "
+":ref:`view-component-def`. Each action has an index which is used to link"
+" it to an :ref:`attribute-def`."
+msgstr ""
+
+#: ../../tool_interface.rst:36
+msgid "Example: [index] The user can click on button B to trigger action C"
+msgstr ""
+
+#: ../../tool_interface.rst:42
+msgid "attribute"
+msgstr ""
+
+#: ../../tool_interface.rst:43
+msgid ""
+"An attribute contains the essential information needed to characterize "
+"and render a :ref:`view-def` or a :ref:`view-component-def`. An attribute"
+" might be visible in the :ref:`view-def` or :ref:`view-component-def` but"
+" it can also just be information. An attribute can be linked to a certain"
+" number of :ref:`action-def` and to certain :ref:`requirement-def`."
+msgstr ""
+
+#: ../../tool_interface.rst:49
+msgid "energy type"
+msgstr ""
+
+#: ../../tool_interface.rst:50
+msgid ""
+"An energy type is represented by a bus. It describes the energy carrier "
+"for an energy sector: heat, electricity, gas, biomass, H2O."
+msgstr ""
+
+#: ../../tool_interface.rst:56
+msgid "main window"
+msgstr ""
+
+#: ../../tool_interface.rst:57
+msgid ""
+"It is the window from which the user can interact with the open_plan tool"
+" on their computer."
+msgstr ""
+
+#: ../../tool_interface.rst:63
+msgid "project"
+msgstr ""
+
+#: ../../tool_interface.rst:64
+msgid ""
+"A project is a collection of one to n scenarios regrouping all the inputs"
+" and a local copy in a folder of all necessary files for the "
+"optimization. A project name and a project ID must be assigned when "
+"creating it. A project can also be used for a simple scenario comparison."
+msgstr ""
+
+#: ../../tool_interface.rst:70
+msgid "requirement"
+msgstr ""
+
+#: ../../tool_interface.rst:71
+msgid ""
+"A requirement describes specific conditions that need to be met. "
+"Requirements can be used for a :ref:`view-def`, a :ref:`view-component-"
+"def`, an :ref:`action-def` or an :ref:`attribute-def`. Each requirement "
+"has an index to link with it's :ref:`attribute-def`."
+msgstr ""
+
+#: ../../tool_interface.rst:77
+msgid "scenario"
+msgstr ""
+
+#: ../../tool_interface.rst:78
+msgid ""
+"A scenario holds all the input data for an energy system. Once the "
+"optimization is done, the ouput data will be available in the same "
+"scenario."
+msgstr ""
+
+#: ../../tool_interface.rst:84
+msgid "view"
+msgstr ""
+
+#: ../../tool_interface.rst:85
+msgid ""
+"Description of a given state of the user interface: what should the user "
+"be able to interact with in that *view*, which other *view* can the user "
+"visit from the current *view*. The collection of *views* form together "
+"the user interface. Note: the view does not describe how the interface "
+"looks like to the user, this is described in the *view-rendering*."
+msgstr ""
+
+#: ../../tool_interface.rst:91
+msgid "view-component"
+msgstr ""
+
+#: ../../tool_interface.rst:92
+msgid ""
+"A *view-component* is a part of a *view* which can be described "
+"independently from the view and could be reused in different *views* (a "
+"menu bar for example). A *view-component* is described in terms of its "
+"attributes and its actions. For example a menu bar has a nested list of "
+"items (each item can itself be a list of item: submenus). Each item, if "
+"not itself a list, consists of a label (what the user will see) and an "
+"action (what will be done upon clicking/selecting the item)."
+msgstr ""
+
+#: ../../tool_interface.rst:98
+msgid "view-rendering"
+msgstr ""
+
+#: ../../tool_interface.rst:99
+msgid ""
+"Description of how a *view* or *component-view* will be rendered on the "
+"screen. This belongs to frontend and is where the details about color, "
+"size, font, placement on screen matter. For example a menu bar which is a"
+" *view-component* can have many different *view-rendering* (horizontal "
+"with buttons, expandable vertically only on hover, etc.)."
+msgstr ""
+
+#: ../../tool_interface.rst:105
+msgid "widget"
+msgstr ""
+
+#: ../../tool_interface.rst:106
+msgid ""
+"Smaller window within the tool's :ref:`main-window-def`. A *widget* can "
+"be moved around by the user within the :ref:`main-window-def` and "
+"collapsed into another *widget* (then each *widget* is accessible via "
+"tabs)."
+msgstr ""
+
+#: ../../tool_interface.rst:112
+msgid "Views definition"
+msgstr ""
+
+#: ../../views/landing.rst:2
+msgid "Landing"
+msgstr ""
+
+#: ../../abstract_components/project.rst:8
+#: ../../abstract_components/scenario.rst:8
+#: ../../view_components/create_project.rst:9
+#: ../../view_components/create_scenario.rst:9
+#: ../../view_components/energy_system_component.rst:9
+#: ../../view_components/energy_system_network.rst:10
+#: ../../view_components/energy_system_sector_selector.rst:9
+#: ../../view_components/export_project.rst:9
+#: ../../view_components/input_parameter_field.rst:9
+#: ../../view_components/load_input_dataseries.rst:9
+#: ../../view_components/load_project.rst:9
+#: ../../view_components/load_scenario.rst:10
+#: ../../view_components/menu_bar.rst:9
+#: ../../view_components/progression_bar.rst:14
+#: ../../view_components/project_list.rst:9
+#: ../../view_components/project_location.rst:11
+#: ../../view_components/project_parameters.rst:10
+#: ../../view_components/read_write_files.rst:9
+#: ../../view_components/scenario_list.rst:9
+#: ../../view_components/scenario_parameters.rst:9
+#: ../../view_components/view_specific_documentation.rst:9
+#: ../../view_components/visualize_dataseries.rst:9
+#: ../../view_components/welcome.rst:10 ../../views/landing.rst:5
+#: ../../views/scenario_comparison.rst:7
+msgid "Attributes"
+msgstr ""
+
+#: ../../views/landing.rst:6
+msgid "There are no attributes specific to the landing view."
+msgstr ""
+
+#: ../../views/landing.rst:9 ../../views/scenario_comparison.rst:17
+msgid "Active view-components"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:71
+#: ../../view_components/load_scenario.rst:70
+#: ../../view_components/progression_bar.rst:61
+#: ../../view_components/welcome.rst:59 ../../views/landing.rst:11
+#: ../../views/scenario_comparison.rst:19
+msgid ":ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:89 ../../views/landing.rst:12
+msgid ":ref:`progression_bar-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:87
+#: ../../view_components/view_specific_documentation.rst:53
+#: ../../views/landing.rst:13
+msgid ":ref:`welcome-label`"
+msgstr ""
+
+#: ../../abstract_components/project.rst:16
+#: ../../abstract_components/scenario.rst:15
+#: ../../view_components/create_project.rst:42
+#: ../../view_components/create_scenario.rst:35
+#: ../../view_components/energy_system_component.rst:46
+#: ../../view_components/energy_system_network.rst:95
+#: ../../view_components/energy_system_sector_selector.rst:36
+#: ../../view_components/export_project.rst:42
+#: ../../view_components/input_parameter_field.rst:75
+#: ../../view_components/load_input_dataseries.rst:43
+#: ../../view_components/load_project.rst:42
+#: ../../view_components/load_scenario.rst:35
+#: ../../view_components/menu_bar.rst:42
+#: ../../view_components/progression_bar.rst:40
+#: ../../view_components/project_list.rst:26
+#: ../../view_components/project_location.rst:21
+#: ../../view_components/project_parameters.rst:41
+#: ../../view_components/read_write_files.rst:40
+#: ../../view_components/scenario_list.rst:24
+#: ../../view_components/scenario_parameters.rst:26
+#: ../../view_components/view_specific_documentation.rst:34
+#: ../../view_components/visualize_dataseries.rst:23
+#: ../../view_components/welcome.rst:34 ../../views/landing.rst:17
+#: ../../views/scenario_comparison.rst:22
+msgid "Actions"
+msgstr ""
+
+#: ../../views/landing.rst:18
+msgid ""
+"There are no actions specific to the landing view, the possible actions "
+"are already defined in the various view-components"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:42
+#: ../../view_components/menu_bar.rst:73
+#: ../../view_components/progression_bar.rst:46
+#: ../../view_components/project_parameters.rst:47
+#: ../../view_components/scenario_parameters.rst:32
+#: ../../view_components/welcome.rst:41 ../../views/landing.rst:21
+#: ../../views/scenario_comparison.rst:47
+msgid "Requirement"
+msgstr ""
+
+#: ../../views/landing.rst:22
+msgid ""
+"the very first time the user sees this view, the :ref:`welcome-label` "
+"view-component should be displayed (popup, or integrated to the view)"
+msgstr ""
+
+#: ../../view_components/welcome.rst:47 ../../views/landing.rst:25
+#: ../../views/scenario_comparison.rst:51
+msgid "Link with other views"
+msgstr ""
+
+#: ../../views/landing.rst:26
+msgid "TBD"
+msgstr ""
+
+#: ../../views/landing.rst:29 ../../views/scenario_comparison.rst:54
+msgid "Rendering of the view"
+msgstr ""
+
+#: ../../views/landing.rst:30
+msgid "There are currently 2 types of rendering proposed:"
+msgstr ""
+
+#: ../../views/landing.rst:33
+msgid "minimalistic:"
+msgstr ""
+
+#: ../../views/landing.rst:33
+msgid "The user is only prompted to \"build your own energy cell\""
+msgstr ""
+
+#: ../../views/landing.rst:36
+msgid "expert mode:"
+msgstr ""
+
+#: ../../views/landing.rst:36
+msgid "Most of the menu and flow charts are displayed in widget windows"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:2
+msgid "Scenario Comparison"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:4
+msgid ""
+"*The output comparable on the \"scenario comparison view\" will be "
+"determine with oemof and the input/output excel file*"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:8 ../../views/scenario_comparison.rst:23
+msgid "**List of scenarios**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:10
+#: ../../views/scenario_comparison.rst:27
+msgid "**Different comparison points**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:12
+msgid "Technical"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:13
+msgid "Financial"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:14
+msgid "Ecological"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:25
+msgid "The user can select which scenario he would like to compare."
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:29
+msgid "Technical: Based on the technical output of the simulation"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:30
+msgid "Financial: Based on the financial output of the simulation"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:31
+msgid "Ecological: Based on the ecological output of the simulation"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:33
+msgid "**Save comparison**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:35
+msgid "Allows the user to save their comparison in the tool."
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:36
+msgid ""
+"Makes a pop up appear where the user has to select a name for his "
+"comparison."
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:38
+msgid "**Export comparison**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:40
+msgid ""
+"Allows the user to save his comparison in different format (PDF, csv, "
+"...?)"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:42
+msgid "**Import scenario**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:44
+msgid "Allows the user to import one or more scenario"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:56
+msgid "**Two possible views**"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:58
+msgid "As a table"
+msgstr ""
+
+#: ../../views/scenario_comparison.rst:59
+msgid "As a plot"
+msgstr ""
+
+#: ../../tool_interface.rst:133
+msgid "View-components definition"
+msgstr ""
+
+#: ../../view_components/welcome.rst:4
+msgid "Welcome page"
+msgstr ""
+
+#: ../../view_components/welcome.rst:6
+msgid ""
+"This view-component is an introduction for the first-time users. It "
+"describes what they can expect from the tool."
+msgstr ""
+
+#: ../../view_components/welcome.rst:13
+msgid "**Welcome message**"
+msgstr ""
+
+#: ../../view_components/welcome.rst:13
+msgid "A text"
+msgstr ""
+
+#: ../../view_components/welcome.rst:17
+msgid "**Video intro message**"
+msgstr ""
+
+#: ../../view_components/welcome.rst:16
+msgid ""
+"A short, 3 minute video clip that provides the important information such"
+" as tool features, capabilities, where to find help, etc., very briefly."
+msgstr ""
+
+#: ../../view_components/welcome.rst:17
+msgid ""
+"This clip is embedded into the welcome pop-up. The user can view it on "
+"YouTube (or Vimeo) on a separate tab of the browser by clicking on a link"
+" on the video."
+msgstr ""
+
+#: ../../view_components/welcome.rst:22
+msgid "**List of Hyperlinks**"
+msgstr ""
+
+#: ../../view_components/welcome.rst:20
+msgid ""
+"Clickable links to read more, documentation, examples, use-cases, video "
+"tutorials, code-base (GitHub repo) and contact us."
+msgstr ""
+
+#: ../../view_components/welcome.rst:22
+msgid "Action index: 1"
+msgstr ""
+
+#: ../../view_components/welcome.rst:31
+msgid "**Check-box: do not show again**"
+msgstr ""
+
+#: ../../view_components/welcome.rst:25
+msgid ""
+"Disable/enable the display of the welcome view-component when tool is "
+"started."
+msgstr ""
+
+#: ../../view_components/create_project.rst:19
+#: ../../view_components/create_project.rst:33
+#: ../../view_components/energy_system_component.rst:29
+#: ../../view_components/energy_system_network.rst:18
+#: ../../view_components/energy_system_network.rst:29
+#: ../../view_components/energy_system_network.rst:40
+#: ../../view_components/energy_system_network.rst:50
+#: ../../view_components/energy_system_network.rst:59
+#: ../../view_components/energy_system_network.rst:69
+#: ../../view_components/energy_system_network.rst:80
+#: ../../view_components/energy_system_network.rst:92
+#: ../../view_components/energy_system_sector_selector.rst:17
+#: ../../view_components/energy_system_sector_selector.rst:25
+#: ../../view_components/energy_system_sector_selector.rst:33
+#: ../../view_components/export_project.rst:19
+#: ../../view_components/export_project.rst:33
+#: ../../view_components/input_parameter_field.rst:60
+#: ../../view_components/load_project.rst:19
+#: ../../view_components/load_project.rst:33
+#: ../../view_components/progression_bar.rst:29
+#: ../../view_components/read_write_files.rst:17
+#: ../../view_components/read_write_files.rst:31
+#: ../../view_components/visualize_dataseries.rst:14
+#: ../../view_components/visualize_dataseries.rst:20
+#: ../../view_components/welcome.rst:29
+msgid "Properties:"
+msgstr ""
+
+#: ../../view_components/welcome.rst:28
+msgid "id `cb_welcome_show_again`"
+msgstr ""
+
+#: ../../view_components/welcome.rst:29
+msgid "unticked by default"
+msgstr ""
+
+#: ../../view_components/welcome.rst:31
+msgid "Action index: 2"
+msgstr ""
+
+#: ../../view_components/welcome.rst:36
+msgid ""
+"Clicking on the hyperlinks will open the respective topic in separate "
+"tabs of the browser."
+msgstr ""
+
+#: ../../view_components/welcome.rst:37
+msgid ""
+"Checking the `Do not show again` check-box would disable the display of "
+"this view component everytime the software is launched."
+msgstr ""
+
+#: ../../view_components/welcome.rst:38
+msgid ""
+"The user can close the welcome window by clicking the :guilabel:`&X` "
+"button in the top right corner."
+msgstr ""
+
+#: ../../view_components/welcome.rst:43
+msgid ""
+"By default, the welcome view-component should be displayed to the user "
+"everytime the software is started."
+msgstr ""
+
+#: ../../view_components/welcome.rst:44
+msgid ""
+"If the user ticks the check-box *Do not show again*, the welcome view-"
+"component should not appear to the user during any subsequent launch of "
+"the tool."
+msgstr ""
+
+#: ../../view_components/welcome.rst:49
+msgid ""
+"This window is displayed by default on top of everything every time the "
+"tool is launched."
+msgstr ""
+
+#: ../../abstract_components/project.rst:37
+#: ../../abstract_components/scenario.rst:36
+#: ../../view_components/create_project.rst:73
+#: ../../view_components/create_scenario.rst:66
+#: ../../view_components/energy_system_component.rst:69
+#: ../../view_components/energy_system_network.rst:113
+#: ../../view_components/energy_system_sector_selector.rst:48
+#: ../../view_components/export_project.rst:73
+#: ../../view_components/input_parameter_field.rst:95
+#: ../../view_components/load_input_dataseries.rst:69
+#: ../../view_components/load_project.rst:73
+#: ../../view_components/load_scenario.rst:65
+#: ../../view_components/menu_bar.rst:84
+#: ../../view_components/progression_bar.rst:59
+#: ../../view_components/project_list.rst:54
+#: ../../view_components/project_location.rst:41
+#: ../../view_components/project_parameters.rst:51
+#: ../../view_components/read_write_files.rst:71
+#: ../../view_components/scenario_list.rst:48
+#: ../../view_components/scenario_parameters.rst:36
+#: ../../view_components/view_specific_documentation.rst:50
+#: ../../view_components/visualize_dataseries.rst:41
+#: ../../view_components/welcome.rst:53
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:57
+#: ../../view_components/load_scenario.rst:57
+#: ../../view_components/progression_bar.rst:56
+#: ../../view_components/project_list.rst:51
+#: ../../view_components/welcome.rst:55
+msgid ":ref:`landing-label`"
+msgstr ""
+
+#: ../../view_components/welcome.rst:59
+msgid ""
+"The user can later re-enable the appearance of the  welcome view-"
+"component by clicking *Display welcome view* in *Preferences* from the "
+"menu."
+msgstr ""
+
+#: ../../view_components/create_project.rst:83
+#: ../../view_components/create_scenario.rst:74
+#: ../../view_components/energy_system_component.rst:75
+#: ../../view_components/energy_system_network.rst:117
+#: ../../view_components/energy_system_sector_selector.rst:54
+#: ../../view_components/export_project.rst:83
+#: ../../view_components/input_parameter_field.rst:102
+#: ../../view_components/load_input_dataseries.rst:82
+#: ../../view_components/load_project.rst:83
+#: ../../view_components/load_scenario.rst:73
+#: ../../view_components/menu_bar.rst:99
+#: ../../view_components/progression_bar.rst:65
+#: ../../view_components/project_list.rst:64
+#: ../../view_components/project_location.rst:47
+#: ../../view_components/project_parameters.rst:54
+#: ../../view_components/read_write_files.rst:81
+#: ../../view_components/scenario_list.rst:57
+#: ../../view_components/scenario_parameters.rst:39
+#: ../../view_components/view_specific_documentation.rst:68
+#: ../../view_components/visualize_dataseries.rst:48
+#: ../../view_components/welcome.rst:62
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/welcome.rst:63
+msgid ""
+"This view-component could be either a popup on top of the :ref:`landing-"
+"view`, :ref:`widget-def` in the landing view or a :ref:`view-def` on its "
+"own."
+msgstr ""
+
+#: ../../view_components/welcome.rst:65
+msgid ""
+"The welcome message should be centered and not contain very long text, "
+"but rather bullet points with links to more detailed documentation. The "
+"video should be placed on the top left of the view-component and start "
+"automatically without the sound."
+msgstr ""
+
+#: ../../view_components/welcome.rst:67
+msgid "Below the welcome message the hyperlinks could be listed and centered."
+msgstr ""
+
+#: ../../view_components/welcome.rst:69
+msgid ""
+"The *Do not show again* check-box can be displayed on the bottom of the "
+"view-component (bottom-left?) with larger fontsize such that the user "
+"cannot miss it. It should be unticked by default."
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:4
+msgid "Progression Bar"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:6
+msgid ""
+"The Progression Bar displays the sequential steps the user should go "
+"through, in order to provide the input parameters required to describe an"
+" energy system and a :ref:`scenario-label` to simulate with this energy "
+"system model"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:8
+msgid "This view-component allows the user to:"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:10
+msgid ""
+"Sequentially progress through the modeling and definition of their :ref"
+":`scenario-label`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:11
+msgid "Jump directly to previous steps to edit input parameters"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:31
+msgid "**List of steps**"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:17
+msgid "For example the following steps:"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:19
+msgid "Project Setup"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:20
+msgid "Inputs"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:21
+msgid "System Inputs"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:22
+msgid "Visualization"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:23
+msgid "Constraints"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:24
+msgid "Simulations"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:25
+msgid "Results"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:28
+msgid ""
+"Each step has an associated index (starting from 1), corresponding to its"
+" position in the list of steps"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:29
+msgid "Each step in the progression bar is a link to a :ref:`view <views-label>`"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:31
+msgid "Actions index: 1, 2"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:37
+msgid "**Current step index**"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:34
+msgid "The index of the currently selected step"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:18
+#: ../../view_components/input_parameter_field.rst:44
+#: ../../view_components/progression_bar.rst:36
+#: ../../view_components/project_location.rst:18
+msgid "Requirements index: 1"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:42
+msgid ""
+"Clicking on a step that has already been fulfilled, allows the user to "
+"make modifications to the inputs within this field"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:43
+msgid ""
+"Clicking on a step which is disabled, make a small text bubble appear "
+"next to the step explaining why the user cannot click on that step"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:48
+msgid ""
+"To enable the next step, the user has to fulfill the requirements of the "
+"current step. Each step's requirements are defined in its respective "
+":ref:`view <views-label>`"
+msgstr ""
+
+#: ../../abstract_components/project.rst:31
+#: ../../abstract_components/scenario.rst:30
+#: ../../view_components/create_project.rst:63
+#: ../../view_components/create_scenario.rst:52
+#: ../../view_components/energy_system_component.rst:64
+#: ../../view_components/export_project.rst:63
+#: ../../view_components/input_parameter_field.rst:90
+#: ../../view_components/load_input_dataseries.rst:60
+#: ../../view_components/load_project.rst:63
+#: ../../view_components/load_scenario.rst:52
+#: ../../view_components/menu_bar.rst:78
+#: ../../view_components/progression_bar.rst:51
+#: ../../view_components/project_list.rst:47
+#: ../../view_components/project_location.rst:31
+#: ../../view_components/read_write_files.rst:61
+#: ../../view_components/scenario_list.rst:44
+#: ../../view_components/view_specific_documentation.rst:46
+#: ../../view_components/visualize_dataseries.rst:32
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:53
+msgid "Here will be a link to the views of each steps"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:56
+msgid ""
+"It is not sure yet whether this view-component should be visible from "
+"start, join the on-going discussion `here <https://github.com/rl-"
+"institut/open_plan/issues/48>`_"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:67
+msgid ""
+"Ribbon-like display of the progression bar where each step is delimited "
+"by an individual blob, the structure is identical throughout the "
+"different views. The term blob is employed to signify that the shape is "
+"up to a decision (non-exhaustive list of examples: a rectangle, an "
+"ellipse, a circle, an arrow)"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:68
+msgid ""
+"Indication of the steps order could be with arrow shaped blob, or with "
+"arrow symbols between the blobs"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:69
+msgid ""
+"Color coding of the blobs backgrounds can be used to indicate whether the"
+" step has already be visited, is not fulfilled yet, disabled or enabled"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:70
+msgid ""
+"The progression bar could be horizontal or vertical (it is assumed from "
+"left to right and top to bottom, but this can be debated)"
+msgstr ""
+
+#: ../../view_components/progression_bar.rst:72
+msgid ""
+"Here is an example of one possible rendering, please note that this is "
+"not a final design, only an example"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:4
+msgid "Menu Bar"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:6
+msgid "Menu bar is a set of options linked to actions, or submenus."
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:14
+msgid "**The following are the menus available in the menu bar:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:12 ../../view_components/menu_bar.rst:51
+msgid "File"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:13 ../../view_components/menu_bar.rst:57
+msgid "Scenarios"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:14 ../../view_components/menu_bar.rst:61
+msgid "Preferences"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:15 ../../view_components/menu_bar.rst:70
+msgid "Help"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:21
+msgid "***File* has the following submenus or options:**"
+msgstr ""
+
+#: ../../view_components/load_project.rst:4
+#: ../../view_components/menu_bar.rst:17 ../../view_components/menu_bar.rst:47
+msgid "Load project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:18 ../../view_components/menu_bar.rst:48
+msgid "New project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:19 ../../view_components/menu_bar.rst:49
+msgid "Save project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:20 ../../view_components/menu_bar.rst:50
+msgid "Save project as"
+msgstr ""
+
+#: ../../view_components/export_project.rst:4
+#: ../../view_components/menu_bar.rst:21
+msgid "Export project"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:22 ../../view_components/menu_bar.rst:52
+msgid "Exit open_plan"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:27
+msgid "***Scenarios* has the following submenus:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:24
+msgid "New scenario"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:25
+msgid "Load scenario"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:26
+msgid "Compare scenarios"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:27 ../../view_components/menu_bar.rst:57
+msgid "---- (separating horizontal line)"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:28 ../../view_components/menu_bar.rst:58
+msgid "List of scenarios in the system"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:31
+msgid "***Preferences* has the following submenus:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:30
+msgid "Language"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:31 ../../view_components/menu_bar.rst:61
+msgid "Display"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:32
+msgid "Display welcome view"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:39
+msgid "***Help* has the following submenus:**"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:34
+msgid "Read documentation"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:35
+msgid "Examples and use cases"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:36
+msgid "Contact developers"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:37
+msgid "Feedback"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:38
+msgid "License information"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:39
+msgid "About open_plan..."
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:44
+msgid ""
+"Clicking on any of the menus' option results in a drop-down list of sub-"
+"menu's options if applicable, otherwise trigger an action"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:51
+msgid "Export project: display :ref:`export_project-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:54
+msgid "New scenario: display :ref:`create_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:55
+msgid "Load scenario: display :ref:`load_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:56
+msgid "Compare scenarios: display view :ref:`scenario_comparison-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:60
+msgid "Language: not sure whether this will be implemented"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:62
+msgid "Display welcome view: display :ref:`welcome-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:64
+msgid ""
+"Read documentation: redirect to `ReadTheDocs documentation <https://open-"
+"plan.readthedocs.io/en/latest/>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:65
+msgid "Examples and use cases: redirect to ReadTheDocs usecases TODO: add link"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:66
+msgid ""
+"Contact developers: redirect to `Github issues <https://github.com/rl-"
+"institut/open_plan/issues/new/choose>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:67
+msgid ""
+"Feedback redirect to `Github issues <https://github.com/rl-"
+"institut/open_plan/issues/new/choose>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:68
+msgid ""
+"License information: redirect to `Github license <https://github.com/rl-"
+"institut/open_plan/blob/dev/LICENSE>`_"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:69
+msgid "About open_plan...: redirect to open_plan website TODO: add link"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:75
+msgid ""
+"The menu/submenu's options that are not applicable are greyed out or "
+"inactive and thus, nothing happens when clicked upon"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:80
+msgid ":ref:`scenario_comparison-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:87
+msgid ""
+"The welcome view-component can be re-enabled if it was disabled by the "
+"user from appearing everytime the tool is launched."
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:91
+msgid ":ref:`export_project-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:93
+msgid ":ref:`create_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:95
+msgid ":ref:`load_scenario-label`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:101
+msgid ""
+"Rectangular drop-down menu buttons present on a horizontal bar on top of "
+"the :ref:`main-window-def`"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:102
+msgid "Rendered on every view of the tool UI"
+msgstr ""
+
+#: ../../view_components/menu_bar.rst:103
+msgid ""
+"The current scenario is highlighted in the drop-down list which results "
+"when the *Scenarios* menu is clicked"
+msgstr ""
+
+#: ../../view_components/create_project.rst:4
+msgid "Create project"
+msgstr ""
+
+#: ../../view_components/create_project.rst:6
+#: ../../view_components/export_project.rst:6
+#: ../../view_components/load_project.rst:6
+msgid "This is not described yet"
+msgstr ""
+
+#: ../../view_components/create_project.rst:23
+#: ../../view_components/export_project.rst:23
+#: ../../view_components/load_project.rst:23
+#: ../../view_components/read_write_files.rst:21
+msgid "**Attribute A**"
+msgstr ""
+
+#: ../../view_components/create_project.rst:14
+#: ../../view_components/create_project.rst:28
+#: ../../view_components/export_project.rst:14
+#: ../../view_components/export_project.rst:28
+#: ../../view_components/load_project.rst:14
+#: ../../view_components/load_project.rst:28
+#: ../../view_components/read_write_files.rst:12
+#: ../../view_components/read_write_files.rst:26
+msgid "Description"
+msgstr ""
+
+#: ../../view_components/create_project.rst:17
+#: ../../view_components/create_project.rst:31
+#: ../../view_components/export_project.rst:17
+#: ../../view_components/export_project.rst:31
+#: ../../view_components/load_project.rst:17
+#: ../../view_components/load_project.rst:31
+#: ../../view_components/read_write_files.rst:15
+#: ../../view_components/read_write_files.rst:29
+msgid "Property 1"
+msgstr ""
+
+#: ../../view_components/create_project.rst:18
+#: ../../view_components/create_project.rst:32
+#: ../../view_components/export_project.rst:18
+#: ../../view_components/export_project.rst:32
+#: ../../view_components/load_project.rst:18
+#: ../../view_components/load_project.rst:32
+#: ../../view_components/read_write_files.rst:16
+#: ../../view_components/read_write_files.rst:30
+msgid "..."
+msgstr ""
+
+#: ../../view_components/create_project.rst:19
+#: ../../view_components/create_project.rst:33
+#: ../../view_components/export_project.rst:19
+#: ../../view_components/export_project.rst:33
+#: ../../view_components/load_project.rst:19
+#: ../../view_components/load_project.rst:33
+#: ../../view_components/read_write_files.rst:17
+#: ../../view_components/read_write_files.rst:31
+msgid "Property n"
+msgstr ""
+
+#: ../../view_components/create_project.rst:21
+#: ../../view_components/create_project.rst:35
+#: ../../view_components/energy_system_component.rst:31
+#: ../../view_components/export_project.rst:21
+#: ../../view_components/export_project.rst:35
+#: ../../view_components/load_project.rst:21
+#: ../../view_components/load_project.rst:35
+#: ../../view_components/read_write_files.rst:19
+#: ../../view_components/read_write_files.rst:33
+msgid "Actions index:"
+msgstr ""
+
+#: ../../view_components/create_project.rst:23
+#: ../../view_components/create_project.rst:37
+#: ../../view_components/energy_system_component.rst:33
+#: ../../view_components/energy_system_network.rst:22
+#: ../../view_components/energy_system_network.rst:33
+#: ../../view_components/energy_system_network.rst:44
+#: ../../view_components/energy_system_network.rst:63
+#: ../../view_components/energy_system_network.rst:73
+#: ../../view_components/energy_system_network.rst:84
+#: ../../view_components/export_project.rst:23
+#: ../../view_components/export_project.rst:37
+#: ../../view_components/load_input_dataseries.rst:18
+#: ../../view_components/load_input_dataseries.rst:30
+#: ../../view_components/load_input_dataseries.rst:35
+#: ../../view_components/load_project.rst:23
+#: ../../view_components/load_project.rst:37
+#: ../../view_components/read_write_files.rst:21
+#: ../../view_components/read_write_files.rst:35
+#: ../../view_components/view_specific_documentation.rst:16
+#: ../../view_components/view_specific_documentation.rst:31
+msgid "Requirements index:"
+msgstr ""
+
+#: ../../view_components/create_project.rst:37
+#: ../../view_components/export_project.rst:37
+#: ../../view_components/load_project.rst:37
+#: ../../view_components/read_write_files.rst:35
+msgid "**Attribute B**"
+msgstr ""
+
+#: ../../view_components/create_project.rst:47
+#: ../../view_components/export_project.rst:47
+#: ../../view_components/load_project.rst:47
+#: ../../view_components/project_list.rst:31
+#: ../../view_components/read_write_files.rst:45
+msgid "Action 1"
+msgstr ""
+
+#: ../../view_components/create_project.rst:48
+#: ../../view_components/export_project.rst:48
+#: ../../view_components/load_project.rst:48
+#: ../../view_components/project_list.rst:32
+#: ../../view_components/read_write_files.rst:46
+msgid "Action 2"
+msgstr ""
+
+#: ../../abstract_components/project.rst:24
+#: ../../abstract_components/scenario.rst:23
+#: ../../view_components/create_project.rst:51
+#: ../../view_components/create_scenario.rst:42
+#: ../../view_components/energy_system_component.rst:51
+#: ../../view_components/energy_system_network.rst:105
+#: ../../view_components/export_project.rst:51
+#: ../../view_components/input_parameter_field.rst:82
+#: ../../view_components/load_input_dataseries.rst:51
+#: ../../view_components/load_project.rst:51
+#: ../../view_components/load_scenario.rst:42
+#: ../../view_components/project_list.rst:35
+#: ../../view_components/project_location.rst:26
+#: ../../view_components/read_write_files.rst:49
+#: ../../view_components/scenario_list.rst:32
+#: ../../view_components/view_specific_documentation.rst:41
+#: ../../view_components/visualize_dataseries.rst:27
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/create_project.rst:59
+#: ../../view_components/export_project.rst:59
+#: ../../view_components/load_project.rst:59
+#: ../../view_components/project_list.rst:43
+#: ../../view_components/read_write_files.rst:57
+#: ../../view_components/scenario_list.rst:40
+msgid "Requirement 1"
+msgstr ""
+
+#: ../../view_components/create_project.rst:60
+#: ../../view_components/export_project.rst:60
+#: ../../view_components/load_project.rst:60
+#: ../../view_components/project_list.rst:44
+#: ../../view_components/read_write_files.rst:58
+#: ../../view_components/scenario_list.rst:41
+msgid "Requirement 2"
+msgstr ""
+
+#: ../../view_components/create_project.rst:67
+#: ../../view_components/create_scenario.rst:63
+#: ../../view_components/export_project.rst:67
+#: ../../view_components/load_input_dataseries.rst:63
+#: ../../view_components/load_project.rst:67
+#: ../../view_components/load_scenario.rst:62
+#: ../../view_components/read_write_files.rst:65
+#: ../../view_components/visualize_dataseries.rst:35
+msgid ":ref:`<view1>-label`"
+msgstr ""
+
+#: ../../view_components/create_project.rst:67
+#: ../../view_components/create_project.rst:70
+#: ../../view_components/create_project.rst:77
+#: ../../view_components/create_project.rst:80
+#: ../../view_components/export_project.rst:67
+#: ../../view_components/export_project.rst:70
+#: ../../view_components/export_project.rst:77
+#: ../../view_components/export_project.rst:80
+#: ../../view_components/load_input_dataseries.rst:63
+#: ../../view_components/load_input_dataseries.rst:66
+#: ../../view_components/load_project.rst:67
+#: ../../view_components/load_project.rst:70
+#: ../../view_components/load_project.rst:77
+#: ../../view_components/load_project.rst:80
+#: ../../view_components/project_location.rst:38
+#: ../../view_components/project_location.rst:44
+#: ../../view_components/read_write_files.rst:65
+#: ../../view_components/read_write_files.rst:68
+#: ../../view_components/read_write_files.rst:75
+#: ../../view_components/read_write_files.rst:78
+#: ../../view_components/view_specific_documentation.rst:59
+#: ../../view_components/visualize_dataseries.rst:35
+#: ../../view_components/visualize_dataseries.rst:38
+msgid "Description of the link"
+msgstr ""
+
+#: ../../view_components/create_project.rst:70
+#: ../../view_components/export_project.rst:70
+#: ../../view_components/load_input_dataseries.rst:66
+#: ../../view_components/load_project.rst:70
+#: ../../view_components/read_write_files.rst:68
+#: ../../view_components/visualize_dataseries.rst:38
+msgid ":ref:`<view2>-label`"
+msgstr ""
+
+#: ../../view_components/create_project.rst:77
+#: ../../view_components/export_project.rst:77
+#: ../../view_components/load_project.rst:77
+#: ../../view_components/project_location.rst:44
+#: ../../view_components/read_write_files.rst:75
+msgid ":ref:`<view_component1>-label`"
+msgstr ""
+
+#: ../../view_components/create_project.rst:80
+#: ../../view_components/export_project.rst:80
+#: ../../view_components/load_input_dataseries.rst:76
+#: ../../view_components/load_project.rst:80
+#: ../../view_components/read_write_files.rst:78
+msgid ":ref:`<view_component2>-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:4
+msgid "Create Scenario"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:6
+msgid ""
+"This view-component enables the user to create a new :ref:`scenario-"
+"label`."
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:16
+#: ../../view_components/load_scenario.rst:17
+msgid "**Scenario name text input**"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:12
+msgid "The user can provide a file path for the scenario they want to create"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:14
+#: ../../view_components/input_parameter_field.rst:62
+#: ../../view_components/input_parameter_field.rst:67
+#: ../../view_components/load_input_dataseries.rst:28
+#: ../../view_components/load_scenario.rst:15
+#: ../../view_components/view_specific_documentation.rst:21
+msgid "Actions index: 2"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:16
+#: ../../view_components/create_scenario.rst:23
+#: ../../view_components/load_scenario.rst:17
+#: ../../view_components/load_scenario.rst:24
+msgid "Requirements index: 1, 2, 3"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:24
+#: ../../view_components/load_scenario.rst:25
+msgid "**button** :guilabel:`&Browse`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:19
+#: ../../view_components/load_scenario.rst:20
+msgid ""
+"Triggers the selection the scenario name text input via a graphical file "
+"structure"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:21
+#: ../../view_components/input_parameter_field.rst:49
+#: ../../view_components/load_input_dataseries.rst:16
+#: ../../view_components/load_input_dataseries.rst:23
+#: ../../view_components/load_scenario.rst:22
+#: ../../view_components/project_location.rst:16
+#: ../../view_components/view_specific_documentation.rst:14
+msgid "Actions index: 1"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:32
+msgid "**button** :guilabel:`&Create`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:27
+#: ../../view_components/load_scenario.rst:28
+msgid "The user triggers the creation of the scenario"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:29
+#: ../../view_components/input_parameter_field.rst:54
+#: ../../view_components/load_input_dataseries.rst:33
+#: ../../view_components/load_scenario.rst:30
+#: ../../view_components/view_specific_documentation.rst:29
+msgid "Actions index: 3"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:31
+#: ../../view_components/load_scenario.rst:32
+msgid "Requirements index: 4, 5, 6"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:37
+#: ../../view_components/load_scenario.rst:37
+msgid ""
+"User can navigate through the file system either graphically to input "
+"scenario name by clicking on :guilabel:`&Browse`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:38
+#: ../../view_components/load_scenario.rst:38
+msgid "User can input scenario name in the input text"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:39
+msgid ""
+"After clicking on :guilabel:`&Create`, a scenario is created in the "
+"backend, in the file system and the user is redirected to the view "
+"corresponding to the first step in the :ref:`progression_bar-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:44
+msgid ""
+"If user only provided a name and not a file path, then the scenario "
+"file/folder is created in a default location"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:45
+msgid ""
+"If user provided a scenario file/folder path which does not exist yet, "
+"the missing folders in the path should be created"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:46
+#: ../../view_components/load_scenario.rst:45
+msgid ""
+"If user provided a scenario file/folder path which exists already, it "
+"should be warned and given the option ot overwrite or not"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:47
+msgid ""
+"After the user clicked on :guilabel:`&Create`, they must still be able to"
+" create another scenario through this view-component if they wish it"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:48
+msgid ""
+"When a new scenario is created, it should be assigned a unique id in the "
+"backend"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:49
+msgid ""
+"When a new scenario is created, it should be possible for the user to "
+"access and edit its input parameters"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:56
+#: ../../view_components/load_scenario.rst:56
+msgid ""
+"It should be possible to trigger the display of this view-component from "
+"the landing view"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:60
+msgid ""
+"After clicking on :guilabel:`&Create`, the user is redirected to the view"
+" corresponding to the first step in the :ref:`progression_bar-label` TODO"
+" add link to this view"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:70
+#: ../../view_components/load_scenario.rst:69
+msgid ""
+"It should be possible to trigger the display of this view-component from "
+"a sub-menu of the :ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:75
+msgid ""
+":guilabel:`&Browse` is on the right of the text input, the "
+":guilabel:`&Create` is centered on the next line below"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:4
+msgid "Load Scenario"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:6
+msgid "This view-component enables the user to load a :ref:`scenario-label`."
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:13
+msgid "The user must provide a file path for the scenario they want to load"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:32
+msgid "**button** :guilabel:`&Load`"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:39
+msgid ""
+"After clicking on :guilabel:`&Load`, a scenario is created in the backend"
+" with loaded parameters. The user is redirected to the view corresponding"
+" to the last step before running the simulation in the :ref"
+":`progression_bar-label`"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:44
+msgid ""
+"If user provided a scenario file/folder path which does not exist yet, an"
+" error message should be displayed"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:46
+msgid ""
+"After the user clicked on :guilabel:`&Load`, they must still be able to "
+"load another scenario through this view-component if they wish it"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:47
+msgid ""
+"When a scenario is loaded, it should be assigned a unique id in the "
+"backend"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:48
+msgid ""
+"When a scenario is loaded, it should be possible for the user to access "
+"and edit its input parameters"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:60
+msgid ""
+"After clicking on :guilabel:`&Load`, the user is redirected to the view "
+"corresponding to the last step before running the simulation in the :ref"
+":`progression_bar-label` TODO add link to this view"
+msgstr ""
+
+#: ../../view_components/load_scenario.rst:75
+msgid ""
+":guilabel:`&Browse` is on the right of the text input, the "
+":guilabel:`&Load` is centered on the next line below"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:4
+msgid "Input Parameter Field"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:6
+msgid ""
+"This view-component enables the user input appropriate data in different "
+"views."
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:13
+#: ../../view_components/load_input_dataseries.rst:13
+msgid "**Label**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:12
+#: ../../view_components/load_input_dataseries.rst:12
+msgid "Name of the parameter which would be displayed close to the input field"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:18
+msgid "**Input Type**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:16
+msgid ""
+"Type of input parameter. One of int, float, str, array of int, float or "
+"str, matrix of int or float, timeseries (an array with timestamp mapped "
+"to each values), csv file"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:25
+#: ../../view_components/load_input_dataseries.rst:25
+msgid "**Input Unit**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:21
+#: ../../view_components/load_input_dataseries.rst:21
+msgid "Unit of the input parameter"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:23
+msgid "Actions index: 4"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:25
+msgid "Requirements index: 5"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:44
+msgid "**Input Field**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:28
+msgid ""
+"An interactive GUI element via which the user can provide a value to the "
+"input parameter."
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:30
+msgid "It depends on input type in the following way"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:32
+msgid "Numbers"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+#: ../../view_components/project_parameters.rst:17
+#: ../../view_components/scenario_parameters.rst:16
+msgid "Input type"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "Input field"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "int"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "Text input"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "float"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "str"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "array"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+#: ../../view_components/visualize_dataseries.rst:45
+msgid ":ref:`load_input_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "matrix"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "timeseries"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:1
+msgid "csv file"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:49
+msgid "**Default/Placeholder Value**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:47
+msgid "The default value provided for each input parameter"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:54
+msgid "**Link to Documentation**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:52
+msgid ""
+"Hyperlink that leads the user to the full documentation of the input "
+"parameter TODO: add link to RTD here"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:62
+msgid "**Helper icon**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:57
+msgid "An image which can be used for rendering of this attribute"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:29
+#: ../../view_components/input_parameter_field.rst:60
+msgid "path to the icon file"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:67
+msgid "**Helper Text**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:65
+msgid ""
+"A brief description of the parameter with the type of inputs and "
+"specifications, if any."
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:72
+#: ../../view_components/load_input_dataseries.rst:40
+msgid "**Boolean Mandatory Input**"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:70
+#: ../../view_components/load_input_dataseries.rst:38
+msgid "If true, the parameter must be defined by the user"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:72
+msgid "Requirements index: 2, 3"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:76
+msgid ""
+"User can overwrite the default/placeholder value in the input field by a "
+"simple click"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:77
+msgid ""
+"User can get brief information about the input parameter by hovering on "
+"the helper icon"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:78
+msgid ""
+"User can directly navigate to the relevant sections of the documentation "
+"by clicking on the documentation link below the helper text (action 2. "
+"need to be performed before this one)"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:79
+#: ../../view_components/load_input_dataseries.rst:48
+msgid ""
+"User can choose unit amongst a list of generic units, or input it by "
+"typing it in. (this is known as an editable combo box)"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:83
+msgid ""
+"The field must change depending on the type of the input. Some inputs "
+"could just be one numeric value, while others might be a series of values"
+" in the form a CSV file"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:84
+#: ../../view_components/load_input_dataseries.rst:55
+msgid ""
+"For mandatory input fields, the fields must be denoted by an asterisk "
+"adjacent to the field"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:85
+#: ../../view_components/load_input_dataseries.rst:56
+msgid ""
+"If the user does not provide input for a mandatory field and tries to "
+"proceed further, the field should be highlighted so as to alert the user"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:86
+msgid ""
+"The default/placeholder values for which the user has not provided any "
+"own-input must be rendered differently than the values in input fields "
+"with input objects supplied by the user"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:87
+#: ../../view_components/load_input_dataseries.rst:54
+msgid ""
+"The physical units which are commonly used for energy and power should be"
+" available there (then converted internally to Joule and Watt)"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:97
+#: ../../view_components/project_location.rst:35
+#: ../../view_components/view_specific_documentation.rst:65
+msgid ":ref:`project_parameters-label`"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:99
+#: ../../view_components/view_specific_documentation.rst:62
+msgid ":ref:`scenario_parameters-label`"
+msgstr ""
+
+#: ../../view_components/input_parameter_field.rst:104
+msgid ""
+"The label is placed above the input field and the helper icon to the "
+"right of the label. The helper text is displayed in a tooltip when user "
+"hover over the helper icon. The link to documentation should be at the "
+"bottom of the tooltip with the text \"More details...\". The rendering of"
+" the input field is either a text input or a :ref:`load_input_dataseries-"
+"label`. The parameter unit editable combobox is placed next to the input "
+"field. An asterisk is placed next to the label (between label and helper "
+"icon) if the parameter input is mandatory."
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:4
+msgid "Load input data-series"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:6
+msgid ""
+"User loads a file containing a data-series as input for a relevant "
+"parameter and is able to quickly visualize the data."
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:18
+msgid "**Input field**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:25
+msgid "Requirements index: 2"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:30
+msgid "**Load File button**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:35
+msgid "**Visualize Data button**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:40
+msgid "Requirements index: 3, 4"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:45
+msgid ""
+"User can directly provide the path of the file to be loaded as text in "
+"the text field"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:46
+msgid ""
+"Clicking on Load File button will open a pop-up window **(link the vc "
+"(TBD) link here)**"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:47
+msgid ""
+"Clicking on the Visualize Data button will open a pop-up window with a "
+"table and plot of the data-series :ref:`visualize_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:53
+msgid ""
+"All parameters that require a data-series must be given input through "
+"this view-component"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:57
+msgid ""
+"The Load File and Visualize Data buttons should be present adjacent to "
+"the Input Field"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:73
+#: ../../view_components/view_specific_documentation.rst:56
+msgid ":ref:`input_parameter_field-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:73
+msgid "Both the view-components share some attributes"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:79
+msgid ":ref:`visualize_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/load_input_dataseries.rst:79
+msgid ""
+"A pop-up window displaying a sample of the input data-series file with a "
+"plot of the data alongside"
+msgstr ""
+
+#: ../../view_components/scenario_parameters.rst:4
+msgid "Scenario parameters"
+msgstr ""
+
+#: ../../view_components/scenario_parameters.rst:5
+msgid ""
+"Inputs parameters to describe a :ref:`scenario-label`. They do not "
+"contain the information about the energy system, which is defined in the "
+":ref:`es_network` view-component."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:12
+#: ../../view_components/scenario_parameters.rst:11
+msgid "**List of input parameters**"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:14
+#: ../../view_components/scenario_parameters.rst:13
+msgid ""
+"Each input parameter will be available to the user via :ref"
+":`input_parameter_field-label`"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:22
+#: ../../view_components/scenario_parameters.rst:21
+msgid "Properties of each input:"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:18
+#: ../../view_components/scenario_parameters.rst:17
+msgid "Input default value"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:19
+#: ../../view_components/scenario_parameters.rst:18
+msgid "Help text"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:20
+#: ../../view_components/scenario_parameters.rst:19
+msgid "If it is mandatory or optional"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:21
+#: ../../view_components/scenario_parameters.rst:20
+msgid "Link in documentation"
+msgstr ""
+
+#: ../../view_components/scenario_parameters.rst:23
+msgid ""
+"You can browse through the list of different :ref:`input "
+"parameters<parameters>`"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:42
+#: ../../view_components/scenario_parameters.rst:27
+msgid "User can edit the value of the input parameters manually."
+msgstr ""
+
+#: ../../view_components/scenario_parameters.rst:28
+msgid ""
+"User can edit the value of the input parameters by loading a scenario "
+"from :ref:`load_scenario-label`"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:48
+#: ../../view_components/scenario_parameters.rst:33
+msgid ""
+"The requirements of :ref:`input_parameter_field-label` apply for each "
+"input parameter"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:55
+#: ../../view_components/scenario_parameters.rst:40
+msgid ""
+"The rendering of :ref:`input_parameter_field-label` apply for each input "
+"parameter"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:4
+msgid "Project parameters"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:6
+msgid "Inputs parameters to set the context of the project."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:24
+msgid ""
+"As the parameters in this list should also be accessible in a more "
+"general parameter documentation in ReadTheDocs, they will be "
+"automatically listed here from either a .yml or csv file."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:26
+msgid "The following inputs stay here for the moment and will be reformated then"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:29
+msgid "Localisation"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst
+msgid "The geographical localisation of the project."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst
+msgid "This can allow to download appropriate dataset."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:31
+msgid "Project lifetime"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:32
+#: ../../view_components/project_parameters.rst:34
+msgid "This can be used for calculations?"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:33
+msgid "Weighted Average Cost of Capital"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:35
+msgid "Project name"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:36
+msgid "Give a name to that project."
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:38
+msgid "Project description (optional)"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:38
+msgid "Give a short description of the project"
+msgstr ""
+
+#: ../../view_components/project_parameters.rst:43
+msgid ""
+"User can edit the value of the input parameters by loading a project from"
+" :ref:`load_project-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:4
+msgid "Energy sector selector"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:6
+msgid ""
+"The user can choose which :ref:`energy-type-def` they would like to use "
+"in their energy system. This choice will impact which components of the "
+"energy system model are available."
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:17
+msgid "**list of available energy sectors**"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:12
+msgid "Contains the possible energy sectors a user can choose from"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:15
+msgid "id `es_sector_avail_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:16
+#: ../../view_components/energy_system_sector_selector.rst:24
+msgid "each sector has an associated :ref:`energy-type-def`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:17
+#: ../../view_components/energy_system_sector_selector.rst:25
+msgid "each sector has an associated icon"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:25
+msgid "**list of selected energy sectors**"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:20
+msgid "Contains the choices selected by the user from the `es_sector_avail_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:23
+msgid "id `es_sector_select_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:33
+msgid "**list of connection between selected energy sectors**"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:28
+msgid "Indicates whether there is a coupling between two sectors"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:31
+msgid "id `es_sector_coupling_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:32
+msgid "each element is a list of two interconnected sectors"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:33
+msgid "an empty list means that all sectors are independent from each other"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:38
+msgid ""
+"The user can select the sector they want to include in their energy "
+"system model from the `es_sector_avail_list` by clicking on the list item"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:39
+msgid ""
+"The user should be able to indicate if two sectors are interconnected "
+"(could be clicking on greyed-out line connecting sectors visually)"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:44
+msgid ""
+"Any `es_sector_select_list` item has to be an item of "
+"`es_sector_avail_list`."
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:72
+#: ../../view_components/energy_system_sector_selector.rst:51
+msgid ":ref:`es_network-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:51
+msgid ""
+"Only :ref:`es_component` compatible with the selected energy sectors can "
+"be included in the energy system"
+msgstr ""
+
+#: ../../view_components/energy_system_sector_selector.rst:55
+msgid ""
+"Each sector in the list is represented by its icon. The energy sectors in"
+" the `es_sector_select_list` are rendered in color and the remaining "
+"energy sectors (in `es_sector_avail_list` but not in "
+"`es_sector_select_list`) are rendered in shades of grey. Each sector is "
+"visually connected to all the other sectors by a greyed-out line (no "
+"active sector coupling). If the line is display in bright color (e.g. "
+"after an activating click on it by the user) it means the two sectors are"
+" interconnected directly."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:4
+msgid "Energy System network"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:6
+msgid "This view-component will help the user to define their energy system model"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:22
+msgid "**list of energy busses**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:13
+msgid "A list of energy busses"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:16
+msgid "id: `es_bus_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:17
+msgid "each bus has a unique id"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:18
+msgid "each bus has an associated :ref:`energy-type-def`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:20
+#: ../../view_components/energy_system_network.rst:52
+msgid "Actions index: 1, 2, 4"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:24
+msgid "**button** :guilabel:`&Add bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:26
+msgid "Linked to the action of adding a bus to the `es_bus_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:29
+msgid "id `add_es_bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:31
+#: ../../view_components/energy_system_network.rst:61
+msgid "Actions index: 1, 5, 6"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:35
+msgid "**button** :guilabel:`&Remove bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:37
+msgid "Linked to the action of removing a bus from the `es_bus_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:40
+msgid "id `remove_es_bus`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:42
+#: ../../view_components/energy_system_network.rst:71
+msgid "Actions index: 2, 3"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:53
+msgid "**list of energy system component**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:47
+msgid "A list of *energy system components*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:50
+msgid "id: `es_component_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:63
+msgid "**button** :guilabel:`&Add component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:56
+msgid ""
+"Linked to the action of adding an energy system component to the "
+"`es_component_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:59
+msgid "id `add_es_component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:73
+msgid "**button** :guilabel:`&Remove component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:66
+msgid ""
+"Linked to the action of removing an energy system component from the "
+"`es_component_list`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:69
+msgid "id `remove_es_component`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:85
+msgid "**Draw area**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:76
+msgid ""
+"Area where the user could drag and drop components and connect them, or "
+"simply see a rendering of the energy system graph withtout being able to "
+"interact with it"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:80
+msgid "id `network_schema`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:82
+msgid "Actions index: 4."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:92
+msgid "**Text area**"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:88
+msgid ""
+"Displays potential error messages arising from wrong configuration of "
+"*energy system network* or single *energy system component*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:91
+msgid "id `error_log`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:97
+msgid ""
+"Clicking on the `add es_bus`/`add es_component` button adds a *Bus* or an"
+" *energy system component* to the `es_bus_list`/`es_component_list`, "
+"respectively."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:98
+msgid ""
+"Clicking on the `remove_es_bus`/`remove_es_component` button removes the "
+"currently selected *Bus* or *energy system component* from the "
+"`es_bus_list`/`es_component_list`, respectively."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:99
+msgid ""
+"Clicking on the `remove_es_bus`/`remove_es_component` button when no "
+"*Bus* or *energy system component* is currently selected sends a log "
+"message to the `error_log`."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:100
+msgid ""
+"Selecting a bus or an energy system component in `es_bus_list`, "
+"`es_component_list` or in `network_schema` allows the user to visualise "
+"and/or edit its properties in another view-component."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:101
+msgid ""
+"When a the user add a *Bus* or *energy system component* by clicking on "
+"the `add_es_bus`/`add_es_component`, they can visualise and/or edit its "
+"properties in another view-component."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:102
+msgid ""
+"When a the user add a *Bus* or *energy system component* by clicking on "
+"the `add_es_bus`/`add_es_component`, they can to see it in the "
+"`network_schema`."
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:107
+msgid ""
+"If not defined by the user, an additional Sink component to dump excess "
+"energy flow is defined and connected automatically to one *Bus* in the "
+"*energy system network*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:108
+msgid ""
+"If not defined by the user, an additional Source component to provide "
+"slack energy flow is defined and connected automatically to one *Bus* in "
+"the *energy system network*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:109
+msgid ""
+"notifications informing the user about potential problems with their "
+"energy system model should be displayed in the `error_log` text area. "
+"Problems could be such as a failure to meet any of the other "
+"requirements, an undefined property value of an *energy system "
+"component*, or a *Bus* without connection to another *energy system "
+"component*"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:114
+msgid ":ref:`es_component-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_network.rst:119
+msgid ""
+"The buttons need to be visible at all time, as the selection of *energy "
+"system components* or *Busses* can be done either from the lists "
+"`es_bus_list`, `es_component_list` or from `network_schema`, they do not "
+"necessarily need to be seen at the same time (they could be side by side "
+"or accessible via tabs)"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:4
+msgid "Energy system component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:6
+msgid ""
+"Define the view a user has when creating or editing a component of its "
+"energy system"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:15
+msgid "**Energy type**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:14
+msgid ""
+"ref:`energy-type-def` linked to the different energy sectors (e.g. heat, "
+"electricity, ...)"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:19
+msgid "**Component type**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:18
+msgid "Can be one of [Source, Sink, Transformer, Storage, Bus]"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:23
+msgid "**Unique id**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:22
+msgid ""
+"A positive integer number to identify the component uniquely within the "
+"list of energy system components of the :ref:`es_network-label`"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:33
+msgid "**Icon**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:26
+msgid "An image which can be used for rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:38
+msgid "**Input energy flow**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:36
+msgid ""
+"A list of other components's ids which are connected to this component "
+"and provide it with energy"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:38
+#: ../../view_components/energy_system_component.rst:43
+msgid "Requirements index: 1, 5, 6"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:43
+msgid "**Output energy flow**"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:41
+msgid ""
+"A list of other components's ids which are connected to this component "
+"and drain energy from it"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:48
+msgid ""
+"Double-clicking on the rendering of the *energy system component* allow "
+"the user to edit its attributes (except id)"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:53
+msgid ""
+"As long as the *energy system component* is not connected correctly to "
+"another *energy system component* the Icon-frame is displayed in another "
+"colour"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:55
+msgid ""
+"An *energy system component* which is not of *component type* Bus can not"
+" be connected to another *energy system component*, which is not of "
+"*component type* Bus"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:57
+msgid ""
+"An *energy system component* which is not of *component type* Bus, should"
+" have at least one connection to an *energy system component* of "
+"*component type* Bus"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:59
+msgid ""
+"An *energy system component* of *component type* Sink has a connection to"
+" *Input energy flow*, but no connection to *Output energy flow*"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:61
+msgid ""
+"An *energy system component* of *component type* Source has a connection "
+"*Output Energy flow*, but no connection to *Input energy flow*"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:66
+msgid "It is currently not directly linked to a view"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:72
+msgid ""
+"The component is inserted within the energy system model described in "
+"this other view-component"
+msgstr ""
+
+#: ../../view_components/energy_system_component.rst:76
+msgid ""
+"This *energy system component* can be rendered as a list item within :ref"
+":`es_network-label`'s `es_component_list` attribute or via its icon "
+"within :ref:`es_network-label`'s `network_schema` attribute."
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:4
+msgid "View Specific Documentation"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:6
+msgid ""
+"This view-component lets the user access the specific sections of the "
+"documentation directly from within the tool UI. It serves as a tooltip "
+"for input parameters."
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:16
+msgid "**Scroll Bar**"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:12
+msgid "This bar lets the user navigate the documentation content"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:21
+msgid "**Side navigation pane**"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:19
+msgid ""
+"This navigation pane is akin to a table of contents and lets the user "
+"jump to other sections of the documentation quickly"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:24
+msgid "**Content**"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:24
+msgid ""
+"Content of the documentation such as text, images, hyperlinks, etc., to "
+"be rendered"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:31
+msgid "**button** :guilabel:`&Download PDF`"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:27
+msgid "Clicking this triggers the download of a pdf of the documentation"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:36
+msgid "User can scroll through the documentation using the scroll bar"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:37
+msgid ""
+"User can jump to other sections of the documentation using the links in "
+"the navigation pane"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:38
+msgid ""
+"User can click on the Download PDF button to obtain a local copy of the "
+"documentation"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:43
+msgid ""
+"User must be able to open this view-component through clicking on links "
+"next to various elements in other views/view-components"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:53
+msgid ""
+"First view-component on the landing view of the tool, seen by the user. "
+"Contains link to documentation"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:56
+msgid ""
+"Generic view-component that describes the fields where user inputs are "
+"necessary"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:59
+msgid ":ref:`load_input_parameter-label`"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:62
+msgid "View-component where the user inputs the scenario-specific parameters"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:65
+msgid "View-component where the user inputs the project parameters"
+msgstr ""
+
+#: ../../view_components/view_specific_documentation.rst:70
+msgid ""
+"This view-component could either be a pop-up on top of the view the user "
+"is currently in, or as a new tab on a browser window opening relevant "
+"sections of readthedocs directly"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:4
+msgid "Visualize data-series"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:6
+msgid ""
+"This view-component helps the user visualize the dataset they load into "
+"the tool in order to cross-check for any issues with the provided "
+"dataset."
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:11
+msgid "**Head of the data-series**"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:14
+msgid ""
+"First few rows and columns of the data-series are displayed in a tabular "
+"form"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:16
+msgid "**Plot of the data-series**"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:19
+msgid ""
+"Rendered as an image alongside the table showing the first few columns "
+"and rows of the data-series"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:29
+msgid ""
+"User should be able to close the pop-up window and re-open it by clicking"
+" on \"Visualize Data\" button in view-component :ref"
+":`load_input_dataseries-label`"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:44
+msgid ""
+"Current view-component is only accessible through attributes of the "
+"linked view-component"
+msgstr ""
+
+#: ../../view_components/visualize_dataseries.rst:50
+msgid "Rendered as a pop-up window"
+msgstr ""
+
+#: ../../view_components/project_location.rst:4
+msgid "Map with Project Location"
+msgstr ""
+
+#: ../../view_components/project_location.rst:6
+msgid "A rectangular container that contains an interactive map."
+msgstr ""
+
+#: ../../view_components/project_location.rst:8
+msgid "This can be implemented for eg., with Leaflet or Folium libraries."
+msgstr ""
+
+#: ../../view_components/project_location.rst:18
+msgid "**Project area highlighted**"
+msgstr ""
+
+#: ../../view_components/project_location.rst:14
+msgid ""
+"The project area, obtained using coordinates supplied by the user and "
+"energy cell area, should be highlighted on the map as a polygon."
+msgstr ""
+
+#: ../../view_components/project_location.rst:23
+msgid "User can zoom in, zoom out, pan around using the input from their mouse"
+msgstr ""
+
+#: ../../view_components/project_location.rst:28
+msgid ""
+"User must provide the project location coordinates and energy cell area "
+"parameters in :ref:`load_project_parameters-label`"
+msgstr ""
+
+#: ../../view_components/project_location.rst:35
+msgid ""
+"The parameters necessary to generate the project location map view-"
+"component are input by the user through this view-component"
+msgstr ""
+
+#: ../../view_components/project_location.rst:38
+msgid ":ref:`load_project_parameters-label`"
+msgstr ""
+
+#: ../../view_components/project_location.rst:49
+msgid ""
+"As a rectangular container displaying an interactive map of the project "
+"location highlighted as either a point or as a polygonal area on the map."
+msgstr ""
+
+#: ../../view_components/read_write_files.rst:4
+msgid "Read/Write Files"
+msgstr ""
+
+#: ../../view_components/read_write_files.rst:6
+msgid "File explorer to read and write files to the system storage."
+msgstr ""
+
+#: ../../view_components/read_write_files.rst:83
+msgid "Rendered as a pop-up"
+msgstr ""
+
+#: ../../view_components/project_list.rst:4
+msgid "List of Projects"
+msgstr ""
+
+#: ../../view_components/project_list.rst:6
+msgid ""
+"This view-component displays a list of open_plan project (or project "
+"files in accepted formats) objects one of which can can be loaded as the "
+"current project."
+msgstr ""
+
+#: ../../view_components/project_list.rst:14
+#: ../../view_components/scenario_list.rst:12
+msgid "**Select**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:14
+msgid ""
+"Allows the user to select the project object to be loaded as the current "
+"project"
+msgstr ""
+
+#: ../../view_components/project_list.rst:17
+#: ../../view_components/scenario_list.rst:15
+msgid "**Delete**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:17
+msgid "Allows the user to delete the saved project object from the disk"
+msgstr ""
+
+#: ../../view_components/project_list.rst:20
+#: ../../view_components/scenario_list.rst:18
+msgid "**Show**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:20
+msgid "Allows the user to quickly preview the project object selected"
+msgstr ""
+
+#: ../../view_components/project_list.rst:23
+#: ../../view_components/scenario_list.rst:21
+msgid "**Edit**"
+msgstr ""
+
+#: ../../view_components/project_list.rst:23
+msgid "Allows the user to quickly edit the main project parameters"
+msgstr ""
+
+#: ../../view_components/project_list.rst:51
+msgid "Landing page view of which this view-component is a part of"
+msgstr ""
+
+#: ../../view_components/project_list.rst:57
+msgid ":ref:`project-label`"
+msgstr ""
+
+#: ../../view_components/project_list.rst:57
+msgid "The abstract component describing the project object"
+msgstr ""
+
+#: ../../abstract_components/project.rst:33
+#: ../../abstract_components/project.rst:40
+#: ../../view_components/project_list.rst:61
+#: ../../view_components/scenario_list.rst:54
+msgid ":ref:`read_write_files-label`"
+msgstr ""
+
+#: ../../view_components/project_list.rst:60
+#: ../../view_components/scenario_list.rst:54
+msgid ""
+"VIew-component through which the project objects could be loaded from the"
+" disk or written to the disk"
+msgstr ""
+
+#: ../../view_components/project_list.rst:66
+msgid ""
+"Rendered as a list which displays all the project objects already saved "
+"in the system or currently created"
+msgstr ""
+
+#: ../../view_components/project_list.rst:68
+msgid "Currently selected project is highlighted separately"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:4
+msgid "List of Scenarios"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:6
+msgid ""
+"This view-component shows the list of scenario objects, both created "
+"through the tool within the current project or loaded from file, "
+"available for further steps in the simulation."
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:12
+msgid ""
+"Allows the user to select the scenario object to be loaded as the current"
+" project"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:15
+msgid "Allows the user to delete the saved scenario object from the disk"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:18
+msgid "Allows the user to quickly preview the scenario object selected"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:21
+msgid "Allows the user to quickly edit the main scenario parameters"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:26
+msgid "Select the current scenario object"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:27
+msgid ""
+"Show the main parameters of any scenario object that the user selects in "
+"the list of scenarios"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:28
+msgid ""
+"View the list of scenarios objects created in the present project or "
+"available on the disk"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:29
+msgid "Delete a scenario object, both saved and unsaved ones"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:51
+msgid ":ref:`scenario-label`"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:51
+msgid ""
+"The abstract component describing the scenario objects part of this view-"
+"component"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:59
+msgid ""
+"Rendered as a list which displays all the scenario objects loaded and/or "
+"created in the current project"
+msgstr ""
+
+#: ../../view_components/scenario_list.rst:61
+msgid "Currently selected scenario is highlighted separately"
+msgstr ""
+
+#: ../../tool_interface.rst:271
+msgid "Abstract-components Definition"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:2
+msgid "Scenario"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:12
+msgid "**Scenario as an object**"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:11
+msgid ""
+"Scenario is an object that exists in the computer's temporary memory "
+"(RAM). It can be considered as the a concept that wraps an instance of "
+"the energy system class plus the inputs. However, it could be saved to "
+"the permanent memory by saving the data the object holds to disk as a "
+"file of an appropriate format."
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:17
+msgid ""
+"Scenario can be saved to disk through the *load scenario* view component "
+"in the Scenarios view"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:18
+msgid ""
+"Multiple scenario objects can be created during the simulation using the "
+"*create scenario* view component in the Scenarios view"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:19
+msgid ""
+"Multiple scenario objects can be compared in the *scenario comparison* "
+"view"
+msgstr ""
+
+#: ../../abstract_components/project.rst:26
+#: ../../abstract_components/scenario.rst:25
+msgid "The objects must be accessible to other relevant view components"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:26
+msgid ""
+"External scenario objects created in other software that are to be "
+"imported into open_plan should adhere to the data standards"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:27
+msgid ""
+"Should be saved to disk in an appropriate format before exiting the tool "
+"in order to be accessible later"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:32
+msgid "*placeholder* *placeholder2*"
+msgstr ""
+
+#: ../../abstract_components/scenario.rst:38
+msgid "*placeholder*"
+msgstr ""
+
+#: ../../abstract_components/project.rst:2
+msgid "Project"
+msgstr ""
+
+#: ../../abstract_components/project.rst:13
+msgid "**Project as an object**"
+msgstr ""
+
+#: ../../abstract_components/project.rst:11
+msgid ""
+"Project is an object that exists in the computer's temporary memory "
+"(RAM). It can be considered as the a concept that holds one or more "
+"scenarios of the energy system simulation sharing some common "
+"characteristics."
+msgstr ""
+
+#: ../../abstract_components/project.rst:13
+msgid ""
+"It could be saved to the permanent memory by saving the data the object "
+"holds to disk as a file of an appropriate format."
+msgstr ""
+
+#: ../../abstract_components/project.rst:18
+msgid ""
+"Existing project object can be loaded through the *load_project* view "
+"component in the Landing Page view"
+msgstr ""
+
+#: ../../abstract_components/project.rst:19
+msgid ""
+"New project object can be created through the UI of the tool using the "
+"*create_project* view component in the Landing Page view"
+msgstr ""
+
+#: ../../abstract_components/project.rst:20
+msgid ""
+"Current project object can be saved to the disk by the user through the "
+"*Save Project* button that connects to the *read_write_files* view-"
+"component"
+msgstr ""
+
+#: ../../abstract_components/project.rst:27
+msgid ""
+"External project objects created in other software that are to be "
+"imported into open_plan should adhere to the data standards"
+msgstr ""
+
+#: ../../abstract_components/project.rst:28
+msgid ""
+"The project object be saved to disk in an appropriate format before "
+"exiting the tool in order to be accessible later"
+msgstr ""
+
+#: ../../abstract_components/project.rst:40
+msgid ""
+"This view-component is required to read and write files from and to the "
+"disk respectively"
+msgstr ""
+

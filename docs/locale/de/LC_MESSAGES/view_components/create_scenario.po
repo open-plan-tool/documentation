@@ -1,0 +1,190 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Reiner Lemoine Institut
+# This file is distributed under the same license as the open_plan package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: open_plan \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-14 10:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../view_components/create_scenario.rst:4
+msgid "Create Scenario"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:6
+msgid ""
+"This view-component enables the user to create a new :ref:`scenario-"
+"label`."
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:9
+msgid "Attributes"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:16
+msgid "**Scenario name text input**"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:12
+msgid "The user can provide a file path for the scenario they want to create"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:14
+msgid "Actions index: 2"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:16
+#: ../../view_components/create_scenario.rst:23
+msgid "Requirements index: 1, 2, 3"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:24
+msgid "**button** :guilabel:`&Browse`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:19
+msgid ""
+"Triggers the selection the scenario name text input via a graphical file "
+"structure"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:21
+msgid "Actions index: 1"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:32
+msgid "**button** :guilabel:`&Create`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:27
+msgid "The user triggers the creation of the scenario"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:29
+msgid "Actions index: 3"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:31
+msgid "Requirements index: 4, 5, 6"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:35
+msgid "Actions"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:37
+msgid ""
+"User can navigate through the file system either graphically to input "
+"scenario name by clicking on :guilabel:`&Browse`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:38
+msgid "User can input scenario name in the input text"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:39
+msgid ""
+"After clicking on :guilabel:`&Create`, a scenario is created in the "
+"backend, in the file system and the user is redirected to the view "
+"corresponding to the first step in the :ref:`progression_bar-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:42
+msgid "Requirements"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:44
+msgid ""
+"If user only provided a name and not a file path, then the scenario "
+"file/folder is created in a default location"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:45
+msgid ""
+"If user provided a scenario file/folder path which does not exist yet, "
+"the missing folders in the path should be created"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:46
+msgid ""
+"If user provided a scenario file/folder path which exists already, it "
+"should be warned and given the option ot overwrite or not"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:47
+msgid ""
+"After the user clicked on :guilabel:`&Create`, they must still be able to"
+" create another scenario through this view-component if they wish it"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:48
+msgid ""
+"When a new scenario is created, it should be assigned a unique id in the "
+"backend"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:49
+msgid ""
+"When a new scenario is created, it should be possible for the user to "
+"access and edit its input parameters"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:52
+msgid "Link with views"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:57
+msgid ":ref:`landing-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:56
+msgid ""
+"It should be possible to trigger the display of this view-component from "
+"the landing view"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:63
+msgid ":ref:`<view1>-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:60
+msgid ""
+"After clicking on :guilabel:`&Create`, the user is redirected to the view"
+" corresponding to the first step in the :ref:`progression_bar-label` TODO"
+" add link to this view"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:66
+msgid "Link with other view-components"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:71
+msgid ":ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:70
+msgid ""
+"It should be possible to trigger the display of this view-component from "
+"a sub-menu of the :ref:`menu_bar-label`"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:74
+msgid "Rendering of the view-component"
+msgstr ""
+
+#: ../../view_components/create_scenario.rst:75
+msgid ""
+":guilabel:`&Browse` is on the right of the text input, the "
+":guilabel:`&Create` is centered on the next line below"
+msgstr ""
+
