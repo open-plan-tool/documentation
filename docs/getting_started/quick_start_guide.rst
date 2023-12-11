@@ -6,15 +6,15 @@ First steps
 -----------
 
 Create an account
-^^^^^^^^^^^^^^^^
-The first step to start using open-plan-tool is to create an account. To do this, you must click on the "Sign up" button at the top right corner and fill in the following information: your name, email address, username and password. Finally, do not forget to read and accept the privacy statement. You should receive an email with a link to confirm the account creation.
+^^^^^^^^^^^^^^^^^
+The first step to start using open-plan-tool is to create an account. To do this, you must click on the "Sign up" button at the top right corner and fill in the following information: your name, email address, username and password. Finally, do not forget to read and accept the privacy statement. You should receive an email with a link to confirm the account creation. You can find our privacy policy `here <https://open-plan.rl-institut.de/en/privacy/>`_.
 
 
 .. image:: ../images/IMG1_Sign_up.png
  :width: 100%
 
 Explore the dashboard
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 When you log in, the following dashboard is displayed. In the following image the points described below are labeled with numbers and letters.
 
@@ -41,7 +41,7 @@ When you log in, the following dashboard is displayed. In the following image th
 
 
 Create a project
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 To create a project in open-plan-tool, the user has three options:
 
@@ -162,7 +162,7 @@ Further you can select the option whether you want to include an LP file. With t
 
 
 Simulation results
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 In the **results dashboard** you can have a detailed look at the results of your scenarios. When pressing the button you are automatically in the currently simulated scenario, but you can select another project [1] or scenario [2]. Only scenarios that have already been simulated are displayed.
 
