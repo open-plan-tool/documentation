@@ -22,7 +22,7 @@ The input parameters are gathered in the table below. Each parameter is provided
 List of parameters
 ******************
 
-Below is the list of all the parameters of the open_plan tool, sorted in alphabetical order.
+Below is the list of all the parameters of the open-plan-tool, sorted in alphabetical order.
 Each of the parameters has the following properties
 
 :Definition: parameter's definition, could also contain potential use cases of the parameter

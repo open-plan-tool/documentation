@@ -1,21 +1,21 @@
-=================================================
-The mathematics behind open_plan simply explained
-=================================================
+======================================================
+The mathematics behind open-plan-tool simply explained
+======================================================
 
-Aim of the open_plan tool
+Aim of the open-plan-tool
 -------------------------
 
-The aim of the open_plan tool is to provide an open source application that has the 
+The aim of the open-plan-tool is to provide an open source application that has the
 capability to model small to medium-sized energy systems with emphasis on renewable 
 energy technologies and optimize them cost-efficiently. 
 The easy to use graphical user interface and also the in-depth insight into the 
 optimization program and its visible open source code encourages end-users and also 
 researchers to use it. 
-.. [Write some more about the aim of open_plan.....]
+.. [Write some more about the aim of open-plan-tool.....]
 
 One important aspect of future scenarios is the determination of optimal dimensioning
 and combinations of various technologies. To compute an optimal individual energy system
-open_plan uses linear optimization.
+open-plan-tool uses linear optimization.
 When we think about how we want to set up our energy system, we have several
 goals. For example, we want to minimize the cost of the energy system or the
 amount of CO2 that we emit. Furthermore, we want to make sure that demand
@@ -110,7 +110,7 @@ Several ways of solving these problems have been developed, one of which is the
 simplex method. This can be done on paper, but as the number of equations
 rises, this becomes more and more difficult.
 
-In open_plan this is done by a solver, which can solve the optimization, given
+In open-plan-tool this is done by a solver, which can solve the optimization, given
 that the equations are in a certain form. The solver then proceeds in two
 steps. In the first step, it checks if there is a solution to the problem, and
 as soon as a solution is found, the solver proceeds to the second step. In the
@@ -156,7 +156,7 @@ longer for the solver to do its work.
   Simplifications are necessary
   Results can be complex
   Energy systems based on renewable energies can become very complex.
-  The components with which an energy supply system can be modeled in open_plan are classified as follows:
+  The components with which an energy supply system can be modeled in open-plan-tool are classified as follows:
   - Sources
   - Sinks
   - Transformer

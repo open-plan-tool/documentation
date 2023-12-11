@@ -3,10 +3,10 @@
 Component models
 ----------------
 
-The component models of the open_plan tool result from the used python-library :code:`oemof-solph` for energy modeling.
+The component models of the open-plan-tool result from the used python-library :code:`oemof-solph` for energy modeling.
 
 It requires component models to be simplified and linearized.
-This is the reason why the open_plan tool can provide a pre-feasibility study of a specific system setup,
+This is the reason why the open-plan-tool can provide a pre-feasibility study of a specific system setup,
 but not the final sizing and system design.
 The types of assets are presented below.
 
@@ -15,8 +15,8 @@ The types of assets are presented below.
 Energy consumption
 ##################
 
-Demands within the open_plan tool are added as energy consumption assets. Most importantly, they are defined by a timeseries, representing the demand profile, and their energy vector. A number of demand profiles can be defined for one energy system, both of the same and different energy vectors.
-The main optimization goal for the open_plan tool is to supply the defined demand without fail for all of the timesteps in the simulation with the least cost of supply (comp. :ref:`economic_precalculation-label`).
+Demands within the open-plan-tool are added as energy consumption assets. Most importantly, they are defined by a timeseries, representing the demand profile, and their energy vector. A number of demand profiles can be defined for one energy system, both of the same and different energy vectors.
+The main optimization goal for the open-plan-tool is to supply the defined demand without fail for all of the timesteps in the simulation with the least cost of supply (comp. :ref:`economic_precalculation-label`).
 
 
 .. _energy_production:
@@ -144,7 +144,7 @@ As described above, the costs for diesel and gas need to be included in the :ref
 Energy providers
 ################
 
-The energy providers are the most complex assets in the open_plan model. They are composed of a number of sub-assets
+The energy providers are the most complex assets in the open-plan-tool model. They are composed of a number of sub-assets
 
     - Energy consumption source, providing the energy required from the system with a certain price
     - Energy peak demand pricing "transformers", which represent the costs induced due to peak demand
@@ -171,13 +171,13 @@ A peak demand pricing scheme is based on an electricity tariff,
 that requires the consumer not only to pay for the aggregated energy consumption in a time period (eg. kWh electricity),
 but also for the maximum peak demand (load, eg. kW power) towards the grid of the energy provider within a specific pricing period.
 
-In the open_plan tool, this information is gathered in the provider assets with:
+In the open-plan-tool, this information is gathered in the provider assets with:
 
     - :const:`multi_vector_simulator.utils.constants_json_strings.PEAK_DEMAND_PRICING_PERIOD` as the period used in peak demand pricing. Possible values are 1 (yearly), 2 (half-yearly), 3 (each trimester), 4 (quaterly), 6 (every 2 months) and 12 (each month). If you have a `simulation_duration` < 365 days, the periods will still be set up assuming a year! This means, that if you are simulating 14 days, you will never be able to have more than one peak demand pricing period in place.
 
     - :const:`multi_vector_simulator.utils.constants_json_strings.PEAK_DEMAND_PRICING` as the costs per peak load unit, eg. kW
 
-To represent the peak demand pricing, the open_plan tool adds a "transformer" that is optimized with specific operation and maintenance costs per year equal to the PEAK_DEMAND_PRICING for each of the pricing periods.
+To represent the peak demand pricing, the open-plan-tool adds a "transformer" that is optimized with specific operation and maintenance costs per year equal to the PEAK_DEMAND_PRICING for each of the pricing periods.
 For two peak demand pricing periods, the resulting dispatch could look as following:
 
 .. image:: ../images/Model_Assumptions_Peak_Demand_Pricing_Dispatch_Graph.png
@@ -204,13 +204,13 @@ When choosing the second option, the capacity of the charge controller can be op
 If you do not want to optimize the charge controller's capacity you can take its costs and efficiency into account when defining the storage's input and output power, see :ref:`storage_csv`.
 A charge controller is defined by two transformers, see section :ref:`energy_conversion` above.
 
-Note that capacity reduction over the lifetime of a BESS that may occur due to different effects during aging cannot be taken into consideration in the open_plan tool. A possible workaround for this could be to manipulate the lifetime.
+Note that capacity reduction over the lifetime of a BESS that may occur due to different effects during aging cannot be taken into consideration in the open-plan-tool. A possible workaround for this could be to manipulate the lifetime.
 
 
 Hydrogen storage (H2)
 =====================
 
-Hydrogen storages are modelled as all storage types in the open_plan tool as :code:`GenericStorage` like described above.
+Hydrogen storages are modelled as all storage types in the open-plan-tool as :code:`GenericStorage` like described above.
 
 The most common hydrogen storages store H2 as liquid under temperatures lower than -253 °C or under high pressures.
 The energy needed to provide these requirements cannot be modelled via the storage component as another energy sector such as cooling or electricity is needed. It could therefore, be modelled as an additional demand of the energy system, see `issue #811 <https://github.com/rl-institut/multi-vector-simulator/issues/811>`_
@@ -221,7 +221,7 @@ Thermal energy storage
 ======================
 
 Thermal energy storages of the type sensible heat storage (SHS) are modelled as :code:`GenericStorage` like described above. The implementation of a specific type of SHS, the stratified thermal energy storage, is described in section :ref:`stratified_tes`.
-The modelling of latent-heat (or Phase-change) and chemical storages have not been tested with the open_plan tool, but might be achieved by precalculations.
+The modelling of latent-heat (or Phase-change) and chemical storages have not been tested with the open-plan-tool, but might be achieved by precalculations.
 
 .. _stratified_tes:
 
@@ -287,7 +287,7 @@ Energy excess
 #############
 
 .. note::
-   Energy excess components are implemented **automatically** by the open_plan tool! You do not need to define them yourself.
+   Energy excess components are implemented **automatically** by the open-plan-tool! You do not need to define them yourself.
 
 An energy excess sink is placed on each of the LES energy busses, and therefore energy excess is allowed to take place on each bus of the LES.
 This means that there are assumed to be sufficient vents (heat) or resistors (electricity) to dump excess (waste) generation.

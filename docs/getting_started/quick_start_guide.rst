@@ -1,20 +1,20 @@
-======================
+===========
 Quick start
-======================
+===========
 
 First steps
-------------
+-----------
 
 CREATE AN ACCOUNT
-^^^^^^^^^^
-The first step to start using open_plan is to create an account. To do this, you must click on the "Sign up" button at the top right corner and fill in the following information: your name, email address, username and password. Finally, do not forget to read and accept the privacy statement. You should receive an email with a link to confirm the account creation. 
+^^^^^^^^^^^^^^^^
+The first step to start using open-plan-tool is to create an account. To do this, you must click on the "Sign up" button at the top right corner and fill in the following information: your name, email address, username and password. Finally, do not forget to read and accept the privacy statement. You should receive an email with a link to confirm the account creation.
 
 
 .. image:: ../images/IMG1_Sign_up.png
  :width: 100%
 
 EXPLORE THE DASHBOARD
-^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 When you log in, the following dashboard is displayed. In the following image the points described below are labeled with numbers and letters.
 
@@ -44,9 +44,9 @@ When you log in, the following dashboard is displayed. In the following image th
 
 
 CREATE A PROJECT
-^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
-To create a project in open_plan, the user has three options:
+To create a project in open-plan-tool, the user has three options:
 
 .. image:: ../images/New_project_EN.png
  :width: 30%
@@ -78,7 +78,7 @@ If you want to start from one of the configured use cases, you can do so in this
 
 
 CREATE A SCENARIO
-^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 Once the project is created, it is possible to create various scenarios within the project. To do this, we have two options: we can create a new scenario by defining all its parameters or we can load a previously created scenario from a json file.
 
@@ -156,7 +156,7 @@ Once the scenario parameters are set, we proceed to the simulation panel. At the
 
 
 SIMULATION RESULTS
-^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 n this screen you will find the results of your scenarios. Here it is possible to select the project [1], download the series, Key Performance Indicators (KPIs) and component costs [2], and return to the scenario setup [3]. You will then see a header with three main actions [4]: single scenarios, compare scenarios and sensitivity analysis.
 
@@ -194,12 +194,12 @@ This functionality is not yet available, but you will be able to find it in a fu
 
 
 Feedback or Question
-------------
+--------------------
 
-We are happy to hear about your experience with open_plan, so feel free to share your questions, comments and suggestions `here. <https://open-plan.rl-institut.de/en/user_feedback>`_ We will get back to you as soon as possible.
+We are happy to hear about your experience with open-plan-tool, so feel free to share your questions, comments and suggestions `here. <https://open-plan.rl-institut.de/en/user_feedback>`_ We will get back to you as soon as possible.
 We also have a FAQ section, your question may already be answered there.
 Remember that on the project's GitHub page you can keep track of the developments that are in progress or those that have been completed.
 
 FAQ
-------------
+---
 **To be completed**
