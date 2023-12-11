@@ -350,9 +350,12 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.imgmath",
     "sphinx.ext.autosummary",
+    "sphinx.ext.mathjax",
     # "sphinxcontrib.rsvgconverter",
     "numpydoc",
 ]
+
+mathjax_path="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
