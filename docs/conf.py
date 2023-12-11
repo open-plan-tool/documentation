@@ -351,6 +351,9 @@ extensions = [
     "sphinx.ext.imgmath",
     "sphinx.ext.autosummary",
     "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.extlinks",
+    "sphinx_design",
     # "sphinxcontrib.rsvgconverter",
     "numpydoc",
 ]
