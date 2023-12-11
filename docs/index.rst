@@ -156,11 +156,11 @@ The open-plan-tool is currently maintained by staff from the `Reiner Lemoine Ins
    :caption: Model Reference
 
    model/assumptions.rst
-..    model/components.rst
-..    model/constraints.rst
-..    model/limitations.rst
-..    model/input_parameters.rst
-..    model/simulation_outputs.rst
+   model/components.rst
+   model/constraints.rst
+   model/limitations.rst
+   model/input_parameters.rst
+   model/simulation_outputs.rst
 
 .. Model Reference
 .. ===============
