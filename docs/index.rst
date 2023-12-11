@@ -3,11 +3,11 @@
 
 ..   SPDX-License-Identifier: CC-BY-4.0
 
-.. .. _Flowchart:
-======================
-open_plan
-======================
-**This documentation is under construction!!!**
+.. _Flowchart:
+
+==============
+open-plan-tool
+==============
 
 The open-plan-tool is an open-source tool for designing and optimizing multi-energy carriers energy systems and operational strategies for the supply of neighborhoods, industrial parks and industries.
 
