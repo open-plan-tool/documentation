@@ -8,7 +8,7 @@ Constraints
 Minimal renewable factor constraint
 ###################################
 
-The minimal renewable factor constraint requires the capacity and dispatch optimization of the open_plan tool to reach at least the minimal renewable factor defined within the constraint. The renewable share of the optimized energy system may also be higher than the minimal renewable factor.
+The minimal renewable factor constraint requires the capacity and dispatch optimization of the open-plan-tool to reach at least the minimal renewable factor defined within the constraint. The renewable share of the optimized energy system may also be higher than the minimal renewable factor.
 
 The minimal renewable factor is applied to the minimal renewable factor of the whole, sector-coupled energy system, but not to specific sectors. As such, energy carrier weighting plays a role and may lead to unexpected results. The constraint reads as follows:
 
@@ -29,7 +29,7 @@ Also, if you are aiming at very high minimal renewable factors, the simulation t
 Minimal degree of autonomy constraint
 ######################################
 
-The minimal degree of autonomy constraint requires the capacity and dispatch optimization of the open_plan tool to reach at least the minimal degree of autonomy defined within the constraint. The degree of autonomy of the optimized energy system may also be higher than the minimal degree of autonomy. For more details, refer to the definition of :ref:`degree of autonomy <degree_of_autonomy>`
+The minimal degree of autonomy constraint requires the capacity and dispatch optimization of the open-plan-tool to reach at least the minimal degree of autonomy defined within the constraint. The degree of autonomy of the optimized energy system may also be higher than the minimal degree of autonomy. For more details, refer to the definition of :ref:`degree of autonomy <degree_of_autonomy>`
 
 The minimal degree of autonomy is applied to the whole, sector-coupled energy system, but not to specific sectors. As such, energy carrier weighting plays a role and may lead to unexpected results.
 
@@ -48,7 +48,7 @@ Depending on the energy system, especially when working with assets which are no
 Maximum emission constraint
 ###########################
 
-The maximum emission constraint limits the maximum amount of total emissions per year of the energy system. It allows the capacity and dispatch optimization of the open_plan tool to result into a maximum amount of emissions defined by the maximum emission constraint. The yearly emissions of the optimized energy system may also be lower than the maximum emission constraint.
+The maximum emission constraint limits the maximum amount of total emissions per year of the energy system. It allows the capacity and dispatch optimization of the open-plan-tool to result into a maximum amount of emissions defined by the maximum emission constraint. The yearly emissions of the optimized energy system may also be lower than the maximum emission constraint.
 
 .. note:: The maximum emissions constraint currently does not take into consideration life cycle emissions, also see :ref:`total_emissions` section for an explanation.
 
@@ -63,12 +63,12 @@ The unit of the constraint is `kgCO2eq/a`. To pick a realistic value for this co
 Net zero energy (NZE) constraint
 ################################
 
-The net zero energy (NZE) constraint requires the capacity and dispatch optimization of the open_plan tool to result into a net zero system, but can also result in a plus energy system.
+The net zero energy (NZE) constraint requires the capacity and dispatch optimization of the open-plan-tool to result into a net zero system, but can also result in a plus energy system.
 The degree of NZE of the optimized energy system may be higher than 1, in case of a plus energy system. Please find the definition of net zero energy (NZE) and the KPI here: :ref:`degree_of_nze`.
 
 .. TODO quote the literature references here
 
-Some definitions of NZE systems in literature allow the energy system's demand solely be provided by locally generated renewable energy. In the open_plan tool this is not the case - all locally generated energy is taken into consideration. To enlarge the share of renewables in the energy system you can use the :ref:`constraint_min_re_factor`.
+Some definitions of NZE systems in literature allow the energy system's demand solely be provided by locally generated renewable energy. In the open-plan-tool this is not the case - all locally generated energy is taken into consideration. To enlarge the share of renewables in the energy system you can use the :ref:`constraint_min_re_factor`.
 
 The NZE constraint is applied to the whole, sector-coupled energy system, but not to specific sectors. As such, energy carrier weighting plays a role and may lead to unexpected results. The constraint reads as follows:
 

@@ -36,13 +36,16 @@ def generate_parameter_description(input_csv_file, output_rst_file):
     df = pd.read_csv(input_csv_file)
     df = df.loc[df.category != "hidden"]
     parameter_properties = [
-        ":Definition:",
+        ":Definition_Short:",
+        ":Definition_Long:",
         ":Type:",
         ":Unit:",
         ":Example:",
         ":Restrictions:",
         ":Default:",
     ]
+    # Replace empty definition by empty strings
+    df.loc[:,[":Definition_Short:", ":Definition_Long:"]] = df.loc[:,[":Definition_Short:", ":Definition_Long:"]].fillna(value="")
 
     lines = []
     # formats following the template:
@@ -77,13 +80,13 @@ def generate_parameter_description(input_csv_file, output_rst_file):
         lines = (
             lines
             + [f".. _{props.ref}:", "", props.label, "^" * len(props.label), "",]
-            + [f"{p} {props[p]}" for p in parameter_properties]
+            + [f"{p} {props[p]}" for p in parameter_properties if props[p] != ""]
             + [""]
-            + [
-                "This parameter is used within the following categories: "
-                + ", ".join([f":ref:`{cat}`" for cat in props.category.split(";")])
-            ]
-            + see_also
+            # + [
+            #     "This parameter is used within the following categories: "
+            #     + ", ".join([f":ref:`{cat}`" for cat in props.category.split(";")])
+            # ]
+            # + see_also
             + ["", "",]
         )
 
@@ -347,9 +350,14 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.imgmath",
     "sphinx.ext.autosummary",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.extlinks",
     # "sphinxcontrib.rsvgconverter",
     "numpydoc",
 ]
+
+mathjax_path="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
