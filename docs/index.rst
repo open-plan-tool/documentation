@@ -19,13 +19,13 @@ Modeling your energy systems has never been so easy before, the tool was develop
  :width: 100%
 
 
-You will be asked to provide the required data via individual data, a collection of csv files or a unique JSON file with particular format. The input data is split into the following categories:
+You will be asked to provide the required data via individual data entry, a collection of csv files or a unique JSON file with particular format. The input data is split into the following categories:
 Project description, which entails the general information regarding the project (country, coordinates, etc.), as well as the economic data such as the discount factor, project duration, or tax;
 System configuration, in which the user specifies the technical and financial data of each asset;
 Constrains, are a fundamental part of the definition of the linear problem and describe the degree of autonomy and the share of renewable energies.
 This set of input data is then translated to a linear programming problem, also known as a constrained optimization problem. The open-plan-tool is based on the multi-vector simulator (MVS), which in turn is based on the oemof-solph python library, with which a problem is described by specifying an objective function to minimize annual energy supply costs, decision variables and limits and constraints.
 
-The simulation outputs are also separated into categories: KPI indicators, economic results and technical results (that include the optimized capacities and dispatch of each asset). 
+The simulation outputs are also separated into categories: KPIs, economic results and technical results (that include the optimized capacities and dispatch of each asset). 
 
 Explore what open-plan-tool has to offer:
 
@@ -33,15 +33,15 @@ Online tool: `open-plan-tool <https://open-plan.rl-institut.de/>`_
 
 Publications: `List of publications <https://open-plan-tool.org/publications_en.html>`_
 
-GitHub: `Online Repository <https://github.com/open-plan-tool/>`_
+GitHub: `Online repository <https://github.com/open-plan-tool/>`_
 
-Youtube: `Watch Our Videos <https://www.youtube.com/channel/UCg8NUlNM4m9iT94K3Zf8S2A>`_
+Youtube: `Watch our videos <https://www.youtube.com/channel/UCg8NUlNM4m9iT94K3Zf8S2A>`_
 
 
 
 The open-plan-tool project consortium is composed of the `Reiner Lemoine Institute (RLI) <https://reiner-lemoine-institut.de/>`_, `German Solar Energy Society [Deutsche Gesellschaft für Sonnenenergie (DGS)] <https://www.dgs-berlin.de/>`_ and the `Potsdam Institute for Climate Impact Research <https://www.pik-potsdam.de/>`_. It is funded within the framework of the "Technology-oriented systems analysis" funding area of the BMWi's 7th Energy Research Programme "Innovation for the energy transition".
 
-The open-plan-tool project complements other previous open-science research projects of RLI, such as open_eGO (OpenEnergyPlatfrom), open_FRED (feed-in time series on OpenEnergyPlatform) and enables the comparison, validation and improvement of energy system modelling.
+The open-plan-tool project complements other previous open-science research projects of RLI, such as open_eGO (OpenEnergyPlatform), open_FRED (feed-in time series on OpenEnergyPlatform) and enables the comparison, validation and improvement of energy system modelling.
 
 
 
