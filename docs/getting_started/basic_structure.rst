@@ -2,8 +2,6 @@
 Basic structure
 ===============
 
-- Test -
-
 This repository contains the code for the user interface. The
 simulations are performed by
 `multi-vector-simulator <https://github.com/rl-institut/multi-vector-simulator>`__
