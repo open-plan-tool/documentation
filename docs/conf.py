@@ -374,6 +374,7 @@ extensions = [
     "sphinx.ext.extlinks",
     # "sphinxcontrib.rsvgconverter",
     "numpydoc",
+    "sphinxcontrib.jquery",  # the navigation of the theme needs jQuery
 ]
 
 mathjax_path="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
@@ -412,4 +413,7 @@ html_static_path = ["_static"]
 # or fully qualified paths (eg. https://...)
 html_css_files = [
     'table-style.css',
+    'components.css',  # page "Component models"
 ]
+
+html_js_files = ['nav-fix.js']  # opens the navigation also for links to labels
