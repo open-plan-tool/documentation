@@ -1,0 +1,113 @@
+heading,introduction,notes,original text (open-plan documentation)
+Component models,"The component models of the open-plan-tool are implemented in the Python library :code:`oemof-eesyplan`, which is based on the energy system modelling framework :code:`oemof-solph`.
+
+The components are simplified and linearized. This is why the open-plan-tool is suited for a pre-feasibility study of a specific system setup, but not for the final sizing and system design. The types of components are presented below.","Introduction below the title of the page ""Component models"". The texts are used as reStructuredText: keep links such as :ref:`...` and directives such as .. image:: unchanged, *italic*, **bold**, paragraphs are separated by an empty line.","The component models of the open-plan-tool result from the used python-library :code:`oemof-solph` for energy modeling.
+
+It requires component models to be simplified and linearized.
+This is the reason why the open-plan-tool can provide a pre-feasibility study of a specific system setup,
+but not the final sizing and system design.
+The types of assets are presented below."
+Energy bus,"An energy bus connects all components that exchange the same energy carrier, e.g. all electricity producers,
+consumers and storages of the system. In every timestep, the energy fed into a bus has to equal the energy taken
+from it. To keep this balance even if supply and demand cannot be matched exactly, every bus is complemented by two
+virtual components: the Excess component absorbs surplus energy and the Shortage component covers demand that cannot
+be met. Both belong to a bus and are not used on their own; their costs define how strongly the optimization avoids
+surplus energy and supply gaps.",Introduction of the area; the heading has to match column C of component_parameters. New text (not in the original documentation).,
+Energy consumption,"Demands are added as consumption components. They are mainly defined by a timeseries, which represents the demand profile, and by their energy carrier. Several demands can be defined for one energy system, both of the same and of different energy carriers.
+
+The main goal of the optimization is to supply all demands in every timestep at the lowest cost (see :ref:`economic_precalculation-label`).",,"Demands within the open-plan-tool are added as energy consumption assets. Most importantly, they are defined by a timeseries, representing the demand profile, and their energy vector. A number of demand profiles can be defined for one energy system, both of the same and different energy vectors.
+The main optimization goal for the open-plan-tool is to supply the defined demand without fail for all of the timesteps in the simulation with the least cost of supply (comp. :ref:`economic_precalculation-label`)."
+Energy production,"Production components represent generation from renewable sources, e.g. PV plants, wind turbines, solar thermal collectors or geothermal plants. Their generation is given by a timeseries per kW of installed capacity (e.g. kW/kWp for PV) for every timestep of the simulated period, usually hourly. The generation follows this timeseries and cannot be dispatched. Surplus energy is taken by the :ref:`Excess <excess>` component of the bus.
+
+If no timeseries are available, they can be calculated from weather data, e.g. with:
+
+- PV: `pvlib <https://github.com/pvlib/pvlib-python>`__, `Renewables.ninja <https://www.renewables.ninja/>`__, `atlite <https://github.com/PyPSA/atlite>`__
+- Wind: `windpowerlib <https://github.com/wind-python/windpowerlib>`__, `Renewables.ninja <https://www.renewables.ninja/>`__, `atlite <https://github.com/PyPSA/atlite>`__
+- Solar thermal: `oemof.thermal <https://oemof-thermal.readthedocs.io/en/stable/solar_thermal_collector.html>`__","Shortened and updated version of the original text (column D): fuel sources are now described under Energy providers (Commodity, DsoFuel), geothermal plants follow a timeseries in oemof-eesyplan, there is no hydro power component, typo ""altlite"" corrected to ""atlite"".","Non-dispatchable sources of generation
+======================================
+
+`Examples`:
+
+    - PV plants
+    - Wind plants
+    - Run-of-the-river hydro power plants
+    - Solar thermal collectors
+
+Variable renewable energy (VRE) sources, like wind and PV, are non-dispatchable due to their fluctuations in supply.
+
+The fluctuating nature of non-dispatchable sources is represented by generation time series that show the respective production for each time step of the simulated period. In energy system modelling it is common to use hourly time series.
+
+If you cannot provide time series for your VRE assets you can consider to calculate them by using models for generating feed-in time series from weather data. The following is a list of examples, which is not exhaustive:
+
+    - PV: `pvlib <https://github.com/pvlib/pvlib-python/>`_ , `Renewables Ninja <https://www.renewables.ninja/>`_ (download capacity factors), `altlite <https://github.com/PyPSA/atlite>`__
+    - Wind: `windpowerlib <https://github.com/wind-python/windpowerlib>`_, `Renewables Ninja <https://www.renewables.ninja/>`_ (download capacity factors), `altlite <https://github.com/PyPSA/atlite>`__
+    - Hydro power (run-of-the-river): `hydropowerlib <https://github.com/hydro-python/hydropowerlib>`_
+    - Solar thermal: `flat plate collectors <https://oemof-thermal.readthedocs.io/en/stable/solar_thermal_collector.html>`_ of `oemof.thermal <https://github.com/oemof/oemof-thermal>`_
+
+
+.. _dispatchable_sources:
+
+Dispatchable sources of generation
+==================================
+
+`Examples`:
+
+    - Fuel sources
+    - Deep-ground geothermal plant (ground assumed to allow unlimited extraction of heat, not depending on season)
+
+Fuel sources are added as dispatchable sources, which can have development, investment, operational and dispatch costs.
+
+Fuel sources are for example needed as source for a diesel generator (diesel), biogas plant (gas) or a condensing power plant (gas, coal, ...), see :ref:`energy_conversion`."
+Energy conversion,"*Examples*:
+
+    - Electrical transformers
+    - Heat pumps and auxiliary electric heaters
+    - Boilers
+    - Combined heat and power (CHP) units with a fixed or variable power-to-heat ratio
+    - Diesel generators
+    - Electrolyzers and fuel cells
+    - Biogas plants
+
+Conversion components are modelled as converters of :code:`oemof-solph`, which transform one or more input flows into one or more output flows with constant efficiencies.
+
+The parameters :ref:`Installed capacity <param-installed_capacity>`, :ref:`Conversion efficiency <param-conversion_efficiency>` and :ref:`Variable operational costs <param-variable_costs>` refer to the main output of a conversion component. The costs of the input, e.g. the fuel costs, are therefore not included in the variable operational costs of the conversion component but in the energy price of the fuel provider, see :ref:`DsoFuel <dsofuel>`.
+
+Depending on the component, a conversion component can have several inputs, e.g. electricity and ambient heat for a heat pump, or several outputs, e.g. electricity and heat for a CHP.",,"`Examples`:
+
+    - Electric transformers (rectifiers, inverters, transformer stations, charge controllers)
+    - HVAC and Heat pumps (as heater and/or chiller)
+    - Combined heat and power (CHP) and other condensing power plants
+    - Diesel generators
+    - Electrolyzers
+    - Biogas power plants
+
+Conversion assets are added as transformers.
+
+The parameters :ref:`dispatch_price <dispatchprice-label>`, :ref:`efficiency <efficiency-label>` and :ref:`installedCap <installedcap-label>` of transformers are assigned to their output flows.
+This means that these parameters need to be provided for the output of the asset and that the costs of the input, (e.g. cost of fuel) are not included in its :ref:`dispatch_price <dispatchprice-label>` but in the :ref:`dispatch_price <dispatchprice-label>` of the fuel source, see :ref:`DsoFuel <dsofuel>`.
+
+Conversion assets can be defined with multiple inputs or multiple outputs, but one asset currently cannot have both, multiple inputs and multiple outputs. Note that multiple inputs/output is possible but this feature is not currently tested."
+Energy providers,"An energy provider represents the connection of the energy system to a supply grid, e.g. the electricity, gas, heat or hydrogen grid. It consists of a source that supplies energy to the connected bus at the energy price and, if a feed-in tariff is given, a sink that takes surplus energy from the bus and is remunerated with the feed-in tariff.
+
+Capacity-related costs of the grid connection can be considered as peak demand pricing, i.e. costs per kW of the highest power drawn from the grid. The supply and the feed-in can be limited by a maximum capacity.","The figure of the former model (.. image:: ../images/Model_Assumptions_energyProvider_assets.png) was removed, as it shows sub-components that oemof-eesyplan no longer uses.","The energy providers are the most complex assets in the open-plan-tool model. They are composed of a number of sub-assets
+
+    - Energy consumption source, providing the energy required from the system with a certain price
+    - Energy peak demand pricing ""transformers"", which represent the costs induced due to peak demand
+    - Bus connecting energy consumption source and energy peak demand pricing transformers
+    - Energy feed-in sink, able to take in generation that is provided to the energy provider for revenue
+    - Optionally: Transformer Station connecting the energy provider bus to the energy bus of the LES
+
+With all these components, the energy provider can be visualized as follows:
+
+.. image:: ../images/Model_Assumptions_energyProvider_assets.png
+ :width: 600"
+Energy storage,"Energy storages such as batteries, thermal storages, fuel storages or hydrogen storages are modelled with the :code:`GenericStorage` component of :code:`oemof-solph`. They have one input and one output.
+
+The charging and discharging power is limited by the C-rates, i.e. by the storage capacity multiplied by the charging or discharging C-rate. Depending on the settings, the state of charge at the end of the simulation can be required to equal the initial state of charge.","The link to the C-rate was removed, as the C-rates are currently not shown (column I = no).","Energy storages such as battery storages, thermal storages or H2 storages are modelled with the :code:`GenericStorage` component of :code:`oemof.solph`. They are designed for one input and one output.
+
+The state of charge of a storage at the first and last time step of an optimization are equal.
+Charge and discharge of the whole capacity of the energy storage are possible within one time step in case the capacity of the storage is not optimized. In case of
+capacity optimization charge and discharge is limited by the :ref:`crate-label`."
+Energy transport,"Transport components move heat within the energy system. The :ref:`HeatingNetwork <heatingnetwork>` distributes heat from the generators to the consumers. The :ref:`HeatingPipe <heatingpipe>` connects two heat buses, e.g. two buildings or two parts of a network, optionally in both directions. Heat losses are considered as absolute losses in kW and, for the heating pipe, additionally as relative losses, i.e. a share of the transported heat.",New text (not in the original documentation).,
+Input parameters,"This page describes the input parameters of the components in alphabetical order. Details that only apply to a
+single component are given in the description of the component on the page :ref:`component_models`.","Introduction below the title of the page ""Input parameters"". New text (not in the original documentation).",
