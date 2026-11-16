@@ -22,7 +22,7 @@ from collections import Counter, OrderedDict, defaultdict
 
 DOCS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-AREA_ORDER = [  # areas not listed here are added at the end in input order
+CATEGORY_ORDER = [  # categories not listed here are added at the end in input order
     "Energy bus", "Energy consumption", "Energy production", "Energy conversion", "Energy providers",
     "Energy storage", "Energy transport", "Energy excess", "Energy shortage",
 ]
@@ -48,7 +48,7 @@ SHOW_SOURCE = False
 
 ICON_DIR = "_static/icons"  # icon of a component: <component name>.svg or .png (relative to the folder docs)
 ICON_EXT = (".svg", ".png")
-IMAGE_DIR = "images/components"  # graphics for pages, areas, components and labels (relative to the folder docs)
+IMAGE_DIR = "images/components"  # graphics for pages, categories, components and labels (relative to the folder docs)
 IMAGE_EXT = (".png", ".svg", ".jpg", ".jpeg", ".gif")
 # labels of the old page "Input parameters" (MVS parameter list) that other pages still refer to -> new label;
 # they are placed as additional targets on the new page, so the old links keep working
@@ -68,15 +68,15 @@ LEGACY_LABELS = {
 COLUMNS = {
     "parameter": (["parameter_name"], 0),
     "component": (["component"], 1),
-    "published": (["component published on openplan"], 2),
-    "show": (["show parameter in gui"], 3),
-    "type": (["input type openplan"], 5),
-    "title": (["description of the parameter in openplan"], 6),
-    "default": (["default value"], 7),
+    "published": (["published_on_branch"], 2),
+    "show": (["show_in_gui"], 3),
+    "type": (["input_type_openplan"], 5),
+    "title": (["verbose"], 6),
+    "default": (["default_value"], 7),
     "unit": (["unit"], 8),
-    "set_text": (["short description"], 9),
-    "area": (["component category for documentation"], 10),
-    "label": (["label for long description"], 11),
+    "set_text": (["short_description"], 9),
+    "category": (["component_category_documentation"], 10),
+    "rtd_link_label": (["rtd_link_label"], 11),
     "text": (["long description"], 12),
 }
 # column F: these types go into the table (numbers and timeseries); "float | int | None" counts too
@@ -88,7 +88,7 @@ NO = {"no", "nein", "n", "false", "0"}
 
 # ------------------------------------------------------------------ helpers
 def slug(text):
-    return re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
+    return text # re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
 
 
 def heading(title, char, overline=False):
@@ -114,8 +114,11 @@ def raw_html(lines):
     return [".. raw:: html", ""] + ["   " + line for line in lines] + [""]
 
 
-def comp_id(name):
-    return f"comp-{slug(name)}"
+def parameter_anchor(component):
+    """Return the explicit RTD anchor configured for a component."""
+    return component["rtd_link_label"]
+
+
 
 
 def own_param_id(name, title):
@@ -189,13 +192,22 @@ def is_yes(value, default):
 
 # ------------------------------------------------------------------ read the CSV files
 def find_columns(header_row):
-    """column index of every key in COLUMNS, found by the header (exact or as beginning of the header)"""
+    """Return the CSV column index for every configured field."""
     header = [str(h or "").strip().lower() for h in header_row]
     col = {}
+
     for key, (names, fallback) in COLUMNS.items():
-        col[key] = next((i for n in names for i, h in enumerate(header) if h == n), None)
-        if col[key] is None:
-            col[key] = next((i for n in names for i, h in enumerate(header) if h.startswith(n)), fallback)
+        index = next(
+            (i for n in names for i, h in enumerate(header) if h == n),
+            None,
+        )
+        if index is None:
+            index = next(
+                (i for n in names for i, h in enumerate(header) if h.startswith(n)),
+                fallback,
+            )
+        col[key] = index
+
     return col
 
 
@@ -251,14 +263,19 @@ def read_parameter_list(parameter_path, label_path, intro_path):
         raise ValueError(f"Parameter file is empty: {parameter_path}")
 
     col = find_columns(rows[0])
+    if col["rtd_link_label"] is None:
+        raise ValueError(
+            "Required column 'rtd_link_label' is missing from the parameter CSV"
+        )
+
     labels = read_labels(label_path)
     intros = read_intros(intro_path)
 
-    areas_by_lower = {a.lower(): a for a in AREA_ORDER}
+    categories_by_lower = {a.lower(): a for a in CATEGORY_ORDER}
 
-    def area_name(value):
+    def category_name(value):
         value = " ".join(str(value or "").split())
-        return areas_by_lower.get(value.lower(), value)
+        return categories_by_lower.get(value.lower(), value)
 
     components = OrderedDict()
     warnings = []
@@ -266,7 +283,8 @@ def read_parameter_list(parameter_path, label_path, intro_path):
 
     for n, row in enumerate(rows[1:], start=2):
         def get(key):
-            return row[col[key]] if col[key] < len(row) else None
+            index = col[key]
+            return row[index] if index is not None and index < len(row) else None
 
         name = get("component")
         if not name:
@@ -276,11 +294,12 @@ def read_parameter_list(parameter_path, label_path, intro_path):
         comp = components.setdefault(
             name,
             {
-                "area": area_name(get("area")),
+                "category": category_name(get("category")),
                 "show": False,
                 "description": None,
                 "default_set": None,
                 "source": None,
+                "rtd_link_label": None,
                 "params": [],
                 "has_row": False,
                 "warnings": [],
@@ -292,7 +311,10 @@ def read_parameter_list(parameter_path, label_path, intro_path):
 
         if parameter == COMPONENT_ROW:
             comp["has_row"] = True
-            comp["area"] = area_name(get("area")) or comp["area"]
+            comp["category"] = category_name(get("category")) or comp["category"]
+            comp["rtd_link_label"] = str(
+                get("rtd_link_label") or name.lower()
+            ).strip() or None
 
             published = str(get("published") or "").strip().lower()
             comp["show"] = (
@@ -372,7 +394,7 @@ def read_parameter_list(parameter_path, label_path, intro_path):
                     if str(get("unit") or "").strip() not in ("", "None")
                     else "–"
                 ),
-                "label": str(get("label") or "").strip(),
+                "label": str(get("rtd_link_label") or "").strip(),
                 "own_text": (
                     text
                     if text and not text.lower().startswith("label:")
@@ -382,23 +404,41 @@ def read_parameter_list(parameter_path, label_path, intro_path):
             }
         )
 
+    anchors = {}
+
     for name, comp in components.items():
         if comp["show"]:
             warnings += comp["warnings"]
+
         if not comp["has_row"]:
             warnings.append(
                 f"{name}: no row '{COMPONENT_ROW}', the component is not shown"
             )
+
         if comp["show"] and not comp["description"]:
             warnings.append(
                 f"{name}: no description "
                 f"(row '{COMPONENT_ROW}', column 'long description')"
             )
-        if comp["show"] and not comp["area"]:
+
+        if comp["show"] and not comp["category"]:
             warnings.append(
-                f"{name}: no area "
-                "(column 'Component category for documentation')"
+                f"{name}: no category "
+                "(column 'component_category_documentation')"
             )
+
+        if comp["show"]:
+            anchor = comp["rtd_link_label"] or comp["parameter"]
+            if not anchor:
+                raise ValueError(
+                    f"{name}: missing rtd_link_label in row '{COMPONENT_ROW}'"
+                )
+            if anchor in anchors:
+                raise ValueError(
+                    f"Duplicate rtd_link_label '{anchor}' for "
+                    f"{anchors[anchor]} and {name}"
+                )
+            anchors[anchor] = name
 
     return components, labels, intros, warnings
 
@@ -465,17 +505,17 @@ def build_component_models(
         return f'<img class="" src="{icon_url}{icon}" alt="" title="{html.escape(name, quote=True)}">'
 
     def intro(heading_text):
-        """Return the introduction text for a page or area, if present."""
+        """Return the introduction text for a page or category, if present."""
         return intros.get(heading_text.lower())
 
     graphics_found, graphics_used = find_graphics(image_dir), set()
 
     def graphics(name, page_output, alt=None):
-        """graphics from the folder images/components for a page, area, component or label (list of rst lines)"""
+        """graphics from the folder images/components for a page, category, component or label (list of rst lines)"""
         key = image_key(name)
         if key in graphics_used:
             if key in graphics_found:
-                warnings.append(f"graphics '{key}': the name fits twice (e.g. area and component), shown only once")
+                warnings.append(f"graphics '{key}': the name fits twice (e.g. category and component), shown only once")
             return []
         graphics_used.add(key)
         url = os.path.relpath(image_dir, os.path.dirname(page_output)).replace(os.sep, "/") + "/"
@@ -484,14 +524,14 @@ def build_component_models(
             lines += graphic_rst(url, file, caption, alt or name)
         return lines
 
-    areas = OrderedDict((a, []) for a in AREA_ORDER)
+    categories = OrderedDict((a, []) for a in CATEGORY_ORDER)
     for name, comp in components.items():
-        areas.setdefault(comp["area"], []).append(name)
-    areas = OrderedDict((a, n) for a, n in areas.items() if n)
-    known = {PAGE_TITLE.lower(), INPUT_TITLE.lower()} | {a.lower() for a in areas}
+        categories.setdefault(comp["category"], []).append(name)
+    categories = OrderedDict((a, n) for a, n in categories.items() if n)
+    known = {PAGE_TITLE.lower(), INPUT_TITLE.lower()} | {a.lower() for a in categories}
     for key in intros:
         if key not in known:
-            warnings.append(f"file '{os.path.basename(intro_file)}': '{key}' is neither a page nor an area with shown components")
+            warnings.append(f"file '{os.path.basename(intro_file)}': '{key}' is neither a page nor an category with shown components")
 
     # ---------------------------------------------------------- page "Component models"
     out = [f".. This page is generated automatically from {os.path.basename(parameter_file)}, "
@@ -504,29 +544,29 @@ def build_component_models(
     out += graphics(PAGE_TITLE, output)
 
     cards = ['<div class="cm-overview">']
-    for area, names in areas.items():
+    for category, names in categories.items():
         cards += ['  <div class="cm-card">',
-                  f'    <a class="cm-card-title" href="#{slug(area)}">{html.escape(area)}'
+                  f'    <a class="cm-card-title" href="#{slug(category)}">{html.escape(category)}'
                   f'<span class="cm-card-count">{len(names)}</span></a>',
                   '    <ul class="cm-card-list">']
-        cards += [f'      <li><a href="#{comp_id(n)}">{img(n)}<span>{html.escape(n)}</span></a></li>' for n in names]
+        cards += [f'      <li><a href="#{parameter_anchor(components[n])}">{img(n)}<span>{html.escape(n)}</span></a></li>' for n in names]
         cards += ["    </ul>", "  </div>"]
     cards += ["</div>"]
     out += raw_html(cards)
 
     no_link = []
-    for area, names in areas.items():
-        out += [f".. _{slug(area).replace('-', '_')}:", "", heading(area, "#")]
+    for category, names in categories.items():
+        out += [f".. _{slug(category).replace('-', '_')}:", "", heading(category, "#")]
         out += raw_html(['<div class="cm-tiles">']
-                        + [f'  <a class="cm-tile" href="#{comp_id(n)}">{img(n)}<span>{html.escape(n)}</span></a>'
+                        + [f'  <a class="cm-tile" href="#{parameter_anchor(components[n])}">{img(n)}<span>{html.escape(n)}</span></a>'
                            for n in names] + ["</div>"])
-        area_intro = intro(area)
-        if area_intro:
-            out += [area_intro, ""]
-        out += graphics(area, output)
+        category_intro = intro(category)
+        if category_intro:
+            out += [category_intro, ""]
+        out += graphics(category, output)
         for name in names:
             comp = components[name]
-            out += [f".. _{comp_id(name)}:", "", heading(name, "="), ".. container:: cm-head", ""]
+            out += [f".. _{parameter_anchor(comp)}:", "", heading(name, "="), ".. container:: cm-head", ""]
             icon = icon_of.get(name)
             if icon:
                 out += [f"   .. image:: {icon_url}{icon}", f"      :alt: {name} icon", ""]
@@ -539,7 +579,7 @@ def build_component_models(
                         "      * - Parameter", "        - Default", "        - Unit"]
                 for p in table_params:
                     if p["own_text"]:  # most specific description: the text at the component
-                        cell = ref(rst_inline(p["title"]), own_param_id(name, p["title"]))
+                        cell = ref(rst_inline(p["title"]), own_param_id(name, p["label"]))
                     elif p["label"] in labels:
                         cell = ref(rst_inline(p["title"]), input_id(p["label"]))
                     else:
@@ -563,7 +603,7 @@ def build_component_models(
             for p in comp["params"]:
                 if not p["own_text"]:
                     continue
-                out += [f".. _{own_param_id(name, p['title'])}:", "", ".. rst-class:: cm-param", "",
+                out += [f".. _{own_param_id(name, p['label'])}:", "", ".. rst-class:: cm-param", "",
                         heading(p["title"], "^"), rst_text(p["own_text"]), ""]
                 if p["label"] in labels and len(used_by[p["label"]]) > 1:
                     out += [f"General description: {ref(label_title(p['label']), input_id(p['label']))}", ""]
@@ -583,17 +623,18 @@ def build_component_models(
     inp += graphics(INPUT_TITLE, input_output)
     inp += [".. admonition:: Parameters on this page", "   :class: cm-params-box", "",
            "   " + ", ".join(ref(label_title(k), input_id(k)) for k in keys), ""]
+    print(keys)
     for key in keys:
         inp += [f".. _{old}:" for old, new in LEGACY_LABELS.items() if new == key]
         inp += [f".. _{input_id(key)}:", "", heading(label_title(key), "*", overline=True)]
         if labels[key]:
             inp += [rst_text(labels[key]), ""]
         inp += graphics(key, input_output, label_title(key))
-        inp += ["**Used by:** " + ", ".join(ref(n, comp_id(n)) for n in used_by[key]), "", ""]
+        inp += ["**Used by:** " + ", ".join(ref(n, parameter_anchor(components[n])) for n in used_by[key]), "", ""]
     write_if_changed(input_output, "\n".join(inp).rstrip() + "\n")
 
     hidden = [n for n, c in all_components.items() if not c["show"]]
-    print(f"component_models: {len(components)} components in {len(areas)} areas"
+    print(f"component_models: {len(components)} components in {len(categories)} categories"
           f"{f' ({len(hidden)} hidden)' if hidden else ''}, "
           f"{sum(len(c['params']) for c in components.values())} parameters "
           f"({sum(p['in_table'] for c in components.values() for p in c['params'])} in the tables), "
@@ -605,7 +646,7 @@ def build_component_models(
         warnings.append("labels not used by any shown parameter: " + ", ".join(unused))
     for key, files in graphics_found.items():
         if key not in graphics_used:
-            warnings.append("graphics not shown (name matches no page, area, shown component or label): "
+            warnings.append("graphics not shown (name matches no page, category, shown component or label): "
                             + ", ".join(f for f, _ in files))
     for w in warnings:
         print("component_models WARNING:", w)
