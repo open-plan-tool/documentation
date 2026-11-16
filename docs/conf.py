@@ -13,6 +13,7 @@
 import os
 import sys
 import pandas as pd
+from pathlib import Path
 import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath(".."))
@@ -308,6 +309,24 @@ def generate_kpi_description(input_csv_file, output_path):
 generate_parameter_description(
     "MVS_parameters_list.csv", "model/parameters/MVS_parameters_list.inc"
 )
+#
+# # Page "Component models" (model/components.rst), generated from the parameter list
+
+DOCS_DIR = Path(__file__).resolve().parent
+SCRIPTS_DIR = DOCS_DIR / "_scripts"
+
+sys.path.insert(0, str(SCRIPTS_DIR))
+
+from component_models_csv import build_component_models
+
+build_component_models(
+    parameter_file="parameter_list_eesyplan.csv",
+    label_file="parameter_long_description_eesyplan.csv",
+    intro_file="component_hdrs.csv",
+    output="model/components.rst",
+    input_output="model/input_parameters.rst",
+)
+
 generate_parameter_table(
     "MVS_parameters_list.csv", "model/parameters/MVS_parameters_list.tbl"
 )
