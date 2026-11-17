@@ -1,3 +1,5 @@
+:tocdepth: 3
+
 ===========
 Quick start
 ===========
@@ -235,66 +237,88 @@ On the project's GitHub page you can keep track of the developments that are in 
 FAQ
 ---
 
+Short answers to the questions we hear most often. Pick a topic:
+
+* `General`_
+* `Projects and scenarios`_
+* `Results`_
+* `Hosting`_
+
+Can't find your question? Write to us via the feedback link above.
+
 General
 ^^^^^^^
 
-**What is open-plan-tool?**
+What is open-plan-tool?
+"""""""""""""""""""""""
 
 An open-source web tool for designing and optimizing energy systems with several energy carriers (e.g. electricity, heat and hydrogen), for neighborhoods, industrial parks and industries. It calculates the combination of components with the lowest annual energy supply costs and is based on the multi-vector simulator (MVS).
 
-**Do I need programming skills?**
+Do I need programming skills?
+"""""""""""""""""""""""""""""
 
 No. The tool was developed with a strong focus on easy use, without requiring programming language expertise.
 
-**Do I need to install anything?**
+Do I need to install anything?
+""""""""""""""""""""""""""""""
 
 No. You can use the online tool in your browser. An installation is only needed if you want to host the tool yourself, see :doc:`installation`.
 
 Projects and scenarios
 ^^^^^^^^^^^^^^^^^^^^^^
 
-**How can I create a project?**
+How can I create a project?
+"""""""""""""""""""""""""""
 
 There are three ways: as an empty project, from a json file, or from one of the use cases. See `Create a project`_.
 
-**Can I share projects or scenarios with others?**
+Can I share projects or scenarios with others?
+""""""""""""""""""""""""""""""""""""""""""""""
 
 Yes. Projects and scenarios can be loaded from a json file, which makes it possible to share them.
 
-**Why can't I connect two components directly?**
+Why can't I connect two components directly?
+""""""""""""""""""""""""""""""""""""""""""""
 
 Components are always connected through a bus, which stands for an energy carrier (e.g. electricity or heat). Connecting two assets or two buses directly is not allowed. Connect the components by dragging a line from the output terminal of one component to the input terminal of the next.
 
-**How do I connect a battery?**
+How do I connect a battery?
+"""""""""""""""""""""""""""
 
 Battery energy storage systems (BESS) have one input and one output and can be connected directly to the electrical bus. The bus supplies the battery and is fed by it at the same time.
 
-**What is the LP file and when should I use it?**
+What is the LP file and when should I use it?
+"""""""""""""""""""""""""""""""""""""""""""""
 
 The LP file contains the mathematical formulation of the optimization problem (objective function and constraints). You can include it in the simulation panel and open it in a text editor after the simulation. Choose a small number of days to evaluate (e.g. one day) to keep the file readable.
 
 Results
 ^^^^^^^
 
-**How do I compare scenarios?**
+How do I compare scenarios?
+"""""""""""""""""""""""""""
 
 Open the results dashboard and select *compare scenarios*. Add the scenarios you want to compare. Each scenario gets its own column in the KPI table and its own values in the charts.
 
-**Can I download my results?**
+Can I download my results?
+""""""""""""""""""""""""""
 
 Yes. In the results dashboard you can download all time series, the KPIs and the component costs as Excel files. Tables and charts can also be exported (e.g. as .xls or .pdf) using the three dots in the upper right corner.
 
-**Why do I get an error in the sensitivity analysis?**
+Why do I get an error in the sensitivity analysis?
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
 This functionality is not fully implemented yet. We are working on it.
 
-**Where can I find the definition of a KPI?**
+Where can I find the definition of a KPI?
+"""""""""""""""""""""""""""""""""""""""""
 
 See :doc:`../model/simulation_outputs`.
 
 Hosting
 ^^^^^^^
 
-**Can I host the tool myself?**
+Can I host the tool myself?
+"""""""""""""""""""""""""""
 
 Yes. The installation instructions are described in :doc:`installation`, and :doc:`basic_structure` explains how the parts of the tool work together.
