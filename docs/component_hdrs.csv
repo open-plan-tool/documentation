@@ -17,7 +17,7 @@ Energy consumption,"Demands are added as consumption components. They are mainly
 
 The main goal of the optimization is to supply all demands in every timestep at the lowest cost (see :ref:`economic_precalculation-label`).",,"Demands within the open-plan-tool are added as energy consumption assets. Most importantly, they are defined by a timeseries, representing the demand profile, and their energy vector. A number of demand profiles can be defined for one energy system, both of the same and different energy vectors.
 The main optimization goal for the open-plan-tool is to supply the defined demand without fail for all of the timesteps in the simulation with the least cost of supply (comp. :ref:`economic_precalculation-label`)."
-Energy production,"Production components represent generation from renewable sources, e.g. PV plants, wind turbines, solar thermal collectors or geothermal plants. Their generation is given by a timeseries per kW of installed capacity (e.g. kW/kWp for PV) for every timestep of the simulated period, usually hourly. The generation follows this timeseries and cannot be dispatched. Surplus energy is taken by the :ref:`Excess <excess>` component of the bus.
+Energy production,"Production components represent generation from renewable sources, e.g. PV plants, wind turbines, solar thermal collectors or geothermal plants. Their generation is given by a timeseries per kW of installed capacity (e.g. kW/kWp for PV) for every timestep of the simulated period, usually hourly. The generation follows this timeseries and cannot be dispatched. Surplus energy is taken by the :ref:`Excess <comp-excess>` component of the bus.
 
 If no timeseries are available, they can be calculated from weather data, e.g. with:
 
@@ -70,7 +70,7 @@ Energy conversion,"*Examples*:
 
 Conversion components are modelled as converters of :code:`oemof-solph`, which transform one or more input flows into one or more output flows with constant efficiencies.
 
-The parameters :ref:`Installed capacity <param-installed_capacity>`, :ref:`Conversion efficiency <param-conversion_efficiency>` and :ref:`Variable operational costs <param-variable_costs>` refer to the main output of a conversion component. The costs of the input, e.g. the fuel costs, are therefore not included in the variable operational costs of the conversion component but in the energy price of the fuel provider, see :ref:`DsoFuel <dsofuel>`.
+The parameters :ref:`Installed capacity <param-installed_capacity>`, :ref:`Conversion efficiency <param-conversion_efficiency>` and :ref:`Variable operational costs <param-variable_costs>` refer to the main output of a conversion component. The costs of the input, e.g. the fuel costs, are therefore not included in the variable operational costs of the conversion component but in the energy price of the fuel provider, see :ref:`DsoFuel <comp-dsofuel>`.
 
 Depending on the component, a conversion component can have several inputs, e.g. electricity and ambient heat for a heat pump, or several outputs, e.g. electricity and heat for a CHP.",,"`Examples`:
 
@@ -84,7 +84,7 @@ Depending on the component, a conversion component can have several inputs, e.g.
 Conversion assets are added as transformers.
 
 The parameters :ref:`dispatch_price <dispatchprice-label>`, :ref:`efficiency <efficiency-label>` and :ref:`installedCap <installedcap-label>` of transformers are assigned to their output flows.
-This means that these parameters need to be provided for the output of the asset and that the costs of the input, (e.g. cost of fuel) are not included in its :ref:`dispatch_price <dispatchprice-label>` but in the :ref:`dispatch_price <dispatchprice-label>` of the fuel source, see :ref:`DsoFuel <dsofuel>`.
+This means that these parameters need to be provided for the output of the asset and that the costs of the input, (e.g. cost of fuel) are not included in its :ref:`dispatch_price <dispatchprice-label>` but in the :ref:`dispatch_price <dispatchprice-label>` of the fuel source, see :ref:`DsoFuel <comp-dsofuel>`.
 
 Conversion assets can be defined with multiple inputs or multiple outputs, but one asset currently cannot have both, multiple inputs and multiple outputs. Note that multiple inputs/output is possible but this feature is not currently tested."
 Energy providers,"An energy provider represents the connection of the energy system to a supply grid, e.g. the electricity, gas, heat or hydrogen grid. It consists of a source that supplies energy to the connected bus at the energy price and, if a feed-in tariff is given, a sink that takes surplus energy from the bus and is remunerated with the feed-in tariff.
@@ -108,6 +108,6 @@ The charging and discharging power is limited by the C-rates, i.e. by the storag
 The state of charge of a storage at the first and last time step of an optimization are equal.
 Charge and discharge of the whole capacity of the energy storage are possible within one time step in case the capacity of the storage is not optimized. In case of
 capacity optimization charge and discharge is limited by the :ref:`crate-label`."
-Energy transport,"Transport components move heat within the energy system. The :ref:`HeatingNetwork <heatingnetwork>` distributes heat from the generators to the consumers. The :ref:`HeatingPipe <heatingpipe>` connects two heat buses, e.g. two buildings or two parts of a network, optionally in both directions. Heat losses are considered as absolute losses in kW and, for the heating pipe, additionally as relative losses, i.e. a share of the transported heat.",New text (not in the original documentation).,
+Energy transport,"Transport components move heat within the energy system. The :ref:`HeatingNetwork <comp-heatingnetwork>` distributes heat from the generators to the consumers. The :ref:`HeatingPipe <comp-heatingpipe>` connects two heat buses, e.g. two buildings or two parts of a network, optionally in both directions. Heat losses are considered as absolute losses in kW and, for the heating pipe, additionally as relative losses, i.e. a share of the transported heat.",New text (not in the original documentation).,
 Input parameters,"This page describes the input parameters of the components in alphabetical order. Details that only apply to a
 single component are given in the description of the component on the page :ref:`component_models`.","Introduction below the title of the page ""Input parameters"". New text (not in the original documentation).",
