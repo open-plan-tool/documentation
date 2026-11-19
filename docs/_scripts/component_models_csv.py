@@ -86,6 +86,27 @@ YES = {"yes", "ja", "y", "true", "1", "x"}
 NO = {"no", "nein", "n", "false", "0"}
 
 
+import inspect
+import oemof.eesyplan as ep
+
+def generate_eesyplan_doc_urls(url):
+    prefix = "oemof.eesyplan.components."
+
+    component_urls = {}
+
+    for name in ep.__all__:
+        obj = getattr(ep, name, None)
+        if not inspect.isclass(obj):
+            continue
+        module = obj.__module__
+        if not module.startswith(prefix):
+            continue
+        component_urls[obj.__name__] = f"{url}#{module}.{name}"
+    return component_urls
+
+EESYPLAN_DOCS_URL = "https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html"
+EESYPLAN_LINKS = generate_eesyplan_doc_urls(EESYPLAN_DOCS_URL)
+
 # ------------------------------------------------------------------ helpers
 def slug(text):
     return text # re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
