@@ -131,8 +131,8 @@ def ref(text, label):
     return f":ref:`{text} <{label}>`"
 
 
-def raw_html(lines):
-    return [".. raw:: html", ""] + ["   " + line for line in lines] + [""]
+def raw_html(lines, tab=0):
+    return ["   " * tab + ".. raw:: html", ""] + ["   " * (tab+1) + line for line in lines] + [""]
 
 
 def parameter_anchor(component):
@@ -591,6 +591,18 @@ def build_component_models(
             icon = icon_of.get(name)
             if icon:
                 out += [f"   .. image:: {icon_url}{icon}", f"      :alt: {name} icon", ""]
+
+            code_url = EESYPLAN_LINKS.get(name)
+            if code_url:
+                out += raw_html([
+                    (
+                        f'<a class="cm-source-link" '
+                        f'href="{html.escape(code_url, quote=True)}" '
+                        f'target="_blank" rel="noopener noreferrer">'
+                        f'<strong>Eesyplan source code</strong></a>'
+                    )
+                ], tab=1)
+
             for p in comp["params"]:
                 if not p["own_text"] and p["label"] not in labels:
                     no_link.append(f"{name}: {p['title']}")
