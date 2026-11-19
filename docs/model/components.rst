@@ -110,6 +110,10 @@ CarrierBus
    .. image:: ../_static/icons/CarrierBus.svg
       :alt: CarrierBus icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.buses.carrier.CarrierBus" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. rst-class:: cm-default-set
 
    :cm-source:`Name as it will show in the results`
@@ -154,6 +158,10 @@ HeatDemand
    .. image:: ../_static/icons/HeatDemand.svg
       :alt: HeatDemand icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.demand.heat_demand.HeatDemand" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -192,6 +200,10 @@ ElectricityDemand
 
    .. image:: ../_static/icons/ElectricityDemand.svg
       :alt: ElectricityDemand icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.demand.electricity_demand.ElectricityDemand" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -232,6 +244,10 @@ H2Demand
    .. image:: ../_static/icons/H2Demand.svg
       :alt: H2Demand icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.demand.hydrogen_demand.H2Demand" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -270,6 +286,10 @@ FuelDemand
 
    .. image:: ../_static/icons/FuelDemand.svg
       :alt: FuelDemand icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.demand.fuel_demand.FuelDemand" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -332,6 +352,10 @@ PvPlant
    .. image:: ../_static/icons/PvPlant.svg
       :alt: PvPlant icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.production.pv_plant.PvPlant" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -391,6 +415,10 @@ WindTurbine
 
    .. image:: ../_static/icons/WindTurbine.svg
       :alt: WindTurbine icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.production.wind_turbine.WindTurbine" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -452,6 +480,10 @@ SolarThermalPlant
    .. image:: ../_static/icons/SolarThermalPlant.svg
       :alt: SolarThermalPlant icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.production.solar_thermal_plant.SolarThermalPlant" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -511,6 +543,10 @@ GeothermalPlant
 
    .. image:: ../_static/icons/GeothermalPlant.svg
       :alt: GeothermalPlant icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.production.geothermal_plant.GeothermalPlant" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -607,6 +643,10 @@ Electrolyzer
    .. image:: ../_static/icons/Electrolyzer.svg
       :alt: Electrolyzer icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.electrolyzer.Electrolyzer" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -667,6 +707,10 @@ ChpVariableRatio
 
    .. image:: ../_static/icons/ChpVariableRatio.svg
       :alt: ChpVariableRatio icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.chp_variable_ratio.ChpVariableRatio" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -762,6 +806,10 @@ ChpFixedRatio
    .. image:: ../_static/icons/ChpFixedRatio.svg
       :alt: ChpFixedRatio icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.chp_fixed_ratio.ChpFixedRatio" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -832,6 +880,10 @@ FuelCell
    .. image:: ../_static/icons/FuelCell.svg
       :alt: FuelCell icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.fuel_cell.FuelCell" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -880,6 +932,10 @@ FuelGenerator
 
    .. image:: ../_static/icons/FuelGenerator.svg
       :alt: FuelGenerator icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.fuel_generator.FuelGenerator" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -930,6 +986,10 @@ ElectricalTransformator
    .. image:: ../_static/icons/ElectricalTransformator.svg
       :alt: ElectricalTransformator icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.electrical_transformator.ElectricalTransformator" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -979,6 +1039,10 @@ Boiler
    .. image:: ../_static/icons/Boiler.svg
       :alt: Boiler icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.boiler.Boiler" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -1027,6 +1091,10 @@ HeatPump
 
    .. image:: ../_static/icons/HeatPump.svg
       :alt: HeatPump icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.converters.heat_pump.HeatPump" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -1085,6 +1153,10 @@ BiogasPlant
 
    .. image:: ../_static/icons/BiogasPlant.svg
       :alt: BiogasPlant icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.production.biogas_plant.BiogasPlant" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -1177,6 +1249,10 @@ DsoHydrogen
    .. image:: ../_static/icons/DsoHydrogen.svg
       :alt: DsoHydrogen icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.providers.dso_hydrogen.DsoHydrogen" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -1230,6 +1306,10 @@ DsoHeat
 
    .. image:: ../_static/icons/DsoHeat.svg
       :alt: DsoHeat icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.providers.dso_heat.DsoHeat" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -1285,6 +1365,10 @@ DsoFuel
    .. image:: ../_static/icons/DsoFuel.svg
       :alt: DsoFuel icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.providers.dso_fuel.DsoFuel" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -1338,6 +1422,10 @@ DsoElectricity
 
    .. image:: ../_static/icons/DsoElectricity.svg
       :alt: DsoElectricity icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.providers.dso_electricity.DsoElectricity" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -1435,6 +1523,10 @@ FuelStorage
    .. image:: ../_static/icons/FuelStorage.svg
       :alt: FuelStorage icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.storages.fuel_storage.FuelStorage" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -1486,6 +1578,10 @@ ThermalStorage
 
    .. image:: ../_static/icons/ThermalStorage.svg
       :alt: ThermalStorage icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.storages.thermal_storage.ThermalStorage" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -1572,6 +1668,10 @@ HydrogenStorage
    .. image:: ../_static/icons/HydrogenStorage.svg
       :alt: HydrogenStorage icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.storages.hydrogen_storage.HydrogenStorage" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -1623,6 +1723,10 @@ ElectricalStorage
 
    .. image:: ../_static/icons/ElectricalStorage.svg
       :alt: ElectricalStorage icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.storages.electrical_storage.ElectricalStorage" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1
@@ -1717,6 +1821,10 @@ HeatingNetwork
    .. image:: ../_static/icons/HeatingNetwork.svg
       :alt: HeatingNetwork icon
 
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.buses.network.HeatingNetwork" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
+
    .. list-table::
       :header-rows: 1
       :class: cm-param-table
@@ -1779,6 +1887,10 @@ HeatingPipe
 
    .. image:: ../_static/icons/HeatingPipe.svg
       :alt: HeatingPipe icon
+
+   .. raw:: html
+
+      <a class="cm-source-link" href="https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html#oemof.eesyplan.components.transport.heat.HeatingPipe" target="_blank" rel="noopener noreferrer"><strong>Eesyplan Source code</strong></a>
 
    .. list-table::
       :header-rows: 1

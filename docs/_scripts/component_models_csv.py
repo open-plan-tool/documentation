@@ -86,6 +86,27 @@ YES = {"yes", "ja", "y", "true", "1", "x"}
 NO = {"no", "nein", "n", "false", "0"}
 
 
+import inspect
+import oemof.eesyplan as ep
+
+def generate_eesyplan_doc_urls(url):
+    prefix = "oemof.eesyplan.components."
+
+    component_urls = {}
+
+    for name in ep.__all__:
+        obj = getattr(ep, name, None)
+        if not inspect.isclass(obj):
+            continue
+        module = obj.__module__
+        if not module.startswith(prefix):
+            continue
+        component_urls[obj.__name__] = f"{url}#{module}.{name}"
+    return component_urls
+
+EESYPLAN_DOCS_URL = "https://oemof-eesyplan.readthedocs.io/en/latest/reference/components.html"
+EESYPLAN_LINKS = generate_eesyplan_doc_urls(EESYPLAN_DOCS_URL)
+
 # ------------------------------------------------------------------ helpers
 def slug(text):
     return text # re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
@@ -110,8 +131,8 @@ def ref(text, label):
     return f":ref:`{text} <{label}>`"
 
 
-def raw_html(lines):
-    return [".. raw:: html", ""] + ["   " + line for line in lines] + [""]
+def raw_html(lines, tab=0):
+    return ["   " * tab + ".. raw:: html", ""] + ["   " * (tab+1) + line for line in lines] + [""]
 
 
 def parameter_anchor(component):
@@ -570,6 +591,18 @@ def build_component_models(
             icon = icon_of.get(name)
             if icon:
                 out += [f"   .. image:: {icon_url}{icon}", f"      :alt: {name} icon", ""]
+
+            code_url = EESYPLAN_LINKS.get(name)
+            if code_url:
+                out += raw_html([
+                    (
+                        f'<a class="cm-source-link" '
+                        f'href="{html.escape(code_url, quote=True)}" '
+                        f'target="_blank" rel="noopener noreferrer">'
+                        f'<strong>Eesyplan source code</strong></a>'
+                    )
+                ], tab=1)
+
             for p in comp["params"]:
                 if not p["own_text"] and p["label"] not in labels:
                     no_link.append(f"{name}: {p['title']}")

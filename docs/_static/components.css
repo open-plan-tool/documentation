@@ -9,6 +9,12 @@
   gap: 14px;
   margin: 4px 0 32px;
 }
+
+.cm-source-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
 .rst-content .cm-card { border: 1px solid #e1e4e5; background: #fafafa; }
 .rst-content a.cm-card-title,
 .rst-content a.cm-card-title:visited {
