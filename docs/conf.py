@@ -13,6 +13,7 @@
 import os
 import sys
 from pathlib import Path
+import pandas as pd
 import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath(".."))
@@ -32,8 +33,12 @@ DOCS_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = DOCS_DIR / "_scripts"
 
 sys.path.insert(0, str(SCRIPTS_DIR))
-
 from component_models_csv import build_component_models
+
+# Download the list of parameters from the open-plan-tool repository
+url = "https://raw.githubusercontent.com/open-plan-tool/gui/refs/heads/main/app/resources/eesyplan_parameters_list.csv"
+df = pd.read_csv(url)
+df.to_csv("parameter_list_eesyplan.csv", index=False)
 
 build_component_models(
     parameter_file="parameter_list_eesyplan.csv",
